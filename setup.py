@@ -6,7 +6,7 @@ from ast import literal_eval
 
 
 
-def get_version(source='vcflib.pyx'):
+def get_version(source='vcfnp.pyx'):
     with open(source) as f:
         for line in f:
             if line.startswith('__version__'):

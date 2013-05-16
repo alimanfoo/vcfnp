@@ -14,9 +14,6 @@ import time
 import sys
  
 
-__version__ = '0.3'
-
-
 VariantTuple = namedtuple('Variant', ['CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'samples'])
 
 
