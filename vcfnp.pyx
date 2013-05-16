@@ -788,7 +788,7 @@ def calldata(filename,                  # name of VCF file
         fields = list(SAMPLE_FIELDS) + formatIds
     else:
         for f in fields:
-            assert f in VARIANT_FIELDS or f in formatIds, 'unknown field: %s' % f
+            assert f in SAMPLE_FIELDS or f in formatIds, 'unknown field: %s' % f
 
     # exclude fields
     if exclude_fields is not None:
@@ -820,8 +820,8 @@ def calldata(filename,                  # name of VCF file
             else:
                 vcf_count = formatCounts[f]
                 if vcf_count == ALLELE_NUMBER:
-                    # default to 1 (biallelic)
-                    arities[f] = 1
+                    # default to 2 (biallelic)
+                    arities[f] = 2
                 elif vcf_count == GENOTYPE_NUMBER:
                     # arity = (n + p - 1) choose p (n is number of alleles; p is ploidy)
                     # default to biallelic (n = 2)
@@ -866,7 +866,7 @@ def calldata(filename,                  # name of VCF file
     # slice?
     if slice:
         it = islice(it, *slice)
-        
+    
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
 
