@@ -14,7 +14,7 @@ def test_len():
     
 
 def test_metadata():
-    vcf = PyVariantCallFile('sample.vcf')
+    vcf = PyVariantCallFile('fixture/sample.vcf')
     eq_(['NS', 'AN', 'AC', 'DP', 'AF', 'AA', 'DB', 'H2'], vcf.infoIds)
     eq_(['GT', 'GQ', 'DP', 'HQ'], vcf.formatIds)
     eq_(['s50', 'q10'], vcf.filterIds)
