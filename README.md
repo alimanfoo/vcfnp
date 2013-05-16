@@ -63,4 +63,4 @@ plt.show()
 Acknowledgments
 ---------------
 
-Based on the ekg/vcflib library.
+Based on the https://github.com/ekg/vcflib library.
