@@ -4,161 +4,39 @@
 Utility functions to extract data from a VCF file and load into a numpy array.
 
 """
+ 
 
-
-__version__ = '0.3'
-
-
-from cython.operator cimport dereference as deref
-from collections import namedtuple
 import numpy as np
 cimport numpy as np
-import time
-import sys
+#from vcflib import TYPE_FLOAT, TYPE_INTEGER, TYPE_STRING, TYPE_BOOL, TYPE_UNKNOWN
+from vcflib cimport PyVariantCallFile, VariantCallFile, Variant, VariantFieldType, FIELD_FLOAT, FIELD_INTEGER, FIELD_STRING, FIELD_BOOL, FIELD_UNKNOWN, ALLELE_NUMBER, GENOTYPE_NUMBER
 from libcpp cimport bool
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp.map cimport map
 from libc.stdlib cimport atoi, atof
 from cython.operator cimport dereference as deref
+import sys
+import time
 from itertools import islice
 import os
-
+#from cython.view cimport array as cvarray
 
 cdef size_t npos = -1
 
-
-#cdef extern from "split.h":
-#    # split a string on a single delimiter character (delim)
-#    vector[string]& split(const string &s, char delim, vector[string] &elems)
-#    vector[string]  split(const string &s, char delim)
-#    # split a string on any character found in the string of delimiters (delims)
-#    vector[string]& split(const string &s, const string& delims, vector[string] &elems)
-#    vector[string]  split(const string &s, const string& delims)
+cdef extern from "split.h":
+    # split a string on a single delimiter character (delim)
+    vector[string]& split(const string &s, char delim, vector[string] &elems)
+    vector[string]  split(const string &s, char delim)
+    # split a string on any character found in the string of delimiters (delims)
+    vector[string]& split(const string &s, const string& delims, vector[string] &elems)
+    vector[string]  split(const string &s, const string& delims)
     
 
 cdef extern from "convert.h":
     bool convert(const string& s, int& r)
     bool convert(const string& s, float& r)
 
-
-VariantTuple = namedtuple('Variant', ['CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'samples'])
-
-
-# expose constants to Python
-TYPE_FLOAT = FIELD_FLOAT
-TYPE_INTEGER = FIELD_INTEGER
-TYPE_BOOL = FIELD_BOOL
-TYPE_STRING = FIELD_STRING
-TYPE_UNKNOWN = FIELD_UNKNOWN
-
-
-cdef class PyVariantCallFile:
-
-    def __cinit__(self, filename):
-        self.thisptr = new VariantCallFile()
-        self.thisptr.open(filename)
-
-    def __dealloc__(self):
-        del self.thisptr        
-        
-    def __len__(self):
-        cdef Variant var
-        var.setVariantCallFile(self.thisptr)
-        n = 0
-        while self.thisptr.getNextVariant(var):
-            n += 1
-        return n
-
-    def __iter__(self):
-        cdef Variant *var
-        cdef vector[string] filters
-        cdef char semicolon = ';'
-        var = new Variant(deref(self.thisptr))
-        while self.thisptr.getNextVariant(deref(var)):
-            # split the filter field here in C++ to avoid having to do it in Python later
-            filters = split(var.filter, semicolon)
-            yield VariantTuple(var.sequenceName, 
-                               var.position, 
-                               var.id, 
-                               var.ref, 
-                               var.alt, 
-                               var.quality, 
-                               filters,
-                               var.info,
-                               var.samples)
-        del var
-        
-    def setRegion(self, *args):
-        if len(args) == 1:
-            self.thisptr.setRegion(args[0])
-        elif len(args) == 3:
-            self.thisptr.setRegion(args[0], args[1], args[2])
-        else:
-            raise Exception('either provide a single region string or provide seq, start, end')
-
-    property infoIds:
-        def __get__(self):
-            return self.thisptr.infoIds()
-
-    property formatIds:
-        def __get__(self):
-            return self.thisptr.formatIds()
-
-    property filterIds:
-        def __get__(self):
-            return self.thisptr.filterIds()
-
-    property infoTypes:
-        def __get__(self):
-            return self.thisptr.infoTypes
-
-    property formatTypes:
-        def __get__(self):
-            return self.thisptr.formatTypes
-
-    property infoCounts:
-        def __get__(self):
-            return self.thisptr.infoCounts
-
-    property formatCounts:
-        def __get__(self):
-            return self.thisptr.formatCounts
-        
-    property parseSamples:
-        def __get__(self):
-            return self.thisptr.parseSamples
-        def __set__(self, v):
-            self.thisptr.parseSamples = v
-
-    property header:
-        def __get__(self):
-            return self.thisptr.header
-        
-    property fileformat: # [sic] no camel case
-        def __get__(self):
-            return self.thisptr.fileformat
-        
-    property fileDate:
-        def __get__(self):
-            return self.thisptr.fileDate
-        
-    property source:
-        def __get__(self):
-            return self.thisptr.source
-        
-    property reference:
-        def __get__(self):
-            return self.thisptr.reference
-        
-    property phasing:
-        def __get__(self):
-            return self.thisptr.phasing
-        
-    property sampleNames:
-        def __get__(self):
-            return self.thisptr.sampleNames
-        
 
 VARIANT_FIELDS = ('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 
                   'num_alleles', 'is_snp')
@@ -267,6 +145,7 @@ cdef string FIELD_NAME_GENOTYPE = 'genotype'
 cdef string FIELD_NAME_GT = 'GT'
 
 
+
 def variants(filename,                  # name of VCF file
              region=None,               # region to extract
              fields=None,               # fields to extract
@@ -373,6 +252,7 @@ def variants(filename,                  # name of VCF file
     return _fromiter(it, dtype, count, progress, logstream)
 
 
+
 def _fromiter(it, dtype, count, int progress=0, logstream=sys.stderr):
     if progress > 0:
         it = _iter_withprogress(it, progress, logstream)
@@ -381,6 +261,7 @@ def _fromiter(it, dtype, count, int progress=0, logstream=sys.stderr):
     else:
         a = np.fromiter(it, dtype=dtype)
     return a
+
 
 
 def _iter_withprogress(iterable, int progress, logstream):
@@ -395,6 +276,7 @@ def _iter_withprogress(iterable, int progress, logstream):
             before = after
     after_all = time.time()
     print >>logstream, '%s rows in %.2fs (%d rows/s)' % (i, after_all-before_all, i/(after_all-before_all))
+
 
 
 def _itervariants(filename, 
@@ -457,6 +339,7 @@ cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
     return variantFile.getNextVariant(deref(var))
 
 
+
 cdef inline object _mkvvals(Variant *var, 
                             vector[string] fields, 
                             map[string, int] arities, 
@@ -464,6 +347,7 @@ cdef inline object _mkvvals(Variant *var,
                             list filterIds):
     out = tuple([_mkvval(var, f, arities[f], fills[f], filterIds) for f in fields])
     return out
+
 
    
 cdef inline object _mkvval(Variant *var, string field, int arity, object fill, list filterIds):
@@ -489,6 +373,7 @@ cdef inline object _mkvval(Variant *var, string field, int arity, object fill, l
         out = 0 # TODO review this
     return out
  
+
  
 cdef inline object _mkaltval(Variant *var, int arity, object fill):
     if arity == 1:
@@ -509,11 +394,13 @@ cdef inline object _mkaltval(Variant *var, int arity, object fill):
     return out
 
  
+ 
 cdef inline object _mkfilterval(Variant *var, list filterIds):
     filters = <list>split(var.filter, SEMICOLON)
     out = [(id in filters) for id in filterIds]
     out = tuple(out)
     return out
+
 
 
 cdef inline object _is_snp(Variant *var):
@@ -527,6 +414,7 @@ cdef inline object _is_snp(Variant *var):
             return False
     return True
 
+    
 
 def info(filename,                  # name of VCF file
          region=None,               # region to extract
@@ -639,6 +527,7 @@ def info(filename,                  # name of VCF file
     return _fromiter(it, dtype, count, progress, logstream)
 
 
+
 def _iterinfo(filename, 
              region,
              vector[string] fields, 
@@ -687,7 +576,8 @@ def _iterinfo_with_condition(filename,
     del variantFile
     del var
 
-     
+    
+    
 cdef inline object _mkivals(Variant *var, 
                             vector[string] fields, 
                             map[string, int] arities,
@@ -696,6 +586,7 @@ cdef inline object _mkivals(Variant *var,
     out = [_mkival(var, f, arities[f], fills[f], infoTypes[f]) for f in fields]
     return tuple(out)
     
+
     
 cdef inline object _mkival(Variant *var, string field, int arity, object fill, VariantFieldType vcf_type):
     if vcf_type == FIELD_BOOL:
@@ -704,6 +595,7 @@ cdef inline object _mkival(Variant *var, string field, int arity, object fill, V
     else:
         out = _mkval(var.info[field], arity, fill, vcf_type)
     return out
+
 
 
 cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, VariantFieldType vcf_type):
@@ -717,6 +609,7 @@ cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, V
     return out
  
 
+ 
 cdef inline object _mkval_string(vector[string]& string_vals, int arity, string fill):
     if arity == 1:
         if string_vals.size() > 0:
@@ -725,6 +618,7 @@ cdef inline object _mkval_string(vector[string]& string_vals, int arity, string 
             return fill
     else:
         return _mkval_string_multi(string_vals, arity, fill)
+
 
 
 cdef inline vector[string] _mkval_string_multi(vector[string]& string_vals, int arity, string fill):
@@ -738,12 +632,14 @@ cdef inline vector[string] _mkval_string_multi(vector[string]& string_vals, int 
     return v
 
 
+
 cdef inline object _mkval_float(vector[string]& string_vals, int arity, float fill):
     if arity == 1:
         out = _mkval_float_single(string_vals, fill)
     else:
         out = _mkval_float_multi(string_vals, arity, fill)
     return out
+
 
 
 cdef inline float _mkval_float_single(vector[string]& string_vals, float fill):
@@ -755,6 +651,7 @@ cdef inline float _mkval_float_single(vector[string]& string_vals, float fill):
 #    if string_vals.size() > 0:
 #        convert(string_vals.at(0), v)
 #    return v
+
 
 
 cdef inline vector[float] _mkval_float_multi(vector[string]& string_vals, int arity, float fill):
@@ -777,6 +674,7 @@ cdef inline vector[float] _mkval_float_multi(vector[string]& string_vals, int ar
 #        out.push_back(v)
 #    return out
 
+
         
 cdef inline object _mkval_int(vector[string]& string_vals, int arity, int fill):
     if arity == 1:
@@ -784,6 +682,7 @@ cdef inline object _mkval_int(vector[string]& string_vals, int arity, int fill):
     else:
         out = _mkval_int_multi(string_vals, arity, fill)
     return out
+
 
 
 cdef inline int _mkval_int_single(vector[string]& string_vals, int fill):
@@ -795,6 +694,7 @@ cdef inline int _mkval_int_single(vector[string]& string_vals, int fill):
 #    if string_vals.size() > 0:
 #        convert(string_vals.at(0), v)
 #    return v
+
 
 
 cdef inline vector[int] _mkval_int_multi(vector[string]& string_vals, int arity, int fill):
@@ -816,6 +716,7 @@ cdef inline vector[int] _mkval_int_multi(vector[string]& string_vals, int arity,
 #            convert(string_vals.at(i), v)
 #        out.push_back(v)
 #    return out
+
 
       
 def calldata(filename,                  # name of VCF file
@@ -967,6 +868,7 @@ def calldata(filename,                  # name of VCF file
     return _fromiter(it, dtype, count, progress, logstream)
 
 
+
 def _itercalldata(filename, 
                   region,
                   vector[string] samples,
@@ -1044,6 +946,7 @@ cdef inline object _mkssvals(Variant *var,
     return tuple(out)
 
     
+    
 cdef inline object _mksvals(Variant *var, 
                             string sample,
                             int ploidy,
@@ -1054,6 +957,7 @@ cdef inline object _mksvals(Variant *var,
     out = [_mksval(var.samples[sample], ploidy, f, arities[f], fills[f], formatTypes) for f in fields]
     return tuple(out)
     
+
 
 cdef inline object _mksval(map[string, vector[string]]& sample_data, 
                            int ploidy,
@@ -1070,6 +974,7 @@ cdef inline object _mksval(map[string, vector[string]]& sample_data,
     else:
         return _mkval(sample_data[field], arity, fill, formatTypes[field])
     
+
 
 cdef inline bool _is_called(map[string, vector[string]]& sample_data):
     cdef vector[string] *gts

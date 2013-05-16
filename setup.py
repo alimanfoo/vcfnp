@@ -5,12 +5,14 @@ import os
 from ast import literal_eval
 
 
-def get_version(source='vcfnp.pyx'):
+
+def get_version(source='vcflib.pyx'):
     with open(source) as f:
         for line in f:
             if line.startswith('__version__'):
                 return literal_eval(line.partition('=')[2].lstrip())
     raise ValueError("__version__ not found")
+
 
 
 vcflib_dir = os.path.join(os.getcwd(), 'vcflib')
@@ -36,6 +38,15 @@ def get_vcflib_sources():
     return sources
 
 
+vcflib_extension = Extension('vcflib',
+                             sources=['vcflib.pyx'] + get_vcflib_sources(),
+                             language='c++',
+                             include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, '.'],
+                             libraries=['m', 'z'],
+                             extra_compile_args=['-O3'],
+                             )
+    
+
 vcfnp_extension = Extension('vcfnp',
                             sources=['vcfnp.pyx'] + get_vcflib_sources(),
                             language='c++',
@@ -43,13 +54,13 @@ vcfnp_extension = Extension('vcfnp',
                             libraries=['m', 'z'],
                             extra_compile_args=['-O3'],
                             )
-
+    
 
 setup(
     name = 'vcfnp',
     version=get_version(),
     cmdclass = {'build_ext': build_ext},
-    ext_modules = [vcfnp_extension],
+    ext_modules = [vcflib_extension, vcfnp_extension],
     )
 
 
