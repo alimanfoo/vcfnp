@@ -10,6 +10,8 @@ Installation
 $ pip install vcfnp
 ```
 
+(Requires cython.)
+
 Usage
 -----
 
@@ -57,3 +59,8 @@ ax.set_title('GQ histogram')
 ax.set_xlabel('GQ')
 plt.show()  
 ```
+
+Acknowledgments
+---------------
+
+Based on the ekg/vcflib library.

@@ -1,0 +1,10 @@
+##fileformat=VCFv4.1
+##INFO=
+##FORMAT=
+##FORMAT=
+##FORMAT=
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT test1 test2 test3 test4
+chr1 1 . A G . PASS DP=2 GT:AD 0:1,0 .:1,0 0:0,0 .:0,0
+chr1 2 . A G . PASS DP=2 GT:AD:ZZ 0:1,0:dummy 0:1,0 0:0,0 .:0,0
+chr1 3 . A G . PASS DP=2 GT:AD:ZZ 0:1,0:dummy .:1,0 0:0,0 .:0,0
+
