@@ -1,4 +1,4 @@
 vcfnp
 =====
 
-Load numpy arrays from VCF (variant call file)
+Load numpy arrays from VCF (variant call file).
