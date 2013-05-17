@@ -1,4 +1,4 @@
-include *.md
+include *.rst
 include *.pyx
 include *.pxd
 include *.cpp
