@@ -1,4 +1,6 @@
 build
+dist
 *.so
 *.pyc
 *~
+MANIFEST

@@ -64,7 +64,7 @@ setup(
     url='https://github.com/alimanfoo/vcfnp',
     license='MIT License',
     description='Load numpy arrays from a VCF (variant call file).',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     classifiers=['Intended Audience :: Developers',
                  'License :: OSI Approved :: MIT License',
                  'Programming Language :: Python',
