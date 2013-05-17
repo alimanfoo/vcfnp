@@ -11,7 +11,6 @@ __version__ = '0.3-SNAPSHOT'
 
 import numpy as np
 cimport numpy as np
-#from vcflib import TYPE_FLOAT, TYPE_INTEGER, TYPE_STRING, TYPE_BOOL, TYPE_UNKNOWN
 from vcflib cimport PyVariantCallFile, VariantCallFile, Variant, VariantFieldType, FIELD_FLOAT, FIELD_INTEGER, FIELD_STRING, FIELD_BOOL, FIELD_UNKNOWN, ALLELE_NUMBER, GENOTYPE_NUMBER
 from libcpp cimport bool
 from libcpp.string cimport string
@@ -23,7 +22,6 @@ import sys
 import time
 from itertools import islice
 import os
-#from cython.view cimport array as cvarray
 
 
 cdef size_t npos = -1
@@ -960,6 +958,7 @@ cdef inline object _mkssvals(Variant *var,
                              map[string, int] arities,
                              dict fills,
                              map[string, VariantFieldType]& formatTypes):
+    print var.sequenceName, var.position, var.samples
     out = [_mksvals(var, s, ploidy, fields, arities, fills, formatTypes) for s in samples]
     return tuple(out)
 
@@ -972,7 +971,9 @@ cdef inline object _mksvals(Variant *var,
                             map[string, int] arities,
                             dict fills,
                             map[string, VariantFieldType]& formatTypes):
+    print sample, var.samples[sample]
     out = [_mksval(var.samples[sample], ploidy, f, arities[f], fills[f], formatTypes) for f in fields]
+#    print sample, out
     return tuple(out)
     
 

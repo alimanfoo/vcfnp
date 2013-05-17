@@ -120,5 +120,16 @@ def test_variable_calldata():
     eq_((1, 0), tuple(c['test2']['AD'][0]))
     eq_((1, 0), tuple(c['test2']['AD'][1]))
     eq_((1, 0), tuple(c['test2']['AD'][2]))
+    eq_('.', c['test2']['GT'][0])
+    eq_('0', c['test2']['GT'][1])
+    eq_('1', c['test2']['GT'][2])
+    
+    
+def test_missing_calldata():
+    c = calldata('fixture/test1.vcf')
+    eq_('.', c['test3']['GT'][2])
+    eq_((-1, -1), tuple(c['test3']['genotype'][2]))
+    eq_('./.', c['test4']['GT'][2])
+    eq_((-1, -1), tuple(c['test4']['genotype'][2]))
 
 

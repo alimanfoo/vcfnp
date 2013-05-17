@@ -6,11 +6,19 @@ Load numpy arrays from VCF (variant call file).
 Installation
 ------------
 
+Installation requires numpy and cython.
+
 ```
 $ pip install vcfnp
 ```
 
-(Requires cython.)
+...or:
+
+```
+$ git clone --recursive git://github.com/alimanfoo/vcfnp.git
+$ cd vcfnp
+$ python setup.py build_ext --inplace
+```
 
 Usage
 -----
