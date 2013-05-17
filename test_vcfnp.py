@@ -115,7 +115,7 @@ def test_condition():
     eq_(5, len(vf))
     
 
-def test_variable_format():
+def test_variable_calldata():
     c = calldata('fixture/test1.vcf')
     eq_((1, 0), tuple(c['test2']['AD'][0]))
     eq_((1, 0), tuple(c['test2']['AD'][1]))

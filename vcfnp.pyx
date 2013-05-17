@@ -6,7 +6,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
  
 
-__version__ = '0.3'
+__version__ = '0.3-SNAPSHOT'
 
 
 import numpy as np
@@ -25,7 +25,9 @@ from itertools import islice
 import os
 #from cython.view cimport array as cvarray
 
+
 cdef size_t npos = -1
+
 
 cdef extern from "split.h":
     # split a string on a single delimiter character (delim)
@@ -41,9 +43,12 @@ cdef extern from "convert.h":
     bool convert(const string& s, float& r)
 
 
+# these are the possible fields in the variants array
 VARIANT_FIELDS = ('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 
                   'num_alleles', 'is_snp')
 
+
+# default dtypes for the variants array fields
 DEFAULT_VARIANT_DTYPE = {
                          'CHROM': 'a12',
                          'POS': 'i4',
@@ -55,6 +60,8 @@ DEFAULT_VARIANT_DTYPE = {
                          'is_snp': 'b1',
                          }
 
+
+# default arities for the variants array fields
 DEFAULT_VARIANT_ARITY = {
                          'CHROM': 1,
                          'POS': 1,
@@ -66,6 +73,8 @@ DEFAULT_VARIANT_ARITY = {
                          'is_snp': 1
                          }
 
+
+# default fill values for the variants fields if values are missing
 DEFAULT_VARIANT_FILL = {'CHROM': '',
                         'POS': 0,
                         'ID': '',
@@ -75,6 +84,8 @@ DEFAULT_VARIANT_FILL = {'CHROM': '',
                         'num_alleles': 0,
                         'is_snp': False}
 
+
+# default mapping from VCF field types to numpy dtypes
 DEFAULT_TYPE_MAP = {FIELD_FLOAT: 'f4',
                     FIELD_INTEGER: 'i4',
                     FIELD_STRING: 'a12',
@@ -82,6 +93,8 @@ DEFAULT_TYPE_MAP = {FIELD_FLOAT: 'f4',
                     FIELD_UNKNOWN: 'a12' # leave as string
                     }
 
+
+# default mapping from VCF field types to fill values for missing values
 DEFAULT_FILL_MAP = {FIELD_FLOAT: 0.,
                     FIELD_INTEGER: 0,
                     FIELD_STRING: '.',
@@ -89,7 +102,9 @@ DEFAULT_FILL_MAP = {FIELD_FLOAT: 0.,
                     FIELD_UNKNOWN: '' 
                     }
 
-# set some lower precision defaults for known INFO fields
+
+# default dtypes for some known INFO fields where we know that lower
+# precision is acceptable
 DEFAULT_INFO_DTYPE = {
                      'AC': 'u2',
                      'AN': 'u2',
@@ -100,9 +115,9 @@ DEFAULT_INFO_DTYPE = {
                      'RPA': 'u2',
                      }
 
-SAMPLE_FIELDS = ('is_called', 'is_phased', 'genotype')
+CALLDATA_FIELDS = ('is_called', 'is_phased', 'genotype')
 
-DEFAULT_SAMPLE_DTYPE = {
+DEFAULT_CALLDATA_DTYPE = {
                         'is_called': 'b1',
                         'is_phased': 'b1',
                         'genotype': 'i1',
@@ -116,13 +131,13 @@ DEFAULT_SAMPLE_DTYPE = {
                         'PL': 'u2',
                         }
 
-DEFAULT_SAMPLE_FILL = {
+DEFAULT_CALLDATA_FILL = {
                        'is_called': False,
                        'is_phased': False,
                        'genotype': -1,
                        }
 
-DEFAULT_SAMPLE_ARITY = {
+DEFAULT_CALLDATA_ARITY = {
                        'is_called': 1,
                        'is_phased': 1,
                        # N.B., set genotype arity to ploidy
@@ -785,10 +800,10 @@ def calldata(filename,                  # name of VCF file
             
     # determine fields to extract
     if fields is None:
-        fields = list(SAMPLE_FIELDS) + formatIds
+        fields = list(CALLDATA_FIELDS) + formatIds
     else:
         for f in fields:
-            assert f in SAMPLE_FIELDS or f in formatIds, 'unknown field: %s' % f
+            assert f in CALLDATA_FIELDS or f in formatIds, 'unknown field: %s' % f
 
     # exclude fields
     if exclude_fields is not None:
@@ -801,9 +816,9 @@ def calldata(filename,                  # name of VCF file
         if f not in dtypes:
             if f == 'GT':
                 dtypes[f] = 'a%d' % ((ploidy*2)-1)
-            elif f in DEFAULT_SAMPLE_DTYPE:
+            elif f in DEFAULT_CALLDATA_DTYPE:
                 # known field
-                dtypes[f] = DEFAULT_SAMPLE_DTYPE[f]
+                dtypes[f] = DEFAULT_CALLDATA_DTYPE[f]
             else:
                 vcf_type = formatTypes[f]
                 dtypes[f] = DEFAULT_TYPE_MAP[vcf_type]
@@ -815,8 +830,8 @@ def calldata(filename,                  # name of VCF file
         if f not in arities:
             if f == 'genotype':
                 arities[f] = ploidy
-            elif f in DEFAULT_SAMPLE_ARITY:
-                arities[f] = DEFAULT_SAMPLE_ARITY[f]
+            elif f in DEFAULT_CALLDATA_ARITY:
+                arities[f] = DEFAULT_CALLDATA_ARITY[f]
             else:
                 vcf_count = formatCounts[f]
                 if vcf_count == ALLELE_NUMBER:
@@ -839,8 +854,8 @@ def calldata(filename,                  # name of VCF file
         if f not in fills:
             if f == 'GT':
                 fills[f] = '/'.join(['.'] * ploidy)
-            elif f in DEFAULT_SAMPLE_FILL:
-                fills[f] = DEFAULT_SAMPLE_FILL[f]
+            elif f in DEFAULT_CALLDATA_FILL:
+                fills[f] = DEFAULT_CALLDATA_FILL[f]
             else:
                 vcf_type = formatTypes[f]
                 fills[f] = DEFAULT_FILL_MAP[vcf_type]
