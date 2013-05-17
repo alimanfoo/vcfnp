@@ -1,0 +1,13 @@
+python setup.py build_ext --inplace
+nosetests
+sed -i -e 's/-SNAPSHOT//' vcfnp.pyx
+version=`grep __version__ vcfnp.pyx | sed -e "s/__version__[ ]=[ ]'\(.*\)'/\1/"`
+echo $version
+git commit -a -m v$version
+git push
+git tag -a v$version -m v$version
+git push --tags
+python setup.py sdist upload
+# increment version and add -SNAPSHOT  
+emacs vcfnp.pyx
+git commit -a -m 'increment version'; git push

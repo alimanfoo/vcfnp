@@ -59,6 +59,17 @@ vcfnp_extension = Extension('vcfnp',
 setup(
     name = 'vcfnp',
     version=get_version(),
+    author='Alistair Miles',
+    author_email='alimanfoo@googlemail.com',
+    url='https://github.com/alimanfoo/vcfnp',
+    license='MIT License',
+    description='Load numpy arrays from a VCF (variant call file).',
+    long_description=open('README.md').read(),
+    classifiers=['Intended Audience :: Developers',
+                 'License :: OSI Approved :: MIT License',
+                 'Programming Language :: Python',
+                 'Topic :: Software Development :: Libraries :: Python Modules'
+                 ],
     cmdclass = {'build_ext': build_ext},
     ext_modules = [vcflib_extension, vcfnp_extension],
     )
