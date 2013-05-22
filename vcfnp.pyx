@@ -6,7 +6,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
  
 
-__version__ = '0.7-SNAPSHOT'
+__version__ = '0.7'
 
 
 import numpy as np
@@ -958,7 +958,6 @@ cdef inline object _mkssvals(Variant *var,
                              map[string, int] arities,
                              dict fills,
                              map[string, VariantFieldType]& formatTypes):
-    print var.sequenceName, var.position, var.samples
     out = [_mksvals(var, s, ploidy, fields, arities, fills, formatTypes) for s in samples]
     return tuple(out)
 
@@ -971,9 +970,7 @@ cdef inline object _mksvals(Variant *var,
                             map[string, int] arities,
                             dict fills,
                             map[string, VariantFieldType]& formatTypes):
-    print sample, var.samples[sample]
     out = [_mksval(var.samples[sample], ploidy, f, arities[f], fills[f], formatTypes) for f in fields]
-#    print sample, out
     return tuple(out)
     
 
