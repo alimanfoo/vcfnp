@@ -3,7 +3,7 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 import os
 from ast import literal_eval
-
+import numpy as np
 
 
 def get_version(source='vcfnp.pyx'):
@@ -41,7 +41,9 @@ def get_vcflib_sources():
 vcflib_extension = Extension('vcflib',
                              sources=['vcflib.pyx'] + get_vcflib_sources(),
                              language='c++',
-                             include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, '.'],
+                             include_dirs=[np.get_include(),vcflib_dir,
+                                           smithwaterman_dir, tabixpp_dir,
+                                           '.'],
                              libraries=['m', 'z'],
                              extra_compile_args=['-O3'],
                              )
@@ -50,7 +52,9 @@ vcflib_extension = Extension('vcflib',
 vcfnp_extension = Extension('vcfnp',
                             sources=['vcfnp.pyx'] + get_vcflib_sources(),
                             language='c++',
-                            include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, '.'],
+                            include_dirs=[np.get_include(), vcflib_dir, 
+                                          smithwaterman_dir, 
+                                          tabixpp_dir, '.'],
                             libraries=['m', 'z'],
                             extra_compile_args=['-O3'],
                             )
