@@ -6,7 +6,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
  
 
-__version__ = '0.9-SNAPSHOT'
+__version__ = '0.9'
 
 
 import numpy as np
@@ -40,6 +40,13 @@ cdef extern from "convert.h":
     bool convert(const string& s, int& r)
     bool convert(const string& s, float& r)
 
+
+TYPESTRING2KEY = {
+                  'Float': FIELD_FLOAT,
+                  'Integer': FIELD_INTEGER,
+                  'String': FIELD_STRING,
+                  'Flag': FIELD_BOOL,
+                  }
 
 # these are the possible fields in the variants array
 VARIANT_FIELDS = ('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 
@@ -439,6 +446,7 @@ def info(filename,                  # name of VCF file
          dtypes=None,               # override default dtypes
          arities=None,              # override how many values to expect
          fills=None,                # override default fill values
+         vcf_types=None,            # override types declared in VCF header
          count=None,                # attempt to extract exactly this many records
          progress=0,                # if >0 log progress
          logstream=sys.stderr,      # stream for logging progress
@@ -483,6 +491,11 @@ def info(filename,                  # name of VCF file
     # exclude fields
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
+        
+    # override vcf types
+    if vcf_types is not None:
+        for f in vcf_types:
+            infoTypes[f] = TYPESTRING2KEY[vcf_types[f]]
         
     # determine a numpy dtype for each field
     if dtypes is None:
@@ -531,9 +544,9 @@ def info(filename,                  # name of VCF file
             
     # set up iterator
     if condition is not None:
-        it = _iterinfo_with_condition(filename, region, fields, arities, fills, condition)
+        it = _iterinfo_with_condition(filename, region, fields, arities, fills, infoTypes, condition)
     else:
-        it = _iterinfo(filename, region, fields, arities, fills)
+        it = _iterinfo(filename, region, fields, arities, fills, infoTypes)
 
     # slice?
     if slice:
@@ -548,7 +561,8 @@ def _iterinfo(filename,
              region,
              vector[string] fields, 
              map[string, int] arities,
-             dict fills):
+             dict fills,
+             dict infoTypes):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
@@ -560,7 +574,7 @@ def _iterinfo(filename,
     var = new Variant(deref(variantFile))
 
     while _get_next_variant(variantFile, var):
-        yield _mkivals(var, fields, arities, fills, variantFile.infoTypes)
+        yield _mkivals(var, fields, arities, fills, infoTypes)
         
     del variantFile
     del var
@@ -571,6 +585,7 @@ def _iterinfo_with_condition(filename,
                              vector[string] fields, 
                              map[string, int] arities,
                              dict fills,
+                             dict infoTypes,
                              condition):
     cdef VariantCallFile *variantFile
     cdef Variant *var
@@ -586,7 +601,7 @@ def _iterinfo_with_condition(filename,
 
     while i < n and _get_next_variant(variantFile, var):
         if condition[i]:
-            yield _mkivals(var, fields, arities, fills, variantFile.infoTypes)
+            yield _mkivals(var, fields, arities, fills, infoTypes)
         i += 1
         
     del variantFile
@@ -598,13 +613,13 @@ cdef inline object _mkivals(Variant *var,
                             vector[string] fields, 
                             map[string, int] arities,
                             dict fills,
-                            map[string, VariantFieldType] infoTypes):
+                            dict infoTypes):
     out = [_mkival(var, f, arities[f], fills[f], infoTypes[f]) for f in fields]
     return tuple(out)
     
 
     
-cdef inline object _mkival(Variant *var, string field, int arity, object fill, VariantFieldType vcf_type):
+cdef inline object _mkival(Variant *var, string field, int arity, object fill, int vcf_type):
     if vcf_type == FIELD_BOOL:
         # ignore arity, this is a flag
         out = (var.infoFlags.count(field) > 0)
@@ -614,7 +629,7 @@ cdef inline object _mkival(Variant *var, string field, int arity, object fill, V
 
 
 
-cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, VariantFieldType vcf_type):
+cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, int vcf_type):
     if vcf_type == FIELD_FLOAT:
         out = _mkval_float(string_vals, arity, fill)
     elif vcf_type == FIELD_INTEGER:

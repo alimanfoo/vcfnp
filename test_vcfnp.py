@@ -5,7 +5,7 @@ Some simple unit tests for the vcfnp extension.
 
 
 from vcfnp import variants, info, calldata
-from nose.tools import eq_
+from nose.tools import eq_, assert_almost_equal
 
 
 def test_variants():
@@ -131,5 +131,14 @@ def test_missing_calldata():
     eq_((-1, -1), tuple(c['test3']['genotype'][2]))
     eq_('./.', c['test4']['GT'][2])
     eq_((-1, -1), tuple(c['test4']['genotype'][2]))
+
+
+def test_override_vcf_types():
+    i = info('fixture/test4.vcf')
+    print repr(i['MQ0Fraction'])
+    eq_(0, i['MQ0Fraction'][2])
+    i = info('fixture/test4.vcf', vcf_types={'MQ0Fraction': 'Float'})
+    print repr(i['MQ0Fraction'])
+    assert_almost_equal(0.03, i['MQ0Fraction'][2])
 
 
