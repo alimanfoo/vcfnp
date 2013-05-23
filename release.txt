@@ -10,4 +10,5 @@ git push --tags
 python setup.py register sdist upload
 # increment version and add -SNAPSHOT  
 emacs vcfnp.pyx
+python setup.py build_ext --inplace
 git commit -a -m 'increment version'; git push
