@@ -4,7 +4,7 @@
 Utility functions to extract data from a VCF file and load into a numpy array.
 
 """
- 
+
 
 __version__ = '0.10-SNAPSHOT'
 
@@ -37,7 +37,7 @@ cdef extern from "split.h":
     # split a string on any character found in the string of delimiters (delims)
     vector[string]& split(const string &s, const string& delims, vector[string] &elems)
     vector[string]  split(const string &s, const string& delims)
-    
+
 
 cdef extern from "convert.h":
     bool convert(const string& s, int& r)
@@ -52,7 +52,7 @@ TYPESTRING2KEY = {
                   }
 
 # these are the possible fields in the variants array
-VARIANT_FIELDS = ('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 
+VARIANT_FIELDS = ('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER',
                   'num_alleles', 'is_snp')
 
 
@@ -107,7 +107,7 @@ DEFAULT_FILL_MAP = {FIELD_FLOAT: 0.,
                     FIELD_INTEGER: 0,
                     FIELD_STRING: '.',
                     FIELD_BOOL: False,
-                    FIELD_UNKNOWN: '' 
+                    FIELD_UNKNOWN: ''
                     }
 
 
@@ -186,7 +186,7 @@ def variants(filename,                  # name of VCF file
              slice=None                 # slice the underlying iterator
              ):
     """
-    Load an numpy structured array with data from the fixed fields of a VCF file 
+    Load an numpy structured array with data from the fixed fields of a VCF file
     (excluding INFO).
 
     Parameters
@@ -220,7 +220,7 @@ def variants(filename,                  # name of VCF file
 
     Examples
     --------
-    
+
         >>> from vcfnp import variants
         >>> a = variants('sample.vcf')
         >>> a
@@ -232,7 +232,7 @@ def variants(filename,                  # name of VCF file
                ('20', 1230237, '.', 'T', '.', 47.0, (True, False, False), 2, False),
                ('20', 1234567, 'microsat1', 'G', 'GA', 50.0, (True, False, False), 3, False),
                ('20', 1235237, '.', 'T', '.', 0.0, (False, False, False), 2, False),
-               ('X', 10, 'rsTest', 'AC', 'A', 10.0, (True, False, False), 3, False)], 
+               ('X', 10, 'rsTest', 'AC', 'A', 10.0, (True, False, False), 3, False)],
               dtype=[('CHROM', '|S12'), ('POS', '<i4'), ('ID', '|S12'), ('REF', '|S12'), ('ALT', '|S12'), ('QUAL', '<f4'), ('FILTER', [('PASS', '|b1'), ('q10', '|b1'), ('s50', '|b1')]), ('num_alleles', '|u1'), ('is_snp', '|b1')])
         >>> a['QUAL']
         array([  9.60000038,  10.        ,  29.        ,   3.        ,
@@ -241,21 +241,21 @@ def variants(filename,                  # name of VCF file
         array([False, False,  True, False,  True,  True,  True, False,  True], dtype=bool)
 
     """
-    
+
     if not os.path.exists(filename):
         raise Exception('file not found: %s' % filename)
-    
+
     # determine fields to extract
     if fields is None:
         fields = VARIANT_FIELDS
     else:
         for f in fields:
             assert f in VARIANT_FIELDS, 'unknown field: %s' % f
-            
+
     # exclude fields
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
-    
+
     # determine a numpy dtype for each field
     if dtypes is None:
         dtypes = dict()
@@ -267,7 +267,7 @@ def variants(filename,                  # name of VCF file
             dtypes[f] = t
         elif f not in dtypes:
             dtypes[f] = DEFAULT_VARIANT_DTYPE[f]
-            
+
     # determine expected number of values for each field
     if arities is None:
         arities = dict()
@@ -276,7 +276,7 @@ def variants(filename,                  # name of VCF file
             arities[f] = 1 # one structured value
         elif f not in arities:
             arities[f] = DEFAULT_VARIANT_ARITY[f]
-    
+
     # determine fill values to use where number of values is less than expectation
     if fills is None:
         fills = dict()
@@ -295,17 +295,17 @@ def variants(filename,                  # name of VCF file
             dtype.append((f, t))
         else:
             dtype.append((f, t, (n,)))
-            
+
     # set up iterator
     if condition is not None:
         it = _itervariants_with_condition(filename, region, fields, arities, fills, condition)
     else:
         it = _itervariants(filename, region, fields, arities, fills)
-    
+
     # slice?
     if slice:
         it = islice(it, *slice)
-    
+
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
 
@@ -337,15 +337,15 @@ def _iter_withprogress(iterable, int progress, logstream):
 
 
 
-def _itervariants(filename, 
+def _itervariants(filename,
                  region,
-                 vector[string] fields, 
+                 vector[string] fields,
                  map[string, int] arities,
                  dict fills):
     cdef VariantCallFile *variantFile
     cdef Variant *var
     cdef vector[string] filterIds
-    
+
     variantFile = new VariantCallFile()
     variantFile.open(filename)
     variantFile.parseSamples = False
@@ -357,14 +357,14 @@ def _itervariants(filename,
 
     while _get_next_variant(variantFile, var):
         yield _mkvvals(var, fields, arities, fills, filterIds)
-        
+
     del variantFile
     del var
-    
-    
-def _itervariants_with_condition(filename, 
+
+
+def _itervariants_with_condition(filename,
                                  region,
-                                 vector[string] fields, 
+                                 vector[string] fields,
                                  map[string, int] arities,
                                  dict fills,
                                  condition):
@@ -373,7 +373,7 @@ def _itervariants_with_condition(filename,
     cdef vector[string] filterIds
     cdef int i = 0
     cdef int n = len(condition)
-    
+
     variantFile = new VariantCallFile()
     variantFile.open(filename)
     variantFile.parseSamples = False
@@ -387,27 +387,27 @@ def _itervariants_with_condition(filename,
         if condition[i]:
             yield _mkvvals(var, fields, arities, fills, filterIds)
         i += 1
-        
+
     del variantFile
     del var
-    
-    
+
+
 cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
     # break this out into a separate function so we can profile it
     return variantFile.getNextVariant(deref(var))
 
 
 
-cdef inline object _mkvvals(Variant *var, 
-                            vector[string] fields, 
-                            map[string, int] arities, 
-                            dict fills, 
+cdef inline object _mkvvals(Variant *var,
+                            vector[string] fields,
+                            map[string, int] arities,
+                            dict fills,
                             list filterIds):
     out = tuple([_mkvval(var, f, arities[f], fills[f], filterIds) for f in fields])
     return out
 
 
-   
+
 cdef inline object _mkvval(Variant *var, string field, int arity, object fill, list filterIds):
     if field == FIELD_NAME_CHROM:
         out = var.sequenceName
@@ -430,9 +430,9 @@ cdef inline object _mkvval(Variant *var, string field, int arity, object fill, l
     else:
         out = 0 # TODO review this
     return out
- 
 
- 
+
+
 cdef inline object _mkaltval(Variant *var, int arity, object fill):
     if arity == 1:
         if var.alt.size() == 0:
@@ -451,8 +451,8 @@ cdef inline object _mkaltval(Variant *var, int arity, object fill):
         out = tuple(out)
     return out
 
- 
- 
+
+
 cdef inline object _mkfilterval(Variant *var, list filterIds):
     filters = <list>split(var.filter, SEMICOLON)
     out = [(id in filters) for id in filterIds]
@@ -472,7 +472,7 @@ cdef inline object _is_snp(Variant *var):
             return False
     return True
 
-    
+
 
 def info(filename,                  # name of VCF file
          region=None,               # region to extract
@@ -489,7 +489,7 @@ def info(filename,                  # name of VCF file
          slice=None,                # slice the underlying iterator
          ):
     """
-    Load a numpy structured array with data from the INFO field of a VCF file. 
+    Load a numpy structured array with data from the INFO field of a VCF file.
 
     Parameters
     ----------
@@ -522,7 +522,7 @@ def info(filename,                  # name of VCF file
 
     Examples
     --------
-    
+
         >>> from vcfnp import info
         >>> a = info('sample.vcf')
         >>> a
@@ -534,14 +534,14 @@ def info(filename,                  # name of VCF file
                (3, 0, 0, 13, 0.0, 'T', False, False),
                (3, 6, 3, 9, 0.0, 'G', False, False),
                (0, 0, 0, 0, 0.0, '.', False, False),
-               (0, 0, 0, 0, 0.0, '.', False, False)], 
+               (0, 0, 0, 0, 0.0, '.', False, False)],
               dtype=[('NS', '<i4'), ('AN', '<u2'), ('AC', '<u2'), ('DP', '<i4'), ('AF', '<f4'), ('AA', '|S12'), ('DB', '|b1'), ('H2', '|b1')])
-    
+
     """
-    
+
     if not os.path.exists(filename):
         raise Exception('file not found: %s' % filename)
-    
+
     vcf = PyVariantCallFile(filename)
     infoIds = vcf.infoIds
     infoTypes = vcf.infoTypes
@@ -557,12 +557,12 @@ def info(filename,                  # name of VCF file
     # exclude fields
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
-        
+
     # override vcf types
     if vcf_types is not None:
         for f in vcf_types:
             infoTypes[f] = TYPESTRING2KEY[vcf_types[f]]
-        
+
     # determine a numpy dtype for each field
     if dtypes is None:
         dtypes = dict()
@@ -574,7 +574,7 @@ def info(filename,                  # name of VCF file
             else:
                 vcf_type = infoTypes[f]
                 dtypes[f] = DEFAULT_TYPE_MAP[vcf_type]
-            
+
     # determine expected number of values for each field
     if arities is None:
         arities = dict()
@@ -589,7 +589,7 @@ def info(filename,                  # name of VCF file
                 arities[f] = 1
             else:
                 arities[f] = vcf_count
-    
+
     # determine fill values to use where number of values is less than expectation
     if fills is None:
         fills = dict()
@@ -607,7 +607,7 @@ def info(filename,                  # name of VCF file
             dtype.append((f, t))
         else:
             dtype.append((f, t, (n,)))
-            
+
     # set up iterator
     if condition is not None:
         it = _iterinfo_with_condition(filename, region, fields, arities, fills, infoTypes, condition)
@@ -617,15 +617,15 @@ def info(filename,                  # name of VCF file
     # slice?
     if slice:
         it = islice(it, *slice)
-        
+
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
 
 
 
-def _iterinfo(filename, 
+def _iterinfo(filename,
              region,
-             vector[string] fields, 
+             vector[string] fields,
              map[string, int] arities,
              dict fills,
              dict infoTypes):
@@ -641,14 +641,14 @@ def _iterinfo(filename,
 
     while _get_next_variant(variantFile, var):
         yield _mkivals(var, fields, arities, fills, infoTypes)
-        
+
     del variantFile
     del var
 
-    
-def _iterinfo_with_condition(filename, 
+
+def _iterinfo_with_condition(filename,
                              region,
-                             vector[string] fields, 
+                             vector[string] fields,
                              map[string, int] arities,
                              dict fills,
                              dict infoTypes,
@@ -669,22 +669,22 @@ def _iterinfo_with_condition(filename,
         if condition[i]:
             yield _mkivals(var, fields, arities, fills, infoTypes)
         i += 1
-        
+
     del variantFile
     del var
 
-    
-    
-cdef inline object _mkivals(Variant *var, 
-                            vector[string] fields, 
+
+
+cdef inline object _mkivals(Variant *var,
+                            vector[string] fields,
                             map[string, int] arities,
                             dict fills,
                             dict infoTypes):
     out = [_mkival(var, f, arities[f], fills[f], infoTypes[f]) for f in fields]
     return tuple(out)
-    
 
-    
+
+
 cdef inline object _mkival(Variant *var, string field, int arity, object fill, int vcf_type):
     if vcf_type == FIELD_BOOL:
         # ignore arity, this is a flag
@@ -704,9 +704,9 @@ cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, i
         # make strings by default
         out = _mkval_string(string_vals, arity, fill)
     return out
- 
 
- 
+
+
 cdef inline object _mkval_string(vector[string]& string_vals, int arity, string fill):
     if arity == 1:
         if string_vals.size() > 0:
@@ -772,7 +772,7 @@ cdef inline vector[float] _mkval_float_multi(vector[string]& string_vals, int ar
 #    return out
 
 
-        
+
 cdef inline object _mkval_int(vector[string]& string_vals, int arity, int fill):
     if arity == 1:
         out = _mkval_int_single(string_vals, fill)
@@ -815,7 +815,7 @@ cdef inline vector[int] _mkval_int_multi(vector[string]& string_vals, int arity,
 #    return out
 
 
-      
+
 def calldata(filename,                  # name of VCF file
              region=None,               # region to extract
              samples=None,              # specify which samples to extract (default all)
@@ -866,7 +866,7 @@ def calldata(filename,                  # name of VCF file
 
     Examples
     --------
-    
+
         >>> from vcfnp import samples
         >>> a = calldata('sample.vcf')
         >>> a
@@ -878,7 +878,7 @@ def calldata(filename,                  # name of VCF file
                ((True, True, [0, 0], '0|0', 54, 0, [56, 60]), (True, True, [0, 0], '0|0', 48, 4, [51, 51]), (True, False, [0, 0], '0/0', 61, 2, [0, 0])),
                ((True, False, [0, 1], '0/1', 0, 4, [0, 0]), (True, False, [0, 2], '0/2', 17, 2, [0, 0]), (True, False, [1, 1], '1/1', 40, 3, [0, 0])),
                ((True, False, [0, 0], '0/0', 0, 0, [0, 0]), (True, True, [0, 0], '0|0', 0, 0, [0, 0]), (False, False, [-1, -1], './.', 0, 0, [0, 0])),
-               ((True, False, [0, -1], '0', 0, 0, [0, 0]), (True, False, [0, 1], '0/1', 0, 0, [0, 0]), (True, True, [0, 2], '0|2', 0, 0, [0, 0]))], 
+               ((True, False, [0, -1], '0', 0, 0, [0, 0]), (True, False, [0, 1], '0/1', 0, 0, [0, 0]), (True, True, [0, 2], '0|2', 0, 0, [0, 0]))],
               dtype=[('NA00001', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])])
         >>> a['NA00001']
         array([(True, True, [0, 0], '0|0', 0, 0, [10, 10]),
@@ -889,14 +889,14 @@ def calldata(filename,                  # name of VCF file
                (True, True, [0, 0], '0|0', 54, 0, [56, 60]),
                (True, False, [0, 1], '0/1', 0, 4, [0, 0]),
                (True, False, [0, 0], '0/0', 0, 0, [0, 0]),
-               (True, False, [0, -1], '0', 0, 0, [0, 0])], 
+               (True, False, [0, -1], '0', 0, 0, [0, 0])],
               dtype=[('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])
-    
+
     """
-    
+
     if not os.path.exists(filename):
         raise Exception('file not found: %s' % filename)
-    
+
     vcf = PyVariantCallFile(filename)
     formatIds = vcf.formatIds
     formatTypes = vcf.formatTypes
@@ -908,7 +908,7 @@ def calldata(filename,                  # name of VCF file
     else:
         for s in samples:
             assert s in all_samples, 'unknown sample: %s' % s
-            
+
     # determine fields to extract
     if fields is None:
         fields = list(CALLDATA_FIELDS) + formatIds
@@ -919,7 +919,7 @@ def calldata(filename,                  # name of VCF file
     # exclude fields
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
-        
+
     # determine a numpy dtype for each field
     if dtypes is None:
         dtypes = dict()
@@ -933,7 +933,7 @@ def calldata(filename,                  # name of VCF file
             else:
                 vcf_type = formatTypes[f]
                 dtypes[f] = DEFAULT_TYPE_MAP[vcf_type]
-            
+
     # determine expected number of values for each field
     if arities is None:
         arities = dict()
@@ -957,7 +957,7 @@ def calldata(filename,                  # name of VCF file
                     arities[f] = 1
                 else:
                     arities[f] = vcf_count
-    
+
     # determine fill values to use where number of values is less than expectation
     if fills is None:
         fills = dict()
@@ -982,7 +982,7 @@ def calldata(filename,                  # name of VCF file
             cell_dtype.append((f, t, (n,)))
     # construct a numpy dtype for structured array
     dtype = [(s, cell_dtype) for s in samples]
-            
+
     # set up iterator
     if condition is not None:
         it = _itercalldata_with_condition(filename, region, samples, ploidy, fields, arities, fills, condition)
@@ -992,17 +992,17 @@ def calldata(filename,                  # name of VCF file
     # slice?
     if slice:
         it = islice(it, *slice)
-    
+
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
 
 
 
-def _itercalldata(filename, 
+def _itercalldata(filename,
                   region,
                   vector[string] samples,
                   int ploidy,
-                  vector[string] fields, 
+                  vector[string] fields,
                   map[string, int] arities,
                   dict fills):
     cdef VariantCallFile *variantFile
@@ -1019,16 +1019,16 @@ def _itercalldata(filename,
         yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
 #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
 #        yield tuple(out)
-        
+
     del variantFile
     del var
-    
-    
-def _itercalldata_with_condition(filename, 
+
+
+def _itercalldata_with_condition(filename,
                                  region,
                                  vector[string] samples,
                                  int ploidy,
-                                 vector[string] fields, 
+                                 vector[string] fields,
                                  map[string, int] arities,
                                  dict fills,
                                  condition,
@@ -1037,7 +1037,7 @@ def _itercalldata_with_condition(filename,
     cdef Variant *var
     cdef int i = 0
     cdef int n = len(condition)
-    
+
     variantFile = new VariantCallFile()
     variantFile.open(filename)
     variantFile.parseSamples = False
@@ -1059,40 +1059,40 @@ def _itercalldata_with_condition(filename,
         i += 1
 #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
 #        yield tuple(out)
-        
+
     del variantFile
     del var
-    
-    
+
+
 cdef inline object _mkssvals(Variant *var,
                              vector[string] samples,
                              int ploidy,
-                             vector[string] fields, 
+                             vector[string] fields,
                              map[string, int] arities,
                              dict fills,
                              map[string, VariantFieldType]& formatTypes):
     out = [_mksvals(var, s, ploidy, fields, arities, fills, formatTypes) for s in samples]
     return tuple(out)
 
-    
-    
-cdef inline object _mksvals(Variant *var, 
+
+
+cdef inline object _mksvals(Variant *var,
                             string sample,
                             int ploidy,
-                            vector[string] fields, 
+                            vector[string] fields,
                             map[string, int] arities,
                             dict fills,
                             map[string, VariantFieldType]& formatTypes):
     out = [_mksval(var.samples[sample], ploidy, f, arities[f], fills[f], formatTypes) for f in fields]
     return tuple(out)
-    
 
 
-cdef inline object _mksval(map[string, vector[string]]& sample_data, 
+
+cdef inline object _mksval(map[string, vector[string]]& sample_data,
                            int ploidy,
                            string field,
-                           int arity, 
-                           object fill, 
+                           int arity,
+                           object fill,
                            map[string, VariantFieldType]& formatTypes):
     if field == FIELD_NAME_IS_CALLED:
         return _is_called(sample_data)
@@ -1102,7 +1102,7 @@ cdef inline object _mksval(map[string, vector[string]]& sample_data,
         return _genotype(sample_data, ploidy)
     else:
         return _mkval(sample_data[field], arity, fill, formatTypes[field])
-    
+
 
 
 cdef inline bool _is_called(map[string, vector[string]]& sample_data):
@@ -1112,8 +1112,8 @@ cdef inline bool _is_called(map[string, vector[string]]& sample_data):
         return False
     else:
         return (gts.at(0).find('.') == npos)
-        
-        
+
+
 cdef inline bool _is_phased(map[string, vector[string]]& sample_data):
     cdef vector[string] *gts
     gts = &sample_data[FIELD_NAME_GT]
@@ -1181,8 +1181,8 @@ cdef inline object _genotype(map[string, vector[string]]& sample_data, int ploid
 #                    convert(allele_strings.at(i), allele)
 #                alleles.push_back(allele)
 #            return tuple(alleles)
-        
-        
+
+
 def view2d(a):
     """
     Utility function to view a structured 1D array where all fields have a
@@ -1201,7 +1201,7 @@ def view2d(a):
 
     Examples
     --------
-    
+
         >>> from vcfnp import samples
         >>> a = calldata('sample.vcf')
         >>> a
@@ -1213,7 +1213,7 @@ def view2d(a):
                ((True, True, [0, 0], '0|0', 54, 0, [56, 60]), (True, True, [0, 0], '0|0', 48, 4, [51, 51]), (True, False, [0, 0], '0/0', 61, 2, [0, 0])),
                ((True, False, [0, 1], '0/1', 0, 4, [0, 0]), (True, False, [0, 2], '0/2', 17, 2, [0, 0]), (True, False, [1, 1], '1/1', 40, 3, [0, 0])),
                ((True, False, [0, 0], '0/0', 0, 0, [0, 0]), (True, True, [0, 0], '0|0', 0, 0, [0, 0]), (False, False, [-1, -1], './.', 0, 0, [0, 0])),
-               ((True, False, [0, -1], '0', 0, 0, [0, 0]), (True, False, [0, 1], '0/1', 0, 0, [0, 0]), (True, True, [0, 2], '0|2', 0, 0, [0, 0]))], 
+               ((True, False, [0, -1], '0', 0, 0, [0, 0]), (True, False, [0, 1], '0/1', 0, 0, [0, 0]), (True, True, [0, 2], '0|2', 0, 0, [0, 0]))],
               dtype=[('NA00001', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])])
         >>> from vcfnp import view2d
         >>> b = view2d(a)
@@ -1244,7 +1244,7 @@ def view2d(a):
                 (False, False, [-1, -1], './.', 0, 0, [0, 0])],
                [(True, False, [0, -1], '0', 0, 0, [0, 0]),
                 (True, False, [0, 1], '0/1', 0, 0, [0, 0]),
-                (True, True, [0, 2], '0|2', 0, 0, [0, 0])]], 
+                (True, True, [0, 2], '0|2', 0, 0, [0, 0])]],
               dtype=[('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])
         >>> b['GT']
         array([['0|0', '0|0', '0/1'],
@@ -1255,17 +1255,17 @@ def view2d(a):
                ['0|0', '0|0', '0/0'],
                ['0/1', '0/2', '1/1'],
                ['0/0', '0|0', './.'],
-               ['0', '0/1', '0|2']], 
+               ['0', '0/1', '0|2']],
               dtype='|S3')
 
     """
-    
+
     rows = a.size
     cols = len(a.dtype)
     dtype = a.dtype[0]
     b = a.view(dtype).reshape(rows, cols)
     return b
-    
+
 
 
 
