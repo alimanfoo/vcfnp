@@ -11,7 +11,10 @@ __version__ = '0.10-SNAPSHOT'
 
 import numpy as np
 cimport numpy as np
-from vcflib cimport PyVariantCallFile, VariantCallFile, Variant, VariantFieldType, FIELD_FLOAT, FIELD_INTEGER, FIELD_STRING, FIELD_BOOL, FIELD_UNKNOWN, ALLELE_NUMBER, GENOTYPE_NUMBER
+from vcflib cimport (PyVariantCallFile, VariantCallFile, Variant,
+                     VariantFieldType, FIELD_FLOAT, FIELD_INTEGER,
+                     FIELD_STRING, FIELD_BOOL, FIELD_UNKNOWN,
+                     ALLELE_NUMBER, GENOTYPE_NUMBER)
 from libcpp cimport bool
 from libcpp.string cimport string
 from libcpp.vector cimport vector
@@ -184,7 +187,39 @@ def variants(filename,                  # name of VCF file
              ):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file 
-    (excluding INFO). E.g.::
+    (excluding INFO).
+
+    Parameters
+    ----------
+
+    filename : string
+        Name of the VCF file
+    region:
+        Region to extract
+    fields: list or array-like
+        List of fields to extract from the VCF
+    exclude_fields: list or array-like
+        Fields to exclude from extraction
+    dtypes: dict or dict-like
+        Dictionary cotaining dtypes to use instead of the default inferred ones
+    arities: dict or dict-like
+        Override the amount of values to expect
+    fills: dict or dict-like
+        Dictionary containing field:fillvalue mappings used to override the
+        default fill in values in VCF fields
+    count: int
+        Attempt to extract a specific number of records
+    progress: int
+        If greater than 0, log parsing progress
+    logstream: file or file-like object
+        Stream to use for logging progress
+    condition: array
+        Boolean array defining which rows to load
+    slice:
+        Slice of the underlying iterator
+
+    Examples
+    --------
     
         >>> from vcfnp import variants
         >>> a = variants('sample.vcf')
@@ -455,7 +490,38 @@ def info(filename,                  # name of VCF file
          ):
     """
     Load a numpy structured array with data from the INFO field of a VCF file. 
-    E.g.::
+
+    Parameters
+    ----------
+
+    filename : string
+        Name of the VCF file
+    region:
+        Region to extract
+    fields: list or array-like
+        List of fields to extract from the VCF
+    exclude_fields: list or array-like
+        Fields to exclude from extraction
+    dtypes: dict or dict-like
+        Dictionary cotaining dtypes to use instead of the default inferred ones
+    arities: dict or dict-like
+        Override the amount of values to expect
+    fills: dict or dict-like
+        Dictionary containing field:fillvalue mappings used to override the
+        default fill in values in VCF fields
+    count: int
+        Attempt to extract a specific number of records
+    progress: int
+        If greater than 0, log parsing progress
+    logstream: file or file-like object
+        Stream to use for logging progress
+    condition: array
+        Boolean array defining which rows to load
+    slice:
+        Slice of the underlying iterator
+
+    Examples
+    --------
     
         >>> from vcfnp import info
         >>> a = info('sample.vcf')
@@ -767,7 +833,39 @@ def calldata(filename,                  # name of VCF file
              ):
     """
     Load a numpy structured array with data from the sample columns of a VCF
-    file. E.g.::
+    file.
+
+    Parameters
+    ----------
+
+    filename : string
+        Name of the VCF file
+    region:
+        Region to extract
+    fields: list or array-like
+        List of fields to extract from the VCF
+    exclude_fields: list or array-like
+        Fields to exclude from extraction
+    dtypes: dict or dict-like
+        Dictionary cotaining dtypes to use instead of the default inferred ones
+    arities: dict or dict-like
+        Override the amount of values to expect
+    fills: dict or dict-like
+        Dictionary containing field:fillvalue mappings used to override the
+        default fill in values in VCF fields
+    count: int
+        Attempt to extract a specific number of records
+    progress: int
+        If greater than 0, log parsing progress
+    logstream: file or file-like object
+        Stream to use for logging progress
+    condition: array
+        Boolean array defining which rows to load
+    slice:
+        Slice of the underlying iterator
+
+    Examples
+    --------
     
         >>> from vcfnp import samples
         >>> a = calldata('sample.vcf')
@@ -1087,8 +1185,22 @@ cdef inline object _genotype(map[string, vector[string]]& sample_data, int ploid
         
 def view2d(a):
     """
-    Utility function to view a structured 1D array where all fields have a uniform dtype 
-    (e.g., an array constructed by :func:samples) as a 2D array. E.g.::
+    Utility function to view a structured 1D array where all fields have a
+    uniform dtype (e.g., an array constructed by :func:samples) as a 2D array.
+
+    Parameters
+    ----------
+
+    a: numpy array or array-like
+        The array to be viewed as 2D, must have a uniform dtype
+
+    Returns
+    -------
+
+    A 2D view of the array.
+
+    Examples
+    --------
     
         >>> from vcfnp import samples
         >>> a = calldata('sample.vcf')
