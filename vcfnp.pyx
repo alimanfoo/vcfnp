@@ -192,10 +192,10 @@ def variants(filename,                  # name of VCF file
     Parameters
     ----------
 
-    filename : string
+    filename: string
         Name of the VCF file
-    region:
-        Region to extract
+    region: string
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
         List of fields to extract from the VCF
     exclude_fields: list or array-like
@@ -215,8 +215,8 @@ def variants(filename,                  # name of VCF file
         Stream to use for logging progress
     condition: array
         Boolean array defining which rows to load
-    slice:
-        Slice of the underlying iterator
+    slice: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
 
     Examples
     --------
@@ -494,10 +494,10 @@ def info(filename,                  # name of VCF file
     Parameters
     ----------
 
-    filename : string
+    filename: string
         Name of the VCF file
-    region:
-        Region to extract
+    region: string
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
         List of fields to extract from the VCF
     exclude_fields: list or array-like
@@ -517,8 +517,8 @@ def info(filename,                  # name of VCF file
         Stream to use for logging progress
     condition: array
         Boolean array defining which rows to load
-    slice:
-        Slice of the underlying iterator
+    slice: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
 
     Examples
     --------
@@ -838,10 +838,10 @@ def calldata(filename,                  # name of VCF file
     Parameters
     ----------
 
-    filename : string
+    filename: string
         Name of the VCF file
-    region:
-        Region to extract
+    region: string
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
         List of fields to extract from the VCF
     exclude_fields: list or array-like
@@ -861,8 +861,8 @@ def calldata(filename,                  # name of VCF file
         Stream to use for logging progress
     condition: array
         Boolean array defining which rows to load
-    slice:
-        Slice of the underlying iterator
+    slice: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
 
     Examples
     --------
@@ -1186,7 +1186,7 @@ cdef inline object _genotype(map[string, vector[string]]& sample_data, int ploid
 def view2d(a):
     """
     Utility function to view a structured 1D array where all fields have a
-    uniform dtype (e.g., an array constructed by :func:samples) as a 2D array.
+    uniform dtype (e.g., an array constructed by :func:calldata) as a 2D array.
 
     Parameters
     ----------
@@ -1202,7 +1202,7 @@ def view2d(a):
     Examples
     --------
 
-        >>> from vcfnp import samples
+        >>> from vcfnp import calldata
         >>> a = calldata('sample.vcf')
         >>> a
         array([ ((True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, False, [0, 1], '0/1', 0, 0, [3, 3])),
