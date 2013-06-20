@@ -6,7 +6,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
 
 
-__version__ = '0.10-SNAPSHOT'
+__version__ = '0.10-RDP-SNAPSHOT'
 
 
 import numpy as np
@@ -193,7 +193,7 @@ def variants(filename,                  # name of VCF file
     ----------
 
     filename: string
-        Name of the VCF file
+        Name of the VCF file or list of filenames
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
@@ -242,8 +242,11 @@ def variants(filename,                  # name of VCF file
 
     """
 
-    if not os.path.exists(filename):
-        raise Exception('file not found: %s' % filename)
+    if isinstance(filename, str):
+        filename = [filename]
+
+    if not os.path.exists(filename[0]):
+        raise Exception('file not found: %s' % filename[0])
 
     # determine fields to extract
     if fields is None:
@@ -261,7 +264,7 @@ def variants(filename,                  # name of VCF file
         dtypes = dict()
     for f in fields:
         if f == 'FILTER':
-            filterIds = PyVariantCallFile(filename).filterIds
+            filterIds = PyVariantCallFile(filename[0]).filterIds
             t = [('PASS', 'b1')]
             t += [(flt, 'b1') for flt in sorted(filterIds)]
             dtypes[f] = t
@@ -346,20 +349,21 @@ def _itervariants(filename,
     cdef Variant *var
     cdef vector[string] filterIds
 
-    variantFile = new VariantCallFile()
-    variantFile.open(filename)
-    variantFile.parseSamples = False
-    if region is not None:
-        variantFile.setRegion(region)
-    var = new Variant(deref(variantFile))
-    filterIds = <list>variantFile.filterIds()
-    filterIds = ['PASS'] + sorted(filterIds)
+    for current_filename in filename:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseSamples = False
+        if region is not None:
+            variantFile.setRegion(region)
+        var = new Variant(deref(variantFile))
+        filterIds = <list>variantFile.filterIds()
+        filterIds = ['PASS'] + sorted(filterIds)
 
-    while _get_next_variant(variantFile, var):
-        yield _mkvvals(var, fields, arities, fills, filterIds)
+        while _get_next_variant(variantFile, var):
+            yield _mkvvals(var, fields, arities, fills, filterIds)
 
-    del variantFile
-    del var
+        del variantFile
+        del var
 
 
 def _itervariants_with_condition(filename,
@@ -374,22 +378,23 @@ def _itervariants_with_condition(filename,
     cdef int i = 0
     cdef int n = len(condition)
 
-    variantFile = new VariantCallFile()
-    variantFile.open(filename)
-    variantFile.parseSamples = False
-    if region is not None:
-        variantFile.setRegion(region)
-    var = new Variant(deref(variantFile))
-    filterIds = <list>variantFile.filterIds()
-    filterIds = ['PASS'] + sorted(filterIds)
+    for current_filename in filename:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseSamples = False
+        if region is not None:
+            variantFile.setRegion(region)
+        var = new Variant(deref(variantFile))
+        filterIds = <list>variantFile.filterIds()
+        filterIds = ['PASS'] + sorted(filterIds)
 
-    while i < n and _get_next_variant(variantFile, var):
-        if condition[i]:
-            yield _mkvvals(var, fields, arities, fills, filterIds)
-        i += 1
+        while i < n and _get_next_variant(variantFile, var):
+            if condition[i]:
+                yield _mkvvals(var, fields, arities, fills, filterIds)
+            i += 1
 
-    del variantFile
-    del var
+        del variantFile
+        del var
 
 
 cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
@@ -494,8 +499,8 @@ def info(filename,                  # name of VCF file
     Parameters
     ----------
 
-    filename: string
-        Name of the VCF file
+    filename: string or list
+        Name of the VCF file or list of filenames
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
@@ -539,10 +544,13 @@ def info(filename,                  # name of VCF file
 
     """
 
-    if not os.path.exists(filename):
-        raise Exception('file not found: %s' % filename)
+    if isinstance(filename, str):
+        filename = [filename]
 
-    vcf = PyVariantCallFile(filename)
+    if not os.path.exists(filename[0]):
+        raise Exception('file not found: %s' % filename[0])
+
+    vcf = PyVariantCallFile(filename[0])
     infoIds = vcf.infoIds
     infoTypes = vcf.infoTypes
     infoCounts = vcf.infoCounts
@@ -632,18 +640,19 @@ def _iterinfo(filename,
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
-    variantFile = new VariantCallFile()
-    variantFile.open(filename)
-    variantFile.parseSamples = False
-    if region is not None:
-        variantFile.setRegion(region)
-    var = new Variant(deref(variantFile))
+    for current_filename in filename:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseSamples = False
+        if region is not None:
+            variantFile.setRegion(region)
+        var = new Variant(deref(variantFile))
 
-    while _get_next_variant(variantFile, var):
-        yield _mkivals(var, fields, arities, fills, infoTypes)
+        while _get_next_variant(variantFile, var):
+            yield _mkivals(var, fields, arities, fills, infoTypes)
 
-    del variantFile
-    del var
+        del variantFile
+        del var
 
 
 def _iterinfo_with_condition(filename,
@@ -658,20 +667,21 @@ def _iterinfo_with_condition(filename,
     cdef int i = 0
     cdef int n = len(condition)
 
-    variantFile = new VariantCallFile()
-    variantFile.open(filename)
-    variantFile.parseSamples = False
-    if region is not None:
-        variantFile.setRegion(region)
-    var = new Variant(deref(variantFile))
+    for current_filename in filename:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseSamples = False
+        if region is not None:
+            variantFile.setRegion(region)
+        var = new Variant(deref(variantFile))
 
-    while i < n and _get_next_variant(variantFile, var):
-        if condition[i]:
-            yield _mkivals(var, fields, arities, fills, infoTypes)
-        i += 1
+        while i < n and _get_next_variant(variantFile, var):
+            if condition[i]:
+                yield _mkivals(var, fields, arities, fills, infoTypes)
+            i += 1
 
-    del variantFile
-    del var
+        del variantFile
+        del var
 
 
 
@@ -839,7 +849,7 @@ def calldata(filename,                  # name of VCF file
     ----------
 
     filename: string
-        Name of the VCF file
+        Name of the VCF file or list of filenames
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
@@ -894,10 +904,13 @@ def calldata(filename,                  # name of VCF file
 
     """
 
-    if not os.path.exists(filename):
-        raise Exception('file not found: %s' % filename)
+    if isinstance(filename, str):
+        filename = [filename]
 
-    vcf = PyVariantCallFile(filename)
+    if not os.path.exists(filename[0]):
+        raise Exception('file not found: %s' % filename[0])
+
+    vcf = PyVariantCallFile(filename[0])
     formatIds = vcf.formatIds
     formatTypes = vcf.formatTypes
     formatCounts = vcf.formatCounts
@@ -1008,20 +1021,21 @@ def _itercalldata(filename,
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
-    variantFile = new VariantCallFile()
-    variantFile.open(filename)
-    variantFile.parseSamples = True
-    if region is not None:
-        variantFile.setRegion(region)
-    var = new Variant(deref(variantFile))
+    for current_filename in filename:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseSamples = True
+        if region is not None:
+            variantFile.setRegion(region)
+        var = new Variant(deref(variantFile))
 
-    while _get_next_variant(variantFile, var):
-        yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
-#        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
-#        yield tuple(out)
+        while _get_next_variant(variantFile, var):
+            yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
+    #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
+    #        yield tuple(out)
 
-    del variantFile
-    del var
+        del variantFile
+        del var
 
 
 def _itercalldata_with_condition(filename,
@@ -1038,30 +1052,31 @@ def _itercalldata_with_condition(filename,
     cdef int i = 0
     cdef int n = len(condition)
 
-    variantFile = new VariantCallFile()
-    variantFile.open(filename)
-    variantFile.parseSamples = False
-    if region is not None:
-        variantFile.setRegion(region)
-    var = new Variant(deref(variantFile))
+    for current_filename in filename:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseSamples = False
+        if region is not None:
+            variantFile.setRegion(region)
+        var = new Variant(deref(variantFile))
 
-    while i < n:
-        # only both parsing samples if we know we want the variant
-        if condition[i]:
-            variantFile.parseSamples = True
-            if not _get_next_variant(variantFile, var):
-                break
-            yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
-        else:
-            variantFile.parseSamples = False
-            if not _get_next_variant(variantFile, var):
-                break
-        i += 1
-#        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
-#        yield tuple(out)
+        while i < n:
+            # only both parsing samples if we know we want the variant
+            if condition[i]:
+                variantFile.parseSamples = True
+                if not _get_next_variant(variantFile, var):
+                    break
+                yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
+            else:
+                variantFile.parseSamples = False
+                if not _get_next_variant(variantFile, var):
+                    break
+            i += 1
+    #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
+    #        yield tuple(out)
 
-    del variantFile
-    del var
+        del variantFile
+        del var
 
 
 cdef inline object _mkssvals(Variant *var,
