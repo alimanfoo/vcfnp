@@ -172,18 +172,18 @@ cdef string FIELD_NAME_GT = 'GT'
 
 
 
-def variants(filename,                  # name of VCF file
-             region=None,               # region to extract
-             fields=None,               # fields to extract
-             exclude_fields=None,       # fields not to extract
-             dtypes=None,               # override default dtypes
-             arities=None,              # override how many values to expect
-             fills=None,                # override default fill values
-             count=None,                # attempt to extract exactly this many records
-             progress=0,                # if >0 log progress
-             logstream=sys.stderr,      # stream for logging progress
-             condition=None,            # boolean array defining which rows to load
-             slice=None                 # slice the underlying iterator
+def variants(filename,
+             region=None,
+             fields=None,
+             exclude_fields=None,
+             dtypes=None,
+             arities=None,
+             fills=None,
+             count=None,
+             progress=0,
+             logstream=sys.stderr,
+             condition=None,
+             slice=None
              ):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
@@ -192,8 +192,8 @@ def variants(filename,                  # name of VCF file
     Parameters
     ----------
 
-    filename: string
-        Name of the VCF file or list of filenames
+    filename: string or list
+        Name of the VCF file or list of file names
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
@@ -242,11 +242,14 @@ def variants(filename,                  # name of VCF file
 
     """
 
-    if isinstance(filename, str):
-        filename = [filename]
+    if isinstance(filename, basestring):
+        filenames = [filename]
+    else:
+        filenames = filename
 
-    if not os.path.exists(filename[0]):
-        raise Exception('file not found: %s' % filename[0])
+    for fn in filenames:
+        if not os.path.exists(fn):
+            raise Exception('file not found: %s' % fn)
 
     # determine fields to extract
     if fields is None:
@@ -264,7 +267,7 @@ def variants(filename,                  # name of VCF file
         dtypes = dict()
     for f in fields:
         if f == 'FILTER':
-            filterIds = PyVariantCallFile(filename[0]).filterIds
+            filterIds = PyVariantCallFile(filenames[0]).filterIds
             t = [('PASS', 'b1')]
             t += [(flt, 'b1') for flt in sorted(filterIds)]
             dtypes[f] = t
@@ -301,9 +304,9 @@ def variants(filename,                  # name of VCF file
 
     # set up iterator
     if condition is not None:
-        it = _itervariants_with_condition(filename, region, fields, arities, fills, condition)
+        it = _itervariants_with_condition(filenames, region, fields, arities, fills, condition)
     else:
-        it = _itervariants(filename, region, fields, arities, fills)
+        it = _itervariants(filenames, region, fields, arities, fills)
 
     # slice?
     if slice:
@@ -340,7 +343,7 @@ def _iter_withprogress(iterable, int progress, logstream):
 
 
 
-def _itervariants(filename,
+def _itervariants(filenames,
                  region,
                  vector[string] fields,
                  map[string, int] arities,
@@ -349,7 +352,7 @@ def _itervariants(filename,
     cdef Variant *var
     cdef vector[string] filterIds
 
-    for current_filename in filename:
+    for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = False
@@ -366,7 +369,7 @@ def _itervariants(filename,
         del var
 
 
-def _itervariants_with_condition(filename,
+def _itervariants_with_condition(filenames,
                                  region,
                                  vector[string] fields,
                                  map[string, int] arities,
@@ -378,7 +381,7 @@ def _itervariants_with_condition(filename,
     cdef int i = 0
     cdef int n = len(condition)
 
-    for current_filename in filename:
+    for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = False
@@ -479,19 +482,19 @@ cdef inline object _is_snp(Variant *var):
 
 
 
-def info(filename,                  # name of VCF file
-         region=None,               # region to extract
-         fields=None,               # INFO fields to extract
-         exclude_fields=None,       # fields not to extract
-         dtypes=None,               # override default dtypes
-         arities=None,              # override how many values to expect
-         fills=None,                # override default fill values
-         vcf_types=None,            # override types declared in VCF header
-         count=None,                # attempt to extract exactly this many records
-         progress=0,                # if >0 log progress
-         logstream=sys.stderr,      # stream for logging progress
-         condition=None,            # boolean array defining which rows to load
-         slice=None,                # slice the underlying iterator
+def info(filename,
+         region=None,
+         fields=None,
+         exclude_fields=None,
+         dtypes=None,
+         arities=None,
+         fills=None,
+         vcf_types=None,
+         count=None,
+         progress=0,
+         logstream=sys.stderr,
+         condition=None,
+         slice=None,
          ):
     """
     Load a numpy structured array with data from the INFO field of a VCF file.
@@ -500,7 +503,7 @@ def info(filename,                  # name of VCF file
     ----------
 
     filename: string or list
-        Name of the VCF file or list of filenames
+        Name of the VCF file or list of file names
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
@@ -544,13 +547,16 @@ def info(filename,                  # name of VCF file
 
     """
 
-    if isinstance(filename, str):
-        filename = [filename]
+    if isinstance(filename, basestring):
+        filenames = [filename]
+    else:
+        filenames = filename
 
-    if not os.path.exists(filename[0]):
-        raise Exception('file not found: %s' % filename[0])
+    for fn in filenames:
+        if not os.path.exists(fn):
+            raise Exception('file not found: %s' % fn)
 
-    vcf = PyVariantCallFile(filename[0])
+    vcf = PyVariantCallFile(filenames[0])
     infoIds = vcf.infoIds
     infoTypes = vcf.infoTypes
     infoCounts = vcf.infoCounts
@@ -618,9 +624,9 @@ def info(filename,                  # name of VCF file
 
     # set up iterator
     if condition is not None:
-        it = _iterinfo_with_condition(filename, region, fields, arities, fills, infoTypes, condition)
+        it = _iterinfo_with_condition(filenames, region, fields, arities, fills, infoTypes, condition)
     else:
-        it = _iterinfo(filename, region, fields, arities, fills, infoTypes)
+        it = _iterinfo(filenames, region, fields, arities, fills, infoTypes)
 
     # slice?
     if slice:
@@ -631,7 +637,7 @@ def info(filename,                  # name of VCF file
 
 
 
-def _iterinfo(filename,
+def _iterinfo(filenames,
              region,
              vector[string] fields,
              map[string, int] arities,
@@ -640,7 +646,7 @@ def _iterinfo(filename,
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
-    for current_filename in filename:
+    for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = False
@@ -655,7 +661,7 @@ def _iterinfo(filename,
         del var
 
 
-def _iterinfo_with_condition(filename,
+def _iterinfo_with_condition(filenames,
                              region,
                              vector[string] fields,
                              map[string, int] arities,
@@ -667,7 +673,7 @@ def _iterinfo_with_condition(filename,
     cdef int i = 0
     cdef int n = len(condition)
 
-    for current_filename in filename:
+    for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = False
@@ -826,20 +832,20 @@ cdef inline vector[int] _mkval_int_multi(vector[string]& string_vals, int arity,
 
 
 
-def calldata(filename,                  # name of VCF file
-             region=None,               # region to extract
-             samples=None,              # specify which samples to extract (default all)
-             ploidy=2,                  # ploidy to assume
-             fields=None,               # fields to extract
-             exclude_fields=None,       # fields not to extract
-             dtypes=None,               # override default dtypes
-             arities=None,              # override how many values to expect
-             fills=None,                # override default fill values
-             count=None,                # attempt to extract exactly this many records
-             progress=0,                # if >0 log progress
-             logstream=sys.stderr,      # stream for logging progress
-             condition=None,            # boolean array defining which rows to load
-             slice=None,                # slice the underlying iterator
+def calldata(filename,
+             region=None,
+             samples=None,
+             ploidy=2,
+             fields=None,
+             exclude_fields=None,
+             dtypes=None,
+             arities=None,
+             fills=None,
+             count=None,
+             progress=0,
+             logstream=sys.stderr,
+             condition=None,
+             slice=None,
              ):
     """
     Load a numpy structured array with data from the sample columns of a VCF
@@ -848,8 +854,8 @@ def calldata(filename,                  # name of VCF file
     Parameters
     ----------
 
-    filename: string
-        Name of the VCF file or list of filenames
+    filename: string or list
+        Name of the VCF file or list of file names
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
     fields: list or array-like
@@ -904,13 +910,16 @@ def calldata(filename,                  # name of VCF file
 
     """
 
-    if isinstance(filename, str):
-        filename = [filename]
+    if isinstance(filename, basestring):
+        filenames = [filename]
+    else:
+        filenames = filename
 
-    if not os.path.exists(filename[0]):
-        raise Exception('file not found: %s' % filename[0])
+    for fn in filenames:
+        if not os.path.exists(fn):
+            raise Exception('file not found: %s' % fn)
 
-    vcf = PyVariantCallFile(filename[0])
+    vcf = PyVariantCallFile(filenames[0])
     formatIds = vcf.formatIds
     formatTypes = vcf.formatTypes
     formatCounts = vcf.formatCounts
@@ -998,9 +1007,9 @@ def calldata(filename,                  # name of VCF file
 
     # set up iterator
     if condition is not None:
-        it = _itercalldata_with_condition(filename, region, samples, ploidy, fields, arities, fills, condition)
+        it = _itercalldata_with_condition(filenames, region, samples, ploidy, fields, arities, fills, condition)
     else:
-        it = _itercalldata(filename, region, samples, ploidy, fields, arities, fills)
+        it = _itercalldata(filenames, region, samples, ploidy, fields, arities, fills)
 
     # slice?
     if slice:
@@ -1011,7 +1020,7 @@ def calldata(filename,                  # name of VCF file
 
 
 
-def _itercalldata(filename,
+def _itercalldata(filenames,
                   region,
                   vector[string] samples,
                   int ploidy,
@@ -1021,7 +1030,7 @@ def _itercalldata(filename,
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
-    for current_filename in filename:
+    for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = True
@@ -1038,7 +1047,7 @@ def _itercalldata(filename,
         del var
 
 
-def _itercalldata_with_condition(filename,
+def _itercalldata_with_condition(filenames,
                                  region,
                                  vector[string] samples,
                                  int ploidy,
@@ -1052,7 +1061,7 @@ def _itercalldata_with_condition(filename,
     cdef int i = 0
     cdef int n = len(condition)
 
-    for current_filename in filename:
+    for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = False
