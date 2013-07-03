@@ -9,6 +9,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 __version__ = '0.11-SNAPSHOT'
 
 
+import re
 import numpy as np
 cimport numpy as np
 from vcflib cimport (PyVariantCallFile, VariantCallFile, Variant,
@@ -203,10 +204,11 @@ def variants(filename,
     dtypes: dict or dict-like
         Dictionary cotaining dtypes to use instead of the default inferred ones
     arities: dict or dict-like
-        Override the amount of values to expect
+        Dictinoary containing field:integer mappings used to override the number
+        of values to expect
     fills: dict or dict-like
         Dictionary containing field:fillvalue mappings used to override the
-        default fill in values in VCF fields
+        defaults used for missing values
     count: int
         Attempt to extract a specific number of records
     progress: int
@@ -489,6 +491,7 @@ def info(filename,
          dtypes=None,
          arities=None,
          fills=None,
+         transformers=None,
          vcf_types=None,
          count=None,
          progress=0,
@@ -513,10 +516,18 @@ def info(filename,
     dtypes: dict or dict-like
         Dictionary cotaining dtypes to use instead of the default inferred ones
     arities: dict or dict-like
-        Override the amount of values to expect
+        Dictinoary containing field:integer mappings used to override the number
+        of values to expect
     fills: dict or dict-like
         Dictionary containing field:fillvalue mappings used to override the
-        default fill in values in VCF fields
+        defaults used for missing values
+    transformers: dict or dict-like
+        Dictionary containing field:function mappings used to preprocess
+        any values prior to loading into array
+    vcf_types: dict or dict-like
+        Dictionary containing field:string mappings used to override any
+        bogus type declarations in the VCF header (e.g., MQ0Fraction declared
+        as Integer)
     count: int
         Attempt to extract a specific number of records
     progress: int
@@ -612,6 +623,12 @@ def info(filename,
             vcf_type = infoTypes[f]
             fills[f] = DEFAULT_FILL_MAP[vcf_type]
 
+    if transformers is None:
+        transformers = dict()
+    for f in fields:
+        if f not in transformers:
+            transformers[f] = None
+
     # construct a numpy dtype for structured array
     dtype = list()
     for f in fields:
@@ -624,9 +641,9 @@ def info(filename,
 
     # set up iterator
     if condition is not None:
-        it = _iterinfo_with_condition(filenames, region, fields, arities, fills, infoTypes, condition)
+        it = _iterinfo_with_condition(filenames, region, fields, arities, fills, infoTypes, transformers, condition)
     else:
-        it = _iterinfo(filenames, region, fields, arities, fills, infoTypes)
+        it = _iterinfo(filenames, region, fields, arities, fills, infoTypes, transformers)
 
     # slice?
     if slice:
@@ -642,7 +659,8 @@ def _iterinfo(filenames,
              vector[string] fields,
              map[string, int] arities,
              dict fills,
-             dict infoTypes):
+             dict infoTypes,
+             dict transformers):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
@@ -655,7 +673,7 @@ def _iterinfo(filenames,
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
-            yield _mkivals(var, fields, arities, fills, infoTypes)
+            yield _mkivals(var, fields, arities, fills, infoTypes, transformers)
 
         del variantFile
         del var
@@ -667,6 +685,7 @@ def _iterinfo_with_condition(filenames,
                              map[string, int] arities,
                              dict fills,
                              dict infoTypes,
+                             dict transformers,
                              condition):
     cdef VariantCallFile *variantFile
     cdef Variant *var
@@ -683,26 +702,28 @@ def _iterinfo_with_condition(filenames,
 
         while i < n and _get_next_variant(variantFile, var):
             if condition[i]:
-                yield _mkivals(var, fields, arities, fills, infoTypes)
+                yield _mkivals(var, fields, arities, fills, infoTypes, transformers)
             i += 1
 
         del variantFile
         del var
 
 
-
 cdef inline object _mkivals(Variant *var,
                             vector[string] fields,
                             map[string, int] arities,
                             dict fills,
-                            dict infoTypes):
-    out = [_mkival(var, f, arities[f], fills[f], infoTypes[f]) for f in fields]
+                            dict infoTypes,
+                            dict transformers):
+    out = [_mkival(var, f, arities[f], fills[f], infoTypes[f], transformers[f]) for f in fields]
     return tuple(out)
 
 
 
-cdef inline object _mkival(Variant *var, string field, int arity, object fill, int vcf_type):
-    if vcf_type == FIELD_BOOL:
+cdef inline object _mkival(Variant *var, string field, int arity, object fill, int vcf_type, transformer):
+    if transformer is not None:
+        out = transformer(var.info[field])
+    elif vcf_type == FIELD_BOOL:
         # ignore arity, this is a flag
         out = (var.infoFlags.count(field) > 0)
     else:
@@ -1291,6 +1312,43 @@ def view2d(a):
     return b
 
 
+EFF_DEFAULT_DTYPE = [
+    ('Effect', 'a33'),
+    ('Effect_Impact', 'a8'),
+    ('Functional_Class', 'a8'),
+    ('Codon_Change', 'a7'), # N.B., will lose information for indels
+    ('Amino_Acid_Change', 'a6'), # N.B., will lose information for indels
+    ('Amino_Acid_Length', 'i4'),
+    ('Gene_Name', 'a14'), # N.B., may be too short for some species
+    ('Transcript_BioType', 'a20'),
+    ('Gene_Coding', 'i1'),
+    ('Transcript_ID', 'a20'),
+    ('Exon', 'i1')
+]
+
+
+EFF_DEFAULT_FILLS = ['.', '.', '.', '.', '.', -1, '.', '.', -1, '.', -1]
+
+
+def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
+    """
+    Return a simple transformer function for parsing EFF annotations. N.B.,
+    ignores all but the first effect.
+
+    """
+    prog_eff_main = re.compile(r'([^(]+)\(([^)]+)\)')
+    def _transformer(vals):
+        match_eff_main = prog_eff_main.match(vals[0]) # ignore all but first effect
+        eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
+        result = tuple(
+            fill if inv == ''
+            else int(inv) if i == 5 or i == 10
+            else (1 if inv == 'CODING' else 0) if i == 8
+            else inv
+            for i, (inv, fill) in enumerate(zip(eff, fills)[:11])
+        )
+        return result
+    return _transformer
 
 
 

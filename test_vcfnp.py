@@ -4,8 +4,9 @@ Some simple unit tests for the vcfnp extension.
 """
 
 
-from vcfnp import variants, info, calldata
+from vcfnp import variants, info, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer
 from nose.tools import eq_, assert_almost_equal
+import re
 
 
 def test_variants():
@@ -105,40 +106,70 @@ def test_calldata():
     
     
 def test_condition():
-    v = variants('fixture/sample.vcf')
-    eq_(9, len(v))
-    c = calldata('fixture/sample.vcf', condition=v['FILTER']['PASS'])
-    eq_(5, len(c))
-    i = info('fixture/sample.vcf', condition=v['FILTER']['PASS'])
-    eq_(5, len(i))
-    vf = variants('fixture/sample.vcf', condition=v['FILTER']['PASS'])
-    eq_(5, len(vf))
+    V = variants('fixture/sample.vcf')
+    eq_(9, len(V))
+    C = calldata('fixture/sample.vcf', condition=V['FILTER']['PASS'])
+    eq_(5, len(C))
+    I = info('fixture/sample.vcf', condition=V['FILTER']['PASS'])
+    eq_(5, len(I))
+    Vf = variants('fixture/sample.vcf', condition=V['FILTER']['PASS'])
+    eq_(5, len(Vf))
     
 
 def test_variable_calldata():
-    c = calldata('fixture/test1.vcf')
-    eq_((1, 0), tuple(c['test2']['AD'][0]))
-    eq_((1, 0), tuple(c['test2']['AD'][1]))
-    eq_((1, 0), tuple(c['test2']['AD'][2]))
-    eq_('.', c['test2']['GT'][0])
-    eq_('0', c['test2']['GT'][1])
-    eq_('1', c['test2']['GT'][2])
+    C = calldata('fixture/test1.vcf')
+    eq_((1, 0), tuple(C['test2']['AD'][0]))
+    eq_((1, 0), tuple(C['test2']['AD'][1]))
+    eq_((1, 0), tuple(C['test2']['AD'][2]))
+    eq_('.', C['test2']['GT'][0])
+    eq_('0', C['test2']['GT'][1])
+    eq_('1', C['test2']['GT'][2])
     
     
 def test_missing_calldata():
-    c = calldata('fixture/test1.vcf')
-    eq_('.', c['test3']['GT'][2])
-    eq_((-1, -1), tuple(c['test3']['genotype'][2]))
-    eq_('./.', c['test4']['GT'][2])
-    eq_((-1, -1), tuple(c['test4']['genotype'][2]))
+    C = calldata('fixture/test1.vcf')
+    eq_('.', C['test3']['GT'][2])
+    eq_((-1, -1), tuple(C['test3']['genotype'][2]))
+    eq_('./.', C['test4']['GT'][2])
+    eq_((-1, -1), tuple(C['test4']['genotype'][2]))
 
 
 def test_override_vcf_types():
-    i = info('fixture/test4.vcf')
-    print repr(i['MQ0Fraction'])
-    eq_(0, i['MQ0Fraction'][2])
-    i = info('fixture/test4.vcf', vcf_types={'MQ0Fraction': 'Float'})
-    print repr(i['MQ0Fraction'])
-    assert_almost_equal(0.03, i['MQ0Fraction'][2])
+    I = info('fixture/test4.vcf')
+    eq_(0, I['MQ0Fraction'][2])
+    I = info('fixture/test4.vcf', vcf_types={'MQ0Fraction': 'Float'})
+    assert_almost_equal(0.03, I['MQ0Fraction'][2])
+
+
+def test_info_transformers():
+    I = info('fixture/test12.vcf',
+             dtypes={'EFF': EFF_DEFAULT_DTYPE},
+             arities={'EFF': 1},
+             transformers={'EFF': eff_default_transformer()})
+
+    eq_('STOP_GAINED', I['EFF']['Effect'][0])
+    eq_('HIGH', I['EFF']['Effect_Impact'][0])
+    eq_('NONSENSE', I['EFF']['Functional_Class'][0])
+    eq_('Cag/Tag', I['EFF']['Codon_Change'][0])
+    eq_('Q236*', I['EFF']['Amino_Acid_Change'][0])
+    eq_(749, I['EFF']['Amino_Acid_Length'][0])
+    eq_('NOC2L', I['EFF']['Gene_Name'][0])
+    eq_('.', I['EFF']['Transcript_BioType'][0])
+    eq_(1, I['EFF']['Gene_Coding'][0])
+    eq_('NM_015658', I['EFF']['Transcript_ID'][0])
+    eq_(-1, I['EFF']['Exon'][0])
+
+    eq_('NON_SYNONYMOUS_CODING', I['EFF']['Effect'][1])
+    eq_('MODERATE', I['EFF']['Effect_Impact'][1])
+    eq_('MISSENSE', I['EFF']['Functional_Class'][1])
+    eq_('gTt/gGt', I['EFF']['Codon_Change'][1])
+    eq_('V155G', I['EFF']['Amino_Acid_Change'][1])
+    eq_(-1, I['EFF']['Amino_Acid_Length'][1])
+    eq_('PF3D7_0108900', I['EFF']['Gene_Name'][1])
+    eq_('.', I['EFF']['Transcript_BioType'][1])
+    eq_(-1, I['EFF']['Gene_Coding'][1])
+    eq_('rna_PF3D7_0108900-1', I['EFF']['Transcript_ID'][1])
+    eq_(1, I['EFF']['Exon'][1])
+
 
 
