@@ -6,7 +6,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
 
 
-__version__ = '0.12-SNAPSHOT'
+__version__ = '0.11.1'
 
 
 import re
@@ -1327,7 +1327,7 @@ EFF_DEFAULT_DTYPE = [
 ]
 
 
-EFF_DEFAULT_FILLS = ['.', '.', '.', '.', '.', -1, '.', '.', -1, '.', -1]
+EFF_DEFAULT_FILLS = ('.', '.', '.', '.', '.', -1, '.', '.', -1, '.', -1)
 
 
 def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
@@ -1338,16 +1338,19 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
     """
     prog_eff_main = re.compile(r'([^(]+)\(([^)]+)\)')
     def _transformer(vals):
-        match_eff_main = prog_eff_main.match(vals[0]) # ignore all but first effect
-        eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
-        result = tuple(
-            fill if inv == ''
-            else int(inv) if i == 5 or i == 10
-            else (1 if inv == 'CODING' else 0) if i == 8
-            else inv
-            for i, (inv, fill) in enumerate(zip(eff, fills)[:11])
-        )
-        return result
+        if len(vals) == 0:
+            return fills
+        else:
+            match_eff_main = prog_eff_main.match(vals[0]) # ignore all but first effect
+            eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
+            result = tuple(
+                fill if v == ''
+                else int(v) if i == 5 or i == 10
+                else (1 if v == 'CODING' else 0) if i == 8
+                else v
+                for i, (v, fill) in enumerate(zip(eff, fills)[:11])
+            )
+            return result
     return _transformer
 
 

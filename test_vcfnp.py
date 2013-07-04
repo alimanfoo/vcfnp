@@ -171,5 +171,19 @@ def test_info_transformers():
     eq_('rna_PF3D7_0108900-1', I['EFF']['Transcript_ID'][1])
     eq_(1, I['EFF']['Exon'][1])
 
+    eq_('.', I['EFF']['Effect'][2])
+    eq_('.', I['EFF']['Effect_Impact'][2])
+    eq_('.', I['EFF']['Functional_Class'][2])
+    eq_('.', I['EFF']['Codon_Change'][2])
+    eq_('.', I['EFF']['Amino_Acid_Change'][2])
+    eq_(-1, I['EFF']['Amino_Acid_Length'][2])
+    eq_('.', I['EFF']['Gene_Name'][2])
+    eq_('.', I['EFF']['Transcript_BioType'][2])
+    eq_(-1, I['EFF']['Gene_Coding'][2])
+    eq_('.', I['EFF']['Transcript_ID'][2])
+    eq_(-1, I['EFF']['Exon'][2])
+
+
+
 
 
