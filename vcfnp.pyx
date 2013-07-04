@@ -6,7 +6,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
 
 
-__version__ = '0.11.1'
+__version__ = '0.11.2'
 
 
 import re
@@ -331,17 +331,18 @@ def _fromiter(it, dtype, count, int progress=0, logstream=sys.stderr):
 
 
 def _iter_withprogress(iterable, int progress, logstream):
-    cdef int i
+    cdef int i, n
     before_all = time.time()
     before = before_all
     for i, o in enumerate(iterable):
         yield o
-        if i > 0 and i % progress == 0:
+        n = i+1
+        if n % progress == 0:
             after = time.time()
-            print >>logstream, '%s rows in %.2fs; batch in %.2fs (%d rows/s)' % (i, after-before_all, after-before, progress/(after-before))
+            print >>logstream, '%s rows in %.2fs; batch in %.2fs (%d rows/s)' % (n, after-before_all, after-before, progress/(after-before))
             before = after
     after_all = time.time()
-    print >>logstream, '%s rows in %.2fs (%d rows/s)' % (i, after_all-before_all, i/(after_all-before_all))
+    print >>logstream, '%s rows in %.2fs (%d rows/s)' % (n, after_all-before_all, n/(after_all-before_all))
 
 
 
