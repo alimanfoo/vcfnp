@@ -199,5 +199,12 @@ def test_svlen():
     eq_((3, -2), tuple(V.svlen[4]))
 
 
+def test_duplicate_field_definitions():
+    I = info('fixture/test10.vcf')
+    # should not raise, but print useful message to stderr
+    C = calldata('fixture/test10.vcf')
+    # should not raise, but print useful message to stderr
+
+
 
 

@@ -9,6 +9,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 __version__ = '0.13-SNAPSHOT'
 
 
+import sys
 import re
 import numpy as np
 cimport numpy as np
@@ -22,7 +23,6 @@ from libcpp.vector cimport vector
 from libcpp.map cimport map
 from libc.stdlib cimport atoi, atof
 from cython.operator cimport dereference as deref
-import sys
 import time
 from itertools import islice
 import os
@@ -601,13 +601,15 @@ def info(filename,
             raise Exception('file not found: %s' % fn)
 
     vcf = PyVariantCallFile(filenames[0])
-    infoIds = vcf.infoIds
+    # warn about duplicate field definitions
+    warn_duplicates(vcf.infoIds)
+    infoIds = sorted(set(vcf.infoIds))
     infoTypes = vcf.infoTypes
     infoCounts = vcf.infoCounts
 
     # determine INFO fields to extract
     if fields is None:
-        fields = infoIds # extract all INFO fields
+        fields = infoIds  # extract all INFO fields
     else:
         for f in fields:
             assert f in infoIds, 'unknown field: %s' % f
@@ -685,6 +687,13 @@ def info(filename,
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
 
+
+def warn_duplicates(fields):
+    visited = set()
+    for f in fields:
+        if f in visited:
+            print >>sys.stderr, 'WARNING: duplicate definition found for field %s' % f
+        visited.add(f)
 
 
 def _iterinfo(filenames,
@@ -974,7 +983,9 @@ def calldata(filename,
             raise Exception('file not found: %s' % fn)
 
     vcf = PyVariantCallFile(filenames[0])
-    formatIds = vcf.formatIds
+    # warn about duplicate field definitions
+    warn_duplicates(vcf.formatIds)
+    formatIds = sorted(set(vcf.formatIds))
     formatTypes = vcf.formatTypes
     formatCounts = vcf.formatCounts
     all_samples = vcf.sampleNames
