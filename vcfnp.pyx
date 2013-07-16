@@ -54,7 +54,7 @@ TYPESTRING2KEY = {
 
 # these are the possible fields in the variants array
 VARIANT_FIELDS = ('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER',
-                  'num_alleles', 'is_snp')
+                  'num_alleles', 'is_snp', 'svlen')
 
 
 # default dtypes for the variants array fields
@@ -67,6 +67,7 @@ DEFAULT_VARIANT_DTYPE = {
                          'QUAL': 'f4',
                          'num_alleles': 'u1',
                          'is_snp': 'b1',
+                         'svlen': 'i4',
                          }
 
 
@@ -76,10 +77,11 @@ DEFAULT_VARIANT_ARITY = {
                          'POS': 1,
                          'ID': 1,
                          'REF': 1,
-                         'ALT': 1, # default assume biallelic (1 alt allele)
+                         'ALT': 1,  # default assume biallelic (1 alt allele)
                          'QUAL': 1,
                          'num_alleles': 1,
-                         'is_snp': 1
+                         'is_snp': 1,
+                         'svlen': 1,  # default assume biallelic
                          }
 
 
@@ -91,7 +93,9 @@ DEFAULT_VARIANT_FILL = {'CHROM': '',
                         'ALT': '',
                         'QUAL': 0,
                         'num_alleles': 0,
-                        'is_snp': False}
+                        'is_snp': False,
+                        'svlen': 0,
+                        }
 
 
 # default mapping from VCF field types to numpy dtypes
@@ -166,6 +170,7 @@ cdef string FIELD_NAME_FILTER = 'FILTER'
 cdef string FIELD_NAME_INFO = 'INFO'
 cdef string FIELD_NAME_NUM_ALLELES = 'num_alleles'
 cdef string FIELD_NAME_IS_SNP = 'is_snp'
+cdef string FIELD_NAME_SVLEN = 'svlen'
 cdef string FIELD_NAME_IS_CALLED = 'is_called'
 cdef string FIELD_NAME_IS_PHASED = 'is_phased'
 cdef string FIELD_NAME_GENOTYPE = 'genotype'
@@ -438,6 +443,8 @@ cdef inline object _mkvval(Variant *var, string field, int arity, object fill, l
         out = var.alt.size() + 1
     elif field == FIELD_NAME_IS_SNP:
         out = _is_snp(var)
+    elif field == FIELD_NAME_SVLEN:
+        out = _svlen(var, arity, fill)
     else:
         out = 0 # TODO review this
     return out
@@ -483,6 +490,31 @@ cdef inline object _is_snp(Variant *var):
             return False
     return True
 
+
+cdef inline object _svlen(Variant *var, int arity, int fill):
+    cdef int i
+    cdef bytes alt
+    if arity == 1:
+        return _svlen_single(var.ref, var.alt, fill)
+    else:
+        return _svlen_multi(var.ref, var.alt, arity, fill)
+
+
+cdef inline int _svlen_single(string ref, vector[string]& alt, int fill):
+    if alt.size() > 0:
+        return alt.at(0).size() - ref.size()
+    return fill
+
+
+cdef inline vector[int] _svlen_multi(string ref, vector[string]& alt, int arity, int fill):
+    cdef int i
+    cdef vector[int] out
+    for i in range(arity):
+        if i < alt.size():
+            out.push_back(alt.at(i).size() - ref.size())
+        else:
+            out.push_back(fill)
+    return out
 
 
 def info(filename,

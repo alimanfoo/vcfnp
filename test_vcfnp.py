@@ -7,6 +7,7 @@ Some simple unit tests for the vcfnp extension.
 from vcfnp import variants, info, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer
 from nose.tools import eq_, assert_almost_equal
 import re
+import numpy as np
 
 
 def test_variants():
@@ -183,6 +184,19 @@ def test_info_transformers():
     eq_('.', I['EFF']['Transcript_ID'][2])
     eq_(-1, I['EFF']['Exon'][2])
 
+
+def test_svlen():
+    V = variants('fixture/test13.vcf').view(np.recarray)
+    assert hasattr(V, 'svlen')
+    eq_(0, V.svlen[0])
+    eq_(1, V.svlen[1])
+    eq_(-1, V.svlen[2])
+    eq_(3, V.svlen[3])
+    eq_(3, V.svlen[4])
+    V = variants('fixture/test13.vcf', arities={'svlen': 2}).view(np.recarray)
+    assert hasattr(V, 'svlen')
+    eq_((3, 0), tuple(V.svlen[3]))
+    eq_((3, -2), tuple(V.svlen[4]))
 
 
 
