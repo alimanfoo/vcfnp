@@ -156,7 +156,6 @@ DEFAULT_CALLDATA_ARITY = {
                        # N.B., set genotype arity to ploidy
                        }
 
-
 cdef char SEMICOLON = ';'
 cdef string DOT = '.'
 cdef string GT_DELIMS = '/|'
@@ -612,7 +611,11 @@ def info(filename,
         fields = infoIds  # extract all INFO fields
     else:
         for f in fields:
-            assert f in infoIds, 'unknown field: %s' % f
+            if f not in infoIds:
+                print >>sys.stderr, 'WARNING: no definition found for field %s' % f
+                # fall back to unary string, can be overridden with vcf_types, dtypes and arities args
+                infoTypes[f] = FIELD_STRING
+                infoCounts[f] = 1
 
     # exclude fields
     if exclude_fields is not None:
@@ -904,6 +907,7 @@ def calldata(filename,
              dtypes=None,
              arities=None,
              fills=None,
+             vcf_types=None,
              count=None,
              progress=0,
              logstream=sys.stderr,
@@ -932,6 +936,9 @@ def calldata(filename,
     fills: dict or dict-like
         Dictionary containing field:fillvalue mappings used to override the
         default fill in values in VCF fields
+    vcf_types: dict or dict-like
+        Dictionary containing field:string mappings used to override any
+        bogus type declarations in the VCF header
     count: int
         Attempt to extract a specific number of records
     progress: int
@@ -1001,11 +1008,20 @@ def calldata(filename,
         fields = list(CALLDATA_FIELDS) + formatIds
     else:
         for f in fields:
-            assert f in CALLDATA_FIELDS or f in formatIds, 'unknown field: %s' % f
+            if f not in CALLDATA_FIELDS and f not in formatIds:
+                print >>sys.stderr, 'WARNING: no definition found for field %s' % f
+                # fall back to unary string, can be overridden with vcf_types, dtypes and arities args
+                formatTypes[f] = FIELD_STRING
+                formatCounts[f] = 1
 
     # exclude fields
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
+
+    # override vcf types
+    if vcf_types is not None:
+        for f in vcf_types:
+            formatTypes[f] = TYPESTRING2KEY[vcf_types[f]]
 
     # determine a numpy dtype for each field
     if dtypes is None:
@@ -1072,9 +1088,9 @@ def calldata(filename,
 
     # set up iterator
     if condition is not None:
-        it = _itercalldata_with_condition(filenames, region, samples, ploidy, fields, arities, fills, condition)
+        it = _itercalldata_with_condition(filenames, region, samples, ploidy, fields, formatTypes, arities, fills, condition)
     else:
-        it = _itercalldata(filenames, region, samples, ploidy, fields, arities, fills)
+        it = _itercalldata(filenames, region, samples, ploidy, fields, formatTypes, arities, fills)
 
     # slice?
     if slice:
@@ -1090,6 +1106,7 @@ def _itercalldata(filenames,
                   vector[string] samples,
                   int ploidy,
                   vector[string] fields,
+                  map[string, int] formatTypes,
                   map[string, int] arities,
                   dict fills):
     cdef VariantCallFile *variantFile
@@ -1104,7 +1121,7 @@ def _itercalldata(filenames,
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
-            yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
+            yield _mkssvals(var, samples, ploidy, fields, arities, fills, formatTypes)
     #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
     #        yield tuple(out)
 
@@ -1117,6 +1134,7 @@ def _itercalldata_with_condition(filenames,
                                  vector[string] samples,
                                  int ploidy,
                                  vector[string] fields,
+                                 map[string, int] formatTypes,
                                  map[string, int] arities,
                                  dict fills,
                                  condition,
@@ -1140,7 +1158,7 @@ def _itercalldata_with_condition(filenames,
                 variantFile.parseSamples = True
                 if not _get_next_variant(variantFile, var):
                     break
-                yield _mkssvals(var, samples, ploidy, fields, arities, fills, variantFile.formatTypes)
+                yield _mkssvals(var, samples, ploidy, fields, arities, fills, formatTypes)
             else:
                 variantFile.parseSamples = False
                 if not _get_next_variant(variantFile, var):
@@ -1159,7 +1177,7 @@ cdef inline object _mkssvals(Variant *var,
                              vector[string] fields,
                              map[string, int] arities,
                              dict fills,
-                             map[string, VariantFieldType]& formatTypes):
+                             map[string, int] formatTypes):
     out = [_mksvals(var, s, ploidy, fields, arities, fills, formatTypes) for s in samples]
     return tuple(out)
 
@@ -1171,7 +1189,7 @@ cdef inline object _mksvals(Variant *var,
                             vector[string] fields,
                             map[string, int] arities,
                             dict fills,
-                            map[string, VariantFieldType]& formatTypes):
+                            map[string, int] formatTypes):
     out = [_mksval(var.samples[sample], ploidy, f, arities[f], fills[f], formatTypes) for f in fields]
     return tuple(out)
 
@@ -1182,7 +1200,7 @@ cdef inline object _mksval(map[string, vector[string]]& sample_data,
                            string field,
                            int arity,
                            object fill,
-                           map[string, VariantFieldType]& formatTypes):
+                           map[string, int] formatTypes):
     if field == FIELD_NAME_IS_CALLED:
         return _is_called(sample_data)
     elif field == FIELD_NAME_IS_PHASED:

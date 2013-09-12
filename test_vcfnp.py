@@ -206,5 +206,19 @@ def test_duplicate_field_definitions():
     # should not raise, but print useful message to stderr
 
 
+def test_missing_info_definition():
+    # INFO field DP not declared in VCF header
+    I = info('fixture/test14.vcf', fields=['DP'])
+    eq_('14', I[2]['DP'])  # default is string
+    I = info('fixture/test14.vcf', fields=['DP'], vcf_types={'DP':'Integer'})
+    eq_(14, I[2]['DP'])
+    # what about a field which isn't present at all?
+    I = info('fixture/test14.vcf', fields=['FOO'])
+    eq_('.', I[2]['FOO'])  # default missing value for string field
 
+
+def test_missing_format_definition():
+    # FORMAT field DP not declared in VCF header
+    C = calldata('fixture/test14.vcf', fields=['DP'], vcf_types={'DP':'Integer'})
+    eq_(1, C[2]['NA00001']['DP'])
 
