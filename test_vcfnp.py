@@ -43,6 +43,13 @@ def test_variants_region():
     eq_(6, len(a))
     
     
+def test_variants_region_empty():
+    a = variants('fixture/sample.vcf.gz', region='18')
+    eq_(0, len(a))
+    a = variants('fixture/sample.vcf.gz', region='19:113-200')
+    eq_(0, len(a))
+
+
 def test_variants_count():
     a = variants('fixture/sample.vcf', count=3)
     eq_(3, len(a))
@@ -82,6 +89,18 @@ def test_info():
 #      dtype=[('NS', '<i4'), ('AN', '<i4'), ('AC', '<i4', (2,)), ('DP', '<i4'), ('AF', '<f4'), ('AA', '|S12'), ('DB', '|b1'), ('H2', '|b1')])
 
 
+def test_info_region():
+    a = info('fixture/sample.vcf.gz', region='20')
+    eq_(6, len(a))
+
+
+def test_info_region_empty():
+    a = info('fixture/sample.vcf.gz', region='18')
+    eq_(0, len(a))
+    a = info('fixture/sample.vcf.gz', region='19:113-200')
+    eq_(0, len(a))
+
+
 def test_calldata():
     a = calldata('fixture/sample.vcf')
     print repr(a)
@@ -104,8 +123,20 @@ def test_calldata():
 #       (True, False, [0, 0], '0/0', 0, 0, [0, 0]),
 #       (True, False, [0, -1], '0', 0, 0, [0, 0])], 
 #      dtype=[('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])
-    
-    
+
+
+def test_calldata_region():
+    a = calldata('fixture/sample.vcf.gz', region='20')
+    eq_(6, len(a))
+
+
+def test_calldata_region_empty():
+    a = calldata('fixture/sample.vcf.gz', region='18')
+    eq_(0, len(a))
+    a = calldata('fixture/sample.vcf.gz', region='19:113-200')
+    eq_(0, len(a))
+
+
 def test_condition():
     V = variants('fixture/sample.vcf')
     eq_(9, len(V))
@@ -200,6 +231,8 @@ def test_svlen():
 
 
 def test_duplicate_field_definitions():
+    V = variants('fixture/test10.vcf')
+    # should not raise, but print useful message to stderr
     I = info('fixture/test10.vcf')
     # should not raise, but print useful message to stderr
     C = calldata('fixture/test10.vcf')
@@ -222,3 +255,8 @@ def test_missing_format_definition():
     C = calldata('fixture/test14.vcf', fields=['DP'], vcf_types={'DP':'Integer'})
     eq_(1, C[2]['NA00001']['DP'])
 
+
+def test_explicit_pass_definition():
+    # explicit PASS FILTER definition
+    V = variants('fixture/test16.vcf')
+    # should not raise

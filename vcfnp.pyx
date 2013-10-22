@@ -274,8 +274,10 @@ def variants(filename,
     for f in fields:
         if f == 'FILTER':
             filterIds = PyVariantCallFile(filenames[0]).filterIds
-            t = [('PASS', 'b1')]
-            t += [(flt, 'b1') for flt in sorted(filterIds)]
+            warn_duplicates(filterIds)
+            t = [(flt, 'b1') for flt in sorted(set(filterIds))]
+            if 'PASS' not in filterIds:
+                t += [('PASS', 'b1')]
             dtypes[f] = t
         elif f not in dtypes:
             dtypes[f] = DEFAULT_VARIANT_DTYPE[f]
@@ -357,17 +359,21 @@ def _itervariants(filenames,
                  dict fills):
     cdef VariantCallFile *variantFile
     cdef Variant *var
-    cdef vector[string] filterIds
+#    cdef vector[string] filterIds
 
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
         variantFile.parseSamples = False
         if region is not None:
-            variantFile.setRegion(region)
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
         var = new Variant(deref(variantFile))
         filterIds = <list>variantFile.filterIds()
-        filterIds = ['PASS'] + sorted(filterIds)
+        filterIds = sorted(set(filterIds))
+        if 'PASS' not in filterIds:
+            filterIds += ['PASS']
 
         while _get_next_variant(variantFile, var):
             yield _mkvvals(var, fields, arities, fills, filterIds)
@@ -384,7 +390,7 @@ def _itervariants_with_condition(filenames,
                                  condition):
     cdef VariantCallFile *variantFile
     cdef Variant *var
-    cdef vector[string] filterIds
+#    cdef vector[string] filterIds
     cdef int i = 0
     cdef int n = len(condition)
 
@@ -393,10 +399,14 @@ def _itervariants_with_condition(filenames,
         variantFile.open(current_filename)
         variantFile.parseSamples = False
         if region is not None:
-            variantFile.setRegion(region)
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
         var = new Variant(deref(variantFile))
         filterIds = <list>variantFile.filterIds()
-        filterIds = ['PASS'] + sorted(filterIds)
+        filterIds = sorted(set(filterIds))
+        if 'PASS' not in filterIds:
+            filterIds += ['PASS']
 
         while i < n and _get_next_variant(variantFile, var):
             if condition[i]:
@@ -695,7 +705,7 @@ def warn_duplicates(fields):
     visited = set()
     for f in fields:
         if f in visited:
-            print >>sys.stderr, 'WARNING: duplicate definition found for field %s' % f
+            print >>sys.stderr, 'WARNING: duplicate definition in header: %s' % f
         visited.add(f)
 
 
@@ -714,7 +724,9 @@ def _iterinfo(filenames,
         variantFile.open(current_filename)
         variantFile.parseSamples = False
         if region is not None:
-            variantFile.setRegion(region)
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
@@ -742,7 +754,9 @@ def _iterinfo_with_condition(filenames,
         variantFile.open(current_filename)
         variantFile.parseSamples = False
         if region is not None:
-            variantFile.setRegion(region)
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
         var = new Variant(deref(variantFile))
 
         while i < n and _get_next_variant(variantFile, var):
@@ -1117,7 +1131,9 @@ def _itercalldata(filenames,
         variantFile.open(current_filename)
         variantFile.parseSamples = True
         if region is not None:
-            variantFile.setRegion(region)
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
@@ -1149,7 +1165,9 @@ def _itercalldata_with_condition(filenames,
         variantFile.open(current_filename)
         variantFile.parseSamples = False
         if region is not None:
-            variantFile.setRegion(region)
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
         var = new Variant(deref(variantFile))
 
         while i < n:

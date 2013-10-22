@@ -1,4 +1,6 @@
 ##fileformat=VCFv4.1
+##FILTER=<ID=s50,Description="Less than 50% of samples have data">
+##FILTER=<ID=s50,Description="Less than 50% of samples have data">
 ##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
 ##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
