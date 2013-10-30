@@ -1,4 +1,4 @@
-# cython: profile = False
+# cython: profile = True
 
 """
 Utility functions to extract data from a VCF file and load into a numpy array.
