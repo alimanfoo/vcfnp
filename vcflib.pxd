@@ -48,6 +48,7 @@ cdef extern from "Variant.h" namespace "vcf":
         map[string, VariantFieldType] formatTypes
         map[string, int] formatCounts
         vector[string] sampleNames
+        bool parseInfo
         bool parseSamples
         bool _done
         void updateSamples(vector[string]& newSampleNames)
@@ -117,7 +118,7 @@ cdef extern from "Variant.h" namespace "vcf":
         Variant(VariantCallFile& v)
         void setVariantCallFile(VariantCallFile& v)
         void setVariantCallFile(VariantCallFile* v)
-        void parse(string& line, bool parseSamples)
+        void parse(string& line, bool parseInfo, bool parseSamples)
         void addFilter(string& tag)
         bool getValueBool(string& key, string& sample, int index)
         double getValueFloat(string& key, string& sample, int index)
@@ -142,4 +143,3 @@ cdef extern from "Variant.h" namespace "vcf":
 cdef class PyVariantCallFile:
 
     cdef VariantCallFile *thisptr
-        

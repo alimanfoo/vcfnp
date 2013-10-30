@@ -1,4 +1,8 @@
 # cython: profile = True
+# cython: boundscheck = False
+# cython: wraparound = False
+# cython: embedsignature = True
+
 
 """
 Utility functions to extract data from a VCF file and load into a numpy array.
@@ -300,11 +304,15 @@ def variants(filename,
         elif f not in fills:
             fills[f] = DEFAULT_VARIANT_FILL[f]
 
+    # convert to tuples for faster iteration
+    fields = tuple(fields)
+    dtypes = tuple(dtypes[f] for f in fields)
+    arities = tuple(arities[f] for f in fields)
+    fills = tuple(fills[f] for f in fields)
+
     # construct a numpy dtype for structured array
     dtype = list()
-    for f in fields:
-        t = dtypes[f]
-        n = arities[f]
+    for f, t, n in zip(fields, dtypes, arities):
         if n == 1:
             dtype.append((f, t))
         else:
@@ -312,9 +320,9 @@ def variants(filename,
 
     # set up iterator
     if condition is not None:
-        it = _itervariants_with_condition(filenames, region, fields, arities, fills, condition)
+        it = itervariants_with_condition(filenames, region, fields, arities, fills, condition)
     else:
-        it = _itervariants(filenames, region, fields, arities, fills)
+        it = itervariants(filenames, region, fields, arities, fills)
 
     # slice?
     if slice:
@@ -352,11 +360,11 @@ def _iter_withprogress(iterable, int progress, logstream):
 
 
 
-def _itervariants(filenames,
+def itervariants(filenames,
                  region,
-                 vector[string] fields,
-                 map[string, int] arities,
-                 dict fills):
+                 tuple fields,
+                 tuple arities,
+                 tuple fills):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 #    cdef vector[string] filterIds
@@ -364,6 +372,7 @@ def _itervariants(filenames,
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
+        variantFile.parseInfo = False
         variantFile.parseSamples = False
         if region is not None:
             region_set = variantFile.setRegion(region)
@@ -374,6 +383,7 @@ def _itervariants(filenames,
         filterIds = sorted(set(filterIds))
         if 'PASS' not in filterIds:
             filterIds += ['PASS']
+        filterIds = tuple(filterIds)
 
         while _get_next_variant(variantFile, var):
             yield _mkvvals(var, fields, arities, fills, filterIds)
@@ -382,11 +392,11 @@ def _itervariants(filenames,
         del var
 
 
-def _itervariants_with_condition(filenames,
+def itervariants_with_condition(filenames,
                                  region,
-                                 vector[string] fields,
-                                 map[string, int] arities,
-                                 dict fills,
+                                 tuple fields,
+                                 tuple arities,
+                                 tuple fills,
                                  condition):
     cdef VariantCallFile *variantFile
     cdef Variant *var
@@ -397,6 +407,7 @@ def _itervariants_with_condition(filenames,
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
+        variantFile.parseInfo = False
         variantFile.parseSamples = False
         if region is not None:
             region_set = variantFile.setRegion(region)
@@ -407,6 +418,7 @@ def _itervariants_with_condition(filenames,
         filterIds = sorted(set(filterIds))
         if 'PASS' not in filterIds:
             filterIds += ['PASS']
+        filterIds = tuple(filterIds)
 
         while i < n and _get_next_variant(variantFile, var):
             if condition[i]:
@@ -424,16 +436,16 @@ cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
 
 
 cdef inline object _mkvvals(Variant *var,
-                            vector[string] fields,
-                            map[string, int] arities,
-                            dict fills,
-                            list filterIds):
-    out = tuple([_mkvval(var, f, arities[f], fills[f], filterIds) for f in fields])
+                            tuple fields,
+                            tuple arities,
+                            tuple fills,
+                            tuple filterIds):
+    out = tuple([_mkvval(var, f, arity, fill, filterIds) for (f, arity, fill) in zip(fields, arities, fills)])
     return out
 
 
 
-cdef inline object _mkvval(Variant *var, string field, int arity, object fill, list filterIds):
+cdef inline object _mkvval(Variant *var, string field, int arity, object fill, tuple filterIds):
     if field == FIELD_NAME_CHROM:
         out = var.sequenceName
     elif field == FIELD_NAME_POS:
@@ -480,7 +492,7 @@ cdef inline object _mkaltval(Variant *var, int arity, object fill):
 
 
 
-cdef inline object _mkfilterval(Variant *var, list filterIds):
+cdef inline object _mkfilterval(Variant *var, tuple filterIds):
     filters = <list>split(var.filter, SEMICOLON)
     out = [(id in filters) for id in filterIds]
     out = tuple(out)
@@ -677,11 +689,17 @@ def info(filename,
         if f not in transformers:
             transformers[f] = None
 
+    # convert to tuples for faster iteration
+    fields = tuple(fields)
+    dtypes = tuple(dtypes[f] for f in fields)
+    arities = tuple(arities[f] for f in fields)
+    fills = tuple(fills[f] for f in fields)
+    infoTypes = tuple(infoTypes[f] for f in fields)
+    transformers = tuple(transformers[f] for f in fields)
+
     # construct a numpy dtype for structured array
     dtype = list()
-    for f in fields:
-        t = dtypes[f]
-        n = arities[f]
+    for f, t, n in zip(fields, dtypes, arities):
         if n == 1:
             dtype.append((f, t))
         else:
@@ -689,9 +707,9 @@ def info(filename,
 
     # set up iterator
     if condition is not None:
-        it = _iterinfo_with_condition(filenames, region, fields, arities, fills, infoTypes, transformers, condition)
+        it = iterinfo_with_condition(filenames, region, fields, arities, fills, infoTypes, transformers, condition)
     else:
-        it = _iterinfo(filenames, region, fields, arities, fills, infoTypes, transformers)
+        it = iterinfo(filenames, region, fields, arities, fills, infoTypes, transformers)
 
     # slice?
     if slice:
@@ -709,13 +727,13 @@ def warn_duplicates(fields):
         visited.add(f)
 
 
-def _iterinfo(filenames,
+def iterinfo(filenames,
              region,
-             vector[string] fields,
-             map[string, int] arities,
-             dict fills,
-             dict infoTypes,
-             dict transformers):
+             tuple fields,
+             tuple arities,
+             tuple fills,
+             tuple infoTypes,
+             tuple transformers):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
@@ -736,13 +754,13 @@ def _iterinfo(filenames,
         del var
 
 
-def _iterinfo_with_condition(filenames,
+def iterinfo_with_condition(filenames,
                              region,
-                             vector[string] fields,
-                             map[string, int] arities,
-                             dict fills,
-                             dict infoTypes,
-                             dict transformers,
+                             tuple fields,
+                             tuple arities,
+                             tuple fills,
+                             tuple infoTypes,
+                             tuple transformers,
                              condition):
     cdef VariantCallFile *variantFile
     cdef Variant *var
@@ -769,12 +787,12 @@ def _iterinfo_with_condition(filenames,
 
 
 cdef inline object _mkivals(Variant *var,
-                            vector[string] fields,
-                            map[string, int] arities,
-                            dict fills,
-                            dict infoTypes,
-                            dict transformers):
-    out = [_mkival(var, f, arities[f], fills[f], infoTypes[f], transformers[f]) for f in fields]
+                            tuple fields,
+                            tuple arities,
+                            tuple fills,
+                            tuple infoTypes,
+                            tuple transformers):
+    out = [_mkival(var, f, arity, fill, infoType, transformer) for (f, arity, fill, infoType, transformer) in zip(fields, arities, fills, infoTypes, transformers)]
     return tuple(out)
 
 
@@ -1088,11 +1106,17 @@ def calldata(filename,
                 vcf_type = formatTypes[f]
                 fills[f] = DEFAULT_FILL_MAP[vcf_type]
 
+    # convert to tuples for faster iteration
+    samples = tuple(samples)
+    fields = tuple(fields)
+    formatTypes = tuple(formatTypes[f] if f in formatTypes else -1 for f in fields)
+    dtypes = tuple(dtypes[f] for f in fields)
+    arities = tuple(arities[f] for f in fields)
+    fills = tuple(fills[f] for f in fields)
+
     # construct a numpy dtype for structured array cells
     cell_dtype = list()
-    for f in fields:
-        t = dtypes[f]
-        n = arities[f]
+    for f, t, n in zip(fields, dtypes, arities):
         if n == 1:
             cell_dtype.append((f, t))
         else:
@@ -1102,9 +1126,9 @@ def calldata(filename,
 
     # set up iterator
     if condition is not None:
-        it = _itercalldata_with_condition(filenames, region, samples, ploidy, fields, formatTypes, arities, fills, condition)
+        it = itercalldata_with_condition(filenames, region, samples, ploidy, fields, formatTypes, arities, fills, condition)
     else:
-        it = _itercalldata(filenames, region, samples, ploidy, fields, formatTypes, arities, fills)
+        it = itercalldata(filenames, region, samples, ploidy, fields, formatTypes, arities, fills)
 
     # slice?
     if slice:
@@ -1115,20 +1139,23 @@ def calldata(filename,
 
 
 
-def _itercalldata(filenames,
+def itercalldata(filenames,
                   region,
-                  vector[string] samples,
+                  tuple samples,
                   int ploidy,
-                  vector[string] fields,
-                  map[string, int] formatTypes,
-                  map[string, int] arities,
-                  dict fills):
+                  tuple fields,
+                  tuple formatTypes,
+                  tuple arities,
+                  tuple fills):
     cdef VariantCallFile *variantFile
     cdef Variant *var
+
+    fieldspec = zip(fields, arities, fills, formatTypes)
 
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
+        variantFile.parseInfo = False
         variantFile.parseSamples = True
         if region is not None:
             region_set = variantFile.setRegion(region)
@@ -1137,22 +1164,20 @@ def _itercalldata(filenames,
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
-            yield _mkssvals(var, samples, ploidy, fields, arities, fills, formatTypes)
-    #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
-    #        yield tuple(out)
+            yield _mkssvals(var, samples, ploidy, fieldspec)
 
         del variantFile
         del var
 
 
-def _itercalldata_with_condition(filenames,
+def itercalldata_with_condition(filenames,
                                  region,
-                                 vector[string] samples,
+                                 tuple samples,
                                  int ploidy,
-                                 vector[string] fields,
-                                 map[string, int] formatTypes,
-                                 map[string, int] arities,
-                                 dict fills,
+                                 tuple fields,
+                                 tuple formatTypes,
+                                 tuple arities,
+                                 tuple fills,
                                  condition,
                                  ):
     cdef VariantCallFile *variantFile
@@ -1160,9 +1185,12 @@ def _itercalldata_with_condition(filenames,
     cdef int i = 0
     cdef int n = len(condition)
 
+    fieldspec = zip(fields, arities, fills, formatTypes)
+
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
+        variantFile.parseInfo = False
         variantFile.parseSamples = False
         if region is not None:
             region_set = variantFile.setRegion(region)
@@ -1176,27 +1204,22 @@ def _itercalldata_with_condition(filenames,
                 variantFile.parseSamples = True
                 if not _get_next_variant(variantFile, var):
                     break
-                yield _mkssvals(var, samples, ploidy, fields, arities, fills, formatTypes)
+                yield _mkssvals(var, samples, ploidy, fieldspec)
             else:
                 variantFile.parseSamples = False
                 if not _get_next_variant(variantFile, var):
                     break
             i += 1
-    #        out = [_mksvals(var, s, ploidy, fields, arities, fills, variantFile.formatTypes) for s in samples]
-    #        yield tuple(out)
 
         del variantFile
         del var
 
 
 cdef inline object _mkssvals(Variant *var,
-                             vector[string] samples,
+                             tuple samples,
                              int ploidy,
-                             vector[string] fields,
-                             map[string, int] arities,
-                             dict fills,
-                             map[string, int] formatTypes):
-    out = [_mksvals(var, s, ploidy, fields, arities, fills, formatTypes) for s in samples]
+                             list fieldspec):
+    out = [_mksvals(var, s, ploidy, fieldspec) for s in samples]
     return tuple(out)
 
 
@@ -1204,11 +1227,9 @@ cdef inline object _mkssvals(Variant *var,
 cdef inline object _mksvals(Variant *var,
                             string sample,
                             int ploidy,
-                            vector[string] fields,
-                            map[string, int] arities,
-                            dict fills,
-                            map[string, int] formatTypes):
-    out = [_mksval(var.samples[sample], ploidy, f, arities[f], fills[f], formatTypes) for f in fields]
+                            list fieldspec):
+    out = [_mksval(var.samples[sample], ploidy, f, arity, fill, formatType)
+           for (f, arity, fill, formatType) in fieldspec]
     return tuple(out)
 
 
@@ -1218,7 +1239,7 @@ cdef inline object _mksval(map[string, vector[string]]& sample_data,
                            string field,
                            int arity,
                            object fill,
-                           map[string, int] formatTypes):
+                           int formatType):
     if field == FIELD_NAME_IS_CALLED:
         return _is_called(sample_data)
     elif field == FIELD_NAME_IS_PHASED:
@@ -1226,7 +1247,7 @@ cdef inline object _mksval(map[string, vector[string]]& sample_data,
     elif field == FIELD_NAME_GENOTYPE:
         return _genotype(sample_data, ploidy)
     else:
-        return _mkval(sample_data[field], arity, fill, formatTypes[field])
+        return _mkval(sample_data[field], arity, fill, formatType)
 
 
 
