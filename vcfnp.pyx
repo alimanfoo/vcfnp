@@ -1233,6 +1233,32 @@ cdef inline object _mksvals(Variant *var,
     return tuple(out)
 
 
+# alternative implementations, no speed difference...
+#
+#
+# cdef inline object _mkssvals(Variant *var,
+#                              tuple samples,
+#                              int ploidy,
+#                              list fieldspec):
+#     cdef int i
+#     out = list()
+#     for i in range(len(samples)):
+#         s = samples[i]
+#         out.append(_mksvals(var, s, ploidy, fieldspec))
+#     return tuple(out)
+#
+#
+# cdef inline object _mksvals(Variant *var,
+#                             string sample,
+#                             int ploidy,
+#                             list fieldspec):
+#     cdef int i
+#     out = list()
+#     for i in range(len(fieldspec)):
+#         f, arity, fill, formatType = fieldspec[i]
+#         out.append(_mksval(var.samples[sample], ploidy, f, arity, fill, formatType))
+#     return tuple(out)
+
 
 cdef inline object _mksval(map[string, vector[string]]& sample_data,
                            int ploidy,
