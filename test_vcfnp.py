@@ -38,6 +38,13 @@ def test_variants():
 #      dtype=[('CHROM', '|S12'), ('POS', '<i4'), ('ID', '|S12'), ('REF', '|S12'), ('ALT', '|S12', (2,)), ('QUAL', '<f4'), ('FILTER', [('PASS', '|b1'), ('q10', '|b1'), ('s50', '|b1')]), ('num_alleles', '|u1'), ('is_snp', '|b1')])
 
 
+def test_variants_flatten_filter():
+    a = variants('fixture/sample.vcf', flatten_filter=True)
+    eq_(True, a[2]['FILTER_PASS'])
+    eq_(False, a[3]['FILTER_PASS'])
+    eq_(True, a[3]['FILTER_q10'])
+
+
 def test_variants_region():
     a = variants('fixture/sample.vcf.gz', region='20')
     eq_(6, len(a))

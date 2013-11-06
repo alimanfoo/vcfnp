@@ -1,4 +1,4 @@
-# cython: profile = True
+# cython: profile = False
 # cython: boundscheck = False
 # cython: wraparound = False
 # cython: embedsignature = True
@@ -180,6 +180,86 @@ cdef string FIELD_NAME_GENOTYPE = 'genotype'
 cdef string FIELD_NAME_GT = 'GT'
 
 
+def _variants_fields(fields=None, exclude_fields=None):
+    if fields is None:
+        fields = VARIANT_FIELDS
+    else:
+        for f in fields:
+            assert f in VARIANT_FIELDS, 'unknown field: %s' % f
+    if exclude_fields is not None:
+        fields = [f for f in fields if f not in exclude_fields]
+    return tuple(fields)
+
+
+def _variants_arities(fields, arities=None):
+    if arities is None:
+        arities = dict()
+    for f in fields:
+        if f == 'FILTER':
+            arities[f] = 1 # one value
+        elif f not in arities:
+            arities[f] = DEFAULT_VARIANT_ARITY[f]
+    arities = tuple(arities[f] for f in fields)
+    return arities
+
+
+def _variants_fills(fields, fills=None):
+    if fills is None:
+        fills = dict()
+    for f in fields:
+        if f == 'FILTER':
+            fills[f] = False
+        elif f not in fills:
+            fills[f] = DEFAULT_VARIANT_FILL[f]
+    fills = tuple(fills[f] for f in fields)
+    return fills
+
+
+def _variants_dtype(filename, fields, arities, dtypes=None, flatten_filter=False):
+
+    filterIds = PyVariantCallFile(filename).filterIds
+    warn_duplicates(filterIds)
+    filterIds = sorted(set(filterIds))
+    if 'PASS' not in filterIds:
+        filterIds.append('PASS')
+
+    dtype = list()
+    for f, n in zip(fields, arities):
+        if f == 'FILTER' and flatten_filter:
+            # represent FILTER as multiple boolean fields
+            for flt in filterIds:
+                nm = 'FILTER_' + flt
+                dtype.append((nm, 'b1'))
+        elif f == 'FILTER' and not flatten_filter:
+            # represent FILTER as a structured datatype
+            t = [(flt, 'b1') for flt in filterIds]
+            dtype.append((f, t))
+        else:
+            if dtypes is not None and f in dtypes:
+                # user overrides default dtype
+                t = dtypes[f]
+            else:
+                t = DEFAULT_VARIANT_DTYPE[f]
+            if n == 1:
+                dtype.append((f, t))
+            else:
+                dtype.append((f, t, (n,)))
+
+    return dtype
+
+
+def _filenames_from_arg(filename):
+    if isinstance(filename, basestring):
+        filenames = [filename]
+    elif isinstance(filename, (list, tuple)):
+        filenames = filename
+    else:
+        raise Exception('filename argument must be basestring, list or tuple')
+    for fn in filenames:
+        if not os.path.exists(fn):
+            raise Exception('file not found: %s' % fn)
+    return filenames
+
 
 def variants(filename,
              region=None,
@@ -192,7 +272,8 @@ def variants(filename,
              progress=0,
              logstream=sys.stderr,
              condition=None,
-             slice=None
+             slice=None,
+             flatten_filter=False,
              ):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
@@ -227,6 +308,8 @@ def variants(filename,
         Boolean array defining which rows to load
     slice: tuple or list
         Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
+    flatten_filter: bool
+        Return FILTER as multiple boolean fields, e.g., FILTER_PASS, FILTER_LowQuality, etc.
 
     Examples
     --------
@@ -252,77 +335,25 @@ def variants(filename,
 
     """
 
-    if isinstance(filename, basestring):
-        filenames = [filename]
-    else:
-        filenames = filename
-
-    for fn in filenames:
-        if not os.path.exists(fn):
-            raise Exception('file not found: %s' % fn)
+    filenames = _filenames_from_arg(filename)
 
     # determine fields to extract
-    if fields is None:
-        fields = VARIANT_FIELDS
-    else:
-        for f in fields:
-            assert f in VARIANT_FIELDS, 'unknown field: %s' % f
-
-    # exclude fields
-    if exclude_fields is not None:
-        fields = [f for f in fields if f not in exclude_fields]
-
-    # determine a numpy dtype for each field
-    if dtypes is None:
-        dtypes = dict()
-    for f in fields:
-        if f == 'FILTER':
-            filterIds = PyVariantCallFile(filenames[0]).filterIds
-            warn_duplicates(filterIds)
-            t = [(flt, 'b1') for flt in sorted(set(filterIds))]
-            if 'PASS' not in filterIds:
-                t += [('PASS', 'b1')]
-            dtypes[f] = t
-        elif f not in dtypes:
-            dtypes[f] = DEFAULT_VARIANT_DTYPE[f]
+    fields = _variants_fields(fields, exclude_fields)
 
     # determine expected number of values for each field
-    if arities is None:
-        arities = dict()
-    for f in fields:
-        if f == 'FILTER':
-            arities[f] = 1 # one structured value
-        elif f not in arities:
-            arities[f] = DEFAULT_VARIANT_ARITY[f]
+    arities = _variants_arities(fields, arities)
 
     # determine fill values to use where number of values is less than expectation
-    if fills is None:
-        fills = dict()
-    for f in fields:
-        if f == 'FILTER':
-            fills[f] = False
-        elif f not in fills:
-            fills[f] = DEFAULT_VARIANT_FILL[f]
+    fills = _variants_fills(fields, fills)
 
-    # convert to tuples for faster iteration
-    fields = tuple(fields)
-    dtypes = tuple(dtypes[f] for f in fields)
-    arities = tuple(arities[f] for f in fields)
-    fills = tuple(fills[f] for f in fields)
-
-    # construct a numpy dtype for structured array
-    dtype = list()
-    for f, t, n in zip(fields, dtypes, arities):
-        if n == 1:
-            dtype.append((f, t))
-        else:
-            dtype.append((f, t, (n,)))
+    # create a numpy dtype
+    dtype = _variants_dtype(filenames[0], fields, arities, dtypes, flatten_filter)
 
     # set up iterator
     if condition is not None:
-        it = itervariants_with_condition(filenames, region, fields, arities, fills, condition)
+        it = itervariants_with_condition(filenames, region, fields, arities, fills, condition, flatten_filter)
     else:
-        it = itervariants(filenames, region, fields, arities, fills)
+        it = itervariants(filenames, region, fields, arities, fills, flatten_filter)
 
     # slice?
     if slice:
@@ -364,7 +395,8 @@ def itervariants(filenames,
                  region,
                  tuple fields,
                  tuple arities,
-                 tuple fills):
+                 tuple fills,
+                 bint flatten_filter):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 #    cdef vector[string] filterIds
@@ -385,8 +417,10 @@ def itervariants(filenames,
             filterIds += ['PASS']
         filterIds = tuple(filterIds)
 
+        fieldspec = zip(fields, arities, fills)
+
         while _get_next_variant(variantFile, var):
-            yield _mkvvals(var, fields, arities, fills, filterIds)
+            yield _mkvvals(var, fieldspec, filterIds, flatten_filter)
 
         del variantFile
         del var
@@ -397,7 +431,8 @@ def itervariants_with_condition(filenames,
                                  tuple fields,
                                  tuple arities,
                                  tuple fills,
-                                 condition):
+                                 condition,
+                                 bint flatten_filter):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 #    cdef vector[string] filterIds
@@ -420,9 +455,11 @@ def itervariants_with_condition(filenames,
             filterIds += ['PASS']
         filterIds = tuple(filterIds)
 
+        fieldspec = zip(fields, arities, fills)
+
         while i < n and _get_next_variant(variantFile, var):
             if condition[i]:
-                yield _mkvvals(var, fields, arities, fills, filterIds)
+                yield _mkvvals(var, fieldspec, filterIds, flatten_filter)
             i += 1
 
         del variantFile
@@ -436,12 +473,17 @@ cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
 
 
 cdef inline object _mkvvals(Variant *var,
-                            tuple fields,
-                            tuple arities,
-                            tuple fills,
-                            tuple filterIds):
-    out = tuple([_mkvval(var, f, arity, fill, filterIds) for (f, arity, fill) in zip(fields, arities, fills)])
-    return out
+                            list fieldspec,
+                            tuple filterIds,
+                            bint flatten_filter):
+    out = list()
+    for f, arity, fill in fieldspec:
+        val = _mkvval(var, f, arity, fill, filterIds)
+        if f == 'FILTER' and flatten_filter:
+            out.extend(val)
+        else:
+            out.append(val)
+    return tuple(out)
 
 
 
@@ -985,7 +1027,7 @@ def calldata(filename,
     Examples
     --------
 
-        >>> from vcfnp import samples
+        >>> from vcfnp import calldata
         >>> a = calldata('sample.vcf')
         >>> a
         array([ ((True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, False, [0, 1], '0/1', 0, 0, [3, 3])),
