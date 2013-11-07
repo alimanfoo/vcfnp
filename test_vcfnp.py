@@ -26,17 +26,6 @@ def test_variants():
     eq_(2, a[0]['num_alleles'])
     eq_(False, a[5]['is_snp'])
     
-#array([ ('19', 111, '.', 'A', ['C', ''], 9.600000381469727, (False, False, False), 2, True),
-#       ('19', 112, '.', 'A', ['G', ''], 10.0, (False, False, False), 2, True),
-#       ('20', 14370, 'rs6054257', 'G', ['A', ''], 29.0, (True, False, False), 2, True),
-#       ('20', 17330, '.', 'T', ['A', ''], 3.0, (False, True, False), 2, True),
-#       ('20', 1110696, 'rs6040355', 'A', ['G', 'T'], 67.0, (True, False, False), 3, True),
-#       ('20', 1230237, '.', 'T', ['.', ''], 47.0, (True, False, False), 2, False),
-#       ('20', 1234567, 'microsat1', 'G', ['GA', 'GAC'], 50.0, (True, False, False), 3, False),
-#       ('20', 1235237, '.', 'T', ['.', ''], 0.0, (False, False, False), 2, False),
-#       ('X', 10, 'rsTest', 'AC', ['A', 'ATG'], 10.0, (True, False, False), 3, False)], 
-#      dtype=[('CHROM', '|S12'), ('POS', '<i4'), ('ID', '|S12'), ('REF', '|S12'), ('ALT', '|S12', (2,)), ('QUAL', '<f4'), ('FILTER', [('PASS', '|b1'), ('q10', '|b1'), ('s50', '|b1')]), ('num_alleles', '|u1'), ('is_snp', '|b1')])
-
 
 def test_variants_flatten_filter():
     a = variants('fixture/sample.vcf', flatten_filter=True)

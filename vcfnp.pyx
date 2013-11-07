@@ -786,6 +786,7 @@ def iterinfo(filenames,
              tuple transformers):
     cdef VariantCallFile *variantFile
     cdef Variant *var
+    fieldspec = zip(fields, arities, fills, infoTypes, transformers)
 
     for current_filename in filenames:
         variantFile = new VariantCallFile()
@@ -798,7 +799,7 @@ def iterinfo(filenames,
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
-            yield _mkivals(var, fields, arities, fills, infoTypes, transformers)
+            yield _mkivals(var, fieldspec)
 
         del variantFile
         del var
@@ -817,6 +818,8 @@ def iterinfo_with_condition(filenames,
     cdef int i = 0
     cdef int n = len(condition)
 
+    fieldspec = zip(fields, arities, fills, infoTypes, transformers)
+
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
@@ -826,10 +829,9 @@ def iterinfo_with_condition(filenames,
             if not region_set:
                 raise StopIteration
         var = new Variant(deref(variantFile))
-
         while i < n and _get_next_variant(variantFile, var):
             if condition[i]:
-                yield _mkivals(var, fields, arities, fills, infoTypes, transformers)
+                yield _mkivals(var, fieldspec)
             i += 1
 
         del variantFile
@@ -837,12 +839,8 @@ def iterinfo_with_condition(filenames,
 
 
 cdef inline object _mkivals(Variant *var,
-                            tuple fields,
-                            tuple arities,
-                            tuple fills,
-                            tuple infoTypes,
-                            tuple transformers):
-    out = [_mkival(var, f, arity, fill, infoType, transformer) for (f, arity, fill, infoType, transformer) in zip(fields, arities, fills, infoTypes, transformers)]
+                            list fieldspec):
+    out = [_mkival(var, f, arity, fill, infoType, transformer) for (f, arity, fill, infoType, transformer) in fieldspec]
     return tuple(out)
 
 
