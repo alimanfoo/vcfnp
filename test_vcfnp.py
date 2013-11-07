@@ -4,16 +4,17 @@ Some simple unit tests for the vcfnp extension.
 """
 
 
-from vcfnp import variants, info, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer
+from vcfnp import variants, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer
 from nose.tools import eq_, assert_almost_equal
 import re
 import numpy as np
 
 
 def test_variants():
-    a = variants('fixture/sample.vcf', arities={'ALT': 2})
+    a = variants('fixture/sample.vcf', arities={'ALT': 2, 'AC': 2})
     print repr(a)
     eq_(9, len(a))
+
     eq_('19', a[0]['CHROM'])
     eq_(111, a[0]['POS'])
     eq_('rs6054257', a[2]['ID'])
@@ -25,7 +26,13 @@ def test_variants():
     eq_(True, a[3]['FILTER']['q10'])
     eq_(2, a[0]['num_alleles'])
     eq_(False, a[5]['is_snp'])
-    
+
+    # INFO fields
+    eq_(3, a[2]['NS'])
+    eq_(.5, a[2]['AF'])
+    eq_(True, a[2]['DB'])
+    eq_((3, 1), tuple(a[6]['AC']))
+
 
 def test_variants_flatten_filter():
     a = variants('fixture/sample.vcf', flatten_filter=True)
@@ -65,38 +72,6 @@ def test_variants_slice():
     eq_('rs6054257', a['ID'][1])
     
     
-def test_info():
-    a = info('fixture/sample.vcf', arities={'AC': 2})
-    print repr(a)
-    eq_(3, a[2]['NS'])
-    eq_(.5, a[2]['AF'])
-    eq_(True, a[2]['DB'])
-    eq_((3, 1), tuple(a[6]['AC']))
-
-#array([(0, 0, [0, 0], 0, 0.0, '', False, False),
-#       (0, 0, [0, 0], 0, 0.0, '', False, False),
-#       (3, 0, [0, 0], 14, 0.5, '', True, True),
-#       (3, 0, [0, 0], 11, 0.017000000923871994, '', False, False),
-#       (2, 0, [0, 0], 10, 0.3330000042915344, 'T', True, False),
-#       (3, 0, [0, 0], 13, 0.0, 'T', False, False),
-#       (3, 6, [3, 1], 9, 0.0, 'G', False, False),
-#       (0, 0, [0, 0], 0, 0.0, '', False, False),
-#       (0, 0, [0, 0], 0, 0.0, '', False, False)], 
-#      dtype=[('NS', '<i4'), ('AN', '<i4'), ('AC', '<i4', (2,)), ('DP', '<i4'), ('AF', '<f4'), ('AA', '|S12'), ('DB', '|b1'), ('H2', '|b1')])
-
-
-def test_info_region():
-    a = info('fixture/sample.vcf.gz', region='20')
-    eq_(6, len(a))
-
-
-def test_info_region_empty():
-    a = info('fixture/sample.vcf.gz', region='18')
-    eq_(0, len(a))
-    a = info('fixture/sample.vcf.gz', region='19:113-200')
-    eq_(0, len(a))
-
-
 def test_calldata():
     a = calldata('fixture/sample.vcf')
     print repr(a)
@@ -138,8 +113,6 @@ def test_condition():
     eq_(9, len(V))
     C = calldata('fixture/sample.vcf', condition=V['FILTER']['PASS'])
     eq_(5, len(C))
-    I = info('fixture/sample.vcf', condition=V['FILTER']['PASS'])
-    eq_(5, len(I))
     Vf = variants('fixture/sample.vcf', condition=V['FILTER']['PASS'])
     eq_(5, len(Vf))
     
@@ -163,53 +136,53 @@ def test_missing_calldata():
 
 
 def test_override_vcf_types():
-    I = info('fixture/test4.vcf')
-    eq_(0, I['MQ0Fraction'][2])
-    I = info('fixture/test4.vcf', vcf_types={'MQ0Fraction': 'Float'})
-    assert_almost_equal(0.03, I['MQ0Fraction'][2])
+    V = variants('fixture/test4.vcf')
+    eq_(0, V['MQ0Fraction'][2])
+    V = variants('fixture/test4.vcf', vcf_types={'MQ0Fraction': 'Float'})
+    assert_almost_equal(0.03, V['MQ0Fraction'][2])
 
 
-def test_info_transformers():
-    I = info('fixture/test12.vcf',
-             dtypes={'EFF': EFF_DEFAULT_DTYPE},
-             arities={'EFF': 1},
-             transformers={'EFF': eff_default_transformer()})
+def test_variants_transformers():
+    V = variants('fixture/test12.vcf',
+                 dtypes={'EFF': EFF_DEFAULT_DTYPE},
+                 arities={'EFF': 1},
+                 transformers={'EFF': eff_default_transformer()})
 
-    eq_('STOP_GAINED', I['EFF']['Effect'][0])
-    eq_('HIGH', I['EFF']['Effect_Impact'][0])
-    eq_('NONSENSE', I['EFF']['Functional_Class'][0])
-    eq_('Cag/Tag', I['EFF']['Codon_Change'][0])
-    eq_('Q236*', I['EFF']['Amino_Acid_Change'][0])
-    eq_(749, I['EFF']['Amino_Acid_Length'][0])
-    eq_('NOC2L', I['EFF']['Gene_Name'][0])
-    eq_('.', I['EFF']['Transcript_BioType'][0])
-    eq_(1, I['EFF']['Gene_Coding'][0])
-    eq_('NM_015658', I['EFF']['Transcript_ID'][0])
-    eq_(-1, I['EFF']['Exon'][0])
+    eq_('STOP_GAINED', V['EFF']['Effect'][0])
+    eq_('HIGH', V['EFF']['Effect_Impact'][0])
+    eq_('NONSENSE', V['EFF']['Functional_Class'][0])
+    eq_('Cag/Tag', V['EFF']['Codon_Change'][0])
+    eq_('Q236*', V['EFF']['Amino_Acid_Change'][0])
+    eq_(749, V['EFF']['Amino_Acid_Length'][0])
+    eq_('NOC2L', V['EFF']['Gene_Name'][0])
+    eq_('.', V['EFF']['Transcript_BioType'][0])
+    eq_(1, V['EFF']['Gene_Coding'][0])
+    eq_('NM_015658', V['EFF']['Transcript_ID'][0])
+    eq_(-1, V['EFF']['Exon'][0])
 
-    eq_('NON_SYNONYMOUS_CODING', I['EFF']['Effect'][1])
-    eq_('MODERATE', I['EFF']['Effect_Impact'][1])
-    eq_('MISSENSE', I['EFF']['Functional_Class'][1])
-    eq_('gTt/gGt', I['EFF']['Codon_Change'][1])
-    eq_('V155G', I['EFF']['Amino_Acid_Change'][1])
-    eq_(-1, I['EFF']['Amino_Acid_Length'][1])
-    eq_('PF3D7_0108900', I['EFF']['Gene_Name'][1])
-    eq_('.', I['EFF']['Transcript_BioType'][1])
-    eq_(-1, I['EFF']['Gene_Coding'][1])
-    eq_('rna_PF3D7_0108900-1', I['EFF']['Transcript_ID'][1])
-    eq_(1, I['EFF']['Exon'][1])
+    eq_('NON_SYNONYMOUS_CODING', V['EFF']['Effect'][1])
+    eq_('MODERATE', V['EFF']['Effect_Impact'][1])
+    eq_('MISSENSE', V['EFF']['Functional_Class'][1])
+    eq_('gTt/gGt', V['EFF']['Codon_Change'][1])
+    eq_('V155G', V['EFF']['Amino_Acid_Change'][1])
+    eq_(-1, V['EFF']['Amino_Acid_Length'][1])
+    eq_('PF3D7_0108900', V['EFF']['Gene_Name'][1])
+    eq_('.', V['EFF']['Transcript_BioType'][1])
+    eq_(-1, V['EFF']['Gene_Coding'][1])
+    eq_('rna_PF3D7_0108900-1', V['EFF']['Transcript_ID'][1])
+    eq_(1, V['EFF']['Exon'][1])
 
-    eq_('.', I['EFF']['Effect'][2])
-    eq_('.', I['EFF']['Effect_Impact'][2])
-    eq_('.', I['EFF']['Functional_Class'][2])
-    eq_('.', I['EFF']['Codon_Change'][2])
-    eq_('.', I['EFF']['Amino_Acid_Change'][2])
-    eq_(-1, I['EFF']['Amino_Acid_Length'][2])
-    eq_('.', I['EFF']['Gene_Name'][2])
-    eq_('.', I['EFF']['Transcript_BioType'][2])
-    eq_(-1, I['EFF']['Gene_Coding'][2])
-    eq_('.', I['EFF']['Transcript_ID'][2])
-    eq_(-1, I['EFF']['Exon'][2])
+    eq_('.', V['EFF']['Effect'][2])
+    eq_('.', V['EFF']['Effect_Impact'][2])
+    eq_('.', V['EFF']['Functional_Class'][2])
+    eq_('.', V['EFF']['Codon_Change'][2])
+    eq_('.', V['EFF']['Amino_Acid_Change'][2])
+    eq_(-1, V['EFF']['Amino_Acid_Length'][2])
+    eq_('.', V['EFF']['Gene_Name'][2])
+    eq_('.', V['EFF']['Transcript_BioType'][2])
+    eq_(-1, V['EFF']['Gene_Coding'][2])
+    eq_('.', V['EFF']['Transcript_ID'][2])
+    eq_(-1, V['EFF']['Exon'][2])
 
 
 def test_svlen():
@@ -229,21 +202,19 @@ def test_svlen():
 def test_duplicate_field_definitions():
     V = variants('fixture/test10.vcf')
     # should not raise, but print useful message to stderr
-    I = info('fixture/test10.vcf')
-    # should not raise, but print useful message to stderr
     C = calldata('fixture/test10.vcf')
     # should not raise, but print useful message to stderr
 
 
 def test_missing_info_definition():
     # INFO field DP not declared in VCF header
-    I = info('fixture/test14.vcf', fields=['DP'])
-    eq_('14', I[2]['DP'])  # default is string
-    I = info('fixture/test14.vcf', fields=['DP'], vcf_types={'DP':'Integer'})
-    eq_(14, I[2]['DP'])
+    V = variants('fixture/test14.vcf', fields=['DP'])
+    eq_('14', V[2]['DP'])  # default is string
+    V = variants('fixture/test14.vcf', fields=['DP'], vcf_types={'DP':'Integer'})
+    eq_(14, V[2]['DP'])
     # what about a field which isn't present at all?
-    I = info('fixture/test14.vcf', fields=['FOO'])
-    eq_('.', I[2]['FOO'])  # default missing value for string field
+    V = variants('fixture/test14.vcf', fields=['FOO'])
+    eq_('.', V[2]['FOO'])  # default missing value for string field
 
 
 def test_missing_format_definition():
