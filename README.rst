@@ -28,41 +28,46 @@ Usage
 	
 	filename = '/path/to/my.vcf'
 	
-	# load data from fixed fields (except INFO)
-	v = vcfnp.variants(filename).view(np.recarray)
+	# load data from fixed fields (including INFO)
+	V = vcfnp.variants(filename).view(np.recarray)
 	
 	# print some simple variant metrics
 	print 'found %s variants (%s SNPs)' % (v.size, np.count_nonzero(v.is_snp))
 	print 'QUAL mean (std): %s (%s)' % (np.mean(v.QUAL), np.std(v.QUAL))
 	
-	# load data from INFO field
-	i = vcfnp.info(filename).view(np.recarray)
-	
 	# plot a histogram of variant depth
 	fig = plt.figure(1)
 	ax = fig.add_subplot(111)
-	ax.hist(i.DP)
+	ax.hist(V.DP)
 	ax.set_title('DP histogram')
 	ax.set_xlabel('DP')
 	plt.show()
 	
 	# load data from sample columns 
-	c = vcfnp.calldata(filename).view(np.recarray)
-	c = vcfnp.view2d(c)
+	C = vcfnp.calldata(filename).view(np.recarray)
+	C2d = vcfnp.view2d(C)
 	
 	# print some simple genotype metrics
-	count_phased = np.count_nonzero(c.is_phased)
-	count_variant = np.count_nonzero(np.any(c.genotype > 0, axis=2)) 
-	count_missing = np.count_nonzero(~c.is_called)
-	print 'calls (phased, variant, missing): %s (%s, %s, %s)' % (c.flatten().size, count_phased, count_variant, count_missing)
+	count_phased = np.count_nonzero(C2d.is_phased)
+	count_variant = np.count_nonzero(np.any(C2d.genotype > 0, axis=2))
+	count_missing = np.count_nonzero(~C2d.is_called)
+	print 'calls (phased, variant, missing): %s (%s, %s, %s)' % (C2d.flatten().size, count_phased, count_variant, count_missing)
 	
 	# plot a histogram of genotype quality
 	fig = plt.figure(2)
 	ax = fig.add_subplot(111)
-	ax.hist(c.GQ.flatten())
+	ax.hist(C2d.GQ.flatten())
 	ax.set_title('GQ histogram')
 	ax.set_xlabel('GQ')
 	plt.show()  
+
+Release Notes
+-------------
+
+Note that as of version 1.0 the info() function has been removed and the variants() function now loads data from any
+of the VCF fixed fields including INFO. I.e., the variants() function gives access to all variant-level data in a single
+structured array. This is convenient for many use cases, e.g., using PyTables in-kernel queries to select variants
+passing some filtering criteria.
 
 Acknowledgments
 ---------------
