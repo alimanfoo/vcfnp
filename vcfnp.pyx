@@ -218,7 +218,7 @@ def _variants_fills(fields, fills=None):
 def _variants_dtype(filename, fields, arities, dtypes=None, flatten_filter=False):
 
     filterIds = PyVariantCallFile(filename).filterIds
-    warn_duplicates(filterIds)
+    _warn_duplicates(filterIds)
     filterIds = sorted(set(filterIds))
     if 'PASS' not in filterIds:
         filterIds.append('PASS')
@@ -580,6 +580,70 @@ cdef inline vector[int] _svlen_multi(string ref, vector[string]& alt, int arity,
     return out
 
 
+def _info_fields(fields, exclude_fields, infoIds):
+    if fields is None:
+        fields = infoIds  # extract all INFO fields
+    else:
+        for f in fields:
+            if f not in infoIds:
+                # support extracting INFO even if not declared in header, but warn...
+                print >>sys.stderr, 'WARNING: no definition found for field %s' % f
+    if exclude_fields is not None:
+        fields = [f for f in fields if f not in exclude_fields]
+    return tuple(fields)
+
+
+def _info_arities(fields, arities, infoCounts):
+    if arities is None:
+        arities = dict()
+    for f, vcf_count in zip(fields, infoCounts):
+        if f not in arities:
+            if vcf_count == ALLELE_NUMBER:
+                # default to 1 (biallelic)
+                arities[f] = 1
+            elif vcf_count <= 0:
+                # catch any other cases of non-specific arity
+                arities[f] = 1
+            else:
+                arities[f] = vcf_count
+    return tuple(arities[f] for f in fields)
+
+
+def _info_fills(fields, fills, infoTypes):
+    if fills is None:
+        fills = dict()
+    for f, vcf_type in zip(fields, infoTypes):
+        if f not in fills:
+            fills[f] = DEFAULT_FILL_MAP[vcf_type]
+    return tuple(fills[f] for f in fields)
+
+
+def _info_transformers(fields, transformers):
+    if transformers is None:
+        transformers = dict()
+    for f in fields:
+        if f not in transformers:
+            transformers[f] = None
+    return tuple(transformers[f] for f in fields)
+
+
+def _info_dtype(fields, dtypes, infoTypes, arities):
+    dtype = list()
+    for f, vcf_type, n in zip(fields, infoTypes, arities):
+        if dtypes is not None and f in dtypes:
+            t = dtypes[f]
+        elif f in DEFAULT_INFO_DTYPE:
+            # known INFO field
+            t = DEFAULT_INFO_DTYPE[f]
+        else:
+            t = DEFAULT_TYPE_MAP[vcf_type]
+        if n == 1:
+            dtype.append((f, t))
+        else:
+            dtype.append((f, t, (n,)))
+    return dtype
+
+
 def info(filename,
          region=None,
          fields=None,
@@ -654,98 +718,42 @@ def info(filename,
 
     """
 
-    if isinstance(filename, basestring):
-        filenames = [filename]
-    else:
-        filenames = filename
-
-    for fn in filenames:
-        if not os.path.exists(fn):
-            raise Exception('file not found: %s' % fn)
+    filenames = _filenames_from_arg(filename)
 
     vcf = PyVariantCallFile(filenames[0])
     # warn about duplicate field definitions
-    warn_duplicates(vcf.infoIds)
+    _warn_duplicates(vcf.infoIds)
     infoIds = sorted(set(vcf.infoIds))
     infoTypes = vcf.infoTypes
     infoCounts = vcf.infoCounts
 
     # determine INFO fields to extract
-    if fields is None:
-        fields = infoIds  # extract all INFO fields
-    else:
-        for f in fields:
-            if f not in infoIds:
-                print >>sys.stderr, 'WARNING: no definition found for field %s' % f
-                # fall back to unary string, can be overridden with vcf_types, dtypes and arities args
-                infoTypes[f] = FIELD_STRING
-                infoCounts[f] = 1
+    fields = _info_fields(fields, exclude_fields, infoIds)
 
-    # exclude fields
-    if exclude_fields is not None:
-        fields = [f for f in fields if f not in exclude_fields]
-
-    # override vcf types
-    if vcf_types is not None:
-        for f in vcf_types:
+    # deal with bad headers
+    for f in fields:
+        if f not in infoIds:
+            # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
+            infoTypes[f] = FIELD_STRING
+            infoCounts[f] = 1
+        if vcf_types is not None and f in vcf_types:
+            # override type declared in VCF header
             infoTypes[f] = TYPESTRING2KEY[vcf_types[f]]
 
-    # determine a numpy dtype for each field
-    if dtypes is None:
-        dtypes = dict()
-    for f in fields:
-        if f not in dtypes:
-            if f in DEFAULT_INFO_DTYPE:
-                # known INFO field
-                dtypes[f] = DEFAULT_INFO_DTYPE[f]
-            else:
-                vcf_type = infoTypes[f]
-                dtypes[f] = DEFAULT_TYPE_MAP[vcf_type]
+    infoTypes = tuple(infoTypes[f] for f in fields)
+    infoCounts = tuple(infoCounts[f] for f in fields)
 
     # determine expected number of values for each field
-    if arities is None:
-        arities = dict()
-    for f in fields:
-        if f not in arities:
-            vcf_count = infoCounts[f]
-            if vcf_count == ALLELE_NUMBER:
-                # default to 1 (biallelic)
-                arities[f] = 1
-            elif vcf_count <= 0:
-                # catch any other cases of non-specific arity
-                arities[f] = 1
-            else:
-                arities[f] = vcf_count
+    arities = _info_arities(fields, arities, infoCounts)
 
     # determine fill values to use where number of values is less than expectation
-    if fills is None:
-        fills = dict()
-    for f in fields:
-        if f not in fills:
-            vcf_type = infoTypes[f]
-            fills[f] = DEFAULT_FILL_MAP[vcf_type]
+    fills = _info_fills(fields, fills, infoTypes)
 
-    if transformers is None:
-        transformers = dict()
-    for f in fields:
-        if f not in transformers:
-            transformers[f] = None
-
-    # convert to tuples for faster iteration
-    fields = tuple(fields)
-    dtypes = tuple(dtypes[f] for f in fields)
-    arities = tuple(arities[f] for f in fields)
-    fills = tuple(fills[f] for f in fields)
-    infoTypes = tuple(infoTypes[f] for f in fields)
-    transformers = tuple(transformers[f] for f in fields)
+    # initialise field transformers
+    transformers = _info_transformers(fields, transformers)
 
     # construct a numpy dtype for structured array
-    dtype = list()
-    for f, t, n in zip(fields, dtypes, arities):
-        if n == 1:
-            dtype.append((f, t))
-        else:
-            dtype.append((f, t, (n,)))
+    dtype = _info_dtype(fields, dtypes, infoTypes, arities)
 
     # set up iterator
     if condition is not None:
@@ -761,7 +769,7 @@ def info(filename,
     return _fromiter(it, dtype, count, progress, logstream)
 
 
-def warn_duplicates(fields):
+def _warn_duplicates(fields):
     visited = set()
     for f in fields:
         if f in visited:
@@ -1065,7 +1073,7 @@ def calldata(filename,
 
     vcf = PyVariantCallFile(filenames[0])
     # warn about duplicate field definitions
-    warn_duplicates(vcf.formatIds)
+    _warn_duplicates(vcf.formatIds)
     formatIds = sorted(set(vcf.formatIds))
     formatTypes = vcf.formatTypes
     formatCounts = vcf.formatCounts
