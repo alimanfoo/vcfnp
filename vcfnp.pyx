@@ -10,7 +10,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
 
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 
 import sys
@@ -743,15 +743,15 @@ cdef inline object _mkval_string(vector[string]& string_vals, int arity, string 
         return _mkval_string_multi(string_vals, arity, fill)
 
 
-cdef inline vector[string] _mkval_string_multi(vector[string]& string_vals, int arity, string fill):
+cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity, string fill):
     cdef int i
-    cdef vector[string] v
+    out = list
     for i in range(arity):
         if i < string_vals.size():
-            v.push_back(string_vals.at(i))
+            out.push_back(string_vals.at(i))
         else:
-            v.push_back(fill)
-    return v
+            out.push_back(fill)
+    return out
 
 
 cdef inline object _mkval_float(vector[string]& string_vals, int arity, float fill):
@@ -762,7 +762,7 @@ cdef inline object _mkval_float(vector[string]& string_vals, int arity, float fi
     return out
 
 
-cdef inline float _mkval_float_single(vector[string]& string_vals, float fill):
+cdef inline object _mkval_float_single(vector[string]& string_vals, float fill):
     cdef float v
     if string_vals.size() > 0:
         return atof(string_vals.at(0).c_str())
@@ -773,14 +773,14 @@ cdef inline float _mkval_float_single(vector[string]& string_vals, float fill):
 #    return v
 
 
-cdef inline vector[float] _mkval_float_multi(vector[string]& string_vals, int arity, float fill):
+cdef inline object _mkval_float_multi(vector[string]& string_vals, int arity, float fill):
     cdef int i
-    cdef vector[float] out
+    out = list()
     for i in range(arity):
         if i < string_vals.size():
-            out.push_back(atof(string_vals.at(i).c_str()))
+            out.append(atof(string_vals.at(i).c_str()))
         else:
-            out.push_back(fill)
+            out.append(fill)
     return out
 #cdef inline vector[float] _mkval_float_multi(vector[string]& string_vals, int arity, float fill):
 #    cdef int i
@@ -802,7 +802,7 @@ cdef inline object _mkval_int(vector[string]& string_vals, int arity, int fill):
     return out
 
 
-cdef inline int _mkval_int_single(vector[string]& string_vals, int fill):
+cdef inline object _mkval_int_single(vector[string]& string_vals, int fill):
     cdef int v
     if string_vals.size() > 0:
         return atoi(string_vals.at(0).c_str())
@@ -813,14 +813,14 @@ cdef inline int _mkval_int_single(vector[string]& string_vals, int fill):
 #    return v
 
 
-cdef inline vector[int] _mkval_int_multi(vector[string]& string_vals, int arity, int fill):
+cdef inline object _mkval_int_multi(vector[string]& string_vals, int arity, int fill):
     cdef int i
-    cdef vector[int] out
+    out = list()
     for i in range(arity):
         if i < string_vals.size():
-            out.push_back(atoi(string_vals.at(i).c_str()))
+            out.append(atoi(string_vals.at(i).c_str()))
         else:
-            out.push_back(fill)
+            out.append(fill)
     return out
 #cdef inline vector[int] _mkval_int_multi(vector[string]& string_vals, int arity, int fill):
 #    cdef int i
