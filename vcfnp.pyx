@@ -10,7 +10,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 """
 
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 
 import sys
@@ -26,7 +26,7 @@ from libcpp cimport bool
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp.map cimport map
-from libc.stdlib cimport atoi, atof
+from libc.stdlib cimport atoi, atol, atof
 from cython.operator cimport dereference as deref
 import time
 from itertools import islice
@@ -43,11 +43,6 @@ cdef extern from "split.h":
     # split a string on any character found in the string of delimiters (delims)
     vector[string]& split(const string &s, const string& delims, vector[string] &elems)
     vector[string]  split(const string &s, const string& delims)
-
-
-cdef extern from "convert.h":
-    bool convert(const string& s, int& r)
-    bool convert(const string& s, float& r)
 
 
 TYPESTRING2KEY = {
@@ -514,7 +509,7 @@ class VariantsTable(object):
         return chain([header], data)
 
 
-def _fromiter(it, dtype, count, int progress=0, logstream=sys.stderr):
+def _fromiter(it, dtype, count, long progress=0, logstream=sys.stderr):
     if progress > 0:
         it = _iter_withprogress(it, progress, logstream)
     if count is not None:
@@ -524,8 +519,8 @@ def _fromiter(it, dtype, count, int progress=0, logstream=sys.stderr):
     return a
 
 
-def _iter_withprogress(iterable, int progress, logstream):
-    cdef int i, n
+def _iter_withprogress(iterable, long progress, logstream):
+    cdef long i, n
     before_all = time.time()
     before = before_all
     for i, o in enumerate(iterable):
@@ -577,8 +572,8 @@ def itervariants_with_condition(filenames,
                                 ):
     cdef VariantCallFile *variantFile
     cdef Variant *var
-    cdef int i = 0
-    cdef int n = len(condition)
+    cdef long i = 0
+    cdef long n = len(condition)
 
     for current_filename in filenames:
         variantFile = new VariantCallFile()
@@ -635,7 +630,7 @@ cdef inline object _mkvval(Variant *var, string field, int arity, object fill, i
     elif field == FIELD_NAME_FILTER:
         out = _mkfilterval(var, filterIds)
     elif field == FIELD_NAME_NUM_ALLELES:
-        out = var.alt.size() + 1
+        out = <int>(var.alt.size() + 1)
     elif field == FIELD_NAME_IS_SNP:
         out = _is_snp(var)
     elif field == FIELD_NAME_SVLEN:
@@ -689,8 +684,6 @@ cdef inline object _is_snp(Variant *var):
 
 
 cdef inline object _svlen(Variant *var, int arity, object fill):
-    cdef int i
-    cdef bytes alt
     if arity == 1:
         return _svlen_single(var.ref, var.alt, fill)
     else:
@@ -699,7 +692,7 @@ cdef inline object _svlen(Variant *var, int arity, object fill):
 
 cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
     if alt.size() > 0:
-        return alt.at(0).size() - ref.size()
+        return <int>(alt.at(0).size() - ref.size())
     return fill
 
 
@@ -708,7 +701,7 @@ cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity, obje
     out = list()
     for i in range(arity):
         if i < alt.size():
-            out.append(alt.at(i).size() - ref.size())
+            out.append(<int>(alt.at(i).size() - ref.size()))
         else:
             out.append(fill)
     return out
@@ -724,9 +717,9 @@ def _warn_duplicates(fields):
 
 cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, int vcf_type):
     if vcf_type == FIELD_FLOAT:
-        out = _mkval_float(string_vals, arity, fill)
+        out = _mkval_double(string_vals, arity, fill)
     elif vcf_type == FIELD_INTEGER:
-        out = _mkval_int(string_vals, arity, fill)
+        out = _mkval_long(string_vals, arity, fill)
     else:
         # make strings by default
         out = _mkval_string(string_vals, arity, fill)
@@ -754,22 +747,22 @@ cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity, o
     return out
 
 
-cdef inline object _mkval_float(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_double(vector[string]& string_vals, int arity, object fill):
     if arity == 1:
-        out = _mkval_float_single(string_vals, fill)
+        out = _mkval_double_single(string_vals, fill)
     else:
-        out = _mkval_float_multi(string_vals, arity, fill)
+        out = _mkval_double_multi(string_vals, arity, fill)
     return out
 
 
-cdef inline object _mkval_float_single(vector[string]& string_vals, object fill):
-    cdef float v
+cdef inline object _mkval_double_single(vector[string]& string_vals, object fill):
+    cdef double v
     if string_vals.size() > 0:
         return atof(string_vals.at(0).c_str())
     return fill
 
 
-cdef inline object _mkval_float_multi(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -780,27 +773,26 @@ cdef inline object _mkval_float_multi(vector[string]& string_vals, int arity, ob
     return out
 
 
-cdef inline object _mkval_int(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_long(vector[string]& string_vals, int arity, object fill):
     if arity == 1:
-        out = _mkval_int_single(string_vals, fill)
+        out = _mkval_long_single(string_vals, fill)
     else:
-        out = _mkval_int_multi(string_vals, arity, fill)
+        out = _mkval_long_multi(string_vals, arity, fill)
     return out
 
 
-cdef inline object _mkval_int_single(vector[string]& string_vals, object fill):
-    cdef int v
+cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):
     if string_vals.size() > 0:
-        return atoi(string_vals.at(0).c_str())
+        return atol(string_vals.at(0).c_str())
     return fill
 
 
-cdef inline object _mkval_int_multi(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):
         if i < string_vals.size():
-            out.append(atoi(string_vals.at(i).c_str()))
+            out.append(atol(string_vals.at(i).c_str()))
         else:
             out.append(fill)
     return out
@@ -1128,8 +1120,8 @@ def itercalldata_with_condition(filenames,
                                  ):
     cdef VariantCallFile *variantFile
     cdef Variant *var
-    cdef int i = 0
-    cdef int n = len(condition)
+    cdef long i = 0
+    cdef long n = len(condition)
 
     for current_filename in filenames:
         variantFile = new VariantCallFile()
