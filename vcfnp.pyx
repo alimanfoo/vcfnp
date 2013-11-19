@@ -15,6 +15,7 @@ __version__ = '1.1-SNAPSHOT'
 
 import sys
 import re
+from itertools import chain
 import numpy as np
 cimport numpy as np
 from vcflib cimport (PyVariantCallFile, VariantCallFile, Variant,
@@ -293,6 +294,64 @@ def _filenames_from_arg(filename):
     return filenames
 
 
+def _setup_variants(filename,
+                    region,
+                    fields,
+                    exclude_fields,
+                    arities,
+                    fills,
+                    transformers,
+                    vcf_types,
+                    flatten_filter):
+
+    filenames = _filenames_from_arg(filename)
+
+    # extract definitions from VCF header
+    vcf = PyVariantCallFile(filenames[0])
+    # FILTER definitions
+    filterIds = vcf.filterIds
+    _warn_duplicates(filterIds)
+    filterIds = sorted(set(filterIds))
+    if 'PASS' not in filterIds:
+        filterIds.append('PASS')
+    filterIds = tuple(filterIds)
+    # INFO definitions
+    _warn_duplicates(vcf.infoIds)
+    infoIds = tuple(sorted(set(vcf.infoIds)))
+    infoTypes = vcf.infoTypes
+    infoCounts = vcf.infoCounts
+
+    # determine fields to extract
+    fields = _variants_fields(fields, exclude_fields, infoIds)
+
+    # determine if we need to parse the INFO field
+    parseInfo = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
+
+    # support for working around VCFs with bad INFO headers
+    for f in fields:
+        if f not in STANDARD_VARIANT_FIELDS and f not in infoIds:
+            # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
+            infoTypes[f] = FIELD_STRING
+            infoCounts[f] = 1
+        if vcf_types is not None and f in vcf_types:
+            # override type declared in VCF header
+            infoTypes[f] = TYPESTRING2KEY[vcf_types[f]]
+
+    infoTypes = tuple(infoTypes[f] if f in infoTypes else -1 for f in fields)
+    infoCounts = tuple(infoCounts[f] if f in infoCounts else -1 for f in fields)
+
+    # determine expected number of values for each field
+    arities = _variants_arities(fields, arities, infoCounts)
+
+    # determine fill values to use where number of values is less than expectation
+    fills = _variants_fills(fields, fills, infoTypes)
+
+    # initialise INFO field transformers
+    transformers = _info_transformers(fields, transformers)
+
+    return filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter
+
+
 def variants(filename,
              region=None,
              fields=None,
@@ -378,56 +437,21 @@ def variants(filename,
 
     """
 
-    filenames = _filenames_from_arg(filename)
-
-    # extract definitions from VCF header
-    vcf = PyVariantCallFile(filenames[0])
-    # FILTER definitions
-    filterIds = vcf.filterIds
-    _warn_duplicates(filterIds)
-    filterIds = sorted(set(filterIds))
-    if 'PASS' not in filterIds:
-        filterIds.append('PASS')
-    filterIds = tuple(filterIds)
-    # INFO definitions
-    _warn_duplicates(vcf.infoIds)
-    infoIds = tuple(sorted(set(vcf.infoIds)))
-    infoTypes = vcf.infoTypes
-    infoCounts = vcf.infoCounts
-
-    # determine fields to extract
-    fields = _variants_fields(fields, exclude_fields, infoIds)
-
-    # determine if we need to parse the INFO field
-    parseInfo = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
-
-    # support for working around VCFs with bad INFO headers
-    for f in fields:
-        if f not in STANDARD_VARIANT_FIELDS and f not in infoIds:
-            # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
-            infoTypes[f] = FIELD_STRING
-            infoCounts[f] = 1
-        if vcf_types is not None and f in vcf_types:
-            # override type declared in VCF header
-            infoTypes[f] = TYPESTRING2KEY[vcf_types[f]]
-
-    infoTypes = tuple(infoTypes[f] if f in infoTypes else -1 for f in fields)
-    infoCounts = tuple(infoCounts[f] if f in infoCounts else -1 for f in fields)
-
-    # determine expected number of values for each field
-    arities = _variants_arities(fields, arities, infoCounts)
-
-    # determine fill values to use where number of values is less than expectation
-    fills = _variants_fills(fields, fills, infoTypes)
-
-    # initialise INFO field transformers
-    transformers = _info_transformers(fields, transformers)
-
-    # create a numpy dtype
-    dtype = _variants_dtype(fields, dtypes, arities, filterIds, flatten_filter, infoTypes)
+    filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter = _setup_variants(filename,
+                                                                                                                               region,
+                                                                                                                               fields,
+                                                                                                                               exclude_fields,
+                                                                                                                               arities,
+                                                                                                                               fills,
+                                                                                                                               transformers,
+                                                                                                                               vcf_types,
+                                                                                                                               flatten_filter)
 
     # zip up field parameters
     fieldspec = zip(fields, arities, fills, infoTypes, transformers)
+
+    # create a numpy dtype
+    dtype = _variants_dtype(fields, dtypes, arities, filterIds, flatten_filter, infoTypes)
 
     # set up iterator
     if condition is not None:
@@ -441,6 +465,53 @@ def variants(filename,
 
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
+
+
+class VariantsTable(object):
+
+    def __init__(self,
+                 filename,
+                 region=None,
+                 fields=None,
+                 exclude_fields=None,
+                 arities=None,
+                 fills=None,
+                 transformers=None,
+                 vcf_types=None,
+                 flatten_filter=False
+                 ):
+        self.filename = filename
+        self.region = region
+        self.fields = fields
+        self.exclude_fields = exclude_fields
+        self.arities = arities
+        self.fills = fills
+        self.transformers = transformers
+        self.vcf_types = vcf_types
+        self.flatten_filter = flatten_filter
+
+    def __iter__(self):
+        filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter = _setup_variants(self.filename,
+                                                                                                                                   self.region,
+                                                                                                                                   self.fields,
+                                                                                                                                   self.exclude_fields,
+                                                                                                                                   self.arities,
+                                                                                                                                   self.fills,
+                                                                                                                                   self.transformers,
+                                                                                                                                   self.vcf_types,
+                                                                                                                                   self.flatten_filter)
+
+        # zip up field parameters
+        fieldspec = zip(fields, arities, fills, infoTypes, transformers)
+        header = list()
+        for f in fields:
+            if flatten_filter and f == 'FILTER':
+                for t in filterIds:
+                    header.append('FILTER_' + t)
+            else:
+                header.append(f)
+        data = itervariants(filenames, region, fieldspec, filterIds, flatten_filter, parseInfo)
+        return chain([header], data)
 
 
 def _fromiter(it, dtype, count, int progress=0, logstream=sys.stderr):
