@@ -362,6 +362,8 @@ def variants(filename,
              condition=None,
              slice=None,
              flatten_filter=False,
+             verbose=False,
+             cache=False,
              ):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
@@ -405,6 +407,11 @@ def variants(filename,
         Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
     flatten_filter: bool
         Return FILTER as multiple boolean fields, e.g., FILTER_PASS, FILTER_LowQuality, etc.
+    verbose: bool
+        Log more messages.
+    cache: bool
+        If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
+        from the VCF.
 
     Examples
     --------
@@ -431,6 +438,101 @@ def variants(filename,
         array([ 0.   ,  0.   ,  0.5  ,  0.017,  0.333,  0.   ,  0.   ,  0.   ,  0.   ], dtype=float32)
 
     """
+
+    if cache:
+
+        if isinstance(filename, (list, tuple)):
+            raise Exception('caching only supported when loading from a single VCF file')
+
+        cache_fn = _mk_cache_fn(filename, type='variants', region=region)
+        if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
+            if verbose:
+                print >>logstream, 'no cache file found or cache out of date'
+            A = _build_variants(filename,
+                                region=region,
+                                fields=fields,
+                                exclude_fields=exclude_fields,
+                                dtypes=dtypes,
+                                arities=arities,
+                                fills=fills,
+                                transformers=transformers,
+                                vcf_types=vcf_types,
+                                count=count,
+                                progress=progress,
+                                logstream=logstream,
+                                condition=condition,
+                                slice=slice,
+                                flatten_filter=flatten_filter,
+                                verbose=verbose)
+            if verbose:
+                print >>logstream, 'saving to cache: %s' % cache_fn
+            np.save(cache_fn, A)
+            return A
+        else:
+            if verbose:
+                print >>logstream, 'loading from cache: %s' % cache_fn
+            A = np.load(cache_fn)
+            return A
+
+    else:
+
+        A = _build_variants(filename,
+                            region=region,
+                            fields=fields,
+                            exclude_fields=exclude_fields,
+                            dtypes=dtypes,
+                            arities=arities,
+                            fills=fills,
+                            transformers=transformers,
+                            vcf_types=vcf_types,
+                            count=count,
+                            progress=progress,
+                            logstream=logstream,
+                            condition=condition,
+                            slice=slice,
+                            flatten_filter=flatten_filter,
+                            verbose=verbose)
+        return A
+
+
+cache_dir_suffix = '.vcfnp_cache'
+
+
+def _mk_cache_fn(vcf_fn, type, region=None):
+    cache_dn = vcf_fn + cache_dir_suffix
+    if not os.path.exists(cache_dn):
+        os.mkdir(cache_dn)
+    else:
+        assert os.path.isdir(cache_dn), 'unexpected error, cache directory is not a directory: %s' % cache_dn
+    if region is None:
+        cache_fn = os.path.join(cache_dn, '%s.npy' % type)
+    else:
+        region = region.replace(':', '_').replace('-', '_')
+        cache_fn = os.path.join(cache_dn, '%s.%s.npy' % (type, region))
+    return cache_fn
+
+
+def _build_variants(filename,
+                    region=None,
+                    fields=None,
+                    exclude_fields=None,
+                    dtypes=None,
+                    arities=None,
+                    fills=None,
+                    transformers=None,
+                    vcf_types=None,
+                    count=None,
+                    progress=0,
+                    logstream=sys.stderr,
+                    condition=None,
+                    slice=None,
+                    flatten_filter=False,
+                    verbose=False,
+                    cache=False,
+                    ):
+
+    if verbose:
+        print >>logstream, 'loading variants from: %s' % filename
 
     filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter = _setup_variants(filename,
                                                                                                                                region,
@@ -888,6 +990,8 @@ def calldata(filename,
              logstream=sys.stderr,
              condition=None,
              slice=None,
+             verbose=False,
+             cache=False
              ):
     """
     Load a numpy 1-dimensional structured array with data from the sample columns of a VCF
@@ -924,6 +1028,11 @@ def calldata(filename,
         Boolean array defining which rows to load
     slice: tuple or list
         Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
+    verbose: bool
+        Log more messages.
+    cache: bool
+        If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
+        from the VCF.
 
     Examples
     --------
@@ -1025,6 +1134,83 @@ def calldata(filename,
 
     """
 
+    if cache:
+
+        if isinstance(filename, (list, tuple)):
+            raise Exception('caching only supported when loading from a single VCF file')
+
+        cache_fn = _mk_cache_fn(filename, type='calldata', region=region)
+        if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
+            if verbose:
+                print >>logstream, 'no cache file found or cache out of date'
+            A = _build_calldata(filename,
+                                region=region,
+                                samples=samples,
+                                ploidy=ploidy,
+                                fields=fields,
+                                exclude_fields=exclude_fields,
+                                dtypes=dtypes,
+                                arities=arities,
+                                fills=fills,
+                                vcf_types=vcf_types,
+                                count=count,
+                                progress=progress,
+                                logstream=logstream,
+                                condition=condition,
+                                slice=slice,
+                                verbose=verbose)
+            if verbose:
+                print >>logstream, 'saving to cache: %s' % cache_fn
+            np.save(cache_fn, A)
+            return A
+        else:
+            if verbose:
+                print >>logstream, 'loading from cache: %s' % cache_fn
+            A = np.load(cache_fn)
+            return A
+
+    else:
+
+        A = _build_calldata(filename,
+                            region=region,
+                            samples=samples,
+                            ploidy=ploidy,
+                            fields=fields,
+                            exclude_fields=exclude_fields,
+                            dtypes=dtypes,
+                            arities=arities,
+                            fills=fills,
+                            vcf_types=vcf_types,
+                            count=count,
+                            progress=progress,
+                            logstream=logstream,
+                            condition=condition,
+                            slice=slice,
+                            verbose=verbose)
+        return A
+
+
+def _build_calldata(filename,
+                    region=None,
+                    samples=None,
+                    ploidy=2,
+                    fields=None,
+                    exclude_fields=None,
+                    dtypes=None,
+                    arities=None,
+                    fills=None,
+                    vcf_types=None,
+                    count=None,
+                    progress=0,
+                    logstream=sys.stderr,
+                    condition=None,
+                    slice=None,
+                    verbose=False,
+                    ):
+
+    if verbose:
+        print >>logstream, 'loading calldata from: %s' % filename
+
     filenames = _filenames_from_arg(filename)
 
     # extract definitions from VCF header
@@ -1100,10 +1286,12 @@ def calldata_2d(filename,
                 logstream=sys.stderr,
                 condition=None,
                 slice=None,
+                verbose=False,
+                cache=False,
                ):
     """
     Load a numpy 2-dimensional structured array with data from the sample columns of a VCF
-    file. Equivalent to calldata() followed by view2d().
+    file. Convenience function, equivalent to calldata() followed by view2d().
 
     Parameters
     ----------
@@ -1136,11 +1324,72 @@ def calldata_2d(filename,
         Boolean array defining which rows to load
     slice: tuple or list
         Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
+    verbose: bool
+        Log more messages.
+    cache: bool
+        If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
+        from the VCF.
 
     """
-    C = calldata(filename, region=region, samples=samples, ploidy=ploidy, fields=fields, exclude_fields=exclude_fields,
-                 dtypes=dtypes, arities=arities, fills=fills, vcf_types=vcf_types, count=count, progress=progress,
-                 logstream=logstream, condition=condition, slice=slice)
+
+    if cache:
+
+        if isinstance(filename, (list, tuple)):
+            raise Exception('caching only supported when loading from a single VCF file')
+
+        cache_fn = _mk_cache_fn(filename, type='calldata_2d', region=region)
+        if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
+            if verbose:
+                print >>logstream, 'no cache file found or cache out of date'
+            A = _build_calldata_2d(filename,
+                                   region=region,
+                                   samples=samples,
+                                   ploidy=ploidy,
+                                   fields=fields,
+                                   exclude_fields=exclude_fields,
+                                   dtypes=dtypes,
+                                   arities=arities,
+                                   fills=fills,
+                                   vcf_types=vcf_types,
+                                   count=count,
+                                   progress=progress,
+                                   logstream=logstream,
+                                   condition=condition,
+                                   slice=slice,
+                                   verbose=verbose)
+            if verbose:
+                print >>logstream, 'saving to cache: %s' % cache_fn
+            np.save(cache_fn, A)
+            return A
+        else:
+            if verbose:
+                print >>logstream, 'loading from cache: %s' % cache_fn
+            A = np.load(cache_fn)
+            return A
+
+    else:
+
+        A = _build_calldata_2d(filename,
+                               region=region,
+                               samples=samples,
+                               ploidy=ploidy,
+                               fields=fields,
+                               exclude_fields=exclude_fields,
+                               dtypes=dtypes,
+                               arities=arities,
+                               fills=fills,
+                               vcf_types=vcf_types,
+                               count=count,
+                               progress=progress,
+                               logstream=logstream,
+                               condition=condition,
+                               slice=slice,
+                               verbose=verbose)
+        return A
+
+
+def _build_calldata_2d(*args, **kwargs):
+    C = calldata(*args, **kwargs)
     C2d = view2d(C)
     return C2d
 
