@@ -364,6 +364,7 @@ def variants(filename,
              flatten_filter=False,
              verbose=False,
              cache=False,
+             cachedir=None,
              ):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
@@ -412,6 +413,8 @@ def variants(filename,
     cache: bool
         If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
         from the VCF.
+    cachedir: string
+        Manually specify the directory to use to store cache files.
 
     Examples
     --------
@@ -444,7 +447,7 @@ def variants(filename,
         if isinstance(filename, (list, tuple)):
             raise Exception('caching only supported when loading from a single VCF file')
 
-        cache_fn = _mk_cache_fn(filename, type='variants', region=region)
+        cache_fn = _mk_cache_fn(filename, type='variants', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
                 print >>logstream, 'no cache file found or cache out of date'
@@ -495,20 +498,21 @@ def variants(filename,
         return A
 
 
-cache_dir_suffix = '.vcfnp_cache'
+cachedir_suffix = '.vcfnp_cache'
 
 
-def _mk_cache_fn(vcf_fn, type, region=None):
-    cache_dn = vcf_fn + cache_dir_suffix
-    if not os.path.exists(cache_dn):
-        os.mkdir(cache_dn)
+def _mk_cache_fn(vcf_fn, type, region=None, cachedir=None):
+    if cachedir is None:
+        cachedir = vcf_fn + cachedir_suffix
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
     else:
-        assert os.path.isdir(cache_dn), 'unexpected error, cache directory is not a directory: %s' % cache_dn
+        assert os.path.isdir(cachedir), 'unexpected error, cache directory is not a directory: %s' % cachedir
     if region is None:
-        cache_fn = os.path.join(cache_dn, '%s.npy' % type)
+        cache_fn = os.path.join(cachedir, '%s.npy' % type)
     else:
         region = region.replace(':', '_').replace('-', '_')
-        cache_fn = os.path.join(cache_dn, '%s.%s.npy' % (type, region))
+        cache_fn = os.path.join(cachedir, '%s.%s.npy' % (type, region))
     return cache_fn
 
 
@@ -991,7 +995,8 @@ def calldata(filename,
              condition=None,
              slice=None,
              verbose=False,
-             cache=False
+             cache=False,
+             cachedir=None,
              ):
     """
     Load a numpy 1-dimensional structured array with data from the sample columns of a VCF
@@ -1033,6 +1038,8 @@ def calldata(filename,
     cache: bool
         If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
         from the VCF.
+    cachedir: string
+        Manually specify the directory to use to store cache files.
 
     Examples
     --------
@@ -1139,7 +1146,7 @@ def calldata(filename,
         if isinstance(filename, (list, tuple)):
             raise Exception('caching only supported when loading from a single VCF file')
 
-        cache_fn = _mk_cache_fn(filename, type='calldata', region=region)
+        cache_fn = _mk_cache_fn(filename, type='calldata', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
                 print >>logstream, 'no cache file found or cache out of date'
@@ -1288,6 +1295,7 @@ def calldata_2d(filename,
                 slice=None,
                 verbose=False,
                 cache=False,
+                cachedir=None,
                ):
     """
     Load a numpy 2-dimensional structured array with data from the sample columns of a VCF
@@ -1329,6 +1337,8 @@ def calldata_2d(filename,
     cache: bool
         If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
         from the VCF.
+    cachedir: string
+        Manually specify the directory to use to store cache files.
 
     """
 
@@ -1337,7 +1347,7 @@ def calldata_2d(filename,
         if isinstance(filename, (list, tuple)):
             raise Exception('caching only supported when loading from a single VCF file')
 
-        cache_fn = _mk_cache_fn(filename, type='calldata_2d', region=region)
+        cache_fn = _mk_cache_fn(filename, type='calldata_2d', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
                 print >>logstream, 'no cache file found or cache out of date'

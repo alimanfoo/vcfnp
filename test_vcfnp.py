@@ -4,7 +4,9 @@ Some simple unit tests for the vcfnp extension.
 """
 
 
-from vcfnp import variants, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer
+import os
+from vcfnp import variants, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer, calldata_2d
+import vcfnp
 from nose.tools import eq_, assert_almost_equal
 import re
 import numpy as np
@@ -227,3 +229,56 @@ def test_explicit_pass_definition():
     # explicit PASS FILTER definition
     V = variants('fixture/test16.vcf')
     # should not raise
+
+
+def test_caching():
+    vcf_fn = 'fixture/sample.vcf.gz'
+
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='variants')
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    A = variants(vcf_fn, cache=True, verbose=True)
+    A2 = np.load(cache_fn)
+    assert np.all(A == A2)
+
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata')
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    A = calldata(vcf_fn, cache=True, verbose=True)
+    A2 = np.load(cache_fn)
+    assert np.all(A == A2)
+
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata_2d')
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    A = calldata_2d(vcf_fn, cache=True, verbose=True)
+    A2 = np.load(cache_fn)
+    assert np.all(A == A2)
+
+
+def test_caching_cachedir():
+    vcf_fn = 'fixture/sample.vcf.gz'
+    cachedir = 'fixture/custom.vcfnp_cache/foo'
+
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='variants', cachedir=cachedir)
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    A = variants(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
+    A2 = np.load(cache_fn)
+    assert np.all(A == A2)
+
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata', cachedir=cachedir)
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    A = calldata(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
+    A2 = np.load(cache_fn)
+    assert np.all(A == A2)
+
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata_2d', cachedir=cachedir)
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    A = calldata_2d(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
+    A2 = np.load(cache_fn)
+    assert np.all(A == A2)
+
+
