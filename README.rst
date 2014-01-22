@@ -64,10 +64,11 @@ Usage
 Release Notes
 -------------
 
-Note that as of version 1.0 the info() function has been removed and the variants() function now loads data from any
-of the VCF fixed fields including INFO. I.e., the variants() function gives access to all variant-level data in a single
-structured array. This is convenient for many use cases, e.g., using PyTables in-kernel queries to select variants
-passing some filtering criteria.
+* `1.5 <https://github.com/alimanfoo/vcfnp/issues?milestone=1&state=closed>`_
+* `1.0 <https://github.com/alimanfoo/vcfnp/issues?milestone=2&page=1&state=closed>`_ - Note that as of version 1.0 the
+info() function has been removed and the variants() function now loads data from any of the VCF fixed fields including
+INFO. I.e., the variants() function gives access to all variant-level data in a single structured array. This is
+convenient for many use cases, e.g., using PyTables in-kernel queries to select variants passing some filtering criteria.
 
 Acknowledgments
 ---------------
