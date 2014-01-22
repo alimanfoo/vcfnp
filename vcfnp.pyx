@@ -890,7 +890,7 @@ def calldata(filename,
              slice=None,
              ):
     """
-    Load a numpy structured array with data from the sample columns of a VCF
+    Load a numpy 1-dimensional structured array with data from the sample columns of a VCF
     file.
 
     Parameters
@@ -1083,6 +1083,66 @@ def calldata(filename,
 
     # build an array from the iterator
     return _fromiter(it, dtype, count, progress, logstream)
+
+
+def calldata_2d(filename,
+                region=None,
+                samples=None,
+                ploidy=2,
+                fields=None,
+                exclude_fields=None,
+                dtypes=None,
+                arities=None,
+                fills=None,
+                vcf_types=None,
+                count=None,
+                progress=0,
+                logstream=sys.stderr,
+                condition=None,
+                slice=None,
+               ):
+    """
+    Load a numpy 2-dimensional structured array with data from the sample columns of a VCF
+    file. Equivalent to calldata() followed by view2d().
+
+    Parameters
+    ----------
+
+    filename: string or list
+        Name of the VCF file or list of file names
+    region: string
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'
+    fields: list or array-like
+        List of fields to extract from the VCF
+    exclude_fields: list or array-like
+        Fields to exclude from extraction
+    dtypes: dict or dict-like
+        Dictionary cotaining dtypes to use instead of the default inferred ones
+    arities: dict or dict-like
+        Override the amount of values to expect
+    fills: dict or dict-like
+        Dictionary containing field:fillvalue mappings used to override the
+        default fill in values in VCF fields
+    vcf_types: dict or dict-like
+        Dictionary containing field:string mappings used to override any
+        bogus type declarations in the VCF header
+    count: int
+        Attempt to extract a specific number of records
+    progress: int
+        If greater than 0, log parsing progress
+    logstream: file or file-like object
+        Stream to use for logging progress
+    condition: array
+        Boolean array defining which rows to load
+    slice: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
+
+    """
+    C = calldata(filename, region=region, samples=samples, ploidy=ploidy, fields=fields, exclude_fields=exclude_fields,
+                 dtypes=dtypes, arities=arities, fills=fills, vcf_types=vcf_types, count=count, progress=progress,
+                 logstream=logstream, condition=condition, slice=slice)
+    C2d = view2d(C)
+    return C2d
 
 
 def itercalldata(filenames,
