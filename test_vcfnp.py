@@ -139,9 +139,9 @@ def test_missing_calldata():
 
 def test_override_vcf_types():
     V = variants('fixture/test4.vcf')
-    eq_(0, V['MQ0Fraction'][2])
-    V = variants('fixture/test4.vcf', vcf_types={'MQ0Fraction': 'Float'})
-    assert_almost_equal(0.03, V['MQ0Fraction'][2])
+    eq_(0, V['MQ0FractionTest'][2])
+    V = variants('fixture/test4.vcf', vcf_types={'MQ0FractionTest': 'Float'})
+    assert_almost_equal(0.03, V['MQ0FractionTest'][2], )
 
 
 def test_variants_transformers():
@@ -216,7 +216,7 @@ def test_missing_info_definition():
     eq_(14, V[2]['DP'])
     # what about a field which isn't present at all?
     V = variants('fixture/test14.vcf', fields=['FOO'])
-    eq_('.', V[2]['FOO'])  # default missing value for string field
+    eq_('', V[2]['FOO'])  # default missing value for string field
 
 
 def test_missing_format_definition():

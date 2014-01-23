@@ -115,22 +115,37 @@ DEFAULT_TYPE_MAP = {
 DEFAULT_FILL_MAP = {
     FIELD_FLOAT: 0.,
     FIELD_INTEGER: 0,
-    FIELD_STRING: '.',
+    FIELD_STRING: '',
     FIELD_BOOL: False,
     FIELD_UNKNOWN: ''
 }
 
 
-# default dtypes for some known INFO fields where we know that lower
-# precision is acceptable
+# default dtypes for some known INFO fields where lower precision is acceptable in most cases
 DEFAULT_INFO_DTYPE = {
+    'ABHet': 'f2',
+    'ABHom': 'f2',
     'AC': 'u2',
+    'AF': 'f2',
     'AN': 'u2',
-    'HRun': 'u2',
+    'BaseQRankSum': 'f2',
+    'ClippingRankSum': 'f2',
+    'Dels': 'f2',
+    'FS': 'f2',
+    'HRun': 'u1',
+    'HaplotypeScore': 'f2',
+    'InbreedingCoeff': 'f2',
+    'VariantType': 'a12',
     'MLEAC': 'u2',
+    'MLEAF': 'f2',
     'MQ': 'f2',
+    'MQ0Fraction': 'f2',
+    'MQRankSum': 'f2',
+    'OND': 'f2',
     'QD': 'f2',
     'RPA': 'u2',
+    'RU': 'a12',
+    'ReadPosRankSum': 'f2',
 }
 
 
@@ -163,6 +178,7 @@ DEFAULT_CALLDATA_ARITY = {
     'is_called': 1,
     'is_phased': 1,
     # N.B., set genotype arity to ploidy
+    'AD': 2,  # default to biallelic
 }
 
 
