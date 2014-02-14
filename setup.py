@@ -75,4 +75,5 @@ setup(
                  ],
     cmdclass={'build_ext': build_ext},
     ext_modules=[vcflib_extension, vcfnp_extension],
+    scripts=['bin/vcf2npy'],
 )

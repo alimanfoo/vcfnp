@@ -1,0 +1,176 @@
+#!/usr/bin/env python
+
+
+import os
+import sys
+import optparse
+import numpy as np
+import pyfasta
+import vcfnp
+
+
+def log(*msg):
+    print >>sys.stderr, ' '.join(map(str, msg))
+    sys.stderr.flush()
+
+
+def main(vcf_filename,
+         fasta_filename,
+         output_dir,
+         array_type,
+         chromosome,
+         task_size,
+         task_index,
+         exclude_fields,
+         ploidy,
+         dtypes,
+         arities,
+         progress,
+         ):
+
+    # determine region to extract
+    if chromosome is None:
+        region = None
+    elif task_size is None:
+        region = chromosome
+    else:
+        genome = pyfasta.Fasta(fasta_filename)
+        chrom_size = len(genome[chromosome])
+        n_fill = int(np.ceil(np.log10(chrom_size)))
+        start = range(0, chrom_size, task_size)[task_index]
+        startstr = str(start+1).zfill(n_fill)
+        stop = start + task_size
+        stopstr = str(stop).zfill(n_fill)
+        region = str(chromosome) + ':' + startstr + '-' + stopstr
+        log(region)
+
+    if array_type == 'variants':
+        A = vcfnp.variants(
+            vcf_filename,
+            region=region,
+            progress=progress,
+            exclude_fields=exclude_fields,
+            dtypes=dtypes,
+            arities=arities,
+            flatten_filter=True,
+            cache=True,
+            cachedir=output_dir,
+            verbose=True,
+        )
+    elif array_type == 'calldata':
+        A = vcfnp.calldata(
+            vcf_filename,
+            region=region,
+            progress=progress,
+            ploidy=ploidy,
+            exclude_fields=exclude_fields,
+            dtypes=dtypes,
+            arities=arities,
+            cache=True,
+            cachedir=output_dir,
+            verbose=True,
+        )
+    elif array_type == 'calldata_2d':
+        A = vcfnp.calldata_2d(
+            vcf_filename,
+            region=region,
+            progress=progress,
+            ploidy=ploidy,
+            exclude_fields=exclude_fields,
+            dtypes=dtypes,
+            arities=arities,
+            cache=True,
+            cachedir=output_dir,
+            verbose=True,
+        )
+    else:
+        raise Exception('unexpected array type: %s' % array_type)
+    log(A.size, 'items', A.nbytes, 'bytes')
+
+
+if __name__ == '__main__':
+
+    # handle command line options
+    parser = optparse.OptionParser()
+    parser.add_option('-V', '--variant',
+                      dest='vcf_filename', metavar='VCF', default=None,
+                      help='input VCF file')
+    parser.add_option('-R', '--reference_sequence',
+                      dest='fasta_filename', metavar='FASTA', default=None,
+                      help='reference genome as FASTA file')
+    parser.add_option('-o', '--output-dir',
+                      dest='output_dir', metavar='DIR', default=None,
+                      help='output directory')
+    parser.add_option('-T', '--array-type',
+                      dest='array_type', default='variants',
+                      help='[variants|calldata|calldata_2d]')
+    parser.add_option('-c', '--chromosome',
+                      dest='chromosome', default=None,
+                      help='chromosome to extract')
+    parser.add_option('-s', '--task-size',
+                      dest='task_size', metavar='BP', default=None, type='int',
+                      help='size (in base pairs) of region to extract')
+    parser.add_option('-n', '--task-index',
+                      dest='task_index', metavar='N', default=None,
+                      help='task index as integer or string to get task from environment variable (e.g., "SGE_TASK_ID")')
+    parser.add_option('-x', '--exclude-field',
+                      dest='exclude_fields', metavar='F', default=None, action='append',
+                      help='field to exclude')
+    parser.add_option('--ploidy',
+                      dest='ploidy', default=2, type='int',
+                      help='sample ploidy')
+    parser.add_option('--dtype',
+                      dest='dtypes', action='append',
+                      help='override default dtype for a given field, e.g., "MQ:f4"')
+    parser.add_option('--arity',
+                      dest='arities', action='append',
+                      help='override default arity for a given field, e.g., "AD:2"')
+    parser.add_option('--progress',
+                      dest='progress', metavar='N', default=10000, type='int',
+                      help='log progress every N rows')
+    options, args = parser.parse_args()
+
+    # determine task index
+    task_index = None
+    if options.chromosome is not None and options.task_size is not None:
+        if options.task_index is not None:
+            try:
+                task_index = int(options.task_index)
+            except ValueError:
+                assert task_index in os.environ, 'expected %s in environment' % options.task_index
+                task_index = int(os.environ[options.task_index])
+        elif 'SGE_TASK_ID' in os.environ:
+            task_index = int(os.environ['SGE_TASK_ID'])
+        else:
+            raise Exception('could not determine task index; %s', options)
+        task_index -= 1  # use zero-based indices internally
+
+    # determine dtype overrides
+    if options.dtypes:
+        dtypes = dict(s.split(':') for s in options.dtypes)
+    else:
+        dtypes = None
+
+    # determine arity overrides
+    if options.arities:
+        arities = dict((s.split(':')[0], int(s.split(':')[1])) for s in options.arities)
+    else:
+        arities = None
+
+    main(vcf_filename=options.vcf_filename,
+         fasta_filename=options.fasta_filename,
+         output_dir=options.output_dir,
+         array_type=options.array_type,
+         chromosome=options.chromosome,
+         task_size=options.task_size,
+         task_index=task_index,
+         exclude_fields=options.exclude_fields,
+         ploidy=options.ploidy,
+         dtypes=dtypes,
+         arities=arities,
+         progress=options.progress,
+         )
+
+
+
+
