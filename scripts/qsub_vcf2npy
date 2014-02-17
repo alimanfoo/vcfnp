@@ -81,12 +81,15 @@ def main(vcf_filename,
         cmd += ['--ploidy', ploidy]
     if progress is not None:
         cmd += ['--progress', progress]
-    for x in exclude_fields:
-        cmd += ['--exclude-field', x]
-    for x in dtypes:
-        cmd += ['--dtype', x]
-    for x in arities:
-        cmd += ['--arity', x]
+    if exclude_fields is not None:
+        for x in exclude_fields:
+            cmd += ['--exclude-field', x]
+    if dtypes is not None:
+        for x in dtypes:
+            cmd += ['--dtype', x]
+    if arities is not None:
+        for x in arities:
+            cmd += ['--arity', x]
 
     log('build qsub command')
     qsub_cmd = ['qsub',
