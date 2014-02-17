@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
     # handle command line args
     parser = argparse.ArgumentParser()
-    parser.add_argument('--variant',
+    parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='VCF', default=None,
                         help='VCF file to extract metadata from')
     parser.add_argument('--input-dir',

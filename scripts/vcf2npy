@@ -107,12 +107,12 @@ if __name__ == '__main__':
     # handle command line options
     epilog = "vcfnp version %s" % vcfnp.__version__
     parser = argparse.ArgumentParser(epilog=epilog)
-    parser.add_argument('--variant',
-                        dest='vcf_filename', metavar='VCF', default=None,
+    parser.add_argument('--vcf',
+                        dest='vcf_filename', metavar='FILE', default=None,
                         help='input VCF file')
-    parser.add_argument('--reference-sequence',
+    parser.add_argument('--fasta',
                         dest='fasta_filename', metavar='FASTA', default=None,
-                        help='reference genome as FASTA file')
+                        help='reference genome as FASTA file (only required if --task-size is given)')
     parser.add_argument('--output-dir',
                         dest='output_dir', metavar='DIR', default=None,
                         help='output directory')

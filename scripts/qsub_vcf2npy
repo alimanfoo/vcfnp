@@ -68,11 +68,12 @@ def main(vcf_filename,
 
     log('build task command')
     cmd = [task_script,
-           '--variant', vcf_filename,
-           '--reference-sequence', fasta_filename,
+           '--vcf', vcf_filename,
+           '--fasta', fasta_filename,
            '--array-type', array_type,
            '--chromosome', chromosome,
            '--task-size', task_size,
+           '--task-index', 'SGE_TASK_ID',
            ]
     if output_dir is not None:
         cmd += ['--output-dir', output_dir]
@@ -103,10 +104,10 @@ if __name__ == '__main__':
 
     # handle command line options
     parser = argparse.ArgumentParser(epilog='All remaining arguments are passed through to qsub.')
-    parser.add_argument('--variant',
+    parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='VCF', default=None,
                         help='input VCF file')
-    parser.add_argument('--reference_sequence',
+    parser.add_argument('--fasta',
                         dest='fasta_filename', metavar='FASTA', default=None,
                         help='reference genome as FASTA file')
     parser.add_argument('--output-dir',
