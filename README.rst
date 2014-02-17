@@ -102,7 +102,7 @@ a VCF file to 100kb variants and calldata_2d NPY splits, run something like::
         --input-dir /path/to/npy/output \
         --output /path/to/my.h5
 
-If you want to grouped the data by chromosome, do something like the following for each chromosome separately::
+If you want to group the data by chromosome, do something like the following for each chromosome separately::
 
     $ vcfnpy2hdf5 \
         --vcf /path/to/my.vcf \
