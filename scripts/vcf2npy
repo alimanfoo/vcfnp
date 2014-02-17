@@ -43,6 +43,8 @@ def main(vcf_filename,
     else:
         log('extract a chromosome split', chromosome, task_size, task_index)
         # N.B., make sure regions will work as sortable file names by left-padding with zeros
+        assert fasta_filename is not None, 'missing FASTA filename, try vcf2npy --help'
+        assert os.path.exists(fasta_filename), 'FASTA file not found'
         genome = pyfasta.Fasta(fasta_filename)
         chrom_size = len(genome[chromosome])
         n_fill = int(np.ceil(np.log10(chrom_size)))
