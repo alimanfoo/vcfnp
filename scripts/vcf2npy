@@ -156,7 +156,8 @@ if __name__ == '__main__':
             try:
                 task_index = int(args.task_index)
             except ValueError:
-                assert task_index in os.environ, 'expected %s in environment' % args.task_index
+                task_index = str(task_index).strip()
+                assert task_index in os.environ, 'expected %r in environment' % args.task_index
                 task_index = int(os.environ[args.task_index])
         # if task_index not given in options, assume SGE job array
         elif 'SGE_TASK_ID' in os.environ:
