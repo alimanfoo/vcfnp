@@ -72,15 +72,15 @@ def main(vcf_filename,
            '--fasta', fasta_filename,
            '--array-type', array_type,
            '--chromosome', chromosome,
-           '--task-size', task_size,
+           '--task-size', str(task_size),
            '--task-index', 'SGE_TASK_ID',
            ]
     if output_dir is not None:
         cmd += ['--output-dir', output_dir]
     if ploidy is not None:
-        cmd += ['--ploidy', ploidy]
+        cmd += ['--ploidy', str(ploidy)]
     if progress is not None:
-        cmd += ['--progress', progress]
+        cmd += ['--progress', str(progress)]
     if exclude_fields is not None:
         for x in exclude_fields:
             cmd += ['--exclude-field', x]
