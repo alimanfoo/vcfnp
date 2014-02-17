@@ -39,7 +39,7 @@ def main(vcf_filename,
     genome = pyfasta.Fasta(fasta_filename)
     if chromosome is None:
         # run all chromosomes
-        for chrom in sorted(genome.keys()):
+        for chromosome in sorted(genome.keys()):
             main(vcf_filename,
                  fasta_filename,
                  output_dir,
