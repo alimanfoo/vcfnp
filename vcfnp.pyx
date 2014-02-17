@@ -31,6 +31,7 @@ from cython.operator cimport dereference as deref
 import time
 from itertools import islice
 import os
+from datetime import datetime
 
 
 cdef size_t npos = -1
@@ -363,6 +364,11 @@ def _setup_variants(filename,
     return filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter
 
 
+def log(logstream, *msg):
+    print >>logstream, '[vcfnp] ' + str(datetime.now()) + ' :: ' + ' '.join([str(m) for m in msg])
+    sys.stderr.flush()
+
+
 def variants(filename,
              region=None,
              fields=None,
@@ -381,6 +387,7 @@ def variants(filename,
              verbose=False,
              cache=False,
              cachedir=None,
+             skip_cached=False,
              ):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
@@ -431,6 +438,8 @@ def variants(filename,
         from the VCF.
     cachedir: string
         Manually specify the directory to use to store cache files.
+    skip_cached: bool
+        If True and cache file is fresh, do not load and return None.
 
     Examples
     --------
@@ -466,7 +475,7 @@ def variants(filename,
         cache_fn = _mk_cache_fn(filename, type='variants', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
-                print >>logstream, 'no cache file found or cache out of date'
+                log(logstream, 'no cache file found or cache out of date')
             A = _build_variants(filename,
                                 region=region,
                                 fields=fields,
@@ -484,14 +493,19 @@ def variants(filename,
                                 flatten_filter=flatten_filter,
                                 verbose=verbose)
             if verbose:
-                print >>logstream, 'saving to cache: %s' % cache_fn
+                log(logstream, 'saving to cache', cache_fn)
             np.save(cache_fn, A)
             return A
         else:
-            if verbose:
-                print >>logstream, 'loading from cache: %s' % cache_fn
-            A = np.load(cache_fn)
-            return A
+            if skip_cached:
+                if verbose:
+                    log(logstream, 'skipping from cache', cache_fn)
+                return None
+            else:
+                if verbose:
+                    log(logstream, 'loading from cache', cache_fn)
+                A = np.load(cache_fn)
+                return A
 
     else:
 
@@ -552,7 +566,7 @@ def _build_variants(filename,
                     ):
 
     if verbose:
-        print >>logstream, 'loading variants from: %s' % filename
+        log(logstream, 'loading variants from', filename)
 
     filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter = _setup_variants(filename,
                                                                                                                                region,
@@ -650,10 +664,10 @@ def _iter_withprogress(iterable, long progress, logstream):
         n = i+1
         if n % progress == 0:
             after = time.time()
-            print >>logstream, '%s rows in %.2fs; batch in %.2fs (%d rows/s)' % (n, after-before_all, after-before, progress/(after-before))
+            log(logstream, '%s rows in %.2fs; batch in %.2fs (%d rows/s)' % (n, after-before_all, after-before, progress/(after-before)))
             before = after
     after_all = time.time()
-    print >>logstream, '%s rows in %.2fs (%d rows/s)' % (n, after_all-before_all, n/(after_all-before_all))
+    log(logstream, '%s rows in %.2fs (%d rows/s)' % (n, after_all-before_all, n/(after_all-before_all)))
 
 
 def itervariants(filenames,
@@ -1013,6 +1027,7 @@ def calldata(filename,
              verbose=False,
              cache=False,
              cachedir=None,
+             skip_cached=False,
              ):
     """
     Load a numpy 1-dimensional structured array with data from the sample columns of a VCF
@@ -1056,6 +1071,8 @@ def calldata(filename,
         from the VCF.
     cachedir: string
         Manually specify the directory to use to store cache files.
+    skip_cached: bool
+        If True and cache file is fresh, do not load and return None.
 
     Examples
     --------
@@ -1165,7 +1182,7 @@ def calldata(filename,
         cache_fn = _mk_cache_fn(filename, type='calldata', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
-                print >>logstream, 'no cache file found or cache out of date'
+                log(logstream, 'no cache file found or cache out of date')
             A = _build_calldata(filename,
                                 region=region,
                                 samples=samples,
@@ -1183,14 +1200,19 @@ def calldata(filename,
                                 slice=slice,
                                 verbose=verbose)
             if verbose:
-                print >>logstream, 'saving to cache: %s' % cache_fn
+                log(logstream, 'saving to cache', cache_fn)
             np.save(cache_fn, A)
             return A
         else:
-            if verbose:
-                print >>logstream, 'loading from cache: %s' % cache_fn
-            A = np.load(cache_fn)
-            return A
+            if skip_cached:
+                if verbose:
+                    log(logstream, 'skipping from cache', cache_fn)
+                return None
+            else:
+                if verbose:
+                    log(logstream, 'loading from cache', cache_fn)
+                A = np.load(cache_fn)
+                return A
 
     else:
 
@@ -1232,7 +1254,7 @@ def _build_calldata(filename,
                     ):
 
     if verbose:
-        print >>logstream, 'loading calldata from: %s' % filename
+        log(logstream, 'loading calldata from', filename)
 
     filenames = _filenames_from_arg(filename)
 
@@ -1312,6 +1334,7 @@ def calldata_2d(filename,
                 verbose=False,
                 cache=False,
                 cachedir=None,
+                skip_cached=False,
                ):
     """
     Load a numpy 2-dimensional structured array with data from the sample columns of a VCF
@@ -1355,6 +1378,8 @@ def calldata_2d(filename,
         from the VCF.
     cachedir: string
         Manually specify the directory to use to store cache files.
+    skip_cached: bool
+        If True and cache file is fresh, do not load and return None.
 
     """
 
@@ -1366,7 +1391,7 @@ def calldata_2d(filename,
         cache_fn = _mk_cache_fn(filename, type='calldata_2d', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
-                print >>logstream, 'no cache file found or cache out of date'
+                log(logstream, 'no cache file found or cache out of date')
             A = _build_calldata_2d(filename,
                                    region=region,
                                    samples=samples,
@@ -1384,14 +1409,19 @@ def calldata_2d(filename,
                                    slice=slice,
                                    verbose=verbose)
             if verbose:
-                print >>logstream, 'saving to cache: %s' % cache_fn
+                log(logstream, 'saving to cache', cache_fn)
             np.save(cache_fn, A)
             return A
         else:
-            if verbose:
-                print >>logstream, 'loading from cache: %s' % cache_fn
-            A = np.load(cache_fn)
-            return A
+            if skip_cached:
+                if verbose:
+                    log(logstream, 'skipping from cache', cache_fn)
+                return None
+            else:
+                if verbose:
+                    log(logstream, 'loading from cache', cache_fn)
+                A = np.load(cache_fn)
+                return A
 
     else:
 

@@ -3,14 +3,15 @@
 
 import os
 import sys
-import optparse
+import argparse
+from datetime import datetime
 import numpy as np
 import pyfasta
 import vcfnp
 
 
 def log(*msg):
-    print >>sys.stderr, ' '.join(map(str, msg))
+    print >>sys.stderr, '[vcf2npy] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg))
     sys.stderr.flush()
 
 
@@ -28,12 +29,20 @@ def main(vcf_filename,
          progress,
          ):
 
+    assert vcf_filename is not None, 'missing VCF filename, try vcf2npy --help'
+    assert os.path.exists(vcf_filename), 'VCF file not found'
+    log('loading', array_type, 'from', vcf_filename)
+
     # determine region to extract
     if chromosome is None:
+        log('extract whole genome')
         region = None
     elif task_size is None:
+        log('extract whole chromosome', chromosome)
         region = chromosome
     else:
+        log('extract a chromosome split', chromosome, task_size, task_index)
+        # N.B., make sure regions will work as sortable file names by left-padding with zeros
         genome = pyfasta.Fasta(fasta_filename)
         chrom_size = len(genome[chromosome])
         n_fill = int(np.ceil(np.log10(chrom_size)))
@@ -55,6 +64,7 @@ def main(vcf_filename,
             flatten_filter=True,
             cache=True,
             cachedir=output_dir,
+            skip_cached=True,
             verbose=True,
         )
     elif array_type == 'calldata':
@@ -68,6 +78,7 @@ def main(vcf_filename,
             arities=arities,
             cache=True,
             cachedir=output_dir,
+            skip_cached=True,
             verbose=True,
         )
     elif array_type == 'calldata_2d':
@@ -81,96 +92,100 @@ def main(vcf_filename,
             arities=arities,
             cache=True,
             cachedir=output_dir,
+            skip_cached=True,
             verbose=True,
         )
     else:
         raise Exception('unexpected array type: %s' % array_type)
-    log(A.size, 'items', A.nbytes, 'bytes')
+    if A is not None:
+        log('loaded', A.size, 'items', A.nbytes, 'bytes')
+    log('all done')
 
 
 if __name__ == '__main__':
 
     # handle command line options
-    parser = optparse.OptionParser()
-    parser.add_option('-V', '--variant',
-                      dest='vcf_filename', metavar='VCF', default=None,
-                      help='input VCF file')
-    parser.add_option('-R', '--reference_sequence',
-                      dest='fasta_filename', metavar='FASTA', default=None,
-                      help='reference genome as FASTA file')
-    parser.add_option('-o', '--output-dir',
-                      dest='output_dir', metavar='DIR', default=None,
-                      help='output directory')
-    parser.add_option('-T', '--array-type',
-                      dest='array_type', default='variants',
-                      help='[variants|calldata|calldata_2d]')
-    parser.add_option('-c', '--chromosome',
-                      dest='chromosome', default=None,
-                      help='chromosome to extract')
-    parser.add_option('-s', '--task-size',
-                      dest='task_size', metavar='BP', default=None, type='int',
-                      help='size (in base pairs) of region to extract')
-    parser.add_option('-n', '--task-index',
-                      dest='task_index', metavar='N', default=None,
-                      help='task index as integer or string to get task from environment variable (e.g., "SGE_TASK_ID")')
-    parser.add_option('-x', '--exclude-field',
-                      dest='exclude_fields', metavar='F', default=None, action='append',
-                      help='field to exclude')
-    parser.add_option('--ploidy',
-                      dest='ploidy', default=2, type='int',
-                      help='sample ploidy')
-    parser.add_option('--dtype',
-                      dest='dtypes', action='append',
-                      help='override default dtype for a given field, e.g., "MQ:f4"')
-    parser.add_option('--arity',
-                      dest='arities', action='append',
-                      help='override default arity for a given field, e.g., "AD:2"')
-    parser.add_option('--progress',
-                      dest='progress', metavar='N', default=10000, type='int',
-                      help='log progress every N rows')
-    options, args = parser.parse_args()
+    epilog = "vcfnp version %s" % vcfnp.__version__
+    parser = argparse.ArgumentParser(epilog=epilog)
+    parser.add_argument('--variant',
+                        dest='vcf_filename', metavar='VCF', default=None,
+                        help='input VCF file')
+    parser.add_argument('--reference-sequence',
+                        dest='fasta_filename', metavar='FASTA', default=None,
+                        help='reference genome as FASTA file')
+    parser.add_argument('--output-dir',
+                        dest='output_dir', metavar='DIR', default=None,
+                        help='output directory')
+    parser.add_argument('--array-type',
+                        dest='array_type', default='variants',
+                        help='array type, one of [variants|calldata|calldata_2d]')
+    parser.add_argument('--chromosome',
+                        dest='chromosome', default=None,
+                        help='chromosome to extract (omit to extract whole genome)')
+    parser.add_argument('--task-size',
+                        dest='task_size', metavar='BP', default=None, type=int,
+                        help='size (in base pairs) of region to extract (omit to extract whole chromosome)')
+    parser.add_argument('--task-index',
+                        dest='task_index', metavar='N', default=None,
+                        help='task index as integer or string to get task from environment variable (e.g., "SGE_TASK_ID")')
+    parser.add_argument('--exclude-field',
+                        dest='exclude_fields', metavar='F', default=None, action='append', nargs='*',
+                        help='array field to exclude')
+    parser.add_argument('--ploidy',
+                        dest='ploidy', default=2, type=int,
+                        help='sample ploidy')
+    parser.add_argument('--dtype',
+                        dest='dtypes', action='append', nargs='*',
+                        help='override default dtype for a given field, e.g., "MQ:f4"')
+    parser.add_argument('--arity',
+                        dest='arities', action='append', nargs='*',
+                        help='override default arity for a given field, e.g., "AD:2"')
+    parser.add_argument('--progress',
+                        dest='progress', metavar='N', default=10000, type=int,
+                        help='log progress every N rows')
+    args = parser.parse_args()
 
     # determine task index
     task_index = None
-    if options.chromosome is not None and options.task_size is not None:
-        if options.task_index is not None:
+    if args.chromosome is not None and args.task_size is not None:
+        # assume we are running as part of a parallel job array
+        # want to determine task index
+        if args.task_index is not None:
             try:
-                task_index = int(options.task_index)
+                task_index = int(args.task_index)
             except ValueError:
-                assert task_index in os.environ, 'expected %s in environment' % options.task_index
-                task_index = int(os.environ[options.task_index])
+                assert task_index in os.environ, 'expected %s in environment' % args.task_index
+                task_index = int(os.environ[args.task_index])
+        # if task_index not given in options, assume SGE job array
         elif 'SGE_TASK_ID' in os.environ:
             task_index = int(os.environ['SGE_TASK_ID'])
         else:
-            raise Exception('could not determine task index; %s', options)
+            raise Exception('could not determine task index; %s', args)
         task_index -= 1  # use zero-based indices internally
 
     # determine dtype overrides
-    if options.dtypes:
-        dtypes = dict(s.split(':') for s in options.dtypes)
+    if args.dtypes:
+        dtypes = dict(s.split(':') for s in args.dtypes)
     else:
         dtypes = None
 
     # determine arity overrides
-    if options.arities:
-        arities = dict((s.split(':')[0], int(s.split(':')[1])) for s in options.arities)
+    if args.arities:
+        arities = dict((s.split(':')[0], int(s.split(':')[1])) for s in args.arities)
     else:
         arities = None
 
-    main(vcf_filename=options.vcf_filename,
-         fasta_filename=options.fasta_filename,
-         output_dir=options.output_dir,
-         array_type=options.array_type,
-         chromosome=options.chromosome,
-         task_size=options.task_size,
+    main(vcf_filename=args.vcf_filename,
+         fasta_filename=args.fasta_filename,
+         output_dir=args.output_dir,
+         array_type=args.array_type,
+         chromosome=args.chromosome,
+         task_size=args.task_size,
          task_index=task_index,
-         exclude_fields=options.exclude_fields,
-         ploidy=options.ploidy,
+         exclude_fields=args.exclude_fields,
+         ploidy=args.ploidy,
          dtypes=dtypes,
          arities=arities,
-         progress=options.progress,
+         progress=args.progress,
          )
-
-
-
 
