@@ -141,8 +141,8 @@ if __name__ == '__main__':
                         dest='progress', metavar='N', default=10000, type=int,
                         help='log progress every N rows')
     parser.add_argument('--task-script',
-                        dest='task_script', default='vcf2npy',
-                        help='override task script (defaults to vcf2npy)')
+                        dest='task_script', default='/usr/local/bin/vcf2npy',
+                        help='override task script (defaults to /usr/local/bin/vcf2npy)')
     parser.add_argument('-S', '--shell',
                         dest='shell', default='/usr/bin/python',
                         help='override interpreting shell for the job (defaults to /usr/bin/python/)')
