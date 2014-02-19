@@ -282,3 +282,61 @@ def test_caching_cachedir():
     assert np.all(A == A2)
 
 
+def test_tabulate_variants():
+    vcf_fn = 'fixture/sample.vcf'
+
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER', 'AF')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields))
+    eq_(fields, tbl[0])
+    eq_(('19', 111, 'A', 'C', '.', '.'), tbl[1])
+    eq_(('20', 17330, 'T', 'A', 'q10', '0.017'), tbl[4])
+    eq_(('20', 1110696, 'A', 'G,T', 'PASS', '0.333,0.667'), tbl[5])
+
+
+def test_tabulate_variants_flatten_filter():
+    vcf_fn = 'fixture/sample.vcf'
+
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, flatten_filter=True))
+    expect_fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER_q10', 'FILTER_s50', 'FILTER_PASS')
+    eq_(expect_fields, tbl[0])
+    eq_(('19', 111, 'A', 'C', False, False, False), tbl[1])
+    eq_(('20', 17330, 'T', 'A', True, False, False), tbl[4])
+    eq_(('20', 1110696, 'A', 'G,T', False, False, True), tbl[5])
+
+
+def test_tabulate_variants_explicit_arity():
+    vcf_fn = 'fixture/sample.vcf'
+
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'AF')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, arities={'ALT': 2, 'AF': 2}))
+    expect_fields = ('CHROM', 'POS', 'REF', 'ALT_1', 'ALT_2', 'FILTER', 'AF_1', 'AF_2')
+    eq_(expect_fields, tbl[0])
+    eq_(('19', 111, 'A', 'C', '.', '.', '.'), tbl[1])
+    eq_(('20', 17330, 'T', 'A', '.', '0.017', '.'), tbl[4])
+    eq_(('20', 1110696, 'A', 'G', 'T', '0.333', '0.667'), tbl[5])
+
+
+def test_tabulate_variants_type_conversion():
+    vcf_fn = 'fixture/sample.vcf'
+
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'AF', 'DP')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, type_conversion=True))
+    eq_(fields, tbl[0])
+    eq_(('19', 111, 'A', 'C', '.', '.'), tbl[1])
+    eq_(('20', 17330, 'T', 'A', 0.017, 11), tbl[4])
+    eq_(('20', 1110696, 'A', 'G,T', '0.333,0.667', 10), tbl[5])
+
+
+def test_tabulate_variants_type_conversion_explicit_arity():
+    vcf_fn = 'fixture/sample.vcf'
+
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'AF', 'DP')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, arities={'ALT': 2, 'AF': 2}, type_conversion=True))
+    expect_fields = ('CHROM', 'POS', 'REF', 'ALT_1', 'ALT_2', 'FILTER', 'AF_1', 'AF_2')
+    eq_(expect_fields, tbl[0])
+    eq_(('19', 111, 'A', 'C', '.', '.', '.', '.'), tbl[1])
+    eq_(('20', 17330, 'T', 'A', '.', 0.017, '.', 11), tbl[4])
+    eq_(('20', 1110696, 'A', 'G', 'T', 0.333, 0.667, 10), tbl[5])
+
+

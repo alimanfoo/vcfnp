@@ -606,43 +606,42 @@ class VariantsTable(object):
                  fields=None,
                  exclude_fields=None,
                  arities=None,
-                 fills=None,
-                 transformers=None,
-                 vcf_types=None,
-                 flatten_filter=False
+                 flatten_filter=False,
+                 type_conversion=False,
                  ):
         self.filename = filename
         self.region = region
         self.fields = fields
         self.exclude_fields = exclude_fields
         self.arities = arities
-        self.fills = fills
-        self.transformers = transformers
-        self.vcf_types = vcf_types
         self.flatten_filter = flatten_filter
+        self.type_conversion = type_conversion
 
     def __iter__(self):
-        filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter = _setup_variants(self.filename,
-                                                                                                                                   self.region,
-                                                                                                                                   self.fields,
-                                                                                                                                   self.exclude_fields,
-                                                                                                                                   self.arities,
-                                                                                                                                   self.fills,
-                                                                                                                                   self.transformers,
-                                                                                                                                   self.vcf_types,
-                                                                                                                                   self.flatten_filter)
+        filenames, region, fields, _, _, infoTypes, _, parseInfo, filterIds, flatten_filter = _setup_variants(filename=self.filename,
+                                                                                                              region=self.region,
+                                                                                                              fields=self.fields,
+                                                                                                              exclude_fields=self.exclude_fields,
+                                                                                                              arities=None,
+                                                                                                              fills=None,
+                                                                                                              transformers=None,
+                                                                                                              vcf_types=None,
+                                                                                                              flatten_filter=self.flatten_filter)
 
-        # zip up field parameters
-        fieldspec = zip(fields, arities, fills, infoTypes, transformers)
+
+        # make header row
         header = list()
         for f in fields:
             if flatten_filter and f == 'FILTER':
                 for t in filterIds:
                     header.append('FILTER_' + t)
+            elif self.arities is not None and f in self.arities and self.arities[f] > 1:
+                for i in range(1, self.arities[f] + 1):
+                    header.append(f + '_' + str(i))
             else:
                 header.append(f)
-        data = itervariants(filenames, region, fieldspec, filterIds, flatten_filter, parseInfo)
-        return chain([header], data)
+        data = itervariantstable(filenames, region, fields, self.arities, infoTypes, parseInfo, filterIds, flatten_filter)
+        return chain(tuple(header), data)
 
 
 def _fromiter(it, dtype, count, long progress=0, logstream=sys.stderr):
@@ -675,8 +674,7 @@ def itervariants(filenames,
                  list fieldspec,
                  tuple filterIds,
                  bint flatten_filter,
-                 parseInfo
-                 ):
+                 parseInfo):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
@@ -731,6 +729,28 @@ def itervariants_with_condition(filenames,
         del var
 
 
+def itervariantstable(filenames, region, fields, arities, infoTypes, parseInfo, filterIds, flatten_filter):
+    cdef VariantCallFile *variantFile
+    cdef Variant *var
+
+    for current_filename in filenames:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseInfo = parseInfo
+        variantFile.parseSamples = False
+        if region is not None:
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
+        var = new Variant(deref(variantFile))
+
+        while _get_next_variant(variantFile, var):
+            yield _mkvtblrow(var, fields, arities, infoTypes, filterIds, flatten_filter)
+
+        del variantFile
+        del var
+
+
 cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
     # break this out into a separate function so we can profile it
     return variantFile.getNextVariant(deref(var))
@@ -747,6 +767,81 @@ cdef inline object _mkvrow(Variant *var,
             out.extend(val)
         else:
             out.append(val)
+    return tuple(out)
+
+
+cdef inline object _mkvtblrow(Variant *var,
+                              fields,
+                              arities,
+                              infoTypes,
+                              filterIds,
+                              flatten_filter):
+    out = list()
+    # TODO sort this function out, it's a mess
+    cdef string field
+    for field in fields:
+        if field == FIELD_NAME_CHROM:
+            val = var.sequenceName
+            out.append(val)
+        elif field == FIELD_NAME_POS:
+            val = var.position
+            out.append(val)
+        elif field == FIELD_NAME_ID:
+            val = var.id
+            out.append(val)
+        elif field == FIELD_NAME_REF:
+            val = var.ref
+            out.append(val)
+        elif field == FIELD_NAME_ALT:
+            val = var.alt
+            f = str(field)  # TODO deal with Python/Cython mess here
+            if arities is not None and f in arities:
+                arity = arities[f]
+                if val.size() == arity:
+                    pass
+                elif val.size() > arity:
+                    val = val[:arity]
+                else:
+                    val += ['.'] * (arity-val.size())
+                out.extend(val)
+            else:
+                out.append(','.join(val))
+        elif field == FIELD_NAME_QUAL:
+            val = var.quality
+        elif field == FIELD_NAME_FILTER:
+            val = var.filter
+            if flatten_filter:
+                val = [(id in val) for id in filterIds]
+                out.extend(val)
+            else:
+                out.append(val)
+        elif field == FIELD_NAME_NUM_ALLELES:
+            val = <int>(var.alt.size() + 1)
+            out.append(val)
+        elif field == FIELD_NAME_IS_SNP:
+            val = _is_snp(var)
+            out.append(val)
+        else:
+            vcf_type = infoTypes[field]
+            if vcf_type == FIELD_BOOL:
+                # ignore arity, this is a flag
+                val = (var.infoFlags.count(field) > 0)
+                out.append(val)
+            else:
+                val = var.info[field]
+                f = str(field)  # TODO deal with Python/Cython mess here
+                # TODO code smell
+                if arities is not None and f in arities:
+                    arity = arities[f]
+                    if val.size() == arity:
+                        pass
+                    elif val.size() > arity:
+                        val = val[:arity]
+                    else:
+                        val += ['.'] * (arity-val.size())
+                    out.extend(val)
+                else:
+                    out.append(','.join(val))
     return tuple(out)
 
 
