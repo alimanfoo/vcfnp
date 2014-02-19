@@ -126,16 +126,16 @@ if __name__ == '__main__':
                         dest='task_size', metavar='BP', default=None, type=int,
                         help='size (in base pairs) of region to extract (omit to extract whole chromosome)')
     parser.add_argument('--exclude-field',
-                        dest='exclude_fields', metavar='F', default=None, action='append', nargs='*',
+                        dest='exclude_fields', metavar='F', default=None, action='append',
                         help='array field to exclude')
     parser.add_argument('--ploidy',
                         dest='ploidy', default=2, type=int,
                         help='sample ploidy')
     parser.add_argument('--dtype',
-                        dest='dtypes', action='append', nargs='*',
+                        dest='dtypes', action='append',
                         help='override default dtype for a given field, e.g., "MQ:f4"')
     parser.add_argument('--arity',
-                        dest='arities', action='append', nargs='*',
+                        dest='arities', action='append',
                         help='override default arity for a given field, e.g., "AD:2"')
     parser.add_argument('--progress',
                         dest='progress', metavar='N', default=10000, type=int,
