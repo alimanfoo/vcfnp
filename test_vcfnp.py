@@ -287,6 +287,7 @@ def test_tabulate_variants():
 
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER', 'AF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields))
+    print tbl
     eq_(fields, tbl[0])
     eq_(('19', 111, 'A', 'C', '.', '.'), tbl[1])
     eq_(('20', 17330, 'T', 'A', 'q10', '0.017'), tbl[4])
@@ -310,33 +311,24 @@ def test_tabulate_variants_explicit_arity():
 
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'AF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, arities={'ALT': 2, 'AF': 2}))
-    expect_fields = ('CHROM', 'POS', 'REF', 'ALT_1', 'ALT_2', 'FILTER', 'AF_1', 'AF_2')
+    expect_fields = ('CHROM', 'POS', 'REF', 'ALT_1', 'ALT_2', 'AF_1', 'AF_2')
     eq_(expect_fields, tbl[0])
     eq_(('19', 111, 'A', 'C', '.', '.', '.'), tbl[1])
     eq_(('20', 17330, 'T', 'A', '.', '0.017', '.'), tbl[4])
     eq_(('20', 1110696, 'A', 'G', 'T', '0.333', '0.667'), tbl[5])
 
 
-def test_tabulate_variants_type_conversion():
+def test_tabulate_variants_fill():
     vcf_fn = 'fixture/sample.vcf'
 
-    fields = ('CHROM', 'POS', 'REF', 'ALT', 'AF', 'DP')
-    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, type_conversion=True))
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER', 'AF')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, fill=None))
+    print tbl
     eq_(fields, tbl[0])
-    eq_(('19', 111, 'A', 'C', '.', '.'), tbl[1])
-    eq_(('20', 17330, 'T', 'A', 0.017, 11), tbl[4])
-    eq_(('20', 1110696, 'A', 'G,T', '0.333,0.667', 10), tbl[5])
+    eq_(('19', 111, 'A', 'C', None, None), tbl[1])
+    eq_(('20', 17330, 'T', 'A', 'q10', '0.017'), tbl[4])
+    eq_(('20', 1110696, 'A', 'G,T', 'PASS', '0.333,0.667'), tbl[5])
 
 
-def test_tabulate_variants_type_conversion_explicit_arity():
-    vcf_fn = 'fixture/sample.vcf'
-
-    fields = ('CHROM', 'POS', 'REF', 'ALT', 'AF', 'DP')
-    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, arities={'ALT': 2, 'AF': 2}, type_conversion=True))
-    expect_fields = ('CHROM', 'POS', 'REF', 'ALT_1', 'ALT_2', 'FILTER', 'AF_1', 'AF_2')
-    eq_(expect_fields, tbl[0])
-    eq_(('19', 111, 'A', 'C', '.', '.', '.', '.'), tbl[1])
-    eq_(('20', 17330, 'T', 'A', '.', 0.017, '.', 11), tbl[4])
-    eq_(('20', 1110696, 'A', 'G', 'T', 0.333, 0.667, 10), tbl[5])
 
 

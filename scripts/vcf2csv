@@ -11,11 +11,6 @@ import pyfasta
 import vcfnp
 
 
-def log(*msg):
-    print >>sys.stderr, '[vcf2csv] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg))
-    sys.stderr.flush()
-
-
 def main(vcf_filename,
          csv_filename=None,
          region=None,
@@ -24,11 +19,11 @@ def main(vcf_filename,
          arities=None,
          flatten_filter=True,
          dialect='excel',
+         fill='.',
          ):
 
     assert vcf_filename is not None, 'missing VCF filename, try vcf2csv --help'
     assert os.path.exists(vcf_filename), 'VCF file not found'
-#    log('reading from', vcf_filename)
 
     if csv_filename is None:
         out = sys.stdout
@@ -42,11 +37,10 @@ def main(vcf_filename,
                               fields=fields,
                               exclude_fields=exclude_fields,
                               arities=arities,
-                              flatten_filter=flatten_filter)
+                              flatten_filter=flatten_filter,
+                              fill=fill)
 
     writer.writerows(tbl)
-
-#    log('all done')
 
 
 if __name__ == '__main__':
@@ -57,7 +51,7 @@ if __name__ == '__main__':
     parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='VCF', default=None,
                         help='input VCF file path')
-    parser.add_argument('--output',
+    parser.add_argument('--csv',
                         dest='csv_filename', metavar='CSV', default=None,
                         help='output CSV file path (omit to write to stdout)')
     parser.add_argument('--region',
@@ -71,18 +65,19 @@ if __name__ == '__main__':
                         help='field to exclude')
     parser.add_argument('--arity',
                         dest='arities', action='append',
-                        help='override default arity for a given field, e.g., "ALT:2"')
+                        help='provide fixed arity for a given field, e.g., "ALT:2"')
     parser.add_argument('--dialect',
                         dest='dialect', default='excel',
                         help='CSV dialect (use "excel-tab" for tab delimited output)')
     parser.add_argument('--flatten-filter',
                         dest='flatten_filter', default=False, action='store_true',
                         help='flatten the FILTER field into multiple boolean fields')
-    # TODO customise fill values
+    parser.add_argument('--fill',
+                        dest='fill', default='.',
+                        help='fill for missing values (default is ".")')
     args = parser.parse_args()
 
     # determine arity overrides
-    log(args.arities)
     if args.arities:
         arities = dict((s.split(':')[0], int(s.split(':')[1])) for s in args.arities)
     else:
@@ -96,9 +91,7 @@ if __name__ == '__main__':
          arities=arities,
          flatten_filter=args.flatten_filter,
          dialect=args.dialect,
+         fill=args.fill,
          )
 
-    # TODO this script is not really fit for purpose as:
-    # 1. it unnecessarily converts values from strings to primitive types
-    # 2. it doesn't handle fields with multiple arity in a sensible way
 

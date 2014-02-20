@@ -598,52 +598,6 @@ def _build_variants(filename,
     return _fromiter(it, dtype, count, progress, logstream)
 
 
-class VariantsTable(object):
-
-    def __init__(self,
-                 filename,
-                 region=None,
-                 fields=None,
-                 exclude_fields=None,
-                 arities=None,
-                 flatten_filter=False,
-                 type_conversion=False,
-                 ):
-        self.filename = filename
-        self.region = region
-        self.fields = fields
-        self.exclude_fields = exclude_fields
-        self.arities = arities
-        self.flatten_filter = flatten_filter
-        self.type_conversion = type_conversion
-
-    def __iter__(self):
-        filenames, region, fields, _, _, infoTypes, _, parseInfo, filterIds, flatten_filter = _setup_variants(filename=self.filename,
-                                                                                                              region=self.region,
-                                                                                                              fields=self.fields,
-                                                                                                              exclude_fields=self.exclude_fields,
-                                                                                                              arities=None,
-                                                                                                              fills=None,
-                                                                                                              transformers=None,
-                                                                                                              vcf_types=None,
-                                                                                                              flatten_filter=self.flatten_filter)
-
-
-        # make header row
-        header = list()
-        for f in fields:
-            if flatten_filter and f == 'FILTER':
-                for t in filterIds:
-                    header.append('FILTER_' + t)
-            elif self.arities is not None and f in self.arities and self.arities[f] > 1:
-                for i in range(1, self.arities[f] + 1):
-                    header.append(f + '_' + str(i))
-            else:
-                header.append(f)
-        data = itervariantstable(filenames, region, fields, self.arities, infoTypes, parseInfo, filterIds, flatten_filter)
-        return chain(tuple(header), data)
-
-
 def _fromiter(it, dtype, count, long progress=0, logstream=sys.stderr):
     if progress > 0:
         it = _iter_withprogress(it, progress, logstream)
@@ -729,28 +683,6 @@ def itervariants_with_condition(filenames,
         del var
 
 
-def itervariantstable(filenames, region, fields, arities, infoTypes, parseInfo, filterIds, flatten_filter):
-    cdef VariantCallFile *variantFile
-    cdef Variant *var
-
-    for current_filename in filenames:
-        variantFile = new VariantCallFile()
-        variantFile.open(current_filename)
-        variantFile.parseInfo = parseInfo
-        variantFile.parseSamples = False
-        if region is not None:
-            region_set = variantFile.setRegion(region)
-            if not region_set:
-                raise StopIteration
-        var = new Variant(deref(variantFile))
-
-        while _get_next_variant(variantFile, var):
-            yield _mkvtblrow(var, fields, arities, infoTypes, filterIds, flatten_filter)
-
-        del variantFile
-        del var
-
-
 cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
     # break this out into a separate function so we can profile it
     return variantFile.getNextVariant(deref(var))
@@ -767,81 +699,6 @@ cdef inline object _mkvrow(Variant *var,
             out.extend(val)
         else:
             out.append(val)
-    return tuple(out)
-
-
-cdef inline object _mkvtblrow(Variant *var,
-                              fields,
-                              arities,
-                              infoTypes,
-                              filterIds,
-                              flatten_filter):
-    out = list()
-    # TODO sort this function out, it's a mess
-    cdef string field
-    for field in fields:
-        if field == FIELD_NAME_CHROM:
-            val = var.sequenceName
-            out.append(val)
-        elif field == FIELD_NAME_POS:
-            val = var.position
-            out.append(val)
-        elif field == FIELD_NAME_ID:
-            val = var.id
-            out.append(val)
-        elif field == FIELD_NAME_REF:
-            val = var.ref
-            out.append(val)
-        elif field == FIELD_NAME_ALT:
-            val = var.alt
-            f = str(field)  # TODO deal with Python/Cython mess here
-            if arities is not None and f in arities:
-                arity = arities[f]
-                if val.size() == arity:
-                    pass
-                elif val.size() > arity:
-                    val = val[:arity]
-                else:
-                    val += ['.'] * (arity-val.size())
-                out.extend(val)
-            else:
-                out.append(','.join(val))
-        elif field == FIELD_NAME_QUAL:
-            val = var.quality
-        elif field == FIELD_NAME_FILTER:
-            val = var.filter
-            if flatten_filter:
-                val = [(id in val) for id in filterIds]
-                out.extend(val)
-            else:
-                out.append(val)
-        elif field == FIELD_NAME_NUM_ALLELES:
-            val = <int>(var.alt.size() + 1)
-            out.append(val)
-        elif field == FIELD_NAME_IS_SNP:
-            val = _is_snp(var)
-            out.append(val)
-        else:
-            vcf_type = infoTypes[field]
-            if vcf_type == FIELD_BOOL:
-                # ignore arity, this is a flag
-                val = (var.infoFlags.count(field) > 0)
-                out.append(val)
-            else:
-                val = var.info[field]
-                f = str(field)  # TODO deal with Python/Cython mess here
-                # TODO code smell
-                if arities is not None and f in arities:
-                    arity = arities[f]
-                    if val.size() == arity:
-                        pass
-                    elif val.size() > arity:
-                        val = val[:arity]
-                    else:
-                        val += ['.'] * (arity-val.size())
-                    out.extend(val)
-                else:
-                    out.append(','.join(val))
     return tuple(out)
 
 
@@ -969,12 +826,12 @@ cdef inline object _mkval_string(vector[string]& string_vals, int arity, object 
 
 cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
-    out = list
+    out = list()
     for i in range(arity):
         if i < string_vals.size():
-            out.push_back(string_vals.at(i))
+            out.append(string_vals.at(i))
         else:
-            out.push_back(fill)
+            out.append(fill)
     return out
 
 
@@ -1822,5 +1679,171 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
     return _transformer
 
 
+class VariantsTable(object):
+
+    def __init__(self,
+                 filename,
+                 region=None,
+                 fields=None,
+                 exclude_fields=None,
+                 arities=None,
+                 flatten_filter=False,
+                 fill='.'
+                 ):
+        self.filename = filename
+        self.region = region
+        self.fields = fields
+        self.exclude_fields = exclude_fields
+        self.arities = arities
+        self.flatten_filter = flatten_filter
+        self.fill = fill
+
+    def __iter__(self):
+
+        filenames = _filenames_from_arg(self.filename)
+
+        # extract definitions from VCF header
+        vcf = PyVariantCallFile(filenames[0])
+
+        # FILTER definitions
+        filter_ids = vcf.filterIds
+        _warn_duplicates(filter_ids)
+        filter_ids = sorted(set(filter_ids))
+        if 'PASS' not in filter_ids:
+            filter_ids.append('PASS')
+        filter_ids = tuple(filter_ids)
+
+        # INFO definitions
+        _warn_duplicates(vcf.infoIds)
+        info_ids = tuple(sorted(set(vcf.infoIds)))
+        info_types = vcf.infoTypes
+
+        # determine fields to extract
+        fields = _variants_fields(self.fields, self.exclude_fields, info_ids)
+
+        # turn arities into tuple for convenience
+        if self.arities is None:
+            arities = (None,) * len(fields)
+        else:
+            arities = tuple(self.arities.get(f) for f in fields)
+
+        # determine if we need to parse the INFO field
+        parse_info = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
+
+        # convert to tuple
+        info_types = tuple(info_types[f] if f in info_types else -1 for f in fields)
+
+        # make header row
+        header = list()
+        for f in fields:
+            if self.flatten_filter and f == 'FILTER':
+                for t in filter_ids:
+                    header.append('FILTER_' + t)
+            elif self.arities is not None and f in self.arities and self.arities[f] > 1:
+                for i in range(1, self.arities[f] + 1):
+                    header.append(f + '_' + str(i))
+            else:
+                header.append(f)
+        header = tuple(header)
+        # make data rows
+        data = itervariantstable(filenames=filenames,
+                                 region=self.region,
+                                 fields=fields,
+                                 arities=arities,
+                                 info_types=info_types,
+                                 parse_info=parse_info,
+                                 filter_ids=filter_ids,
+                                 flatten_filter=self.flatten_filter,
+                                 fill=self.fill)
+        return chain((header,), data)
+
+
+def itervariantstable(filenames, region, fields, arities, info_types, parse_info, filter_ids, flatten_filter, fill):
+    cdef VariantCallFile *variantFile
+    cdef Variant *var
+
+    for current_filename in filenames:
+        variantFile = new VariantCallFile()
+        variantFile.open(current_filename)
+        variantFile.parseInfo = parse_info
+        variantFile.parseSamples = False
+        if region is not None:
+            region_set = variantFile.setRegion(region)
+            if not region_set:
+                raise StopIteration
+        var = new Variant(deref(variantFile))
+
+        while _get_next_variant(variantFile, var):
+            yield _mkvtblrow(var, fields, arities, info_types, filter_ids, flatten_filter, fill)
+
+        del variantFile
+        del var
+
+
+cdef inline object _mkvtblrow(Variant *var,
+                              fields,
+                              arities,
+                              info_types,
+                              filter_ids,
+                              flatten_filter,
+                              fill):
+    out = list()
+    cdef string field
+    for field, arity, vcf_type in zip(fields, arities, info_types):
+        if field == FIELD_NAME_CHROM:
+            out.append(var.sequenceName)
+        elif field == FIELD_NAME_POS:
+            out.append(var.position)
+        elif field == FIELD_NAME_ID:
+            out.append(var.id)
+        elif field == FIELD_NAME_REF:
+            out.append(var.ref)
+        elif field == FIELD_NAME_ALT:
+            if arity is not None:
+                vals = _mktblval_multi(var.alt, arity, fill)
+                out.extend(vals)
+            elif var.alt.size() == 0:
+                out.append(fill)
+            else:
+                val = ','.join(var.alt)
+                out.append(val)
+        elif field == FIELD_NAME_QUAL:
+            out.append(var.quality)
+        elif field == FIELD_NAME_FILTER:
+            if flatten_filter:
+                out.extend(_mkfilterval(var, filter_ids))
+            elif var.filter == DOT:
+                out.append(fill)
+            else:
+                out.append(var.filter)
+        elif field == FIELD_NAME_NUM_ALLELES:
+            out.append(var.alt.size() + 1)
+        elif field == FIELD_NAME_IS_SNP:
+            out.append(_is_snp(var))
+        else:
+            if vcf_type == FIELD_BOOL:
+                # ignore arity, this is a flag
+                val = (var.infoFlags.count(field) > 0)
+                out.append(val)
+            else:
+                if arity is not None:
+                    vals = _mktblval_multi(var.info[field], arity, fill)
+                    out.extend(vals)
+                elif var.info[field].size() == 0:
+                    out.append(fill)
+                else:
+                    out.append(','.join(var.info[field]))
+    return tuple(out)
+
+
+cdef inline object _mktblval_multi(vector[string]& string_vals, int arity, object fill):
+    cdef int i
+    out = list()
+    for i in range(arity):
+        if i < string_vals.size():
+            out.append(string_vals.at(i))
+        else:
+            out.append(fill)
+    return out
 
 
