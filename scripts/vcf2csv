@@ -46,7 +46,7 @@ def main(vcf_filename,
 if __name__ == '__main__':
 
     # handle command line options
-    epilog = "vcfnp version %s" % vcfnp.__version__
+    epilog = "Version: vcfnp %s" % vcfnp.__version__
     parser = argparse.ArgumentParser(epilog=epilog)
     parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='FILE', default=None,
