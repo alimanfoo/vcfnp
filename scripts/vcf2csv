@@ -49,10 +49,10 @@ if __name__ == '__main__':
     epilog = "vcfnp version %s" % vcfnp.__version__
     parser = argparse.ArgumentParser(epilog=epilog)
     parser.add_argument('--vcf',
-                        dest='vcf_filename', metavar='VCF', default=None,
+                        dest='vcf_filename', metavar='FILE', default=None,
                         help='input VCF file path')
     parser.add_argument('--csv',
-                        dest='csv_filename', metavar='CSV', default=None,
+                        dest='csv_filename', metavar='FILE', default=None,
                         help='output CSV file path (omit to write to stdout)')
     parser.add_argument('--region',
                         dest='region', default=None,
@@ -64,7 +64,7 @@ if __name__ == '__main__':
                         dest='exclude_fields', metavar='F', default=None, action='append',
                         help='field to exclude')
     parser.add_argument('--arity',
-                        dest='arities', action='append',
+                        metavar='FIELD:ARITY', dest='arities', action='append',
                         help='provide fixed arity for a given field, e.g., "ALT:2"')
     parser.add_argument('--dialect',
                         dest='dialect', default='excel',

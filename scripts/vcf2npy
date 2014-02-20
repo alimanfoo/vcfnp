@@ -117,7 +117,7 @@ if __name__ == '__main__':
                         help='reference genome as FASTA file (only required if --task-size is given)')
     parser.add_argument('--output-dir',
                         dest='output_dir', metavar='DIR', default=None,
-                        help='output directory')
+                        help='output directory (omit to use default vcfnp cache directory)')
     parser.add_argument('--array-type',
                         dest='array_type', default='variants',
                         help='array type, one of [variants|calldata|calldata_2d]')
@@ -131,16 +131,16 @@ if __name__ == '__main__':
                         dest='task_index', metavar='N', default=None,
                         help='task index as integer or string to get task from environment variable (e.g., "SGE_TASK_ID")')
     parser.add_argument('--exclude-field',
-                        dest='exclude_fields', metavar='F', default=None, action='append',
-                        help='array field to exclude')
+                        dest='exclude_fields', metavar='FIELD', default=None, action='append',
+                        help='field to exclude')
     parser.add_argument('--ploidy',
                         dest='ploidy', default=2, type=int,
                         help='sample ploidy')
     parser.add_argument('--dtype',
-                        dest='dtypes', action='append',
+                        metavar='FIELD:DTYPE', dest='dtypes', action='append',
                         help='override default dtype for a given field, e.g., "MQ:f4"')
     parser.add_argument('--arity',
-                        dest='arities', action='append',
+                        metavar='FIELD:ARITY', dest='arities', action='append',
                         help='override default arity for a given field, e.g., "AD:2"')
     parser.add_argument('--progress',
                         dest='progress', metavar='N', default=10000, type=int,

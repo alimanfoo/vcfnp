@@ -38,7 +38,7 @@ def main(vcf_filename,
 
     genome = pyfasta.Fasta(fasta_filename)
     if chromosome is None:
-        # run all chromosomes
+        # run each chromosome as a separate job array
         for chromosome in sorted(genome.keys()):
             main(vcf_filename,
                  fasta_filename,
@@ -106,7 +106,7 @@ def main(vcf_filename,
 if __name__ == '__main__':
 
     # handle command line options
-    parser = argparse.ArgumentParser(epilog='All remaining arguments are passed through to qsub.')
+    parser = argparse.ArgumentParser(epilog='Any other arguments are passed through to qsub.')
     parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='VCF', default=None,
                         help='input VCF file')
@@ -115,7 +115,7 @@ if __name__ == '__main__':
                         help='reference genome as FASTA file')
     parser.add_argument('--output-dir',
                         dest='output_dir', metavar='DIR', default=None,
-                        help='output directory')
+                        help='output directory (omit to use default vcfnp cache directory)')
     parser.add_argument('--array-type',
                         dest='array_type', default='variants',
                         help='array type, one of [variants|calldata|calldata_2d]')
@@ -126,16 +126,16 @@ if __name__ == '__main__':
                         dest='task_size', metavar='BP', default=None, type=int,
                         help='size (in base pairs) of region to extract (omit to extract whole chromosome)')
     parser.add_argument('--exclude-field',
-                        dest='exclude_fields', metavar='F', default=None, action='append',
-                        help='array field to exclude')
+                        dest='exclude_fields', metavar='FIELD', default=None, action='append',
+                        help='field to exclude')
     parser.add_argument('--ploidy',
                         dest='ploidy', default=2, type=int,
                         help='sample ploidy')
     parser.add_argument('--dtype',
-                        dest='dtypes', action='append',
+                        metavar='FIELD:DTYPE', dest='dtypes', action='append',
                         help='override default dtype for a given field, e.g., "MQ:f4"')
     parser.add_argument('--arity',
-                        dest='arities', action='append',
+                        metavar='FIELD:ARITY', dest='arities', action='append',
                         help='override default arity for a given field, e.g., "AD:2"')
     parser.add_argument('--progress',
                         dest='progress', metavar='N', default=10000, type=int,
