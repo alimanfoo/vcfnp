@@ -145,46 +145,54 @@ def test_override_vcf_types():
 
 
 def test_variants_transformers():
+
+    def _test(V):
+
+        eq_('STOP_GAINED', V['EFF']['Effect'][0])
+        eq_('HIGH', V['EFF']['Effect_Impact'][0])
+        eq_('NONSENSE', V['EFF']['Functional_Class'][0])
+        eq_('Cag/Tag', V['EFF']['Codon_Change'][0])
+        eq_('Q236*', V['EFF']['Amino_Acid_Change'][0])
+        eq_(749, V['EFF']['Amino_Acid_Length'][0])
+        eq_('NOC2L', V['EFF']['Gene_Name'][0])
+        eq_('.', V['EFF']['Transcript_BioType'][0])
+        eq_(1, V['EFF']['Gene_Coding'][0])
+        eq_('NM_015658', V['EFF']['Transcript_ID'][0])
+        eq_(-1, V['EFF']['Exon'][0])
+
+        eq_('NON_SYNONYMOUS_CODING', V['EFF']['Effect'][1])
+        eq_('MODERATE', V['EFF']['Effect_Impact'][1])
+        eq_('MISSENSE', V['EFF']['Functional_Class'][1])
+        eq_('gTt/gGt', V['EFF']['Codon_Change'][1])
+        eq_('V155G', V['EFF']['Amino_Acid_Change'][1])
+        eq_(-1, V['EFF']['Amino_Acid_Length'][1])
+        eq_('PF3D7_0108900', V['EFF']['Gene_Name'][1])
+        eq_('.', V['EFF']['Transcript_BioType'][1])
+        eq_(-1, V['EFF']['Gene_Coding'][1])
+        eq_('rna_PF3D7_0108900-1', V['EFF']['Transcript_ID'][1])
+        eq_(1, V['EFF']['Exon'][1])
+
+        eq_('.', V['EFF']['Effect'][2])
+        eq_('.', V['EFF']['Effect_Impact'][2])
+        eq_('.', V['EFF']['Functional_Class'][2])
+        eq_('.', V['EFF']['Codon_Change'][2])
+        eq_('.', V['EFF']['Amino_Acid_Change'][2])
+        eq_(-1, V['EFF']['Amino_Acid_Length'][2])
+        eq_('.', V['EFF']['Gene_Name'][2])
+        eq_('.', V['EFF']['Transcript_BioType'][2])
+        eq_(-1, V['EFF']['Gene_Coding'][2])
+        eq_('.', V['EFF']['Transcript_ID'][2])
+        eq_(-1, V['EFF']['Exon'][2])
+
     V = variants('fixture/test12.vcf',
                  dtypes={'EFF': EFF_DEFAULT_DTYPE},
                  arities={'EFF': 1},
                  transformers={'EFF': eff_default_transformer()})
+    _test(V)
 
-    eq_('STOP_GAINED', V['EFF']['Effect'][0])
-    eq_('HIGH', V['EFF']['Effect_Impact'][0])
-    eq_('NONSENSE', V['EFF']['Functional_Class'][0])
-    eq_('Cag/Tag', V['EFF']['Codon_Change'][0])
-    eq_('Q236*', V['EFF']['Amino_Acid_Change'][0])
-    eq_(749, V['EFF']['Amino_Acid_Length'][0])
-    eq_('NOC2L', V['EFF']['Gene_Name'][0])
-    eq_('.', V['EFF']['Transcript_BioType'][0])
-    eq_(1, V['EFF']['Gene_Coding'][0])
-    eq_('NM_015658', V['EFF']['Transcript_ID'][0])
-    eq_(-1, V['EFF']['Exon'][0])
-
-    eq_('NON_SYNONYMOUS_CODING', V['EFF']['Effect'][1])
-    eq_('MODERATE', V['EFF']['Effect_Impact'][1])
-    eq_('MISSENSE', V['EFF']['Functional_Class'][1])
-    eq_('gTt/gGt', V['EFF']['Codon_Change'][1])
-    eq_('V155G', V['EFF']['Amino_Acid_Change'][1])
-    eq_(-1, V['EFF']['Amino_Acid_Length'][1])
-    eq_('PF3D7_0108900', V['EFF']['Gene_Name'][1])
-    eq_('.', V['EFF']['Transcript_BioType'][1])
-    eq_(-1, V['EFF']['Gene_Coding'][1])
-    eq_('rna_PF3D7_0108900-1', V['EFF']['Transcript_ID'][1])
-    eq_(1, V['EFF']['Exon'][1])
-
-    eq_('.', V['EFF']['Effect'][2])
-    eq_('.', V['EFF']['Effect_Impact'][2])
-    eq_('.', V['EFF']['Functional_Class'][2])
-    eq_('.', V['EFF']['Codon_Change'][2])
-    eq_('.', V['EFF']['Amino_Acid_Change'][2])
-    eq_(-1, V['EFF']['Amino_Acid_Length'][2])
-    eq_('.', V['EFF']['Gene_Name'][2])
-    eq_('.', V['EFF']['Transcript_BioType'][2])
-    eq_(-1, V['EFF']['Gene_Coding'][2])
-    eq_('.', V['EFF']['Transcript_ID'][2])
-    eq_(-1, V['EFF']['Exon'][2])
+    # test EFF is included in defaults
+    V = variants('fixture/test12.vcf')
+    _test(V)
 
 
 def test_svlen():
@@ -234,21 +242,21 @@ def test_explicit_pass_definition():
 def test_caching():
     vcf_fn = 'fixture/sample.vcf.gz'
 
-    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='variants')
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, array_type='variants')
     if os.path.exists(cache_fn):
         os.remove(cache_fn)
     A = variants(vcf_fn, cache=True, verbose=True)
     A2 = np.load(cache_fn)
     assert np.all(A == A2)
 
-    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata')
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, array_type='calldata')
     if os.path.exists(cache_fn):
         os.remove(cache_fn)
     A = calldata(vcf_fn, cache=True, verbose=True)
     A2 = np.load(cache_fn)
     assert np.all(A == A2)
 
-    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata_2d')
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, array_type='calldata_2d')
     if os.path.exists(cache_fn):
         os.remove(cache_fn)
     A = calldata_2d(vcf_fn, cache=True, verbose=True)
@@ -260,21 +268,21 @@ def test_caching_cachedir():
     vcf_fn = 'fixture/sample.vcf.gz'
     cachedir = 'fixture/custom.vcfnp_cache/foo'
 
-    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='variants', cachedir=cachedir)
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, array_type='variants', cachedir=cachedir)
     if os.path.exists(cache_fn):
         os.remove(cache_fn)
     A = variants(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
     A2 = np.load(cache_fn)
     assert np.all(A == A2)
 
-    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata', cachedir=cachedir)
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, array_type='calldata', cachedir=cachedir)
     if os.path.exists(cache_fn):
         os.remove(cache_fn)
     A = calldata(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
     A2 = np.load(cache_fn)
     assert np.all(A == A2)
 
-    cache_fn = vcfnp._mk_cache_fn(vcf_fn, type='calldata_2d', cachedir=cachedir)
+    cache_fn = vcfnp._mk_cache_fn(vcf_fn, array_type='calldata_2d', cachedir=cachedir)
     if os.path.exists(cache_fn):
         os.remove(cache_fn)
     A = calldata_2d(vcf_fn, cache=True, verbose=True, cachedir=cachedir)

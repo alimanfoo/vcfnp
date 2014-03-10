@@ -150,6 +150,9 @@ DEFAULT_INFO_DTYPE = {
 }
 
 
+DEFAULT_TRANSFORMER = dict()
+
+
 STANDARD_CALLDATA_FIELDS = ('is_called', 'is_phased', 'genotype')
 
 
@@ -203,12 +206,12 @@ cdef string FIELD_NAME_GENOTYPE = 'genotype'
 cdef string FIELD_NAME_GT = 'GT'
 
 
-def _variants_fields(fields, exclude_fields, infoIds):
+def _variants_fields(fields, exclude_fields, info_ids):
     if fields is None:
-        fields = STANDARD_VARIANT_FIELDS + infoIds
+        fields = STANDARD_VARIANT_FIELDS + info_ids
     else:
         for f in fields:
-            if f not in STANDARD_VARIANT_FIELDS and f not in infoIds:
+            if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
                 # support extracting INFO even if not declared in header, but warn...
                 print >>sys.stderr, 'WARNING: no INFO definition found for field %s' % f
     if exclude_fields is not None:
@@ -216,10 +219,10 @@ def _variants_fields(fields, exclude_fields, infoIds):
     return tuple(fields)
 
 
-def _variants_arities(fields, arities, infoCounts):
+def _variants_arities(fields, arities, info_counts):
     if arities is None:
         arities = dict()
-    for f, vcf_count in zip(fields, infoCounts):
+    for f, vcf_count in zip(fields, info_counts):
         if f == 'FILTER':
             arities[f] = 1 # one value
         elif f not in arities:
@@ -237,10 +240,10 @@ def _variants_arities(fields, arities, infoCounts):
     return arities
 
 
-def _variants_fills(fields, fills, infoTypes):
+def _variants_fills(fields, fills, info_types):
     if fills is None:
         fills = dict()
-    for f, vcf_type in zip(fields, infoTypes):
+    for f, vcf_type in zip(fields, info_types):
         if f == 'FILTER':
             fills[f] = False
         elif f not in fills:
@@ -257,22 +260,22 @@ def _info_transformers(fields, transformers):
         transformers = dict()
     for f in fields:
         if f not in transformers:
-            transformers[f] = None
+            transformers[f] = DEFAULT_TRANSFORMER.get(f, None)
     return tuple(transformers[f] for f in fields)
 
 
-def _variants_dtype(fields, dtypes, arities, filterIds, flatten_filter, infoTypes):
+def _variants_dtype(fields, dtypes, arities, filter_ids, flatten_filter, info_types):
 
     dtype = list()
-    for f, n, vcf_type in zip(fields, arities, infoTypes):
+    for f, n, vcf_type in zip(fields, arities, info_types):
         if f == 'FILTER' and flatten_filter:
             # represent FILTER as multiple boolean fields
-            for flt in filterIds:
+            for flt in filter_ids:
                 nm = 'FILTER_' + flt
                 dtype.append((nm, 'b1'))
         elif f == 'FILTER' and not flatten_filter:
             # represent FILTER as a structured datatype
-            t = [(flt, 'b1') for flt in filterIds]
+            t = [(flt, 'b1') for flt in filter_ids]
             dtype.append((f, t))
         else:
             if dtypes is not None and f in dtypes:
@@ -321,47 +324,47 @@ def _setup_variants(filename,
     # extract definitions from VCF header
     vcf = PyVariantCallFile(filenames[0])
     # FILTER definitions
-    filterIds = vcf.filterIds
-    _warn_duplicates(filterIds)
-    filterIds = sorted(set(filterIds))
-    if 'PASS' not in filterIds:
-        filterIds.append('PASS')
-    filterIds = tuple(filterIds)
+    filter_ids = vcf.filterIds
+    _warn_duplicates(filter_ids)
+    filter_ids = sorted(set(filter_ids))
+    if 'PASS' not in filter_ids:
+        filter_ids.append('PASS')
+    filter_ids = tuple(filter_ids)
     # INFO definitions
     _warn_duplicates(vcf.infoIds)
-    infoIds = tuple(sorted(set(vcf.infoIds)))
-    infoTypes = vcf.infoTypes
-    infoCounts = vcf.infoCounts
+    info_ids = tuple(sorted(set(vcf.infoIds)))
+    info_types = vcf.infoTypes
+    info_counts = vcf.infoCounts
 
     # determine fields to extract
-    fields = _variants_fields(fields, exclude_fields, infoIds)
+    fields = _variants_fields(fields, exclude_fields, info_ids)
 
     # determine if we need to parse the INFO field
-    parseInfo = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
+    parse_info = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
 
     # support for working around VCFs with bad INFO headers
     for f in fields:
-        if f not in STANDARD_VARIANT_FIELDS and f not in infoIds:
+        if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
             # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
-            infoTypes[f] = FIELD_STRING
-            infoCounts[f] = 1
+            info_types[f] = FIELD_STRING
+            info_counts[f] = 1
         if vcf_types is not None and f in vcf_types:
             # override type declared in VCF header
-            infoTypes[f] = TYPESTRING2KEY[vcf_types[f]]
+            info_types[f] = TYPESTRING2KEY[vcf_types[f]]
 
-    infoTypes = tuple(infoTypes[f] if f in infoTypes else -1 for f in fields)
-    infoCounts = tuple(infoCounts[f] if f in infoCounts else -1 for f in fields)
+    info_types = tuple(info_types[f] if f in info_types else -1 for f in fields)
+    info_counts = tuple(info_counts[f] if f in info_counts else -1 for f in fields)
 
     # determine expected number of values for each field
-    arities = _variants_arities(fields, arities, infoCounts)
+    arities = _variants_arities(fields, arities, info_counts)
 
     # determine fill values to use where number of values is less than expectation
-    fills = _variants_fills(fields, fills, infoTypes)
+    fills = _variants_fills(fields, fills, info_types)
 
     # initialise INFO field transformers
     transformers = _info_transformers(fields, transformers)
 
-    return filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter
+    return filenames, region, fields, arities, fills, info_types, transformers, parse_info, filter_ids, flatten_filter
 
 
 def log(logstream, *msg):
@@ -472,7 +475,7 @@ def variants(filename,
         if isinstance(filename, (list, tuple)):
             raise Exception('caching only supported when loading from a single VCF file')
 
-        cache_fn = _mk_cache_fn(filename, type='variants', region=region, cachedir=cachedir)
+        cache_fn = _mk_cache_fn(filename, array_type='variants', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
                 log(logstream, 'no cache file found or cache out of date')
@@ -531,7 +534,7 @@ def variants(filename,
 cachedir_suffix = '.vcfnp_cache'
 
 
-def _mk_cache_fn(vcf_fn, type, region=None, cachedir=None):
+def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
     if cachedir is None:
         cachedir = vcf_fn + cachedir_suffix
     if not os.path.exists(cachedir):
@@ -539,10 +542,10 @@ def _mk_cache_fn(vcf_fn, type, region=None, cachedir=None):
     else:
         assert os.path.isdir(cachedir), 'unexpected error, cache directory is not a directory: %s' % cachedir
     if region is None:
-        cache_fn = os.path.join(cachedir, '%s.npy' % type)
+        cache_fn = os.path.join(cachedir, '%s.npy' % array_type)
     else:
         region = region.replace(':', '_').replace('-', '_')
-        cache_fn = os.path.join(cachedir, '%s.%s.npy' % (type, region))
+        cache_fn = os.path.join(cachedir, '%s.%s.npy' % (array_type, region))
     return cache_fn
 
 
@@ -653,9 +656,9 @@ def itervariants(filenames,
 def itervariants_with_condition(filenames,
                                 region,
                                 list fieldspec,
-                                tuple filterIds,
+                                tuple filter_ids,
                                 bint flatten_filter,
-                                parseInfo,
+                                parse_info,
                                 condition,
                                 ):
     cdef VariantCallFile *variantFile
@@ -666,7 +669,7 @@ def itervariants_with_condition(filenames,
     for current_filename in filenames:
         variantFile = new VariantCallFile()
         variantFile.open(current_filename)
-        variantFile.parseInfo = parseInfo
+        variantFile.parseInfo = parse_info
         variantFile.parseSamples = False
         if region is not None:
             region_set = variantFile.setRegion(region)
@@ -676,7 +679,7 @@ def itervariants_with_condition(filenames,
 
         while i < n and _get_next_variant(variantFile, var):
             if condition[i]:
-                yield _mkvrow(var, fieldspec, filterIds, flatten_filter)
+                yield _mkvrow(var, fieldspec, filter_ids, flatten_filter)
             i += 1
 
         del variantFile
@@ -690,11 +693,11 @@ cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
 
 cdef inline object _mkvrow(Variant *var,
                             list fieldspec,
-                            tuple filterIds,
+                            tuple filter_ids,
                             bint flatten_filter):
     out = list()
     for f, arity, fill, vcf_type, transformer in fieldspec:
-        val = _mkvval(var, f, arity, fill, vcf_type, transformer, filterIds)
+        val = _mkvval(var, f, arity, fill, vcf_type, transformer, filter_ids)
         if f == 'FILTER' and flatten_filter:
             out.extend(val)
         else:
@@ -702,7 +705,7 @@ cdef inline object _mkvrow(Variant *var,
     return tuple(out)
 
 
-cdef inline object _mkvval(Variant *var, string field, int arity, object fill, int vcf_type, transformer, tuple filterIds):
+cdef inline object _mkvval(Variant *var, string field, int arity, object fill, int vcf_type, transformer, tuple filter_ids):
     if field == FIELD_NAME_CHROM:
         out = var.sequenceName
     elif field == FIELD_NAME_POS:
@@ -716,7 +719,7 @@ cdef inline object _mkvval(Variant *var, string field, int arity, object fill, i
     elif field == FIELD_NAME_QUAL:
         out = var.quality
     elif field == FIELD_NAME_FILTER:
-        out = _mkfilterval(var, filterIds)
+        out = _mkfilterval(var, filter_ids)
     elif field == FIELD_NAME_NUM_ALLELES:
         out = <int>(var.alt.size() + 1)
     elif field == FIELD_NAME_IS_SNP:
@@ -752,9 +755,9 @@ cdef inline object _mkaltval(Variant *var, int arity, object fill):
     return out
 
 
-cdef inline object _mkfilterval(Variant *var, tuple filterIds):
+cdef inline object _mkfilterval(Variant *var, tuple filter_ids):
     filters = <list>split(var.filter, SEMICOLON)
-    out = [(id in filters) for id in filterIds]
+    out = [(id in filters) for id in filter_ids]
     out = tuple(out)
     return out
 
@@ -937,11 +940,11 @@ def _calldata_fills(fields, fills, formatTypes, ploidy):
     return tuple(fills[f] for f in fields)
 
 
-def _calldata_dtype(fields, dtypes, formatTypes, arities, samples, ploidy):
+def _calldata_dtype(fields, dtypes, format_types, arities, samples, ploidy):
 
     # construct a numpy dtype for structured array cells
     cell_dtype = list()
-    for f, vcf_type, n in zip(fields, formatTypes, arities):
+    for f, vcf_type, n in zip(fields, format_types, arities):
         if dtypes is not None and f in dtypes:
             t = dtypes[f]
         elif f == 'GT':
@@ -1131,7 +1134,7 @@ def calldata(filename,
         if isinstance(filename, (list, tuple)):
             raise Exception('caching only supported when loading from a single VCF file')
 
-        cache_fn = _mk_cache_fn(filename, type='calldata', region=region, cachedir=cachedir)
+        cache_fn = _mk_cache_fn(filename, array_type='calldata', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
                 log(logstream, 'no cache file found or cache out of date')
@@ -1213,9 +1216,9 @@ def _build_calldata(filename,
     # extract definitions from VCF header
     vcf = PyVariantCallFile(filenames[0])
     _warn_duplicates(vcf.formatIds)
-    formatIds = tuple(sorted(set(vcf.formatIds)))
-    formatTypes = vcf.formatTypes
-    formatCounts = vcf.formatCounts
+    format_ids = tuple(sorted(set(vcf.formatIds)))
+    format_types = vcf.formatTypes
+    format_counts = vcf.formatCounts
     all_samples = vcf.sampleNames
 
     # determine which samples to extract
@@ -1227,32 +1230,32 @@ def _build_calldata(filename,
     samples = tuple(samples)
 
     # determine fields to extract
-    fields = _calldata_fields(fields, exclude_fields, formatIds)
+    fields = _calldata_fields(fields, exclude_fields, format_ids)
 
     # support for working around VCFs with bad FORMAT headers
     for f in fields:
-        if f not in STANDARD_CALLDATA_FIELDS and f not in formatIds:
+        if f not in STANDARD_CALLDATA_FIELDS and f not in format_ids:
             # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
-            formatTypes[f] = FIELD_STRING
-            formatCounts[f] = 1
+            format_types[f] = FIELD_STRING
+            format_counts[f] = 1
         if vcf_types is not None and f in vcf_types:
             # override type declared in VCF header
-            formatTypes[f] = TYPESTRING2KEY[vcf_types[f]]
+            format_types[f] = TYPESTRING2KEY[vcf_types[f]]
 
-    formatTypes = tuple(formatTypes[f] if f in formatTypes else -1 for f in fields)
-    formatCounts = tuple(formatCounts[f] if f in formatCounts else -1 for f in fields)
+    format_types = tuple(format_types[f] if f in format_types else -1 for f in fields)
+    format_counts = tuple(format_counts[f] if f in format_counts else -1 for f in fields)
 
     # determine expected number of values for each field
-    arities = _calldata_arities(fields, arities, formatCounts, ploidy)
+    arities = _calldata_arities(fields, arities, format_counts, ploidy)
 
     # determine fill values to use where number of values is less than expectation
-    fills = _calldata_fills(fields, fills, formatTypes, ploidy)
+    fills = _calldata_fills(fields, fills, format_types, ploidy)
 
     # construct a numpy dtype for structured array
-    dtype = _calldata_dtype(fields, dtypes, formatTypes, arities, samples, ploidy)
+    dtype = _calldata_dtype(fields, dtypes, format_types, arities, samples, ploidy)
 
     # zip up field parameters
-    fieldspec = zip(fields, arities, fills, formatTypes)
+    fieldspec = zip(fields, arities, fills, format_types)
 
     # set up iterator
     if condition is not None:
@@ -1340,7 +1343,7 @@ def calldata_2d(filename,
         if isinstance(filename, (list, tuple)):
             raise Exception('caching only supported when loading from a single VCF file')
 
-        cache_fn = _mk_cache_fn(filename, type='calldata_2d', region=region, cachedir=cachedir)
+        cache_fn = _mk_cache_fn(filename, array_type='calldata_2d', region=region, cachedir=cachedir)
         if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
             if verbose:
                 log(logstream, 'no cache file found or cache out of date')
@@ -1480,8 +1483,8 @@ cdef inline object _mkcvals(Variant *var,
                             string sample,
                             int ploidy,
                             list fieldspec):
-    out = [_mkcval(var.samples[sample], ploidy, f, arity, fill, formatType)
-           for (f, arity, fill, formatType) in fieldspec]
+    out = [_mkcval(var.samples[sample], ploidy, f, arity, fill, format_type)
+           for (f, arity, fill, format_type) in fieldspec]
     return tuple(out)
 
 
@@ -1490,7 +1493,7 @@ cdef inline object _mkcval(map[string, vector[string]]& sample_data,
                            string field,
                            int arity,
                            object fill,
-                           int formatType):
+                           int format_type):
     if field == FIELD_NAME_IS_CALLED:
         return _is_called(sample_data)
     elif field == FIELD_NAME_IS_PHASED:
@@ -1498,7 +1501,7 @@ cdef inline object _mkcval(map[string, vector[string]]& sample_data,
     elif field == FIELD_NAME_GENOTYPE:
         return _genotype(sample_data, ploidy)
     else:
-        return _mkval(sample_data[field], arity, fill, formatType)
+        return _mkval(sample_data[field], arity, fill, format_type)
 
 
 cdef inline bool _is_called(map[string, vector[string]]& sample_data):
@@ -1652,6 +1655,10 @@ EFF_DEFAULT_DTYPE = [
 ]
 
 
+DEFAULT_INFO_DTYPE['EFF'] = EFF_DEFAULT_DTYPE
+DEFAULT_VARIANT_ARITY['EFF'] = 1
+
+
 EFF_DEFAULT_FILLS = ('.', '.', '.', '.', '.', -1, '.', '.', -1, '.', -1)
 
 
@@ -1677,6 +1684,9 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
             )
             return result
     return _transformer
+
+
+DEFAULT_TRANSFORMER['EFF'] = eff_default_transformer()
 
 
 class VariantsTable(object):
