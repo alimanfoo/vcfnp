@@ -1668,12 +1668,11 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
     ignores all but the first effect.
 
     """
-    prog_eff_main = re.compile(r'([^(]+)\(([^)]+)\)')
     def _transformer(vals):
         if len(vals) == 0:
             return fills
         else:
-            match_eff_main = prog_eff_main.match(vals[0]) # ignore all but first effect
+            match_eff_main = _prog_eff_main.match(vals[0]) # ignore all but first effect
             eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
             result = tuple(
                 fill if v == ''
@@ -1698,7 +1697,8 @@ class VariantsTable(object):
                  exclude_fields=None,
                  arities=None,
                  flatten_filter=False,
-                 fill='.'
+                 fill='.',
+                 flatten=None,
                  ):
         self.filename = filename
         self.region = region
@@ -1707,6 +1707,7 @@ class VariantsTable(object):
         self.arities = arities
         self.flatten_filter = flatten_filter
         self.fill = fill
+        self.flatten = flatten
 
     def __iter__(self):
 
@@ -1743,6 +1744,14 @@ class VariantsTable(object):
         # convert to tuple
         info_types = tuple(info_types[f] if f in info_types else -1 for f in fields)
 
+        # default flattening
+        if self.flatten is None:
+            self.flatten = dict()
+        for f in DEFAULT_FLATTEN:
+            if f not in self.flatten:
+                ff, t = DEFAULT_FLATTEN[f]
+                self.flatten[f] = ff, t(self.fill)
+
         # make header row
         header = list()
         for f in fields:
@@ -1752,6 +1761,9 @@ class VariantsTable(object):
             elif self.arities is not None and f in self.arities and self.arities[f] > 1:
                 for i in range(1, self.arities[f] + 1):
                     header.append(f + '_' + str(i))
+            elif f in self.flatten and self.flatten[f] is not None:
+                fflds, _ = self.flatten[f]
+                header.extend(fflds)
             else:
                 header.append(f)
         header = tuple(header)
@@ -1764,11 +1776,12 @@ class VariantsTable(object):
                                  parse_info=parse_info,
                                  filter_ids=filter_ids,
                                  flatten_filter=self.flatten_filter,
-                                 fill=self.fill)
+                                 fill=self.fill,
+                                 flatten=self.flatten)
         return chain((header,), data)
 
 
-def itervariantstable(filenames, region, fields, arities, info_types, parse_info, filter_ids, flatten_filter, fill):
+def itervariantstable(filenames, region, fields, arities, info_types, parse_info, filter_ids, flatten_filter, fill, flatten):
     cdef VariantCallFile *variantFile
     cdef Variant *var
 
@@ -1784,7 +1797,7 @@ def itervariantstable(filenames, region, fields, arities, info_types, parse_info
         var = new Variant(deref(variantFile))
 
         while _get_next_variant(variantFile, var):
-            yield _mkvtblrow(var, fields, arities, info_types, filter_ids, flatten_filter, fill)
+            yield _mkvtblrow(var, fields, arities, info_types, filter_ids, flatten_filter, fill, flatten)
 
         del variantFile
         del var
@@ -1796,7 +1809,8 @@ cdef inline object _mkvtblrow(Variant *var,
                               info_types,
                               filter_ids,
                               flatten_filter,
-                              fill):
+                              fill,
+                              flatten):
     out = list()
     cdef string field
     for field, arity, vcf_type in zip(fields, arities, info_types):
@@ -1841,6 +1855,10 @@ cdef inline object _mkvtblrow(Variant *var,
                     out.extend(vals)
                 elif var.info[field].size() == 0:
                     out.append(fill)
+                elif str(field) in flatten and flatten[str(field)] is not None:
+                    _, t = flatten[str(field)]
+                    vals = t(var.info[field])
+                    out.extend(vals)
                 else:
                     out.append(','.join(var.info[field]))
     return tuple(out)
@@ -1857,3 +1875,36 @@ cdef inline object _mktblval_multi(vector[string]& string_vals, int arity, objec
     return out
 
 
+EFF_FIELDS = (
+    'Effect',
+    'Effect_Impact',
+    'Functional_Class',
+    'Codon_Change',
+    'Amino_Acid_Change',
+    'Amino_Acid_Length',
+    'Gene_Name',
+    'Transcript_BioType',
+    'Gene_Coding',
+    'Transcript_ID',
+    'Exon',
+)
+
+
+_prog_eff_main = re.compile(r'([^(]+)\(([^)]+)\)')
+
+
+def flatten_eff(fill='.'):
+    def _flatten(vals):
+        if len(vals) == 0:
+            return None
+        else:
+            match_eff_main = _prog_eff_main.match(vals[0])  # ignore all but first effect
+            eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
+            eff = [fill if v == '' else v for v in eff[:11]]
+            return eff
+    return _flatten
+
+
+DEFAULT_FLATTEN = {
+    'EFF': (EFF_FIELDS, flatten_eff),
+}
