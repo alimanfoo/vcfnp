@@ -114,6 +114,9 @@ If you want to group the data by chromosome, do something like the following for
 Release Notes
 -------------
 
+
+* `1.10 <https://github.com/alimanfoo/vcfnp/issues?milestone=7&state=closed>`_
+* `1.9 <https://github.com/alimanfoo/vcfnp/issues?milestone=6&state=closed>`_
 * `1.8 <https://github.com/alimanfoo/vcfnp/issues?milestone=5&state=closed>`_
 * `1.7 <https://github.com/alimanfoo/vcfnp/issues?milestone=4&page=1&state=closed>`_
 * `1.6 <https://github.com/alimanfoo/vcfnp/issues?milestone=3&page=1&state=closed>`_
