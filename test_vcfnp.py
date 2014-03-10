@@ -338,5 +338,36 @@ def test_tabulate_variants_fill():
     eq_(('20', 1110696, 'A', 'G,T', 'PASS', '0.333,0.667'), tbl[5])
 
 
+def test_tabulate_variants_flatten_eff():
+    vcf_fn = 'fixture/test12.vcf'
+
+    # test without flattening
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'EFF')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, flatten={'EFF': None}))
+    print tbl
+    eq_(fields, tbl[0])
+    eq_(('1', 889455, 'G', 'A', 'STOP_GAINED(HIGH|NONSENSE|Cag/Tag|Q236*|749|NOC2L||CODING|NM_015658|)'), tbl[1])
+    eq_(('1', 897062, 'C', 'T', 'NON_SYNONYMOUS_CODING(MODERATE|MISSENSE|gTt/gGt|V155G||PF3D7_0108900|||rna_PF3D7_0108900-1|1|1|WARNING_TRANSCRIPT_MULTIPLE_STOP_CODONS)'), tbl[2])
+    eq_(('1', 897063, 'C', 'T', '.'), tbl[3])
+
+    # test with explicit flattening
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'EFF')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, flatten={'EFF': (vcfnp.EFF_FIELDS, vcfnp.flatten_eff('NA'))}))
+    print tbl
+    eq_(fields[:4] + ('Effect', 'Effect_Impact', 'Functional_Class', 'Codon_Change', 'Amino_Acid_Change', 'Amino_Acid_Length', 'Gene_Name', 'Transcript_BioType', 'Gene_Coding', 'Transcript_ID', 'Exon'), tbl[0])
+    eq_(('1', 889455, 'G', 'A', 'STOP_GAINED', 'HIGH', 'NONSENSE', 'Cag/Tag', 'Q236*', '749', 'NOC2L', 'NA', 'CODING', 'NM_015658', 'NA'), tbl[1])
+    eq_(('1', 897062, 'C', 'T', 'NON_SYNONYMOUS_CODING', 'MODERATE', 'MISSENSE', 'gTt/gGt', 'V155G', 'NA', 'PF3D7_0108900', 'NA', 'NA', 'rna_PF3D7_0108900-1', '1'), tbl[2])
+    eq_(('1', 897063, 'C', 'T', '.'), tbl[3])
+
+    # test with default flattening
+    fields = ('CHROM', 'POS', 'REF', 'ALT', 'EFF')
+    tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, fill=None))
+    print tbl
+    eq_(fields[:4] + ('Effect', 'Effect_Impact', 'Functional_Class', 'Codon_Change', 'Amino_Acid_Change', 'Amino_Acid_Length', 'Gene_Name', 'Transcript_BioType', 'Gene_Coding', 'Transcript_ID', 'Exon'), tbl[0])
+    eq_(('1', 889455, 'G', 'A', 'STOP_GAINED', 'HIGH', 'NONSENSE', 'Cag/Tag', 'Q236*', '749', 'NOC2L', None, 'CODING', 'NM_015658', None), tbl[1])
+    eq_(('1', 897062, 'C', 'T', 'NON_SYNONYMOUS_CODING', 'MODERATE', 'MISSENSE', 'gTt/gGt', 'V155G', None, 'PF3D7_0108900', None, None, 'rna_PF3D7_0108900-1', '1'), tbl[2])
+    eq_(('1', 897063, 'C', 'T', None), tbl[3])
+
+
 
 
