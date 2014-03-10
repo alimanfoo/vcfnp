@@ -1853,12 +1853,12 @@ cdef inline object _mkvtblrow(Variant *var,
                 if arity is not None:
                     vals = _mktblval_multi(var.info[field], arity, fill)
                     out.extend(vals)
-                elif var.info[field].size() == 0:
-                    out.append(fill)
                 elif str(field) in flatten and flatten[str(field)] is not None:
                     _, t = flatten[str(field)]
                     vals = t(var.info[field])
                     out.extend(vals)
+                elif var.info[field].size() == 0:
+                    out.append(fill)
                 else:
                     out.append(','.join(var.info[field]))
     return tuple(out)
@@ -1896,7 +1896,7 @@ _prog_eff_main = re.compile(r'([^(]+)\(([^)]+)\)')
 def flatten_eff(fill='.'):
     def _flatten(vals):
         if len(vals) == 0:
-            return None
+            return [fill] * 11
         else:
             match_eff_main = _prog_eff_main.match(vals[0])  # ignore all but first effect
             eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
