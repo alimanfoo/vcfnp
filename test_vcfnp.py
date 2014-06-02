@@ -131,10 +131,37 @@ def test_variable_calldata():
     
 def test_missing_calldata():
     C = calldata('fixture/test1.vcf')
+
+    # first variant, second sample
+    eq_('.', C['test2']['GT'][0])
+    eq_((-1, -1), tuple(C['test2']['genotype'][0]))
+    eq_((1, 0), tuple(C['test2']['AD'][0]))  # data are present
+
+    # third variant, third sample
     eq_('.', C['test3']['GT'][2])
     eq_((-1, -1), tuple(C['test3']['genotype'][2]))
+    eq_((0, 0), tuple(C['test3']['AD'][2]))  # default fill
+
+    # third variant, fourth sample
     eq_('./.', C['test4']['GT'][2])
     eq_((-1, -1), tuple(C['test4']['genotype'][2]))
+    eq_((0, 0), tuple(C['test4']['AD'][2]))  # default fill
+
+
+def test_missing_calldata_cleared():
+    C = calldata('fixture/test32.vcf')['AC0093-C']
+
+    # first variant, non-missing
+    eq_('0/0', C['GT'][0])
+    eq_((0, 0), tuple(C['genotype'][0]))
+    eq_(8, C['DP'][0])
+    eq_(3, C['GQ'][0])
+
+    # second variant, missing
+    eq_('./.', C['GT'][1])
+    eq_((-1, -1), tuple(C['genotype'][1]))
+    eq_(0, C['DP'][1])  # should be default fill value
+    eq_(0, C['GQ'][1])  # should be default fill value
 
 
 def test_override_vcf_types():
