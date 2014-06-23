@@ -6,3 +6,4 @@ dist
 MANIFEST
 .idea
 *.prof
+tmp

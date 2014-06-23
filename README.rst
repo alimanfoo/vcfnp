@@ -1,7 +1,7 @@
 vcfnp
 =====
 
-Load numpy arrays from a VCF (variant call file).
+Load data from a VCF (variant call file) into numpy arrays or an HDF5 file.
 
 Installation
 ------------

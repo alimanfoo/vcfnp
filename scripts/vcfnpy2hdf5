@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 
+from __future__ import division
 import os
 import sys
 import argparse
@@ -16,119 +17,151 @@ def log(*msg):
     sys.stderr.flush()
 
 
-def main(args):
+def load_compound_arrays_into_dataset(input_filenames, dataset_name, parent_group, chunk_size, compression, compression_opts):
+
+    a = np.load(input_filenames[0])
+
+    if dataset_name in parent_group:
+        log(dataset_name, 'delete existing dataset')
+        del parent_group[dataset_name]
+
+    log(dataset_name, 'setup dataset')
+    shape = (0,) + a.shape[1:]  # initially empty
+    maxshape = (None,) + a.shape[1:]  # resizable along first dimension
+    if a.ndim == 1:
+        chunks = chunk_size//a.dtype.itemsize,
+    else:
+        # optimise for access along second dimension
+        chunks = (chunk_size//a.dtype.itemsize, 1) + a.shape[2:]
+    log(dataset_name, 'dtype', a.dtype, 'shape', shape, 'maxshape', maxshape, 'chunks', chunks)
+    ds = parent_group.create_dataset(dataset_name, shape=shape, dtype=a.dtype,
+                                     chunks=chunks, maxshape=maxshape,
+                                     compression=compression,
+                                     compression_opts=compression_opts)
+
+    log(dataset_name, 'load data')
+    for fn in input_filenames:
+        a = np.load(fn)
+        if a.size > 0:
+            n = ds.shape[0]
+            n_add = a.shape[0]
+            n_new = n + n_add
+            log(dataset_name, 'resizing', n, n_new)
+            ds.resize(n_new, axis=0)
+            log(dataset_name, 'loading', n, n_new)
+            ds[n:n_new] = a
+
+    return ds
+
+
+def load_compound_arrays_into_group(input_filenames, group_name, parent_group, chunk_size, compression, compression_opts):
+
+    a = np.load(input_filenames[0])
+    grp = parent_group.require_group(group_name)
+
+    log(group_name, 'setup datasets')
+    for f in a.dtype.names:
+
+        if f in grp:
+            log(group_name, f, 'deleting existing dataset')
+            del grp[f]
+
+        shape = (0,) + a[f].shape[1:]  # initially empty
+        maxshape = (None,) + a[f].shape[1:]  # resizable along first dimension
+        if a.ndim == 1:
+            chunks = chunk_size//a[f].dtype.itemsize,
+        else:
+            # optimise for access along second dimension
+            chunks = (chunk_size//a[f].dtype.itemsize, 1) + a[f].shape[2:]
+        log(group_name, f, 'dtype', a[f].dtype, 'shape', shape, 'maxshape', maxshape, 'chunks', chunks)
+        grp.create_dataset(f, shape=shape, dtype=a[f].dtype,
+                           chunks=chunks, maxshape=maxshape,
+                           compression=compression,
+                           compression_opts=compression_opts)
+
+    log(group_name, 'load data')
+    for fn in input_filenames:
+        a = np.load(fn)
+        if a.size > 0:
+            for f in a.dtype.names:
+                n = grp[f].shape[0]
+                n_add = a.shape[0]
+                n_new = n + n_add
+                log(group_name, f, 'resizing', n, n_new)
+                grp[f].resize(n_new, axis=0)
+                log(group_name, f, 'loading', n, n_new)
+                grp[f][n:n_new, ...] = a[f]
+
+    return grp
+
+
+def load_hdf5(input_dir,
+              output_filename,
+              input_filename_template='{array_type}*.npy',
+              vcf_filename=None,
+              variants_only=False,
+              tabulate_variants=False,
+              parent_group_name='/',
+              chunk_size=100000,
+              compression=None,
+              compression_opts=None):
 
     # guard conditions
-    assert args.input_dir is not None and os.path.exists(args.input_dir)
-    assert args.vcf_filename is not None and os.path.exists(args.vcf_filename)
+    assert input_dir is not None and os.path.exists(input_dir)
+    if vcf_filename is not None:
+        assert os.path.exists(vcf_filename)
 
     # template for input arrays
-    input_path_template = os.path.join(args.input_dir, args.input_filename_template)
+    input_path_template = os.path.join(input_dir, input_filename_template)
 
-    log('open hdf5 file', args.output_filename)
-    h5f = h5py.File(args.output_filename, 'a')
+    log('open hdf5 file', output_filename)
+    with h5py.File(output_filename, 'a') as h5f:
 
-    log('store metadata from VCF', args.vcf_filename)
-    vcf = vcflib.PyVariantCallFile(args.vcf_filename)
-    samples = vcf.sampleNames
-    h5f.attrs['samples'] = samples
+        log('setup parent group', parent_group_name)
+        parent_group = h5f.require_group(parent_group_name)
 
-    log('setup output group', args.group)
-    group = h5f.require_group(args.group)
+        if vcf_filename is not None:
+            log('store metadata from VCF', vcf_filename)
+            vcf = vcflib.PyVariantCallFile(vcf_filename)
+            if 'samples' in parent_group:
+                del parent_group['samples']
+            samples = np.array(vcf.sampleNames)
+            parent_group.create_dataset('samples', data=samples)
 
-    log('process variants')
-    #######################
+        log('process variants')
+        variants_input_filenames = sorted(glob(input_path_template.format(array_type='variants')))
+        if tabulate_variants:
+            log('use dataset layout for variants')
+            variants = load_compound_arrays_into_dataset(variants_input_filenames, 'variants', parent_group,
+                                                         chunk_size=chunk_size,
+                                                         compression=compression,
+                                                         compression_opts=compression_opts)
+        else:
+            log('use group layout for variants')
+            variants = load_compound_arrays_into_group(variants_input_filenames, 'variants', parent_group,
+                                                       chunk_size=chunk_size,
+                                                       compression=compression,
+                                                       compression_opts=compression_opts)
 
-    if 'variants' in group:
-        log('deleting existing variants dataset')
-        del group['variants']
-    variants_input_filenames = sorted(glob(input_path_template.format(array_type='variants')))
+        if not variants_only:
 
-    log('determine dtype')
-    A = np.load(variants_input_filenames[0])
-    dtype = A.dtype
-    log(dtype)
+            log('process calldata')
+            calldata_input_filenames = sorted(glob(input_path_template.format(array_type='calldata_2d')))
 
-    log('determine chunk shape')
-    chunks = args.chunk_size/dtype.itemsize,
-    log(chunks)
+            log('check number of input files')
+            nvf = len(variants_input_filenames)
+            nc2df = len(calldata_input_filenames)
+            assert nvf == nc2df, 'bad number of calldata files, expected %s, found %s' % (nvf, nc2df)
 
-    log('create dataset')
-    shape = 0,  # initially empty
-    maxshape = None,  # resizable
-    variants = group.create_dataset('variants', shape=shape, dtype=dtype,
-                                    chunks=chunks, maxshape=maxshape,
-                                    compression=args.compression,
-                                    compression_opts=args.compression_opts)
+            calldata = load_compound_arrays_into_group(calldata_input_filenames, 'calldata', parent_group,
+                                                       chunk_size=chunk_size,
+                                                       compression=compression,
+                                                       compression_opts=compression_opts)
 
-    log('load data')
-    for fn in variants_input_filenames:
-        A = np.load(fn)
-        if A.size > 0:
-            n = variants.shape[0]
-            n_add = A.shape[0]
-            n_new = n + n_add
-            log('loading', n, n_new)
-            variants.resize(n_new, axis=0)
-            variants[n:n_new] = A
-    log('loaded', variants.size)
-
-    if 'POS' in group:
-        log('deleting existing POS dataset')
-        del group['POS']
-    log('create POS dataset')
-    group.create_dataset('POS', data=variants['POS'], chunks=None, compression=None)
-
-    if not args.variants_only > 0:
-
-        log('process calldata')
-        #######################
-
-        calldata_2d = group.require_group('calldata_2d')
-        calldata_2d_input_filenames = sorted(glob(input_path_template.format(array_type='calldata_2d')))
-        nvf = len(variants_input_filenames)
-        nc2df = len(calldata_2d_input_filenames)
-        # check there is one calldata_2d file for each variants file
-        assert nvf == nc2df, 'bad number of calldata_2d files, expected %s, found %s' % (nvf, nc2df)
-
-        log('determine dataset names')
-        A = np.load(calldata_2d_input_filenames[0])
-        dtype = A.dtype
-        log(dtype.names)
-
-        for f in dtype.names:
-            t = dtype.fields[f][0]
-            log(f, 'dtype', t)
-            shape = variants.size, len(samples)
-            log(f, 'shape', shape)
-            # try to get ~100kb chunks, optimise for accessing column-wise
-            chunks = args.chunk_size/t.itemsize, 1
-            log(f, 'chunkshape', chunks)
-            if chunks[0] > shape[0]:
-                chunks = shape
-            if f in calldata_2d:
-                log(f, 'deleting existing dataset')
-                del calldata_2d[f]
-            log(f, 'create dataset')
-            calldata_2d.create_dataset(f, shape=shape, dtype=t, chunks=chunks,
-                                       compression=args.compression,
-                                       compression_opts=args.compression_opts)
-
-        log('load data')
-        start = 0
-        for fn in calldata_2d_input_filenames:
-            A = np.load(fn)
-            if A.size > 0:
-                stop = start + A.shape[0]
-                log('loading', start, stop)
-                for f in dtype.names:
-                    calldata_2d[f][start:stop, ...] = A[f]
-                start = stop
-
-    log('all done')
+        log('all done')
 
 
-if __name__ == '__main__':
+def main():
 
     # handle command line args
     parser = argparse.ArgumentParser()
@@ -160,5 +193,21 @@ if __name__ == '__main__':
     parser.add_argument('--variants-only',
                         dest='variants_only', action='store_true', default=False,
                         help="load variants only, don't look for calldata")
+    parser.add_argument('--tabulate-variants',
+                        dest='tabulate_variants', action='store_true', default=False,
+                        help="organise the variants as a dataset with a compound dtype")
     args = parser.parse_args()
-    main(args)
+
+    load_hdf5(input_dir=args.input_dir,
+              output_filename=args.output_filename,
+              input_filename_template=args.input_filename_template,
+              parent_group_name=args.group,
+              chunk_size=args.chunk_size,
+              compression=args.compression,
+              compression_opts=args.compression_opts,
+              variants_only=args.variants_only,
+              tabulate_variants=args.tabulate_variants)
+
+
+if __name__ == '__main__':
+    main()

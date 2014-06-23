@@ -12,7 +12,7 @@ Utility functions to extract data from a VCF file and load into a numpy array.
 
 # 1.10.1
 # 1.10.2
-__version__ = '1.11-SNAPSHOT'
+__version__ = '1.11'
 
 
 import sys
