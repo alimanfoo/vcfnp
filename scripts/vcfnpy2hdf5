@@ -68,7 +68,7 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group, c
 
         shape = (0,) + a[f].shape[1:]  # initially empty
         maxshape = (None,) + a[f].shape[1:]  # resizable along first dimension
-        if a.ndim == 1:
+        if a[f].ndim == 1:
             chunks = chunk_size//a[f].dtype.itemsize,
         else:
             # optimise for access along second dimension
