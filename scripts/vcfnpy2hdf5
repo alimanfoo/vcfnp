@@ -46,9 +46,8 @@ def load_compound_arrays_into_dataset(input_filenames, dataset_name, parent_grou
             n = ds.shape[0]
             n_add = a.shape[0]
             n_new = n + n_add
-            log(dataset_name, 'resizing', n, n_new)
-            ds.resize(n_new, axis=0)
             log(dataset_name, 'loading', n, n_new)
+            ds.resize(n_new, axis=0)
             ds[n:n_new] = a
 
     return ds
@@ -87,9 +86,8 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group, c
                 n = grp[f].shape[0]
                 n_add = a.shape[0]
                 n_new = n + n_add
-                log(group_name, f, 'resizing', n, n_new)
-                grp[f].resize(n_new, axis=0)
                 log(group_name, f, 'loading', n, n_new)
+                grp[f].resize(n_new, axis=0)
                 grp[f][n:n_new, ...] = a[f]
 
     return grp
