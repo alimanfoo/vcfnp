@@ -125,6 +125,8 @@ def load_hdf5(input_dir,
                 del parent_group['samples']
             samples = np.array(vcf.sampleNames)
             parent_group.create_dataset('samples', data=samples)
+        else:
+            log('no VCF file provided, skipping metadata storage')
 
         log('process variants')
         variants_input_filenames = sorted(glob(input_path_template.format(array_type='variants')))
@@ -199,6 +201,7 @@ def main():
     load_hdf5(input_dir=args.input_dir,
               output_filename=args.output_filename,
               input_filename_template=args.input_filename_template,
+              vcf_filename=args.vcf_filename,
               parent_group_name=args.group,
               chunk_size=args.chunk_size,
               compression=args.compression,
