@@ -171,10 +171,10 @@ def load_hdf5(input_dir,
         variants_input_filenames = sorted(
             glob(input_path_template.format(array_type='variants'))
         )
-        log('found', len(variants_input_filenames), 'variants files to load')
+        log('variants found', len(variants_input_filenames), 'files to load')
 
         if tabulate_variants:
-            log('use dataset layout for variants')
+            log('variants use dataset layout')
             variants = load_compound_arrays_into_dataset(
                 variants_input_filenames, 'variants', parent_group,
                 chunk_size=chunk_size,
@@ -182,7 +182,7 @@ def load_hdf5(input_dir,
                 compression_opts=compression_opts
             )
         else:
-            log('use group layout for variants')
+            log('variants use group layout')
             variants = load_compound_arrays_into_group(
                 variants_input_filenames, 'variants', parent_group,
                 chunk_size=chunk_size,
@@ -196,10 +196,11 @@ def load_hdf5(input_dir,
             calldata_input_filenames = sorted(
                 glob(input_path_template.format(array_type='calldata_2d'))
             )
-            log('found', len(calldata_input_filenames), 'calldata files to '
-                                                        'load')
+            log('calldata found',
+                len(calldata_input_filenames),
+                'files to load')
 
-            log('check number of input files')
+            log('calldata check number of input files')
             nvf = len(variants_input_filenames)
             nc2df = len(calldata_input_filenames)
             assert nvf == nc2df, (
