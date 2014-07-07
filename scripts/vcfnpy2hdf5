@@ -13,11 +13,21 @@ from datetime import datetime
 
 
 def log(*msg):
-    print >>sys.stderr, '[vcfnpy2hdf5] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg))
+    print >>sys.stderr, ('[vcfnpy2hdf5] '
+                         + str(datetime.now())
+                         + ' :: '
+                         + ' '.join(map(str, msg)))
     sys.stderr.flush()
 
 
-def load_compound_arrays_into_dataset(input_filenames, dataset_name, parent_group, chunk_size, compression, compression_opts):
+def load_compound_arrays_into_dataset(
+        input_filenames,
+        dataset_name,
+        parent_group,
+        chunk_size,
+        compression,
+        compression_opts
+    ):
 
     a = np.load(input_filenames[0])
 
@@ -33,11 +43,22 @@ def load_compound_arrays_into_dataset(input_filenames, dataset_name, parent_grou
     else:
         # optimise for access along second dimension
         chunks = (chunk_size//a.dtype.itemsize, 1) + a.shape[2:]
-    log(dataset_name, 'dtype', a.dtype, 'shape', shape, 'maxshape', maxshape, 'chunks', chunks)
-    ds = parent_group.create_dataset(dataset_name, shape=shape, dtype=a.dtype,
-                                     chunks=chunks, maxshape=maxshape,
-                                     compression=compression,
-                                     compression_opts=compression_opts)
+    log(
+        dataset_name,
+        'dtype', a.dtype,
+        'shape', shape,
+        'maxshape', maxshape,
+        'chunks', chunks
+    )
+    ds = parent_group.create_dataset(
+        dataset_name,
+        shape=shape,
+        dtype=a.dtype,
+        chunks=chunks,
+        maxshape=maxshape,
+        compression=compression,
+        compression_opts=compression_opts
+    )
 
     log(dataset_name, 'load data')
     for fn in input_filenames:
@@ -53,7 +74,14 @@ def load_compound_arrays_into_dataset(input_filenames, dataset_name, parent_grou
     return ds
 
 
-def load_compound_arrays_into_group(input_filenames, group_name, parent_group, chunk_size, compression, compression_opts):
+def load_compound_arrays_into_group(
+        input_filenames,
+        group_name,
+        parent_group,
+        chunk_size,
+        compression,
+        compression_opts
+    ):
 
     a = np.load(input_filenames[0])
     grp = parent_group.require_group(group_name)
@@ -72,11 +100,22 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group, c
         else:
             # optimise for access along second dimension
             chunks = (chunk_size//a[f].dtype.itemsize, 1) + a[f].shape[2:]
-        log(group_name, f, 'dtype', a[f].dtype, 'shape', shape, 'maxshape', maxshape, 'chunks', chunks)
-        grp.create_dataset(f, shape=shape, dtype=a[f].dtype,
-                           chunks=chunks, maxshape=maxshape,
-                           compression=compression,
-                           compression_opts=compression_opts)
+        log(
+            group_name, f,
+            'dtype', a[f].dtype,
+            'shape', shape,
+            'maxshape', maxshape,
+            'chunks', chunks
+        )
+        grp.create_dataset(
+            f,
+            shape=shape,
+            dtype=a[f].dtype,
+            chunks=chunks,
+            maxshape=maxshape,
+            compression=compression,
+            compression_opts=compression_opts
+        )
 
     log(group_name, 'load data')
     for fn in input_filenames:
@@ -129,34 +168,51 @@ def load_hdf5(input_dir,
             log('no VCF file provided, skipping metadata storage')
 
         log('process variants')
-        variants_input_filenames = sorted(glob(input_path_template.format(array_type='variants')))
+        variants_input_filenames = sorted(
+            glob(input_path_template.format(array_type='variants'))
+        )
+        log('found', len(variants_input_filenames), 'variants files to load')
+
         if tabulate_variants:
             log('use dataset layout for variants')
-            variants = load_compound_arrays_into_dataset(variants_input_filenames, 'variants', parent_group,
-                                                         chunk_size=chunk_size,
-                                                         compression=compression,
-                                                         compression_opts=compression_opts)
+            variants = load_compound_arrays_into_dataset(
+                variants_input_filenames, 'variants', parent_group,
+                chunk_size=chunk_size,
+                compression=compression,
+                compression_opts=compression_opts
+            )
         else:
             log('use group layout for variants')
-            variants = load_compound_arrays_into_group(variants_input_filenames, 'variants', parent_group,
-                                                       chunk_size=chunk_size,
-                                                       compression=compression,
-                                                       compression_opts=compression_opts)
+            variants = load_compound_arrays_into_group(
+                variants_input_filenames, 'variants', parent_group,
+                chunk_size=chunk_size,
+                compression=compression,
+                compression_opts=compression_opts
+            )
 
         if not variants_only:
 
             log('process calldata')
-            calldata_input_filenames = sorted(glob(input_path_template.format(array_type='calldata_2d')))
+            calldata_input_filenames = sorted(
+                glob(input_path_template.format(array_type='calldata_2d'))
+            )
+            log('found', len(calldata_input_filenames), 'calldata files to '
+                                                        'load')
 
             log('check number of input files')
             nvf = len(variants_input_filenames)
             nc2df = len(calldata_input_filenames)
-            assert nvf == nc2df, 'bad number of calldata files, expected %s, found %s' % (nvf, nc2df)
+            assert nvf == nc2df, (
+                'bad number of calldata files, expected %s, found %s'
+                % (nvf, nc2df)
+            )
 
-            calldata = load_compound_arrays_into_group(calldata_input_filenames, 'calldata', parent_group,
-                                                       chunk_size=chunk_size,
-                                                       compression=compression,
-                                                       compression_opts=compression_opts)
+            calldata = load_compound_arrays_into_group(
+                calldata_input_filenames, 'calldata', parent_group,
+                chunk_size=chunk_size,
+                compression=compression,
+                compression_opts=compression_opts
+            )
 
         log('all done')
 
@@ -174,28 +230,35 @@ def main():
     parser.add_argument('--input-filename-template',
                         dest='input_filename_template', metavar='TEMPLATE',
                         default='{array_type}*.npy',
-                        help='template for input file names, defaults to "{array_type}*.npy"')
+                        help='template for input file names, defaults to '
+                             '"{array_type}*.npy"')
     parser.add_argument('--output',
                         dest='output_filename', metavar='HDF5', default=None,
                         help='name of output HDF5 file')
     parser.add_argument('--group',
                         metavar='GROUP', dest='group', default='/',
-                        help='destination group in HDF5 file, defaults to root group')
+                        help='destination group in HDF5 file, defaults to '
+                             'root group')
     parser.add_argument('--chunk-size',
-                        dest='chunk_size', type=int, metavar='NBYTES', default=100000,
+                        dest='chunk_size', type=int, metavar='NBYTES',
+                        default=100000,
                         help='chunk size (defaults to 100kb)')
     parser.add_argument('--compression',
                         dest='compression', metavar='NAME', default=None,
                         help='compression, default is None')
     parser.add_argument('--compression-opts',
-                        dest='compression_opts', metavar='LEVEL', type=int, default=None,
+                        dest='compression_opts', metavar='LEVEL', type=int,
+                        default=None,
                         help='compression level, applies only to gzip')
     parser.add_argument('--variants-only',
-                        dest='variants_only', action='store_true', default=False,
+                        dest='variants_only', action='store_true',
+                        default=False,
                         help="load variants only, don't look for calldata")
     parser.add_argument('--tabulate-variants',
-                        dest='tabulate_variants', action='store_true', default=False,
-                        help="organise the variants as a dataset with a compound dtype")
+                        dest='tabulate_variants', action='store_true',
+                        default=False,
+                        help="organise the variants as a dataset with a "
+                             "compound dtype")
     args = parser.parse_args()
 
     load_hdf5(input_dir=args.input_dir,
