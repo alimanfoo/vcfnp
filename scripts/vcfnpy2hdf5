@@ -49,7 +49,12 @@ def load_compound_arrays_into_dataset(input_filenames,
         'dtype', a.dtype,
         'shape', shape,
         'maxshape', maxshape,
-        'chunks', chunks
+        'chunks', chunks,
+        'compression', compression,
+        'compression_opts', compression_opts,
+        'shuffle', shuffle,
+        'fletcher32', fletcher32,
+        'scaleoffset', scaleoffset
     )
     ds = parent_group.create_dataset(
         dataset_name,
@@ -110,7 +115,12 @@ def load_compound_arrays_into_group(input_filenames,
             'dtype', a[f].dtype,
             'shape', shape,
             'maxshape', maxshape,
-            'chunks', chunks
+            'chunks', chunks,
+            'compression', compression,
+            'compression_opts', compression_opts,
+            'shuffle', shuffle,
+            'fletcher32', fletcher32,
+            'scaleoffset', scaleoffset
         )
         grp.create_dataset(
             f,
