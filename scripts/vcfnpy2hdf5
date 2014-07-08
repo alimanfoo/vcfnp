@@ -20,14 +20,15 @@ def log(*msg):
     sys.stderr.flush()
 
 
-def load_compound_arrays_into_dataset(
-        input_filenames,
-        dataset_name,
-        parent_group,
-        chunk_size,
-        compression,
-        compression_opts
-    ):
+def load_compound_arrays_into_dataset(input_filenames,
+                                      dataset_name,
+                                      parent_group,
+                                      chunk_size,
+                                      compression,
+                                      compression_opts,
+                                      shuffle,
+                                      fletcher32,
+                                      scaleoffset):
 
     a = np.load(input_filenames[0])
 
@@ -57,7 +58,10 @@ def load_compound_arrays_into_dataset(
         chunks=chunks,
         maxshape=maxshape,
         compression=compression,
-        compression_opts=compression_opts
+        compression_opts=compression_opts,
+        shuffle=shuffle,
+        fletcher32=fletcher32,
+        scaleoffset=scaleoffset
     )
 
     log(dataset_name, 'load data')
@@ -74,14 +78,15 @@ def load_compound_arrays_into_dataset(
     return ds
 
 
-def load_compound_arrays_into_group(
-        input_filenames,
-        group_name,
-        parent_group,
-        chunk_size,
-        compression,
-        compression_opts
-    ):
+def load_compound_arrays_into_group(input_filenames,
+                                    group_name,
+                                    parent_group,
+                                    chunk_size,
+                                    compression,
+                                    compression_opts,
+                                    shuffle,
+                                    fletcher32,
+                                    scaleoffset):
 
     a = np.load(input_filenames[0])
     grp = parent_group.require_group(group_name)
@@ -114,7 +119,10 @@ def load_compound_arrays_into_group(
             chunks=chunks,
             maxshape=maxshape,
             compression=compression,
-            compression_opts=compression_opts
+            compression_opts=compression_opts,
+            shuffle=shuffle,
+            fletcher32=fletcher32,
+            scaleoffset=scaleoffset
         )
 
     log(group_name, 'load data')
@@ -141,7 +149,10 @@ def load_hdf5(input_dir,
               parent_group_name='/',
               chunk_size=100000,
               compression=None,
-              compression_opts=None):
+              compression_opts=None,
+              shuffle=False,
+              fletcher32=False,
+              scaleoffset=None):
 
     # guard conditions
     assert input_dir is not None and os.path.exists(input_dir)
@@ -179,7 +190,10 @@ def load_hdf5(input_dir,
                 variants_input_filenames, 'variants', parent_group,
                 chunk_size=chunk_size,
                 compression=compression,
-                compression_opts=compression_opts
+                compression_opts=compression_opts,
+                shuffle=shuffle,
+                fletcher32=fletcher32,
+                scaleoffset=scaleoffset
             )
         else:
             log('variants use group layout')
@@ -187,7 +201,10 @@ def load_hdf5(input_dir,
                 variants_input_filenames, 'variants', parent_group,
                 chunk_size=chunk_size,
                 compression=compression,
-                compression_opts=compression_opts
+                compression_opts=compression_opts,
+                shuffle=shuffle,
+                fletcher32=fletcher32,
+                scaleoffset=scaleoffset
             )
 
         if not variants_only:
@@ -212,7 +229,10 @@ def load_hdf5(input_dir,
                 calldata_input_filenames, 'calldata', parent_group,
                 chunk_size=chunk_size,
                 compression=compression,
-                compression_opts=compression_opts
+                compression_opts=compression_opts,
+                shuffle=shuffle,
+                fletcher32=fletcher32,
+                scaleoffset=scaleoffset
             )
 
         log('all done')
@@ -251,6 +271,18 @@ def main():
                         dest='compression_opts', metavar='LEVEL', type=int,
                         default=None,
                         help='compression level, applies only to gzip')
+    parser.add_argument('--shuffle',
+                        dest='shuffle', action='store_true',
+                        default=False,
+                        help='use the shuffle filter')
+    parser.add_argument('--fletcher32',
+                        dest='fletcher32', action='store_true',
+                        default=False,
+                        help='use the Fletcher32 checksum filter')
+    parser.add_argument('--scaleoffset',
+                        dest='scaleoffset', metavar='N', type=int,
+                        default=None,
+                        help='use the scale-offset filter')
     parser.add_argument('--variants-only',
                         dest='variants_only', action='store_true',
                         default=False,
@@ -270,6 +302,9 @@ def main():
               chunk_size=args.chunk_size,
               compression=args.compression,
               compression_opts=args.compression_opts,
+              shuffle=args.shuffle,
+              fletcher32=args.fletcher32,
+              scaleoffset=args.scaleoffset,
               variants_only=args.variants_only,
               tabulate_variants=args.tabulate_variants)
 
