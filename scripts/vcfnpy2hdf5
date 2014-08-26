@@ -10,6 +10,7 @@ import h5py
 import vcflib
 from glob import glob
 from datetime import datetime
+import operator
 
 
 def log(*msg):
@@ -24,6 +25,7 @@ def load_compound_arrays_into_dataset(input_filenames,
                                       dataset_name,
                                       parent_group,
                                       chunk_size,
+                                      chunk_width,
                                       compression,
                                       compression_opts,
                                       shuffle,
@@ -37,19 +39,32 @@ def load_compound_arrays_into_dataset(input_filenames,
         del parent_group[dataset_name]
 
     log(dataset_name, 'setup dataset')
+
+    # determine shape
     shape = (0,) + a.shape[1:]  # initially empty
     maxshape = (None,) + a.shape[1:]  # resizable along first dimension
+
+    # determine chunk shape
     if a.ndim == 1:
-        chunks = chunk_size//a.dtype.itemsize,
+        chunks = chunk_size // a.dtype.itemsize,
+    elif a.ndim > 1:
+        chunk_width = min(chunk_width, a.shape[1])
+        row_size = reduce(
+            operator.mul,
+            (a.dtype.itemsize, chunk_width) + a.shape[2:]
+        )
+        chunk_height = chunk_size // row_size
+        chunks = (chunk_height, chunk_width) + a.shape[2:]
     else:
-        # optimise for access along second dimension
-        chunks = (chunk_size//a.dtype.itemsize, 1) + a.shape[2:]
+        raise Exception('unexpected number of dimensions: %r' % a)
+
     log(
         dataset_name,
         'dtype', a.dtype,
         'shape', shape,
         'maxshape', maxshape,
         'chunks', chunks,
+        'chunk size', a.dtype.itemsize * reduce(operator.mul, chunks),
         'compression', compression,
         'compression_opts', compression_opts,
         'shuffle', shuffle,
@@ -87,6 +102,7 @@ def load_compound_arrays_into_group(input_filenames,
                                     group_name,
                                     parent_group,
                                     chunk_size,
+                                    chunk_width,
                                     compression,
                                     compression_opts,
                                     shuffle,
@@ -103,19 +119,31 @@ def load_compound_arrays_into_group(input_filenames,
             log(group_name, f, 'deleting existing dataset')
             del grp[f]
 
+        # determine shape
         shape = (0,) + a[f].shape[1:]  # initially empty
         maxshape = (None,) + a[f].shape[1:]  # resizable along first dimension
+
+        # determine chunk shape
         if a[f].ndim == 1:
-            chunks = chunk_size//a[f].dtype.itemsize,
+            chunks = chunk_size // a[f].dtype.itemsize,
+        elif a[f].ndim > 1:
+            chunk_width = min(chunk_width, a[f].shape[1])
+            row_size = reduce(
+                operator.mul,
+                (a[f].dtype.itemsize, chunk_width) + a[f].shape[2:]
+            )
+            chunk_height = chunk_size // row_size
+            chunks = (chunk_height, chunk_width) + a[f].shape[2:]
         else:
-            # optimise for access along second dimension
-            chunks = (chunk_size//a[f].dtype.itemsize, 1) + a[f].shape[2:]
+            raise Exception('unexpected number of dimensions: %r' % a[f])
+
         log(
             group_name, f,
             'dtype', a[f].dtype,
             'shape', shape,
             'maxshape', maxshape,
             'chunks', chunks,
+            'chunk size', a[f].dtype.itemsize * reduce(operator.mul, chunks),
             'compression', compression,
             'compression_opts', compression_opts,
             'shuffle', shuffle,
@@ -158,6 +186,7 @@ def load_hdf5(input_dir,
               tabulate_variants=False,
               parent_group_name='/',
               chunk_size=100000,
+              chunk_width=10,
               compression=None,
               compression_opts=None,
               shuffle=False,
@@ -199,6 +228,7 @@ def load_hdf5(input_dir,
             variants = load_compound_arrays_into_dataset(
                 variants_input_filenames, 'variants', parent_group,
                 chunk_size=chunk_size,
+                chunk_width=chunk_width,
                 compression=compression,
                 compression_opts=compression_opts,
                 shuffle=shuffle,
@@ -210,6 +240,7 @@ def load_hdf5(input_dir,
             variants = load_compound_arrays_into_group(
                 variants_input_filenames, 'variants', parent_group,
                 chunk_size=chunk_size,
+                chunk_width=chunk_width,
                 compression=compression,
                 compression_opts=compression_opts,
                 shuffle=shuffle,
@@ -238,6 +269,7 @@ def load_hdf5(input_dir,
             calldata = load_compound_arrays_into_group(
                 calldata_input_filenames, 'calldata', parent_group,
                 chunk_size=chunk_size,
+                chunk_width=chunk_width,
                 compression=compression,
                 compression_opts=compression_opts,
                 shuffle=shuffle,
@@ -272,27 +304,34 @@ def main():
                              'root group')
     parser.add_argument('--chunk-size',
                         dest='chunk_size', type=int, metavar='NBYTES',
-                        default=100000,
-                        help='chunk size (defaults to 100kb)')
+                        default=2**17,
+                        help='chunk size (defaults to 128kb)')
+    parser.add_argument('--chunk-width',
+                        dest='chunk_width', type=int, metavar='N',
+                        default=10,
+                        help='chunk width for 2 dimensional datasets ('
+                             'defaults to 10)')
     parser.add_argument('--compression',
-                        dest='compression', metavar='NAME', default=None,
-                        help='compression, default is None')
+                        dest='compression', metavar='NAME', default='gzip',
+                        help='compression, default is gzip')
     parser.add_argument('--compression-opts',
                         dest='compression_opts', metavar='LEVEL', type=int,
-                        default=None,
-                        help='compression level, applies only to gzip')
+                        default=3,
+                        help='compression level, applies only to gzip ('
+                             'defaults to 3)')
     parser.add_argument('--shuffle',
                         dest='shuffle', action='store_true',
                         default=False,
-                        help='use the shuffle filter')
+                        help='use the shuffle filter (defaults to False)')
     parser.add_argument('--fletcher32',
                         dest='fletcher32', action='store_true',
                         default=False,
-                        help='use the Fletcher32 checksum filter')
+                        help='use the Fletcher32 checksum filter (defaults to '
+                             'False)')
     parser.add_argument('--scaleoffset',
                         dest='scaleoffset', metavar='N', type=int,
                         default=None,
-                        help='use the scale-offset filter')
+                        help='use the scale-offset filter (defaults to None)')
     parser.add_argument('--variants-only',
                         dest='variants_only', action='store_true',
                         default=False,
@@ -301,8 +340,13 @@ def main():
                         dest='tabulate_variants', action='store_true',
                         default=False,
                         help="organise the variants as a dataset with a "
-                             "compound dtype")
+                             "compound dtype (defaults to False - organise "
+                             "variants as a group, with each column as a "
+                             "separate dataset)")
     args = parser.parse_args()
+
+    compression = args.compression
+    compression_opts = args.compression_opts if compression == 'gzip' else None
 
     load_hdf5(input_dir=args.input_dir,
               output_filename=args.output_filename,
@@ -310,8 +354,9 @@ def main():
               vcf_filename=args.vcf_filename,
               parent_group_name=args.group,
               chunk_size=args.chunk_size,
-              compression=args.compression,
-              compression_opts=args.compression_opts,
+              chunk_width=args.chunk_width,
+              compression=compression,
+              compression_opts=compression_opts,
               shuffle=args.shuffle,
               fletcher32=args.fletcher32,
               scaleoffset=args.scaleoffset,
