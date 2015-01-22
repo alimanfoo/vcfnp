@@ -31,9 +31,9 @@ TYPE_UNKNOWN = FIELD_UNKNOWN
 
 
 def _py(x):
-    if isinstance(x, binary_type):
-        # always pass text to Python
-        y = text_type(x, 'ascii')
+    if isinstance(x, binary_type) and not PY2:
+        # always pass str to Python
+        y = str(x, 'ascii')
     elif isinstance(x, list):
         y = [_py(i) for i in x]
     elif isinstance(x, tuple):

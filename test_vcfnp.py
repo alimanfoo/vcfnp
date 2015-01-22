@@ -1,20 +1,22 @@
-"""
-Some simple unit tests for the vcfnp extension.
-
-"""
+from __future__ import print_function, division, absolute_import
 
 
 import os
-from vcfnp import variants, calldata, EFF_DEFAULT_DTYPE, eff_default_transformer, calldata_2d
+from vcfnp import variants, calldata, EFF_DEFAULT_DTYPE, \
+    eff_default_transformer, calldata_2d
 import vcfnp
 from nose.tools import eq_, assert_almost_equal
-import re
 import numpy as np
+import logging
+
+
+logger = logging.getLogger(__name__)
+debug = logger.debug
 
 
 def test_variants():
     a = variants('fixture/sample.vcf', arities={'ALT': 2, 'AC': 2})
-    print repr(a)
+    debug(repr(a))
     eq_(9, len(a))
 
     eq_('19', a[0]['CHROM'])
@@ -76,7 +78,7 @@ def test_variants_slice():
     
 def test_calldata():
     a = calldata('fixture/sample.vcf')
-    print repr(a)
+    debug(repr(a))
     eq_('0|0', a[0]['NA00001']['GT'])
     eq_(True, a[0]['NA00001']['is_called'])
     eq_(True, a[0]['NA00001']['is_phased'])
@@ -322,7 +324,7 @@ def test_tabulate_variants():
 
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER', 'AF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields))
-    print tbl
+    debug(tbl)
     eq_(fields, tbl[0])
     eq_(('19', 111, 'A', 'C', '.', '.'), tbl[1])
     eq_(('20', 17330, 'T', 'A', 'q10', '0.017'), tbl[4])
@@ -358,7 +360,7 @@ def test_tabulate_variants_fill():
 
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'FILTER', 'AF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, fill=None))
-    print tbl
+    debug(tbl)
     eq_(fields, tbl[0])
     eq_(('19', 111, 'A', 'C', None, None), tbl[1])
     eq_(('20', 17330, 'T', 'A', 'q10', '0.017'), tbl[4])
@@ -371,7 +373,7 @@ def test_tabulate_variants_flatten_eff():
     # test without flattening
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'EFF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, flatten={'EFF': None}))
-    print tbl
+    debug(tbl)
     eq_(fields, tbl[0])
     eq_(('1', 889455, 'G', 'A', 'STOP_GAINED(HIGH|NONSENSE|Cag/Tag|Q236*|749|NOC2L||CODING|NM_015658|)'), tbl[1])
     eq_(('1', 897062, 'C', 'T', 'NON_SYNONYMOUS_CODING(MODERATE|MISSENSE|gTt/gGt|V155G||PF3D7_0108900|||rna_PF3D7_0108900-1|1|1|WARNING_TRANSCRIPT_MULTIPLE_STOP_CODONS)'), tbl[2])
@@ -380,7 +382,7 @@ def test_tabulate_variants_flatten_eff():
     # test with explicit flattening
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'EFF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, flatten={'EFF': (vcfnp.EFF_FIELDS, vcfnp.flatten_eff('NA'))}))
-    print tbl
+    debug(tbl)
     eq_(fields[:4] + ('Effect', 'Effect_Impact', 'Functional_Class', 'Codon_Change', 'Amino_Acid_Change', 'Amino_Acid_Length', 'Gene_Name', 'Transcript_BioType', 'Gene_Coding', 'Transcript_ID', 'Exon'), tbl[0])
     eq_(('1', 889455, 'G', 'A', 'STOP_GAINED', 'HIGH', 'NONSENSE', 'Cag/Tag', 'Q236*', '749', 'NOC2L', 'NA', 'CODING', 'NM_015658', 'NA'), tbl[1])
     eq_(('1', 897062, 'C', 'T', 'NON_SYNONYMOUS_CODING', 'MODERATE', 'MISSENSE', 'gTt/gGt', 'V155G', 'NA', 'PF3D7_0108900', 'NA', 'NA', 'rna_PF3D7_0108900-1', '1'), tbl[2])
@@ -389,7 +391,7 @@ def test_tabulate_variants_flatten_eff():
     # test with default flattening
     fields = ('CHROM', 'POS', 'REF', 'ALT', 'EFF')
     tbl = list(vcfnp.VariantsTable(vcf_fn, fields=fields, fill=None))
-    print tbl
+    debug(tbl)
     eq_(fields[:4] + ('Effect', 'Effect_Impact', 'Functional_Class', 'Codon_Change', 'Amino_Acid_Change', 'Amino_Acid_Length', 'Gene_Name', 'Transcript_BioType', 'Gene_Coding', 'Transcript_ID', 'Exon'), tbl[0])
     eq_(('1', 889455, 'G', 'A', 'STOP_GAINED', 'HIGH', 'NONSENSE', 'Cag/Tag', 'Q236*', '749', 'NOC2L', None, 'CODING', 'NM_015658', None), tbl[1])
     eq_(('1', 897062, 'C', 'T', 'NON_SYNONYMOUS_CODING', 'MODERATE', 'MISSENSE', 'gTt/gGt', 'V155G', None, 'PF3D7_0108900', None, None, 'rna_PF3D7_0108900-1', '1'), tbl[2])

@@ -2,15 +2,10 @@
 # cython: boundscheck = False
 # cython: wraparound = False
 # cython: embedsignature = True
+from __future__ import print_function, division, absolute_import
 
 
-"""
-Utility functions to extract data from a VCF file and load into a numpy array.
-
-"""
-
-
-__version__ = '1.14-SNAPSHOT'
+__version__ = '2.0.0.dev0'
 
 
 import sys
@@ -32,6 +27,24 @@ import time
 from itertools import islice
 import os
 from datetime import datetime
+import logging
+
+
+logger = logging.getLogger(__name__)
+import inspect
+debug = lambda msg: logger.debug('%s: %s' % (inspect.stack()[0][3], msg))
+
+
+# PY2/3 compatibility
+PY2 = sys.version_info[0] == 2
+if PY2:
+    text_type = unicode
+    binary_type = str
+    string_types = basestring,
+else:
+    text_type = str
+    binary_type = bytes
+    string_types = str,
 
 
 cdef size_t npos = -1
@@ -53,7 +66,7 @@ TYPESTRING2KEY = {
     'Flag': FIELD_BOOL,
 }
 
-# these are the possible fields in the variants array
+# these are the standard fields in the variants array
 STANDARD_VARIANT_FIELDS = (
     'CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER',
     'num_alleles', 'is_snp', 'svlen'
@@ -122,7 +135,8 @@ DEFAULT_FILL_MAP = {
 }
 
 
-# default dtypes for some known INFO fields where lower precision is acceptable in most cases
+# default dtypes for some known INFO fields where lower precision is
+# acceptable in most cases
 DEFAULT_INFO_DTYPE = {
     'ABHet': 'f2',
     'ABHom': 'f2',
@@ -186,46 +200,59 @@ DEFAULT_CALLDATA_ARITY = {
 }
 
 
-cdef char SEMICOLON = ';'
-cdef string DOT = '.'
-cdef string GT_DELIMS = '/|'
-cdef string FIELD_NAME_CHROM = 'CHROM'
-cdef string FIELD_NAME_POS = 'POS'
-cdef string FIELD_NAME_ID = 'ID'
-cdef string FIELD_NAME_REF = 'REF'
-cdef string FIELD_NAME_ALT = 'ALT'
-cdef string FIELD_NAME_QUAL = 'QUAL'
-cdef string FIELD_NAME_FILTER = 'FILTER'
-cdef string FIELD_NAME_INFO = 'INFO'
-cdef string FIELD_NAME_NUM_ALLELES = 'num_alleles'
-cdef string FIELD_NAME_IS_SNP = 'is_snp'
-cdef string FIELD_NAME_SVLEN = 'svlen'
-cdef string FIELD_NAME_IS_CALLED = 'is_called'
-cdef string FIELD_NAME_IS_PHASED = 'is_phased'
-cdef string FIELD_NAME_GENOTYPE = 'genotype'
-cdef string FIELD_NAME_GT = 'GT'
+cdef char SEMICOLON = b';'
+cdef string DOT = b'.'
+cdef string GT_DELIMS = b'/|'
+cdef string FIELD_NAME_CHROM = b'CHROM'
+cdef string FIELD_NAME_POS = b'POS'
+cdef string FIELD_NAME_ID = b'ID'
+cdef string FIELD_NAME_REF = b'REF'
+cdef string FIELD_NAME_ALT = b'ALT'
+cdef string FIELD_NAME_QUAL = b'QUAL'
+cdef string FIELD_NAME_FILTER = b'FILTER'
+cdef string FIELD_NAME_INFO = b'INFO'
+cdef string FIELD_NAME_NUM_ALLELES = b'num_alleles'
+cdef string FIELD_NAME_IS_SNP = b'is_snp'
+cdef string FIELD_NAME_SVLEN = b'svlen'
+cdef string FIELD_NAME_IS_CALLED = b'is_called'
+cdef string FIELD_NAME_IS_PHASED = b'is_phased'
+cdef string FIELD_NAME_GENOTYPE = b'genotype'
+cdef string FIELD_NAME_GT = b'GT'
 
 
 def _variants_fields(fields, exclude_fields, info_ids):
+    """Utility function to determine which fields to extract when loading
+    variants."""
     if fields is None:
+        # no fields specified by user
+        # by default extract all standard and INFO fields
         fields = STANDARD_VARIANT_FIELDS + info_ids
     else:
+        # fields have been specified
         for f in fields:
+            # check for non-standard fields not declared in INFO header
             if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
-                # support extracting INFO even if not declared in header, but warn...
-                print >>sys.stderr, 'WARNING: no INFO definition found for field %s' % f
+                # support extracting INFO even if not declared in header,
+                # but warn...
+                print('WARNING: no INFO definition found for field %s' % f,
+                      file=sys.stderr)
+    # process any exclusions
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
     return tuple(fields)
 
 
 def _variants_arities(fields, arities, info_counts):
+    """Utility function to determine arities (i.e., number of values to
+    expect) for variants fields."""
     if arities is None:
+        # no arities specified by user
         arities = dict()
     for f, vcf_count in zip(fields, info_counts):
         if f == 'FILTER':
-            arities[f] = 1 # one value
+            arities[f] = 1  # force one value for the FILTER field
         elif f not in arities:
+            # arity not specified by user
             if f in STANDARD_VARIANT_FIELDS:
                 arities[f] = DEFAULT_VARIANT_ARITY[f]
             elif vcf_count == ALLELE_NUMBER:
@@ -235,13 +262,18 @@ def _variants_arities(fields, arities, info_counts):
                 # catch any other cases of non-specific arity
                 arities[f] = 1
             else:
+                # use arity (i.e., number) specified in INFO header
                 arities[f] = vcf_count
+    # convert to tuple for zipping with fields
     arities = tuple(arities[f] for f in fields)
     return arities
 
 
 def _variants_fills(fields, fills, info_types):
+    """Utility function to determine fill values for variants fields with
+    missing values."""
     if fills is None:
+        # no fills specified by user
         fills = dict()
     for f, vcf_type in zip(fields, info_types):
         if f == 'FILTER':
@@ -251,12 +283,16 @@ def _variants_fills(fields, fills, info_types):
                 fills[f] = DEFAULT_VARIANT_FILL[f]
             else:
                 fills[f] = DEFAULT_FILL_MAP[vcf_type]
+    # convert to tuple for zipping with fields
     fills = tuple(fills[f] for f in fields)
     return fills
 
 
 def _info_transformers(fields, transformers):
+    """Utility function to determine transformer functions for variants
+    fields."""
     if transformers is None:
+        # no transformers specified by user
         transformers = dict()
     for f in fields:
         if f not in transformers:
@@ -264,17 +300,19 @@ def _info_transformers(fields, transformers):
     return tuple(transformers[f] for f in fields)
 
 
-def _variants_dtype(fields, dtypes, arities, filter_ids, flatten_filter, info_types):
-
+def _variants_dtype(fields, dtypes, arities, filter_ids, flatten_filter,
+                    info_types):
+    """Utility function to build a numpy dtype for a variants array,
+    given user arguments and information available from VCF header."""
     dtype = list()
     for f, n, vcf_type in zip(fields, arities, info_types):
         if f == 'FILTER' and flatten_filter:
-            # represent FILTER as multiple boolean fields
+            # split FILTER into multiple boolean fields
             for flt in filter_ids:
                 nm = 'FILTER_' + flt
                 dtype.append((nm, 'b1'))
         elif f == 'FILTER' and not flatten_filter:
-            # represent FILTER as a structured datatype
+            # represent FILTER as a structured field
             t = [(flt, 'b1') for flt in filter_ids]
             dtype.append((f, t))
         else:
@@ -288,110 +326,263 @@ def _variants_dtype(fields, dtypes, arities, filter_ids, flatten_filter, info_ty
                 t = DEFAULT_INFO_DTYPE[f]
             else:
                 t = DEFAULT_TYPE_MAP[vcf_type]
+            # deal with arity
             if n == 1:
                 dtype.append((f, t))
             else:
                 dtype.append((f, t, (n,)))
-
     return dtype
 
 
 def _filenames_from_arg(filename):
-    if isinstance(filename, basestring):
+    """Utility function to deal with polymorphic filenames argument."""
+    if isinstance(filename, string_types):
         filenames = [filename]
     elif isinstance(filename, (list, tuple)):
         filenames = filename
     else:
-        raise Exception('filename argument must be basestring, list or tuple')
+        raise Exception('filename argument must be string, list or tuple')
     for fn in filenames:
         if not os.path.exists(fn):
             raise Exception('file not found: %s' % fn)
     return filenames
 
 
-def _setup_variants(filename,
-                    region,
-                    fields,
-                    exclude_fields,
-                    arities,
-                    fills,
-                    transformers,
-                    vcf_types,
-                    flatten_filter):
-
-    filenames = _filenames_from_arg(filename)
-
-    # extract definitions from VCF header
-    vcf = PyVariantCallFile(filenames[0])
-    # FILTER definitions
-    filter_ids = vcf.filterIds
-    _warn_duplicates(filter_ids)
-    filter_ids = sorted(set(filter_ids))
-    if 'PASS' not in filter_ids:
-        filter_ids.append('PASS')
-    filter_ids = tuple(filter_ids)
-    # INFO definitions
-    _warn_duplicates(vcf.infoIds)
-    info_ids = tuple(sorted(set(vcf.infoIds)))
-    info_types = vcf.infoTypes
-    info_counts = vcf.infoCounts
-
-    # determine fields to extract
-    fields = _variants_fields(fields, exclude_fields, info_ids)
-
-    # determine if we need to parse the INFO field
-    parse_info = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
-
-    # support for working around VCFs with bad INFO headers
-    for f in fields:
-        if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
-            # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
-            info_types[f] = FIELD_STRING
-            info_counts[f] = 1
-        if vcf_types is not None and f in vcf_types:
-            # override type declared in VCF header
-            info_types[f] = TYPESTRING2KEY[vcf_types[f]]
-
-    info_types = tuple(info_types[f] if f in info_types else -1 for f in fields)
-    info_counts = tuple(info_counts[f] if f in info_counts else -1 for f in fields)
-
-    # determine expected number of values for each field
-    arities = _variants_arities(fields, arities, info_counts)
-
-    # determine fill values to use where number of values is less than expectation
-    fills = _variants_fills(fields, fills, info_types)
-
-    # initialise INFO field transformers
-    transformers = _info_transformers(fields, transformers)
-
-    return filenames, region, fields, arities, fills, info_types, transformers, parse_info, filter_ids, flatten_filter
+# TODO replace this with use of Python standard libary logging support
 
 
-def log(logstream, *msg):
-    print >>logstream, '[vcfnp] ' + str(datetime.now()) + ' :: ' + ' '.join([str(m) for m in msg])
-    sys.stderr.flush()
+class _Logger(object):
+
+    def __init__(self, logstream=None):
+        if logstream is None:
+            logstream = sys.stderr
+        self.logstream = logstream
+
+    def __call__(self, *msg):
+        s = ('[vcfnp] '
+             + str(datetime.now())
+             + ' :: '
+             + ' '.join([str(m) for m in msg]))
+        print(s, file=self.logstream)
+        self.logstream.flush()
 
 
-def variants(filename,
-             region=None,
-             fields=None,
-             exclude_fields=None,
-             dtypes=None,
-             arities=None,
-             fills=None,
-             transformers=None,
-             vcf_types=None,
-             count=None,
-             progress=0,
-             logstream=sys.stderr,
-             condition=None,
-             slice=None,
-             flatten_filter=False,
-             verbose=False,
-             cache=False,
-             cachedir=None,
-             skip_cached=False,
-             ):
+def _nolog(*args, **kwargs):
+    pass
+
+
+def _get_logger(logstream, verbose):
+    if verbose:
+        log = _Logger(logstream)
+    else:
+        log = _nolog
+    return log
+
+
+CACHEDIR_SUFFIX = '.vcfnp_cache'
+
+
+def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
+    """Utility function to construct a filename for a cache file, given a VCF
+    file name (where the original data came from) and other parameters."""
+    if cachedir is None:
+        # use the VCF file name as the base for a directory name
+        cachedir = vcf_fn + CACHEDIR_SUFFIX
+    if not os.path.exists(cachedir):
+        # ensure cache dir exists
+        os.makedirs(cachedir)
+    else:
+        assert os.path.isdir(cachedir), \
+            'unexpected error, cache directory is not a directory: %r' \
+            % cachedir
+    if region is None:
+        # loading the whole genome (i.e., all variants)
+        cache_fn = os.path.join(cachedir, '%s.npy' % array_type)
+    else:
+        # loading a specific region
+        region = region.replace(':', '_').replace('-', '_')
+        cache_fn = os.path.join(cachedir, '%s.%s.npy' % (array_type, region))
+    return cache_fn
+
+
+def _get_cache_fn(vcf_fn, array_type, region, cachedir, log):
+    """Utility function to obtain a cache file name and determine whether or
+    not a fresh cache file is available."""
+
+    # guard condition
+    if isinstance(vcf_fn, (list, tuple)):
+        raise Exception(
+            'caching only supported when loading from a single VCF file'
+        )
+
+    # create cache file name
+    cache_fn = _mk_cache_fn(vcf_fn, array_type=array_type, region=region,
+                            cachedir=cachedir)
+
+    # decide whether or not a fresh cache file is available
+    # (if not, we will parse the VCF and build array from scratch)
+    if not os.path.exists(cache_fn):
+        log('no cache file found')
+        is_cached = False
+    elif os.path.getmtime(vcf_fn) > os.path.getmtime(cache_fn):
+        is_cached = False
+        log('cache file out of date')
+    else:
+        is_cached = True
+        log('cache file available')
+
+    return cache_fn, is_cached
+
+
+class _ArrayLoader(object):
+    """Abstract class providing support for loading an array optionally via a
+    cache layer."""
+
+    # to be overridden in subclass
+    array_type = None
+
+    def __init__(self, vcf_fn, logstream, verbose, **kwargs):
+        debug('init')
+        self.vcf_fn = vcf_fn
+        # deal with polymorphic vcf_fn argument
+        self.vcf_fns = _filenames_from_arg(vcf_fn)
+        self.log = _get_logger(logstream, verbose)
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+    def load(self):
+        log = self.log
+        debug(log)
+        array_type = self.array_type
+        vcf_fn = self.vcf_fn
+        region = self.region
+        cache = self.cache
+        cachedir = self.cachedir
+        skip_cached = self.skip_cached
+        if cache:
+            log('caching is enabled')
+            cache_fn, is_cached = _get_cache_fn(vcf_fn, array_type=array_type,
+                                                region=region,
+                                                cachedir=cachedir, log=log)
+            if not is_cached:
+                log('building array')
+                arr = self.build()
+                log('saving to cache file', cache_fn)
+                np.save(cache_fn, arr)
+            elif skip_cached:
+                log('skipping load from cache file', cache_fn)
+                arr = None
+            else:
+                log('loading from cache file', cache_fn)
+                arr = np.load(cache_fn)
+
+        else:
+            log('caching is disabled')
+            log('building array')
+            arr = self.build()
+
+        return arr
+
+    # to be overridden in subclass
+    def build(self):
+        pass
+
+
+class _VariantsLoader(_ArrayLoader):
+    """Class for building variants array."""
+
+    array_type = 'variants'
+
+    def build(self):
+        log = self.log
+
+        # open VCF file to inspect header
+        vcf_fns = self.vcf_fns
+        vcf = PyVariantCallFile(vcf_fns[0])
+
+        # extract FILTER definitions
+        filter_ids = vcf.filter_ids
+        _warn_duplicates(filter_ids)
+        filter_ids = sorted(set(filter_ids))
+        if 'PASS' not in filter_ids:
+            filter_ids.append('PASS')
+        filter_ids = tuple(filter_ids)
+
+        # extract INFO definitions
+        _warn_duplicates(vcf.info_ids)
+        info_ids = tuple(sorted(set(vcf.info_ids)))
+        info_types = vcf.info_types
+        info_counts = vcf.info_counts
+
+        # determine which fields to load
+        fields = _variants_fields(self.fields, self.exclude_fields, info_ids)
+
+        # determine whether we need to parse the INFO field at all
+        parse_info = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
+
+        # support for working around VCFs with bad INFO headers
+        vcf_types = self.vcf_types
+        for f in fields:
+            if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
+                # fall back to unary string; can be overridden with
+                # vcf_types, dtypes and arities args
+                info_types[f] = FIELD_STRING
+                info_counts[f] = 1
+            if vcf_types is not None and f in vcf_types:
+                # override type declared in VCF header
+                info_types[f] = TYPESTRING2KEY[vcf_types[f]]
+
+         # convert to tuples for convenience
+        info_types = tuple(info_types[f] if f in info_types else -1
+                           for f in fields)
+        info_counts = tuple(info_counts[f] if f in info_counts else -1
+                            for f in fields)
+
+        # determine expected number of values for each field
+        arities = _variants_arities(fields, self.arities, info_counts)
+
+        # determine fill values to use where number of values is less than
+        # expectation
+        fills = _variants_fills(fields, self.fills, info_types)
+
+        # initialise INFO field transformers
+        transformers = _info_transformers(fields, self.transformers)
+
+        # zip up field information for convenience
+        fieldspec = list(zip(fields, arities, fills, info_types, transformers))
+
+        # determine dtype to use
+        flatten_filter = self.flatten_filter
+        dtype = _variants_dtype(fields, self.dtypes, arities, filter_ids,
+                                flatten_filter, info_types)
+
+        # set up iterator
+        region = self.region
+        condition = self.condition
+        if condition is not None:
+            it = _itervariants_with_condition(vcf_fns, region, fieldspec,
+                                              filter_ids, flatten_filter,
+                                              parse_info, condition)
+        else:
+            it = _itervariants(vcf_fns, region, fieldspec, filter_ids,
+                               flatten_filter, parse_info)
+
+        # slice iterator
+        slice_args = self.slice_args
+        if slice_args:
+            it = islice(it, *slice_args)
+
+        # load array
+        arr = _fromiter(it, dtype, self.count, self.progress, log)
+
+        return arr
+
+
+def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
+             arities=None, fills=None, transformers=None, vcf_types=None,
+             count=None, progress=0, logstream=None, condition=None,
+             slice_args=None, flatten_filter=False, verbose=True, cache=True,
+             cachedir=None, skip_cached=False):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
     (including INFO).
@@ -399,49 +590,51 @@ def variants(filename,
     Parameters
     ----------
 
-    filename: string or list
+    vcf_fn: string or list
         Name of the VCF file or list of file names
-    region: string
+    region: string, optional
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'
-    fields: list or array-like
+    fields: list or array-like, optional
         List of fields to extract from the VCF
-    exclude_fields: list or array-like
+    exclude_fields: list or array-like, optional
         Fields to exclude from extraction
-    dtypes: dict or dict-like
+    dtypes: dict or dict-like, optional
         Dictionary cotaining dtypes to use instead of the default inferred ones
-    arities: dict or dict-like
+    arities: dict or dict-like, optional
         Dictinoary containing field:integer mappings used to override the number
         of values to expect
-    fills: dict or dict-like
+    fills: dict or dict-like, optional
         Dictionary containing field:fillvalue mappings used to override the
         defaults used for missing values
-    transformers: dict or dict-like
+    transformers: dict or dict-like, optional
         Dictionary containing field:function mappings used to preprocess
         any values prior to loading into array
-    vcf_types: dict or dict-like
+    vcf_types: dict or dict-like, optional
         Dictionary containing field:string mappings used to override any
         bogus type declarations in the VCF header (e.g., MQ0Fraction declared
         as Integer)
-    count: int
+    count: int, optional
         Attempt to extract a specific number of records
-    progress: int
-        If greater than 0, log parsing progress
-    logstream: file or file-like object
+    progress: int, optional
+        If greater than 0, log progress
+    logstream: file or file-like object, optional
         Stream to use for logging progress
-    condition: array
+    condition: array, optional
         Boolean array defining which rows to load
-    slice: tuple or list
-        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
-    flatten_filter: bool
-        Return FILTER as multiple boolean fields, e.g., FILTER_PASS, FILTER_LowQuality, etc.
-    verbose: bool
+    slice_args: tuple or list, optional
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every
+        10th row from the first 1000
+    flatten_filter: bool, optional
+        Return FILTER as multiple boolean fields, e.g., FILTER_PASS,
+        FILTER_LowQuality, etc.
+    verbose: bool, optional
         Log more messages.
-    cache: bool
-        If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
-        from the VCF.
-    cachedir: string
+    cache: bool, optional
+        If True, save the resulting numpy array to disk, and load from the
+        cache if present rather than rebuilding from the VCF.
+    cachedir: string, optional
         Manually specify the directory to use to store cache files.
-    skip_cached: bool
+    skip_cached: bool, optional
         If True and cache file is fresh, do not load and return None.
 
     Examples
@@ -470,140 +663,23 @@ def variants(filename,
 
     """
 
-    if cache:
-
-        if isinstance(filename, (list, tuple)):
-            raise Exception('caching only supported when loading from a single VCF file')
-
-        cache_fn = _mk_cache_fn(filename, array_type='variants', region=region, cachedir=cachedir)
-        if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
-            if verbose:
-                log(logstream, 'no cache file found or cache out of date')
-            A = _build_variants(filename,
-                                region=region,
-                                fields=fields,
-                                exclude_fields=exclude_fields,
-                                dtypes=dtypes,
-                                arities=arities,
-                                fills=fills,
-                                transformers=transformers,
-                                vcf_types=vcf_types,
-                                count=count,
-                                progress=progress,
-                                logstream=logstream,
-                                condition=condition,
-                                slice=slice,
-                                flatten_filter=flatten_filter,
-                                verbose=verbose)
-            if verbose:
-                log(logstream, 'saving to cache', cache_fn)
-            np.save(cache_fn, A)
-            return A
-        else:
-            if skip_cached:
-                if verbose:
-                    log(logstream, 'skipping from cache', cache_fn)
-                return None
-            else:
-                if verbose:
-                    log(logstream, 'loading from cache', cache_fn)
-                A = np.load(cache_fn)
-                return A
-
-    else:
-
-        A = _build_variants(filename,
-                            region=region,
-                            fields=fields,
-                            exclude_fields=exclude_fields,
-                            dtypes=dtypes,
-                            arities=arities,
-                            fills=fills,
-                            transformers=transformers,
-                            vcf_types=vcf_types,
-                            count=count,
-                            progress=progress,
-                            logstream=logstream,
-                            condition=condition,
-                            slice=slice,
-                            flatten_filter=flatten_filter,
-                            verbose=verbose)
-        return A
+    loader = _VariantsLoader(vcf_fn, region=region, fields=fields,
+                             exclude_fields=exclude_fields, dtypes=dtypes,
+                             arities=arities, fills=fills,
+                             transformers=transformers, vcf_types=vcf_types,
+                             count=count, progress=progress,
+                             logstream=logstream, condition=condition,
+                             slice_args=slice_args,
+                             flatten_filter=flatten_filter, verbose=verbose,
+                             cache=cache, cachedir=cachedir,
+                             skip_cached=skip_cached)
+    return loader.load()
 
 
-cachedir_suffix = '.vcfnp_cache'
-
-
-def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
-    if cachedir is None:
-        cachedir = vcf_fn + cachedir_suffix
-    if not os.path.exists(cachedir):
-        os.makedirs(cachedir)
-    else:
-        assert os.path.isdir(cachedir), 'unexpected error, cache directory is not a directory: %s' % cachedir
-    if region is None:
-        cache_fn = os.path.join(cachedir, '%s.npy' % array_type)
-    else:
-        region = region.replace(':', '_').replace('-', '_')
-        cache_fn = os.path.join(cachedir, '%s.%s.npy' % (array_type, region))
-    return cache_fn
-
-
-def _build_variants(filename,
-                    region=None,
-                    fields=None,
-                    exclude_fields=None,
-                    dtypes=None,
-                    arities=None,
-                    fills=None,
-                    transformers=None,
-                    vcf_types=None,
-                    count=None,
-                    progress=0,
-                    logstream=sys.stderr,
-                    condition=None,
-                    slice=None,
-                    flatten_filter=False,
-                    verbose=False,
-                    cache=False,
-                    ):
-
-    if verbose:
-        log(logstream, 'loading variants from', filename)
-
-    filenames, region, fields, arities, fills, infoTypes, transformers, parseInfo, filterIds, flatten_filter = _setup_variants(filename,
-                                                                                                                               region,
-                                                                                                                               fields,
-                                                                                                                               exclude_fields,
-                                                                                                                               arities,
-                                                                                                                               fills,
-                                                                                                                               transformers,
-                                                                                                                               vcf_types,
-                                                                                                                               flatten_filter)
-
-    # zip up field parameters
-    fieldspec = zip(fields, arities, fills, infoTypes, transformers)
-
-    # create a numpy dtype
-    dtype = _variants_dtype(fields, dtypes, arities, filterIds, flatten_filter, infoTypes)
-
-    # set up iterator
-    if condition is not None:
-        it = itervariants_with_condition(filenames, region, fieldspec, filterIds, flatten_filter, parseInfo, condition)
-    else:
-        it = itervariants(filenames, region, fieldspec, filterIds, flatten_filter, parseInfo)
-
-    # slice?
-    if slice:
-        it = islice(it, *slice)
-
-    # build an array from the iterator
-    return _fromiter(it, dtype, count, progress, logstream)
-
-
-def _fromiter(it, dtype, count, long progress=0, logstream=sys.stderr):
+def _fromiter(it, dtype, count, long progress, log):
+    """Utility function to load an array from an iterator."""
     if progress > 0:
-        it = _iter_withprogress(it, progress, logstream)
+        it = _iter_withprogress(it, progress, log)
     if count is not None:
         a = np.fromiter(it, dtype=dtype, count=count)
     else:
@@ -611,7 +687,9 @@ def _fromiter(it, dtype, count, long progress=0, logstream=sys.stderr):
     return a
 
 
-def _iter_withprogress(iterable, long progress, logstream):
+def _iter_withprogress(iterable, long progress, log):
+    """Utility function to load an array from an iterator, reporting progress
+    as we go."""
     cdef long i, n
     before_all = time.time()
     before = before_all
@@ -620,84 +698,93 @@ def _iter_withprogress(iterable, long progress, logstream):
         n = i+1
         if n % progress == 0:
             after = time.time()
-            log(logstream, '%s rows in %.2fs; batch in %.2fs (%d rows/s)' % (n, after-before_all, after-before, progress/(after-before)))
+            log('%s rows in %.2fs; batch in %.2fs (%d rows/s)'
+                % (n, after-before_all, after-before, progress/(after-before)))
             before = after
     after_all = time.time()
-    log(logstream, '%s rows in %.2fs (%d rows/s)' % (n, after_all-before_all, n/(after_all-before_all)))
+    log('%s rows in %.2fs (%d rows/s)'
+        % (n, after_all-before_all, n/(after_all-before_all)))
 
 
-def itervariants(filenames,
-                 region,
-                 list fieldspec,
-                 tuple filterIds,
-                 bint flatten_filter,
-                 parseInfo):
-    cdef VariantCallFile *variantFile
-    cdef Variant *var
+def _itervariants(vcf_fns, region, list fieldspec, tuple filter_ids,
+                  bint flatten_filter, bint parse_info):
+    """Iterate over variants from a VCF file, and generate a tuple for each
+    variant suitable for loading into a numpy array."""
 
-    for current_filename in filenames:
-        variantFile = new VariantCallFile()
-        variantFile.open(current_filename)
-        variantFile.parseInfo = parseInfo
-        variantFile.parseSamples = False
+    # statically typed variables
+    cdef VariantCallFile *variant_file
+    cdef Variant *variant
+
+    # work through multiple VCFs if provided
+    for vcf_fn in vcf_fns:
+        variant_file = new VariantCallFile()
+        variant_file.open(vcf_fn)
+        # set whether INFO field needs to be parsed
+        variant_file.parseInfo = parse_info
+        # set whether samples fields need to be parsed
+        variant_file.parseSamples = False
         if region is not None:
-            region_set = variantFile.setRegion(region)
+            # set genome region to extract variants from
+            region_set = variant_file.setRegion(region)
             if not region_set:
                 raise StopIteration
-        var = new Variant(deref(variantFile))
+        variant = new Variant(deref(variant_file))
 
-        while _get_next_variant(variantFile, var):
-            yield _mkvrow(var, fieldspec, filterIds, flatten_filter)
+        # iterate over variants
+        while _get_next_variant(variant_file, variant):
+            yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
 
-        del variantFile
-        del var
+        # clean up
+        del variant_file
+        del variant
 
 
-def itervariants_with_condition(filenames,
-                                region,
-                                list fieldspec,
-                                tuple filter_ids,
-                                bint flatten_filter,
-                                parse_info,
-                                condition,
-                                ):
-    cdef VariantCallFile *variantFile
-    cdef Variant *var
+def _itervariants_with_condition(vcf_fns, region, list fieldspec,
+                                 tuple filter_ids, bint flatten_filter,
+                                 parse_info, condition):
+    """Utility function to iterate over variants and generate a tuple for each
+    variant suitable for loading into a numpy array, yielding only those
+    variants for which the corresponding item in condition is True."""
+
+    # statically typed variables
+    cdef VariantCallFile *variant_file
+    cdef Variant *variant
     cdef long i = 0
     cdef long n = len(condition)
 
-    for current_filename in filenames:
-        variantFile = new VariantCallFile()
-        variantFile.open(current_filename)
-        variantFile.parseInfo = parse_info
-        variantFile.parseSamples = False
+    for vcf_fn in vcf_fns:
+        variant_file = new VariantCallFile()
+        variant_file.open(vcf_fn)
+        variant_file.parseInfo = parse_info
+        variant_file.parseSamples = False
         if region is not None:
-            region_set = variantFile.setRegion(region)
+            region_set = variant_file.setRegion(region)
             if not region_set:
                 raise StopIteration
-        var = new Variant(deref(variantFile))
+        variant = new Variant(deref(variant_file))
 
-        while i < n and _get_next_variant(variantFile, var):
+        while i < n and _get_next_variant(variant_file, variant):
             if condition[i]:
-                yield _mkvrow(var, fieldspec, filter_ids, flatten_filter)
+                yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
             i += 1
 
-        del variantFile
-        del var
+        del variant_file
+        del variant
 
 
-cdef inline bool _get_next_variant(VariantCallFile *variantFile, Variant *var):
+cdef inline bool _get_next_variant(VariantCallFile *variant_file,
+                                   Variant *variant):
     # break this out into a separate function so we can profile it
-    return variantFile.getNextVariant(deref(var))
+    return variant_file.getNextVariant(deref(variant))
 
 
-cdef inline object _mkvrow(Variant *var,
-                            list fieldspec,
-                            tuple filter_ids,
-                            bint flatten_filter):
+cdef inline object _mkvrow(Variant *variant, list fieldspec, tuple filter_ids,
+                           bint flatten_filter):
+    """Make a row of variant data."""
     out = list()
     for f, arity, fill, vcf_type, transformer in fieldspec:
-        val = _mkvval(var, f, arity, fill, vcf_type, transformer, filter_ids)
+        val = _mkvval(variant, f, arity, fill, vcf_type, transformer,
+                      filter_ids)
         if f == 'FILTER' and flatten_filter:
             out.extend(val)
         else:
@@ -705,80 +792,82 @@ cdef inline object _mkvrow(Variant *var,
     return tuple(out)
 
 
-cdef inline object _mkvval(Variant *var, string field, int arity, object fill, int vcf_type, transformer, tuple filter_ids):
+cdef inline object _mkvval(Variant *variant, string field, int arity,
+                           object fill, int vcf_type, transformer,
+                           tuple filter_ids):
     if field == FIELD_NAME_CHROM:
-        out = var.sequenceName
+        out = variant.sequenceName
     elif field == FIELD_NAME_POS:
-        out = var.position
+        out = variant.position
     elif field == FIELD_NAME_ID:
-        out = var.id
+        out = variant.id
     elif field == FIELD_NAME_REF:
-        out = var.ref
+        out = variant.ref
     elif field == FIELD_NAME_ALT:
-        out = _mkaltval(var, arity, fill)
+        out = _mkaltval(variant, arity, fill)
     elif field == FIELD_NAME_QUAL:
-        out = var.quality
+        out = variant.quality
     elif field == FIELD_NAME_FILTER:
-        out = _mkfilterval(var, filter_ids)
+        out = _mkfilterval(variant, filter_ids)
     elif field == FIELD_NAME_NUM_ALLELES:
-        out = <int>(var.alt.size() + 1)
+        out = <int>(variant.alt.size() + 1)
     elif field == FIELD_NAME_IS_SNP:
-        out = _is_snp(var)
+        out = _is_snp(variant)
     elif field == FIELD_NAME_SVLEN:
-        out = _svlen(var, arity, fill)
+        out = _svlen(variant, arity, fill)
     elif transformer is not None:
-        out = transformer(var.info[field])
+        out = transformer(variant.info[field])
     elif vcf_type == FIELD_BOOL:
         # ignore arity, this is a flag
-        out = (var.infoFlags.count(field) > 0)
+        out = (variant.infoFlags.count(field) > 0)
     else:
-        out = _mkval(var.info[field], arity, fill, vcf_type)
+        out = _mkval(variant.info[field], arity, fill, vcf_type)
     return out
 
 
-cdef inline object _mkaltval(Variant *var, int arity, object fill):
+cdef inline object _mkaltval(Variant *variant, int arity, object fill):
     if arity == 1:
-        if var.alt.size() == 0:
+        if variant.alt.size() == 0:
             out = fill
         else:
-            out = var.alt.at(0)
-    elif var.alt.size() == arity:
-        out = var.alt
+            out = variant.alt.at(0)
+    elif variant.alt.size() == arity:
+        out = variant.alt
         out = tuple(out)
-    elif var.alt.size() > arity:
-        out = var.alt
+    elif variant.alt.size() > arity:
+        out = variant.alt
         out = tuple(out[:arity])
     else:
-        out = var.alt
-        out += [fill] * (arity-var.alt.size())
+        out = variant.alt
+        out += [fill] * (arity-variant.alt.size())
         out = tuple(out)
     return out
 
 
-cdef inline object _mkfilterval(Variant *var, tuple filter_ids):
-    filters = <list>split(var.filter, SEMICOLON)
-    out = [(id in filters) for id in filter_ids]
+cdef inline object _mkfilterval(Variant *variant, tuple filter_ids):
+    filters = <list>split(variant.filter, SEMICOLON)
+    out = [(f in filters) for f in filter_ids]
     out = tuple(out)
     return out
 
 
-cdef inline object _is_snp(Variant *var):
+cdef inline object _is_snp(Variant *variant):
     cdef int i
     cdef bytes alt
-    if var.ref.size() > 1:
+    if variant.ref.size() > 1:
         return False
-    for i in range(var.alt.size()):
-        alt = var.alt.at(i)
+    for i in range(variant.alt.size()):
+        alt = variant.alt.at(i)
         if alt not in {'A', 'C', 'G', 'T'}:
             return False
     return True
 
 
-cdef inline object _svlen(Variant *var, int arity, object fill):
+cdef inline object _svlen(Variant *variant, int arity, object fill):
     if arity == 1:
-        return _svlen_single(var.ref, var.alt, fill)
+        return _svlen_single(variant.ref, variant.alt, fill)
     else:
-        return _svlen_multi(var.ref, var.alt, arity, fill)
+        return _svlen_multi(variant.ref, variant.alt, arity, fill)
 
 
 cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
@@ -787,7 +876,8 @@ cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
     return fill
 
 
-cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity, object fill):
+cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity,
+                                object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -802,11 +892,13 @@ def _warn_duplicates(fields):
     visited = set()
     for f in fields:
         if f in visited:
-            print >>sys.stderr, 'WARNING: duplicate definition in header: %s' % f
+            print('WARNING: duplicate definition in header: %s' % f,
+                  file=sys.stderr)
         visited.add(f)
 
 
-cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, int vcf_type):
+cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,
+                          int vcf_type):
     if vcf_type == FIELD_FLOAT:
         out = _mkval_double(string_vals, arity, fill)
     elif vcf_type == FIELD_INTEGER:
@@ -817,7 +909,8 @@ cdef inline object _mkval(vector[string]& string_vals, int arity, object fill, i
     return out
 
 
-cdef inline object _mkval_string(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_string(vector[string]& string_vals, int arity,
+                                 object fill):
     if arity == 1:
         if string_vals.size() > 0:
             return string_vals.at(0)
@@ -827,7 +920,8 @@ cdef inline object _mkval_string(vector[string]& string_vals, int arity, object 
         return _mkval_string_multi(string_vals, arity, fill)
 
 
-cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity,
+                                       object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -838,7 +932,8 @@ cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity, o
     return out
 
 
-cdef inline object _mkval_double(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_double(vector[string]& string_vals, int arity,
+                                 object fill):
     if arity == 1:
         out = _mkval_double_single(string_vals, fill)
     else:
@@ -846,14 +941,16 @@ cdef inline object _mkval_double(vector[string]& string_vals, int arity, object 
     return out
 
 
-cdef inline object _mkval_double_single(vector[string]& string_vals, object fill):
+cdef inline object _mkval_double_single(vector[string]& string_vals,
+                                        object fill):
     cdef double v
     if string_vals.size() > 0:
         return atof(string_vals.at(0).c_str())
     return fill
 
 
-cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity,
+                                       object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -864,7 +961,8 @@ cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity, o
     return out
 
 
-cdef inline object _mkval_long(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_long(vector[string]& string_vals, int arity,
+                               object fill):
     if arity == 1:
         out = _mkval_long_single(string_vals, fill)
     else:
@@ -878,7 +976,8 @@ cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):
     return fill
 
 
-cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity,
+                                     object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -889,23 +988,32 @@ cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity, obj
     return out
 
 
-def _calldata_fields(fields, exclude_fields, formatIds):
+def _calldata_fields(fields, exclude_fields, format_ids):
+    """Utility function to determine which calldata (i.e., FORMAT) fields to
+    extract."""
     if fields is None:
-        fields = STANDARD_CALLDATA_FIELDS + formatIds
+        # no fields specified by user
+        # default to all standard fields plus all FORMAT fields in VCF header
+        fields = STANDARD_CALLDATA_FIELDS + format_ids
     else:
+        # fields specified by user
         for f in fields:
-            if f not in STANDARD_CALLDATA_FIELDS and f not in formatIds:
-                # support extracting FORMAT even if not declared in header, but warn...
-                print >>sys.stderr, 'WARNING: no definition found for field %s' % f
+            # check if field is standard or defined in VCF header
+            if f not in STANDARD_CALLDATA_FIELDS and f not in format_ids:
+                # support extracting FORMAT even if not declared in header,
+                # but warn...
+                print('WARNING: no definition found for field %s' % f,
+                      file=sys.stderr)
+    # process exclusions
     if exclude_fields is not None:
         fields = [f for f in fields if f not in exclude_fields]
     return tuple(fields)
 
 
-def _calldata_arities(fields, arities, formatCounts, ploidy):
+def _calldata_arities(fields, arities, format_counts, ploidy):
     if arities is None:
         arities = dict()
-    for f, vcf_count in zip(fields, formatCounts):
+    for f, vcf_count in zip(fields, format_counts):
         if f not in arities:
             if f == 'genotype':
                 arities[f] = ploidy
@@ -915,7 +1023,8 @@ def _calldata_arities(fields, arities, formatCounts, ploidy):
                 # default to 2 (biallelic)
                 arities[f] = 2
             elif vcf_count == GENOTYPE_NUMBER:
-                # arity = (n + p - 1) choose p (n is number of alleles; p is ploidy)
+                # arity = (n + p - 1) choose p (n is number of alleles; p is
+                # ploidy)
                 # default to biallelic (n = 2)
                 arities[f] = ploidy + 1
             elif vcf_count <= 0:
@@ -926,10 +1035,10 @@ def _calldata_arities(fields, arities, formatCounts, ploidy):
     return tuple(arities[f] for f in fields)
 
 
-def _calldata_fills(fields, fills, formatTypes, ploidy):
+def _calldata_fills(fields, fills, format_types, ploidy):
     if fills is None:
         fills = dict()
-    for f, vcf_type in zip(fields, formatTypes):
+    for f, vcf_type in zip(fields, format_types):
         if f not in fills:
             if f == 'GT':
                 fills[f] = '/'.join(['.'] * ploidy)
@@ -964,66 +1073,137 @@ def _calldata_dtype(fields, dtypes, format_types, arities, samples, ploidy):
     return dtype
 
 
-def calldata(filename,
-             region=None,
-             samples=None,
-             ploidy=2,
-             fields=None,
-             exclude_fields=None,
-             dtypes=None,
-             arities=None,
-             fills=None,
-             vcf_types=None,
-             count=None,
-             progress=0,
-             logstream=sys.stderr,
-             condition=None,
-             slice=None,
-             verbose=False,
-             cache=False,
-             cachedir=None,
-             skip_cached=False,
-             ):
+class _CalldataLoader(_ArrayLoader):
+
+    array_type = 'calldata'
+
+    def build(self):
+        log = self.log
+
+        # open VCF file to inspect header
+        vcf_fns = self.vcf_fns
+        vcf = PyVariantCallFile(vcf_fns[0])
+
+        # extract FORMAT definitions
+        _warn_duplicates(vcf.format_ids)
+        format_ids = tuple(sorted(set(vcf.format_ids)))
+        format_types = vcf.format_types
+        format_counts = vcf.format_counts
+
+        # extract sample IDs
+        all_samples = vcf.sampleNames
+
+        # determine which samples to extract
+        samples = self.samples
+        if samples is None:
+            samples = all_samples
+        else:
+            for s in samples:
+                assert s in all_samples, 'unknown sample: %s' % s
+        samples = tuple(samples)
+
+        # determine which fields to extract
+        fields = _calldata_fields(self.fields, self.exclude_fields, format_ids)
+
+        # support for working around VCFs with bad FORMAT headers
+        vcf_types = self.vcf_types
+        for f in fields:
+            if f not in STANDARD_CALLDATA_FIELDS and f not in format_ids:
+                # fall back to unary string; can be overridden with
+                # vcf_types, dtypes and arities args
+                format_types[f] = FIELD_STRING
+                format_counts[f] = 1
+            if vcf_types is not None and f in vcf_types:
+                # override type declared in VCF header
+                format_types[f] = TYPESTRING2KEY[vcf_types[f]]
+
+        # conveniences
+        format_types = tuple(format_types[f] if f in format_types else -1
+                             for f in fields)
+        format_counts = tuple(format_counts[f] if f in format_counts else -1
+                              for f in fields)
+
+        # determine expected number of values for each field
+        ploidy = self.plody
+        arities = _calldata_arities(fields, self.arities, format_counts, ploidy)
+
+        # determine fill values to use where number of values is less than
+        # expectation
+        fills = _calldata_fills(fields, self.fills, format_types, ploidy)
+
+        # construct a numpy dtype for structured array
+        dtype = _calldata_dtype(fields, self.dtypes, format_types, arities,
+                                samples, ploidy)
+
+        # zip up field parameters
+        fieldspec = zip(fields, arities, fills, format_types)
+
+        # set up iterator
+        condition = self.condition
+        region = self.region
+        if condition is not None:
+            it = _itercalldata_with_condition(vcf_fns, region, samples, ploidy,
+                                             fieldspec, condition)
+        else:
+            it = _itercalldata(vcf_fns, region, samples, ploidy, fieldspec)
+
+        # slice iterator
+        slice_args = self.slice_args
+        if slice_args:
+            it = islice(it, *slice_args)
+
+        # build an array from the iterator
+        arr = _fromiter(it, dtype, self.count, self.progress, log)
+
+        return arr
+
+
+def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
+             exclude_fields=None, dtypes=None, arities=None, fills=None,
+             vcf_types=None, count=None, progress=0, logstream=None,
+             condition=None, slice_args=None, verbose=False, cache=False,
+             cachedir=None, skip_cached=False):
     """
-    Load a numpy 1-dimensional structured array with data from the sample columns of a VCF
-    file.
+    Load a numpy 1-dimensional structured array with data from the sample
+    columns of a VCF file.
 
     Parameters
     ----------
 
-    filename: string or list
-        Name of the VCF file or list of file names
+    vcf_fn: string or list
+        Name of the VCF file or list of file names.
     region: string
-        Region to extract, e.g., 'chr1' or 'chr1:0-100000'
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'.
     fields: list or array-like
-        List of fields to extract from the VCF
+        List of fields to extract from the VCF.
     exclude_fields: list or array-like
-        Fields to exclude from extraction
+        Fields to exclude from extraction.
     dtypes: dict or dict-like
         Dictionary cotaining dtypes to use instead of the default inferred ones
     arities: dict or dict-like
-        Override the amount of values to expect
+        Override the amount of values to expect.
     fills: dict or dict-like
         Dictionary containing field:fillvalue mappings used to override the
-        default fill in values in VCF fields
+        default fill in values in VCF fields.
     vcf_types: dict or dict-like
         Dictionary containing field:string mappings used to override any
-        bogus type declarations in the VCF header
+        bogus type declarations in the VCF header.
     count: int
-        Attempt to extract a specific number of records
+        Attempt to extract a specific number of records.
     progress: int
-        If greater than 0, log parsing progress
+        If greater than 0, log parsing progress.
     logstream: file or file-like object
-        Stream to use for logging progress
+        Stream to use for logging progress.
     condition: array
-        Boolean array defining which rows to load
-    slice: tuple or list
-        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
+        Boolean array defining which rows to load.
+    slice_args: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every
+        10th row from the first 1000.
     verbose: bool
         Log more messages.
     cache: bool
-        If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
-        from the VCF.
+        If True, save the resulting numpy array to disk, and load from the
+        cache if present rather than rebuilding from the VCF.
     cachedir: string
         Manually specify the directory to use to store cache files.
     skip_cached: bool
@@ -1129,208 +1309,71 @@ def calldata(filename,
 
     """
 
-    if cache:
-
-        if isinstance(filename, (list, tuple)):
-            raise Exception('caching only supported when loading from a single VCF file')
-
-        cache_fn = _mk_cache_fn(filename, array_type='calldata', region=region, cachedir=cachedir)
-        if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
-            if verbose:
-                log(logstream, 'no cache file found or cache out of date')
-            A = _build_calldata(filename,
-                                region=region,
-                                samples=samples,
-                                ploidy=ploidy,
-                                fields=fields,
-                                exclude_fields=exclude_fields,
-                                dtypes=dtypes,
-                                arities=arities,
-                                fills=fills,
-                                vcf_types=vcf_types,
-                                count=count,
-                                progress=progress,
-                                logstream=logstream,
-                                condition=condition,
-                                slice=slice,
-                                verbose=verbose)
-            if verbose:
-                log(logstream, 'saving to cache', cache_fn)
-            np.save(cache_fn, A)
-            return A
-        else:
-            if skip_cached:
-                if verbose:
-                    log(logstream, 'skipping from cache', cache_fn)
-                return None
-            else:
-                if verbose:
-                    log(logstream, 'loading from cache', cache_fn)
-                A = np.load(cache_fn)
-                return A
-
-    else:
-
-        A = _build_calldata(filename,
-                            region=region,
-                            samples=samples,
-                            ploidy=ploidy,
-                            fields=fields,
-                            exclude_fields=exclude_fields,
-                            dtypes=dtypes,
-                            arities=arities,
-                            fills=fills,
-                            vcf_types=vcf_types,
-                            count=count,
-                            progress=progress,
-                            logstream=logstream,
-                            condition=condition,
-                            slice=slice,
-                            verbose=verbose)
-        return A
+    loader = _CalldataLoader(vcf_fn, region=region, samples=samples,
+                             ploidy=ploidy, fields=fields,
+                             exclude_fields=exclude_fields, dtypes=dtypes,
+                             arities=arities, fills=fills, vcf_types=vcf_types,
+                             count=count, progress=progress,
+                             logstream=logstream, condition=condition,
+                             slice_args=slice_args, verbose=verbose,
+                             cache=cache, cachedir=cachedir,
+                             skip_cached=skip_cached)
+    arr = loader.load()
+    return arr
 
 
-def _build_calldata(filename,
-                    region=None,
-                    samples=None,
-                    ploidy=2,
-                    fields=None,
-                    exclude_fields=None,
-                    dtypes=None,
-                    arities=None,
-                    fills=None,
-                    vcf_types=None,
-                    count=None,
-                    progress=0,
-                    logstream=sys.stderr,
-                    condition=None,
-                    slice=None,
-                    verbose=False,
-                    ):
+class _Calldata2DLoader(_CalldataLoader):
 
-    if verbose:
-        log(logstream, 'loading calldata from', filename)
+    array_type = 'calldata_2d'
 
-    filenames = _filenames_from_arg(filename)
-
-    # extract definitions from VCF header
-    vcf = PyVariantCallFile(filenames[0])
-    _warn_duplicates(vcf.formatIds)
-    format_ids = tuple(sorted(set(vcf.formatIds)))
-    format_types = vcf.formatTypes
-    format_counts = vcf.formatCounts
-    all_samples = vcf.sampleNames
-
-    # determine which samples to extract
-    if samples is None:
-        samples = all_samples
-    else:
-        for s in samples:
-            assert s in all_samples, 'unknown sample: %s' % s
-    samples = tuple(samples)
-
-    # determine fields to extract
-    fields = _calldata_fields(fields, exclude_fields, format_ids)
-
-    # support for working around VCFs with bad FORMAT headers
-    for f in fields:
-        if f not in STANDARD_CALLDATA_FIELDS and f not in format_ids:
-            # fall back to unary string; can be overridden with vcf_types, dtypes and arities args
-            format_types[f] = FIELD_STRING
-            format_counts[f] = 1
-        if vcf_types is not None and f in vcf_types:
-            # override type declared in VCF header
-            format_types[f] = TYPESTRING2KEY[vcf_types[f]]
-
-    format_types = tuple(format_types[f] if f in format_types else -1 for f in fields)
-    format_counts = tuple(format_counts[f] if f in format_counts else -1 for f in fields)
-
-    # determine expected number of values for each field
-    arities = _calldata_arities(fields, arities, format_counts, ploidy)
-
-    # determine fill values to use where number of values is less than expectation
-    fills = _calldata_fills(fields, fills, format_types, ploidy)
-
-    # construct a numpy dtype for structured array
-    dtype = _calldata_dtype(fields, dtypes, format_types, arities, samples, ploidy)
-
-    # zip up field parameters
-    fieldspec = zip(fields, arities, fills, format_types)
-
-    # set up iterator
-    if condition is not None:
-        it = itercalldata_with_condition(filenames, region, samples, ploidy, fieldspec, condition)
-    else:
-        it = itercalldata(filenames, region, samples, ploidy, fieldspec)
-
-    # slice?
-    if slice:
-        it = islice(it, *slice)
-
-    # build an array from the iterator
-    return _fromiter(it, dtype, count, progress, logstream)
+    def build(self):
+        arr = super().build()
+        return view2d(arr)
 
 
-def calldata_2d(filename,
-                region=None,
-                samples=None,
-                ploidy=2,
-                fields=None,
-                exclude_fields=None,
-                dtypes=None,
-                arities=None,
-                fills=None,
-                vcf_types=None,
-                count=None,
-                progress=0,
-                logstream=sys.stderr,
-                condition=None,
-                slice=None,
-                verbose=False,
-                cache=False,
-                cachedir=None,
-                skip_cached=False,
-               ):
+def calldata_2d(vcf_fn, **kwargs):
     """
-    Load a numpy 2-dimensional structured array with data from the sample columns of a VCF
-    file. Convenience function, equivalent to calldata() followed by view2d().
+    Load a numpy 2-dimensional structured array with data from the sample
+    columns of a VCF file. Convenience function, equivalent to calldata()
+    followed by view2d().
 
     Parameters
     ----------
 
-    filename: string or list
-        Name of the VCF file or list of file names
+    vcf_fn: string or list
+        Name of the VCF file or list of file names.
     region: string
-        Region to extract, e.g., 'chr1' or 'chr1:0-100000'
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'.
     fields: list or array-like
-        List of fields to extract from the VCF
+        List of fields to extract from the VCF.
     exclude_fields: list or array-like
-        Fields to exclude from extraction
+        Fields to exclude from extraction.
     dtypes: dict or dict-like
-        Dictionary cotaining dtypes to use instead of the default inferred ones
+        Dictionary cotaining dtypes to use instead of the default inferred ones.
     arities: dict or dict-like
         Override the amount of values to expect
     fills: dict or dict-like
         Dictionary containing field:fillvalue mappings used to override the
-        default fill in values in VCF fields
+        default fill in values in VCF fields.
     vcf_types: dict or dict-like
         Dictionary containing field:string mappings used to override any
-        bogus type declarations in the VCF header
+        bogus type declarations in the VCF header.
     count: int
-        Attempt to extract a specific number of records
+        Attempt to extract a specific number of records.
     progress: int
-        If greater than 0, log parsing progress
+        If greater than 0, log parsing progress.
     logstream: file or file-like object
-        Stream to use for logging progress
+        Stream to use for logging progress.
     condition: array
-        Boolean array defining which rows to load
-    slice: tuple or list
-        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every 10th row from the first 1000
+        Boolean array defining which rows to load.
+    slice_args: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every
+        10th row from the first 1000.
     verbose: bool
         Log more messages.
     cache: bool
-        If True, save the resulting numpy array to disk, and load from the cache if present rather than rebuilding
-        from the VCF.
+        If True, save the resulting numpy array to disk, and load from the
+        cache if present rather than rebuilding from the VCF.
     cachedir: string
         Manually specify the directory to use to store cache files.
     skip_cached: bool
@@ -1338,152 +1381,81 @@ def calldata_2d(filename,
 
     """
 
-    if cache:
-
-        if isinstance(filename, (list, tuple)):
-            raise Exception('caching only supported when loading from a single VCF file')
-
-        cache_fn = _mk_cache_fn(filename, array_type='calldata_2d', region=region, cachedir=cachedir)
-        if not os.path.exists(cache_fn) or os.path.getmtime(filename) > os.path.getmtime(cache_fn):
-            if verbose:
-                log(logstream, 'no cache file found or cache out of date')
-            A = _build_calldata_2d(filename,
-                                   region=region,
-                                   samples=samples,
-                                   ploidy=ploidy,
-                                   fields=fields,
-                                   exclude_fields=exclude_fields,
-                                   dtypes=dtypes,
-                                   arities=arities,
-                                   fills=fills,
-                                   vcf_types=vcf_types,
-                                   count=count,
-                                   progress=progress,
-                                   logstream=logstream,
-                                   condition=condition,
-                                   slice=slice,
-                                   verbose=verbose)
-            if verbose:
-                log(logstream, 'saving to cache', cache_fn)
-            np.save(cache_fn, A)
-            return A
-        else:
-            if skip_cached:
-                if verbose:
-                    log(logstream, 'skipping from cache', cache_fn)
-                return None
-            else:
-                if verbose:
-                    log(logstream, 'loading from cache', cache_fn)
-                A = np.load(cache_fn)
-                return A
-
-    else:
-
-        A = _build_calldata_2d(filename,
-                               region=region,
-                               samples=samples,
-                               ploidy=ploidy,
-                               fields=fields,
-                               exclude_fields=exclude_fields,
-                               dtypes=dtypes,
-                               arities=arities,
-                               fills=fills,
-                               vcf_types=vcf_types,
-                               count=count,
-                               progress=progress,
-                               logstream=logstream,
-                               condition=condition,
-                               slice=slice,
-                               verbose=verbose)
-        return A
+    loader = _Calldata2DLoader(vcf_fn, **kwargs)
+    arr = loader.load()
+    return arr
 
 
-def _build_calldata_2d(*args, **kwargs):
-    C = calldata(*args, **kwargs)
-    C2d = view2d(C)
-    return C2d
+def _itercalldata(vcf_fns, region, tuple samples, int ploidy, list fieldspec):
+    cdef VariantCallFile *variant_file
+    cdef Variant *variant
 
-
-def itercalldata(filenames,
-                  region,
-                  tuple samples,
-                  int ploidy,
-                  list fieldspec):
-    cdef VariantCallFile *variantFile
-    cdef Variant *var
-
-    for current_filename in filenames:
-        variantFile = new VariantCallFile()
-        variantFile.open(current_filename)
-        variantFile.parseInfo = False
-        variantFile.parseSamples = True
+    for vcf_fn in vcf_fns:
+        variant_file = new VariantCallFile()
+        variant_file.open(vcf_fn)
+        variant_file.parseInfo = False
+        variant_file.parseSamples = True
         if region is not None:
-            region_set = variantFile.setRegion(region)
+            region_set = variant_file.setRegion(region)
             if not region_set:
                 raise StopIteration
-        var = new Variant(deref(variantFile))
+        variant = new Variant(deref(variant_file))
 
-        while _get_next_variant(variantFile, var):
-            yield _mkcrow(var, samples, ploidy, fieldspec)
+        while _get_next_variant(variant_file, variant):
+            yield _mkcrow(variant, samples, ploidy, fieldspec)
 
-        del variantFile
-        del var
+        del variant_file
+        del variant
 
 
-def itercalldata_with_condition(filenames,
-                                 region,
-                                 tuple samples,
-                                 int ploidy,
-                                 list fieldspec,
-                                 condition,
-                                 ):
-    cdef VariantCallFile *variantFile
-    cdef Variant *var
+def _itercalldata_with_condition(vcf_fns, region, tuple samples, int ploidy,
+                                 list fieldspec, condition):
+    cdef VariantCallFile *variant_file
+    cdef Variant *variant
     cdef long i = 0
     cdef long n = len(condition)
 
-    for current_filename in filenames:
-        variantFile = new VariantCallFile()
-        variantFile.open(current_filename)
-        variantFile.parseInfo = False
-        variantFile.parseSamples = False
+    for vcf_fn in vcf_fns:
+        variant_file = new VariantCallFile()
+        variant_file.open(vcf_fn)
+        variant_file.parseInfo = False
+        variant_file.parseSamples = False
         if region is not None:
-            region_set = variantFile.setRegion(region)
+            region_set = variant_file.setRegion(region)
             if not region_set:
                 raise StopIteration
-        var = new Variant(deref(variantFile))
+        variant = new Variant(deref(variant_file))
 
         while i < n:
             # only worth parsing samples if we know we want the variant
             if condition[i]:
-                variantFile.parseSamples = True
-                if not _get_next_variant(variantFile, var):
+                variant_file.parseSamples = True
+                if not _get_next_variant(variant_file, variant):
                     break
-                yield _mkcrow(var, samples, ploidy, fieldspec)
+                yield _mkcrow(variant, samples, ploidy, fieldspec)
             else:
-                variantFile.parseSamples = False
-                if not _get_next_variant(variantFile, var):
+                variant_file.parseSamples = False
+                if not _get_next_variant(variant_file, variant):
                     break
             i += 1
 
-        del variantFile
-        del var
+        del variant_file
+        del variant
 
 
-cdef inline object _mkcrow(Variant *var,
+cdef inline object _mkcrow(Variant *variant,
                              tuple samples,
                              int ploidy,
                              list fieldspec):
-    out = [_mkcvals(var, s, ploidy, fieldspec) for s in samples]
+    out = [_mkcvals(variant, s, ploidy, fieldspec) for s in samples]
     return tuple(out)
 
 
-cdef inline object _mkcvals(Variant *var,
+cdef inline object _mkcvals(Variant *variant,
                             string sample,
                             int ploidy,
                             list fieldspec):
-    out = [_mkcval(var.samples[sample], ploidy, f, arity, fill, format_type)
+    out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)
            for (f, arity, fill, format_type) in fieldspec]
     return tuple(out)
 
@@ -1522,7 +1494,8 @@ cdef inline bool _is_phased(map[string, vector[string]]& sample_data):
         return gts.at(0).find('|') != npos
 
 
-cdef inline object _genotype(map[string, vector[string]]& sample_data, int ploidy):
+cdef inline object _genotype(map[string, vector[string]]& sample_data,
+                             int ploidy):
     cdef vector[string] *gts
     cdef vector[int] alleles
     cdef vector[string] allele_strings
@@ -1672,7 +1645,8 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
         if len(vals) == 0:
             return fills
         else:
-            match_eff_main = _prog_eff_main.match(vals[0]) # ignore all but first effect
+            # ignore all but first effect
+            match_eff_main = _prog_eff_main.match(vals[0])
             eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
             result = tuple(
                 fill if v == ''
@@ -1711,13 +1685,13 @@ class VariantsTable(object):
 
     def __iter__(self):
 
-        filenames = _filenames_from_arg(self.filename)
+        vcf_fns = _filenames_from_arg(self.filename)
 
         # extract definitions from VCF header
-        vcf = PyVariantCallFile(filenames[0])
+        vcf = PyVariantCallFile(vcf_fns[0])
 
         # FILTER definitions
-        filter_ids = vcf.filterIds
+        filter_ids = vcf.filter_ids
         _warn_duplicates(filter_ids)
         filter_ids = sorted(set(filter_ids))
         if 'PASS' not in filter_ids:
@@ -1725,9 +1699,9 @@ class VariantsTable(object):
         filter_ids = tuple(filter_ids)
 
         # INFO definitions
-        _warn_duplicates(vcf.infoIds)
-        info_ids = tuple(sorted(set(vcf.infoIds)))
-        info_types = vcf.infoTypes
+        _warn_duplicates(vcf.info_ids)
+        info_ids = tuple(sorted(set(vcf.info_ids)))
+        info_types = vcf.info_types
 
         # determine fields to extract
         fields = _variants_fields(self.fields, self.exclude_fields, info_ids)
@@ -1742,7 +1716,8 @@ class VariantsTable(object):
         parse_info = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
 
         # convert to tuple
-        info_types = tuple(info_types[f] if f in info_types else -1 for f in fields)
+        info_types = tuple(info_types[f] if f in info_types else -1
+                           for f in fields)
 
         # default flattening
         if self.flatten is None:
@@ -1758,7 +1733,9 @@ class VariantsTable(object):
             if self.flatten_filter and f == 'FILTER':
                 for t in filter_ids:
                     header.append('FILTER_' + t)
-            elif self.arities is not None and f in self.arities and self.arities[f] > 1:
+            elif (self.arities is not None
+                  and f in self.arities
+                  and self.arities[f] > 1):
                 for i in range(1, self.arities[f] + 1):
                     header.append(f + '_' + str(i))
             elif f in self.flatten and self.flatten[f] is not None:
@@ -1768,103 +1745,96 @@ class VariantsTable(object):
                 header.append(f)
         header = tuple(header)
         # make data rows
-        data = itervariantstable(filenames=filenames,
-                                 region=self.region,
-                                 fields=fields,
-                                 arities=arities,
-                                 info_types=info_types,
-                                 parse_info=parse_info,
+        data = _itervariantstable(vcf_fns=vcf_fns, region=self.region,
+                                 fields=fields, arities=arities,
+                                 info_types=info_types, parse_info=parse_info,
                                  filter_ids=filter_ids,
                                  flatten_filter=self.flatten_filter,
-                                 fill=self.fill,
-                                 flatten=self.flatten)
+                                 fill=self.fill, flatten=self.flatten)
         return chain((header,), data)
 
 
-def itervariantstable(filenames, region, fields, arities, info_types, parse_info, filter_ids, flatten_filter, fill, flatten):
-    cdef VariantCallFile *variantFile
-    cdef Variant *var
+def _itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,
+                       filter_ids, flatten_filter, fill, flatten):
+    cdef VariantCallFile *variant_file
+    cdef Variant *variant
 
-    for current_filename in filenames:
-        variantFile = new VariantCallFile()
-        variantFile.open(current_filename)
-        variantFile.parseInfo = parse_info
-        variantFile.parseSamples = False
+    for vcf_fn in vcf_fns:
+        variant_file = new VariantCallFile()
+        variant_file.open(vcf_fn)
+        variant_file.parseInfo = parse_info
+        variant_file.parseSamples = False
         if region is not None:
-            region_set = variantFile.setRegion(region)
+            region_set = variant_file.setRegion(region)
             if not region_set:
                 raise StopIteration
-        var = new Variant(deref(variantFile))
+        variant = new Variant(deref(variant_file))
 
-        while _get_next_variant(variantFile, var):
-            yield _mkvtblrow(var, fields, arities, info_types, filter_ids, flatten_filter, fill, flatten)
+        while _get_next_variant(variant_file, variant):
+            yield _mkvtblrow(variant, fields, arities, info_types, filter_ids,
+                             flatten_filter, fill, flatten)
 
-        del variantFile
-        del var
+        del variant_file
+        del variant
 
 
-cdef inline object _mkvtblrow(Variant *var,
-                              fields,
-                              arities,
-                              info_types,
-                              filter_ids,
-                              flatten_filter,
-                              fill,
-                              flatten):
+cdef inline object _mkvtblrow(Variant *variant, fields, arities, info_types,
+                              filter_ids, flatten_filter, fill, flatten):
     out = list()
     cdef string field
     for field, arity, vcf_type in zip(fields, arities, info_types):
         if field == FIELD_NAME_CHROM:
-            out.append(var.sequenceName)
+            out.append(variant.sequenceName)
         elif field == FIELD_NAME_POS:
-            out.append(var.position)
+            out.append(variant.position)
         elif field == FIELD_NAME_ID:
-            out.append(var.id)
+            out.append(variant.id)
         elif field == FIELD_NAME_REF:
-            out.append(var.ref)
+            out.append(variant.ref)
         elif field == FIELD_NAME_ALT:
             if arity is not None:
-                vals = _mktblval_multi(var.alt, arity, fill)
+                vals = _mktblval_multi(variant.alt, arity, fill)
                 out.extend(vals)
-            elif var.alt.size() == 0:
+            elif variant.alt.size() == 0:
                 out.append(fill)
             else:
-                val = ','.join(var.alt)
+                val = ','.join(variant.alt)
                 out.append(val)
         elif field == FIELD_NAME_QUAL:
-            out.append(var.quality)
+            out.append(variant.quality)
         elif field == FIELD_NAME_FILTER:
             if flatten_filter:
-                out.extend(_mkfilterval(var, filter_ids))
-            elif var.filter == DOT:
+                out.extend(_mkfilterval(variant, filter_ids))
+            elif variant.filter == DOT:
                 out.append(fill)
             else:
-                out.append(var.filter)
+                out.append(variant.filter)
         elif field == FIELD_NAME_NUM_ALLELES:
-            out.append(var.alt.size() + 1)
+            out.append(variant.alt.size() + 1)
         elif field == FIELD_NAME_IS_SNP:
-            out.append(_is_snp(var))
+            out.append(_is_snp(variant))
         else:
             if vcf_type == FIELD_BOOL:
                 # ignore arity, this is a flag
-                val = (var.infoFlags.count(field) > 0)
+                val = (variant.infoFlags.count(field) > 0)
                 out.append(val)
             else:
                 if arity is not None:
-                    vals = _mktblval_multi(var.info[field], arity, fill)
+                    vals = _mktblval_multi(variant.info[field], arity, fill)
                     out.extend(vals)
                 elif str(field) in flatten and flatten[str(field)] is not None:
                     _, t = flatten[str(field)]
-                    vals = t(var.info[field])
+                    vals = t(variant.info[field])
                     out.extend(vals)
-                elif var.info[field].size() == 0:
+                elif variant.info[field].size() == 0:
                     out.append(fill)
                 else:
-                    out.append(','.join(var.info[field]))
+                    out.append(','.join(variant.info[field]))
     return tuple(out)
 
 
-cdef inline object _mktblval_multi(vector[string]& string_vals, int arity, object fill):
+cdef inline object _mktblval_multi(vector[string]& string_vals, int arity,
+                                   object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -1898,7 +1868,8 @@ def flatten_eff(fill='.'):
         if len(vals) == 0:
             return [fill] * 11
         else:
-            match_eff_main = _prog_eff_main.match(vals[0])  # ignore all but first effect
+            # ignore all but first effect
+            match_eff_main = _prog_eff_main.match(vals[0])
             eff = [match_eff_main.group(1)] + match_eff_main.group(2).split('|')
             eff = [fill if v == '' else v for v in eff[:11]]
             return eff
