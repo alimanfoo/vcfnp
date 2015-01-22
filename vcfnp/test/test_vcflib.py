@@ -1,8 +1,8 @@
 from __future__ import print_function, division, absolute_import
 
 
-from vcflib import PyVariantCallFile, TYPE_INTEGER, TYPE_FLOAT, TYPE_STRING, \
-    TYPE_BOOL
+from vcfnp.vcflib import PyVariantCallFile, TYPE_INTEGER, TYPE_FLOAT, \
+    TYPE_STRING, TYPE_BOOL
 from nose.tools import eq_
 
 

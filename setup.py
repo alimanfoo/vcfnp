@@ -1,12 +1,11 @@
 from distutils.core import setup
 from distutils.extension import Extension
-from Cython.Distutils import build_ext
+from Cython.Build import cythonize
 import os
 from ast import literal_eval
-import numpy as np
 
 
-def get_version(source='vcfnp.pyx'):
+def get_version(source='vcfnp/__init__.py'):
     with open(source) as f:
         for line in f:
             if line.startswith('__version__'):
@@ -17,7 +16,6 @@ def get_version(source='vcfnp.pyx'):
 vcflib_dir = os.path.join(os.getcwd(), 'vcflib')
 smithwaterman_dir = os.path.join(vcflib_dir, 'smithwaterman')
 tabixpp_dir = os.path.join(vcflib_dir, 'tabixpp')
-
 vcflib_sources = ('Variant.cpp', 'ssw.c', 'ssw_cpp.cpp', 'split.cpp')
 smithwaterman_sources = ('BandedSmithWaterman.cpp',
                          'SmithWatermanGotoh.cpp',
@@ -32,31 +30,40 @@ tabixpp_sources = ('bedidx.c', 'bgzf.c', 'index.c', 'knetfile.c', 'kstring.c',
 def get_vcflib_sources():
     sources = list()
     sources += [os.path.join(vcflib_dir, s) for s in vcflib_sources]
-    sources += [os.path.join(smithwaterman_dir, s) for s in smithwaterman_sources]
+    sources += [os.path.join(smithwaterman_dir, s)
+                for s in smithwaterman_sources]
     sources += [os.path.join(tabixpp_dir, s) for s in tabixpp_sources]
     return sources
 
 
-vcflib_extension = Extension('vcflib',
-                             sources=['vcflib.pyx'] + get_vcflib_sources(),
-                             language='c++',
-                             include_dirs=[np.get_include(), vcflib_dir,
-                                           smithwaterman_dir, tabixpp_dir,
-                                           '.'],
-                             libraries=['m', 'z'],
-                             extra_compile_args=['-O3'],
-                             )
+compat_extension = Extension(
+    'vcfnp.compat',
+    sources=['vcfnp/compat.pyx']
+)
 
 
-vcfnp_extension = Extension('vcfnp',
-                            sources=['vcfnp.pyx'] + get_vcflib_sources(),
-                            language='c++',
-                            include_dirs=[np.get_include(), vcflib_dir,
-                                          smithwaterman_dir,
-                                          tabixpp_dir, '.'],
-                            libraries=['m', 'z'],
-                            extra_compile_args=['-O3'],
-                            )
+vcflib_extension = Extension(
+    'vcfnp.vcflib',
+    sources=['vcfnp/vcflib.pyx'] + get_vcflib_sources(),
+    language='c++',
+    include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp'],
+    libraries=['m', 'z'],
+    extra_compile_args=['-O3']
+)
+
+
+array_extension = Extension(
+    'vcfnp.array_ext',
+    sources=['vcfnp/array_ext.pyx']
+)
+
+
+# vcfnp_extension = Extension('vcfnp',
+#                             sources=['vcfnp.pyx'] + get_vcflib_sources(),
+#                             language='c++',
+#                             include_dirs=[np.get_include(), vcflib_dir,
+#                                           smithwaterman_dir, tabixpp_dir, '.'],
+#                             libraries=['m', 'z'], extra_compile_args=['-O3'], )
 
 
 setup(
@@ -73,7 +80,13 @@ setup(
                  'Programming Language :: Python',
                  'Topic :: Software Development :: Libraries :: Python Modules'
                  ],
-    cmdclass={'build_ext': build_ext},
-    ext_modules=[vcflib_extension, vcfnp_extension],
-    scripts=['scripts/vcf2npy', 'scripts/qsub_vcf2npy', 'scripts/vcfnpy2hdf5', 'scripts/vcf2csv'],
+    package_dir={'': '.'},
+    packages=['vcfnp.array'],
+    ext_modules=cythonize([compat_extension,
+                           vcflib_extension,
+                           array_extension]),
+    scripts=['scripts/vcf2npy',
+             'scripts/qsub_vcf2npy',
+             'scripts/vcfnpy2hdf5',
+             'scripts/vcf2csv'],
 )
