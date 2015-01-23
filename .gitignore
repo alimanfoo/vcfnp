@@ -7,3 +7,4 @@ MANIFEST
 .idea
 *.prof
 tmp
+.ipynb_checkpoints/

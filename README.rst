@@ -22,7 +22,9 @@ Installation requires numpy and cython::
 Usage
 -----
 
-From Python::
+For usage from Python, see the `IPython notebook example
+<http://nbviewer.ipython.org/github/alimanfoo/vcfnp/blob/master/example.ipynb>`_,
+or try::
 
     >>> from __future__ import print_function, division
     >>> import numpy as np
@@ -31,7 +33,7 @@ From Python::
     >>> import matplotlib.pyplot as plt
     >>> import vcfnp
     >>> vcfnp.__version__
-    '2.0.0a1.dev0'
+    '2.0.0'
     >>> filename = 'fixture/sample.vcf'
     >>> # load data from fixed fields (including INFO)
     ... v = vcfnp.variants(filename, cache=True).view(np.recarray)

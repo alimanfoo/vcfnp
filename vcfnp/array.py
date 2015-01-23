@@ -520,7 +520,7 @@ def _iter_withprogress(iterable, progress, log):
 def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
              exclude_fields=None, dtypes=None, arities=None, fills=None,
              vcf_types=None, count=None, progress=0, logstream=None,
-             condition=None, slice_args=None, verbose=False, cache=False,
+             condition=None, slice_args=None, verbose=True, cache=False,
              cachedir=None, skip_cached=False):
     """
     Load a numpy 1-dimensional structured array with data from the sample
@@ -769,7 +769,7 @@ class _CalldataLoader(_ArrayLoader):
 def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                 exclude_fields=None, dtypes=None, arities=None, fills=None,
                 vcf_types=None, count=None, progress=0, logstream=None,
-                condition=None, slice_args=None, verbose=False, cache=False,
+                condition=None, slice_args=None, verbose=True, cache=False,
                 cachedir=None, skip_cached=False):
     """
     Load a numpy 2-dimensional structured array with data from the sample

@@ -2,7 +2,7 @@
 from __future__ import absolute_import, print_function, division
 
 
-__version__ = '2.0.0a1.dev0'
+__version__ = '2.0.0'
 
 
 from vcfnp.vcflib import PyVariantCallFile as VariantCallFile
