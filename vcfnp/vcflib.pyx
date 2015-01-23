@@ -7,20 +7,19 @@ from collections import namedtuple
 
 
 # expose these constants to Python
-FIELD_INTEGER = VariantFieldType.FIELD_INTEGER
-FIELD_FLOAT = VariantFieldType.FIELD_FLOAT
-FIELD_STRING = VariantFieldType.FIELD_STRING
-FIELD_BOOL = VariantFieldType.FIELD_BOOL
-FIELD_UNKNOWN = VariantFieldType.FIELD_UNKNOWN
-ALLELE_NUMBER = VariantFieldNumber.ALLELE_NUMBER
-GENOTYPE_NUMBER = VariantFieldNumber.GENOTYPE_NUMBER
+TYPE_INTEGER = FIELD_INTEGER
+TYPE_FLOAT = FIELD_FLOAT
+TYPE_STRING = FIELD_STRING
+TYPE_BOOL = FIELD_BOOL
+TYPE_UNKNOWN = FIELD_UNKNOWN
+NUMBER_ALLELE = ALLELE_NUMBER
+NUMBER_GENOTYPE = GENOTYPE_NUMBER
 
 
 VariantTuple = namedtuple(
     'Variant',
     ['CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'samples']
 )
-
 
 
 cdef class PyVariantCallFile:
@@ -49,7 +48,8 @@ cdef class PyVariantCallFile:
         cdef char semicolon = b';'
         var = new Variant(deref(self.thisptr))
         while self.thisptr.getNextVariant(deref(var)):
-            # split the filter field here in C++ to avoid having to do it in Python later
+            # split the filter field here in C++ to avoid having to do it in
+            # Python later
             filters = split(var.filter, semicolon)
             v = VariantTuple(
                 _s(var.sequenceName),

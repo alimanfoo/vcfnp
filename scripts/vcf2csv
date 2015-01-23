@@ -1,26 +1,17 @@
 #!/usr/bin/env python
+from __future__ import print_function, division, absolute_import
 
 
 import os
 import sys
 import argparse
-from datetime import datetime
 import csv
-import numpy as np
-import pyfasta
 import vcfnp
 
 
-def main(vcf_filename,
-         csv_filename=None,
-         region=None,
-         fields=None,
-         exclude_fields=None,
-         arities=None,
-         flatten_filter=True,
-         dialect='excel',
-         fill='.',
-         ):
+def main(vcf_filename, csv_filename=None, region=None, fields=None,
+         exclude_fields=None, arities=None, flatten_filter=True,
+         dialect='excel', fill='.'):
 
     assert vcf_filename is not None, 'missing VCF filename, try vcf2csv --help'
     assert os.path.exists(vcf_filename), 'VCF file not found'
@@ -32,13 +23,9 @@ def main(vcf_filename,
 
     writer = csv.writer(out, dialect=dialect)
 
-    tbl = vcfnp.VariantsTable(vcf_filename,
-                              region=region,
-                              fields=fields,
-                              exclude_fields=exclude_fields,
-                              arities=arities,
-                              flatten_filter=flatten_filter,
-                              fill=fill)
+    tbl = vcfnp.VariantsTable(vcf_filename, region=region, fields=fields,
+                              exclude_fields=exclude_fields, arities=arities,
+                              flatten_filter=flatten_filter, fill=fill)
 
     writer.writerows(tbl)
 
@@ -46,52 +33,44 @@ def main(vcf_filename,
 if __name__ == '__main__':
 
     # handle command line options
-    epilog = "Version: vcfnp %s" % vcfnp.__version__
+    pyv = '.'.join(map(str, sys.version_info[:3]))
+    epilog = "Version: vcfnp %s (Python %s)" % (vcfnp.__version__, pyv)
     parser = argparse.ArgumentParser(epilog=epilog)
-    parser.add_argument('--vcf',
-                        dest='vcf_filename', metavar='FILE', default=None,
-                        help='input VCF file path')
-    parser.add_argument('--csv',
-                        dest='csv_filename', metavar='FILE', default=None,
+    parser.add_argument('--vcf', dest='vcf_filename', metavar='FILE',
+                        default=None, help='input VCF file path')
+    parser.add_argument('--csv', dest='csv_filename', metavar='FILE',
+                        default=None,
                         help='output CSV file path (omit to write to stdout)')
-    parser.add_argument('--region',
-                        dest='region', default=None,
+    parser.add_argument('--region', dest='region', default=None,
                         help='region to extract (omit to extract all variants)')
-    parser.add_argument('--field',
-                        dest='fields', metavar='F', default=None, action='append',
-                        help='field to include')
-    parser.add_argument('--exclude-field',
-                        dest='exclude_fields', metavar='F', default=None, action='append',
-                        help='field to exclude')
-    parser.add_argument('--arity',
-                        metavar='FIELD:ARITY', dest='arities', action='append',
-                        help='provide fixed arity for a given field, e.g., "ALT:2"')
-    parser.add_argument('--dialect',
-                        dest='dialect', default='excel',
-                        help='CSV dialect (use "excel-tab" for tab delimited output)')
-    parser.add_argument('--flatten-filter',
-                        dest='flatten_filter', default=False, action='store_true',
-                        help='flatten the FILTER field into multiple boolean fields')
-    parser.add_argument('--fill',
-                        dest='fill', default='.',
+    parser.add_argument('--field', dest='fields', metavar='F', default=None,
+                        action='append', help='field to include')
+    parser.add_argument('--exclude-field', dest='exclude_fields', metavar='F',
+                        default=None, action='append', help='field to exclude')
+    parser.add_argument('--arity', metavar='FIELD:ARITY', dest='arities',
+                        action='append',
+                        help='provide fixed arity for a given field, e.g., '
+                             '"ALT:2"')
+    parser.add_argument('--dialect', dest='dialect', default='excel',
+                        help='CSV dialect (use "excel-tab" for tab delimited '
+                             'output)')
+    parser.add_argument('--flatten-filter', dest='flatten_filter',
+                        default=False, action='store_true',
+                        help='flatten the FILTER field into multiple boolean '
+                             'fields')
+    parser.add_argument('--fill', dest='fill', default='.',
                         help='fill for missing values (default is ".")')
     args = parser.parse_args()
 
     # determine arity overrides
     if args.arities:
-        arities = dict((s.split(':')[0], int(s.split(':')[1])) for s in args.arities)
+        arities = dict((s.split(':')[0], int(s.split(':')[1]))
+                       for s in args.arities)
     else:
         arities = None
 
-    main(vcf_filename=args.vcf_filename,
-         csv_filename=args.csv_filename,
-         region=args.region,
-         fields=args.fields,
-         exclude_fields=args.exclude_fields,
-         arities=arities,
-         flatten_filter=args.flatten_filter,
-         dialect=args.dialect,
-         fill=args.fill,
-         )
-
-
+    main(vcf_filename=args.vcf_filename, csv_filename=args.csv_filename,
+         region=args.region, fields=args.fields,
+         exclude_fields=args.exclude_fields, arities=arities,
+         flatten_filter=args.flatten_filter, dialect=args.dialect,
+         fill=args.fill)

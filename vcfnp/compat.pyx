@@ -1,4 +1,3 @@
-import sys
 from cpython.version cimport PY_MAJOR_VERSION
 from cpython cimport PyBytes_Check, PyUnicode_Check, PyList_Check, \
     PyTuple_Check, PyDict_Check
@@ -10,7 +9,7 @@ else:
     string_types = str,
 
 
-cdef s(object x):
+cpdef object s(object x):
     if x is None:
         return None
     elif PY_MAJOR_VERSION < 3:
@@ -20,14 +19,14 @@ cdef s(object x):
     elif PyList_Check(x):
         return [s(i) for i in x]
     elif PyTuple_Check(x):
-        return tuple(s(i) for i in x)
+        return tuple([s(i) for i in x])
     elif PyDict_Check(x):
         return {s(k): s(v) for k, v in x.items()}
     else:
         return x
 
 
-cdef bytes b(object x):
+cpdef object b(object x):
     if x is None:
         return None
     elif PY_MAJOR_VERSION < 3:
@@ -39,7 +38,7 @@ cdef bytes b(object x):
     elif PyList_Check(x):
         return [b(i) for i in x]
     elif PyTuple_Check(x):
-        return tuple(b(i) for i in x)
+        return tuple([b(i) for i in x])
     elif PyDict_Check(x):
         return {b(k): b(v) for k, v in x.items()}
     else:

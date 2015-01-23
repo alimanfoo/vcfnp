@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function, division, absolute_import
 
 
 import os
@@ -10,28 +11,17 @@ import pyfasta
 
 
 def log(*msg):
-    print >>sys.stderr, '[vcf2npy] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg))
+    print('[vcf2npy] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg)),
+          file=sys.stderr)
     sys.stderr.flush()
 
 
-def main(vcf_filename,
-         fasta_filename,
-         output_dir,
-         array_type,
-         chromosome,
-         task_size,
-         exclude_fields,
-         ploidy,
-         dtypes,
-         arities,
-         progress,
-         qsub_args,
-         shell,
-         task_script,
-         tasks,
-         ):
+def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
+         task_size, exclude_fields, ploidy, dtypes, arities, progress,
+         qsub_args, shell, task_script, tasks):
 
-    assert vcf_filename is not None, 'missing VCF filename, try qsub_vcf2npy --help'
+    assert vcf_filename is not None, 'missing VCF filename, try qsub_vcf2npy ' \
+                                     '--help'
     assert os.path.exists(vcf_filename), 'VCF file not found'
     assert fasta_filename is not None and os.path.exists(fasta_filename)
     assert array_type in {'variants', 'calldata', 'calldata_2d'}
@@ -40,21 +30,9 @@ def main(vcf_filename,
     if chromosome is None:
         # run each chromosome as a separate job array
         for chromosome in sorted(genome.keys()):
-            main(vcf_filename,
-                 fasta_filename,
-                 output_dir,
-                 array_type,
-                 chromosome,
-                 task_size,
-                 exclude_fields,
-                 ploidy,
-                 dtypes,
-                 arities,
-                 progress,
-                 qsub_args,
-                 shell,
-                 task_script,
-                 tasks)
+            main(vcf_filename, fasta_filename, output_dir, array_type,
+                 chromosome, task_size, exclude_fields, ploidy, dtypes, arities,
+                 progress, qsub_args, shell, task_script, tasks)
         return
     else:
         assert chromosome in genome.keys()
@@ -106,65 +84,58 @@ def main(vcf_filename,
 if __name__ == '__main__':
 
     # handle command line options
-    parser = argparse.ArgumentParser(epilog='Any other arguments are passed through to qsub.')
-    parser.add_argument('--vcf',
-                        dest='vcf_filename', metavar='VCF', default=None,
-                        help='input VCF file')
-    parser.add_argument('--fasta',
-                        dest='fasta_filename', metavar='FASTA', default=None,
-                        help='reference genome as FASTA file')
-    parser.add_argument('--output-dir',
-                        dest='output_dir', metavar='DIR', default=None,
-                        help='output directory (omit to use default vcfnp cache directory)')
-    parser.add_argument('--array-type',
-                        dest='array_type', default='variants',
-                        help='array type, one of [variants|calldata|calldata_2d]')
-    parser.add_argument('--chromosome',
-                        dest='chromosome', default=None,
-                        help='chromosome to extract (omit to extract whole genome)')
-    parser.add_argument('--task-size',
-                        dest='task_size', metavar='BP', default=None, type=int,
-                        help='size (in base pairs) of region to extract (omit to extract whole chromosome)')
-    parser.add_argument('--exclude-field',
-                        dest='exclude_fields', metavar='FIELD', default=None, action='append',
+    parser = argparse.ArgumentParser(
+        epilog='Any other arguments are passed through to qsub.')
+    parser.add_argument('--vcf', dest='vcf_filename', metavar='VCF',
+                        default=None, help='input VCF file')
+    parser.add_argument('--fasta', dest='fasta_filename', metavar='FASTA',
+                        default=None, help='reference genome as FASTA file')
+    parser.add_argument('--output-dir', dest='output_dir', metavar='DIR',
+                        default=None,
+                        help='output directory (omit to use default vcfnp '
+                             'cache directory)')
+    parser.add_argument('--array-type', dest='array_type', default='variants',
+                        help='array type, one of ['
+                             'variants|calldata|calldata_2d]')
+    parser.add_argument('--chromosome', dest='chromosome', default=None,
+                        help='chromosome to extract (omit to extract whole '
+                             'genome)')
+    parser.add_argument('--task-size', dest='task_size', metavar='BP',
+                        default=None, type=int,
+                        help='size (in base pairs) of region to extract (omit '
+                             'to extract whole chromosome)')
+    parser.add_argument('--exclude-field', dest='exclude_fields',
+                        metavar='FIELD', default=None, action='append',
                         help='field to exclude')
-    parser.add_argument('--ploidy',
-                        dest='ploidy', default=2, type=int,
+    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int,
                         help='sample ploidy')
-    parser.add_argument('--dtype',
-                        metavar='FIELD:DTYPE', dest='dtypes', action='append',
-                        help='override default dtype for a given field, e.g., "MQ:f4"')
-    parser.add_argument('--arity',
-                        metavar='FIELD:ARITY', dest='arities', action='append',
-                        help='override default arity for a given field, e.g., "AD:2"')
-    parser.add_argument('--progress',
-                        dest='progress', metavar='N', default=10000, type=int,
+    parser.add_argument('--dtype', metavar='FIELD:DTYPE', dest='dtypes',
+                        action='append',
+                        help='override default dtype for a given field, e.g., '
+                             '"MQ:f4"')
+    parser.add_argument('--arity', metavar='FIELD:ARITY', dest='arities',
+                        action='append',
+                        help='override default arity for a given field, e.g., '
+                             '"AD:2"')
+    parser.add_argument('--progress', dest='progress', metavar='N',
+                        default=10000, type=int,
                         help='log progress every N rows')
-    parser.add_argument('--task-script',
-                        dest='task_script', default='/usr/local/bin/vcf2npy',
-                        help='override task script (defaults to /usr/local/bin/vcf2npy)')
-    parser.add_argument('-S', '--shell',
-                        dest='shell', default='/usr/bin/python',
-                        help='override interpreting shell for the job (defaults to /usr/bin/python/)')
-    parser.add_argument('-t',
-                        dest='tasks', default=None,
+    parser.add_argument('--task-script', dest='task_script',
+                        default='/usr/local/bin/vcf2npy',
+                        help='override task script (defaults to '
+                             '/usr/local/bin/vcf2npy)')
+    parser.add_argument('-S', '--shell', dest='shell',
+                        default='/usr/bin/python',
+                        help='override interpreting shell for the job ('
+                             'defaults to /usr/bin/python/)')
+    parser.add_argument('-t', dest='tasks', default=None,
                         help='specify tasks to run (defaults to all tasks)')
     args, qsub_args = parser.parse_known_args()
 
-    main(vcf_filename=args.vcf_filename,
-         fasta_filename=args.fasta_filename,
-         output_dir=args.output_dir,
-         array_type=args.array_type,
-         chromosome=args.chromosome,
-         task_size=args.task_size,
-         exclude_fields=args.exclude_fields,
-         ploidy=args.ploidy,
-         dtypes=args.dtypes,
-         arities=args.arities,
-         progress=args.progress,
-         qsub_args=qsub_args,
-         shell=args.shell,
-         task_script=args.task_script,
-         tasks=args.tasks,
-         )
-
+    main(vcf_filename=args.vcf_filename, fasta_filename=args.fasta_filename,
+         output_dir=args.output_dir, array_type=args.array_type,
+         chromosome=args.chromosome, task_size=args.task_size,
+         exclude_fields=args.exclude_fields, ploidy=args.ploidy,
+         dtypes=args.dtypes, arities=args.arities, progress=args.progress,
+         qsub_args=qsub_args, shell=args.shell, task_script=args.task_script,
+         tasks=args.tasks)

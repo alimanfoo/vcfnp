@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function, division, absolute_import
 
 
 import os
@@ -11,23 +12,17 @@ import vcfnp
 
 
 def log(*msg):
-    print >>sys.stderr, '[vcf2npy] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg))
+    print('[vcf2npy] '
+          + str(datetime.now())
+          + ' :: '
+          + ' '.join(map(str, msg)),
+          file=sys.stderr)
     sys.stderr.flush()
 
 
-def main(vcf_filename,
-         fasta_filename,
-         output_dir,
-         array_type,
-         chromosome,
-         task_size,
-         task_index,
-         exclude_fields,
-         ploidy,
-         dtypes,
-         arities,
-         progress,
-         ):
+def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
+         task_size, task_index, exclude_fields, ploidy, dtypes, arities,
+         progress):
 
     assert vcf_filename is not None, 'missing VCF filename, try vcf2npy --help'
     assert os.path.exists(vcf_filename), 'VCF file not found'
@@ -42,8 +37,10 @@ def main(vcf_filename,
         region = chromosome
     else:
         log('extract a chromosome split', chromosome, task_size, task_index)
-        # N.B., make sure regions will work as sortable file names by left-padding with zeros
-        assert fasta_filename is not None, 'missing FASTA filename, try vcf2npy --help'
+        # N.B., make sure regions will work as sortable file names by
+        # left-padding with zeros
+        assert fasta_filename is not None, \
+            'missing FASTA filename, try vcf2npy --help'
         assert os.path.exists(fasta_filename), 'FASTA file not found'
         genome = pyfasta.Fasta(fasta_filename)
         chrom_size = len(genome[chromosome])
@@ -56,94 +53,75 @@ def main(vcf_filename,
         log(region)
 
     if array_type == 'variants':
-        A = vcfnp.variants(
-            vcf_filename,
-            region=region,
-            progress=progress,
-            exclude_fields=exclude_fields,
-            dtypes=dtypes,
-            arities=arities,
-            flatten_filter=True,
-            cache=True,
-            cachedir=output_dir,
-            skip_cached=True,
-            verbose=True,
-        )
+        arr = vcfnp.variants(vcf_filename, region=region, progress=progress,
+                             exclude_fields=exclude_fields, dtypes=dtypes,
+                             arities=arities, flatten_filter=True, cache=True,
+                             cachedir=output_dir, skip_cached=True,
+                             verbose=True)
     elif array_type == 'calldata':
-        A = vcfnp.calldata(
-            vcf_filename,
-            region=region,
-            progress=progress,
-            ploidy=ploidy,
-            exclude_fields=exclude_fields,
-            dtypes=dtypes,
-            arities=arities,
-            cache=True,
-            cachedir=output_dir,
-            skip_cached=True,
-            verbose=True,
-        )
+        arr = vcfnp.calldata(vcf_filename, region=region, progress=progress,
+                             ploidy=ploidy, exclude_fields=exclude_fields,
+                             dtypes=dtypes, arities=arities, cache=True,
+                             cachedir=output_dir, skip_cached=True,
+                             verbose=True)
     elif array_type == 'calldata_2d':
-        A = vcfnp.calldata_2d(
-            vcf_filename,
-            region=region,
-            progress=progress,
-            ploidy=ploidy,
-            exclude_fields=exclude_fields,
-            dtypes=dtypes,
-            arities=arities,
-            cache=True,
-            cachedir=output_dir,
-            skip_cached=True,
-            verbose=True,
-        )
+        arr = vcfnp.calldata_2d(vcf_filename, region=region, progress=progress,
+                                ploidy=ploidy, exclude_fields=exclude_fields,
+                                dtypes=dtypes, arities=arities, cache=True,
+                                cachedir=output_dir, skip_cached=True,
+                                verbose=True)
     else:
         raise Exception('unexpected array type: %s' % array_type)
-    if A is not None:
-        log('loaded', A.size, 'items', A.nbytes, 'bytes')
+    if arr is not None:
+        log('loaded', arr.size, 'items', arr.nbytes, 'bytes')
     log('all done')
 
 
 if __name__ == '__main__':
 
     # handle command line options
-    epilog = "Version: vcfnp %s" % vcfnp.__version__
+    pyv = '.'.join(map(str, sys.version_info[:3]))
+    epilog = "Version: vcfnp %s (Python %s)" % (vcfnp.__version__, pyv)
     parser = argparse.ArgumentParser(epilog=epilog)
-    parser.add_argument('--vcf',
-                        dest='vcf_filename', metavar='FILE', default=None,
-                        help='input VCF file')
-    parser.add_argument('--fasta',
-                        dest='fasta_filename', metavar='FASTA', default=None,
-                        help='reference genome as FASTA file (only required if --task-size is given)')
-    parser.add_argument('--output-dir',
-                        dest='output_dir', metavar='DIR', default=None,
-                        help='output directory (omit to use default vcfnp cache directory)')
-    parser.add_argument('--array-type',
-                        dest='array_type', default='variants',
-                        help='array type, one of [variants|calldata|calldata_2d]')
-    parser.add_argument('--chromosome',
-                        dest='chromosome', default=None,
-                        help='chromosome to extract (omit to extract whole genome)')
-    parser.add_argument('--task-size',
-                        dest='task_size', metavar='BP', default=None, type=int,
-                        help='size (in base pairs) of region to extract (omit to extract whole chromosome)')
-    parser.add_argument('--task-index',
-                        dest='task_index', metavar='N', default=None,
-                        help='task index as integer or string to get task from environment variable (e.g., "SGE_TASK_ID")')
-    parser.add_argument('--exclude-field',
-                        dest='exclude_fields', metavar='FIELD', default=None, action='append',
+    parser.add_argument('--vcf', dest='vcf_filename', metavar='FILE',
+                        default=None, help='input VCF file')
+    parser.add_argument('--fasta', dest='fasta_filename', metavar='FASTA',
+                        default=None,
+                        help='reference genome as FASTA file (only required '
+                             'if --task-size is given)')
+    parser.add_argument('--output-dir', dest='output_dir', metavar='DIR',
+                        default=None,
+                        help='output directory (omit to use default vcfnp '
+                             'cache directory)')
+    parser.add_argument('--array-type', dest='array_type', default='variants',
+                        help='array type, one of ['
+                             'variants|calldata|calldata_2d]')
+    parser.add_argument('--chromosome', dest='chromosome', default=None,
+                        help='chromosome to extract (omit to extract whole '
+                             'genome)')
+    parser.add_argument('--task-size', dest='task_size', metavar='BP',
+                        default=None, type=int,
+                        help='size (in base pairs) of region to extract (omit '
+                             'to extract whole chromosome)')
+    parser.add_argument('--task-index', dest='task_index', metavar='N',
+                        default=None,
+                        help='task index as integer or string to get task '
+                             'from environment variable (e.g., "SGE_TASK_ID")')
+    parser.add_argument('--exclude-field', dest='exclude_fields',
+                        metavar='FIELD', default=None, action='append',
                         help='field to exclude')
-    parser.add_argument('--ploidy',
-                        dest='ploidy', default=2, type=int,
+    parser.add_argument('--ploidy', dest='ploidy', default=2, type=int,
                         help='sample ploidy')
-    parser.add_argument('--dtype',
-                        metavar='FIELD:DTYPE', dest='dtypes', action='append',
-                        help='override default dtype for a given field, e.g., "MQ:f4"')
-    parser.add_argument('--arity',
-                        metavar='FIELD:ARITY', dest='arities', action='append',
-                        help='override default arity for a given field, e.g., "AD:2"')
-    parser.add_argument('--progress',
-                        dest='progress', metavar='N', default=10000, type=int,
+    parser.add_argument('--dtype', metavar='FIELD:DTYPE', dest='dtypes',
+                        action='append',
+                        help='override default dtype for a given field, e.g., '
+                             '"MQ:f4"')
+    parser.add_argument('--arity', metavar='FIELD:ARITY', dest='arities',
+                        action='append',
+                        help='override default arity for a given field, e.g., '
+                             '"AD:2"')
+    parser.add_argument('--progress', dest='progress', metavar='N',
+                        default=10000, type=int,
                         help='log progress every N rows')
     args = parser.parse_args()
 
@@ -178,17 +156,9 @@ if __name__ == '__main__':
     else:
         arities = None
 
-    main(vcf_filename=args.vcf_filename,
-         fasta_filename=args.fasta_filename,
-         output_dir=args.output_dir,
-         array_type=args.array_type,
-         chromosome=args.chromosome,
-         task_size=args.task_size,
-         task_index=task_index,
-         exclude_fields=args.exclude_fields,
-         ploidy=args.ploidy,
-         dtypes=dtypes,
-         arities=arities,
-         progress=args.progress,
-         )
-
+    main(vcf_filename=args.vcf_filename, fasta_filename=args.fasta_filename,
+         output_dir=args.output_dir, array_type=args.array_type,
+         chromosome=args.chromosome, task_size=args.task_size,
+         task_index=task_index, exclude_fields=args.exclude_fields,
+         ploidy=args.ploidy, dtypes=dtypes, arities=arities,
+         progress=args.progress)

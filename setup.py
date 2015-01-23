@@ -38,6 +38,7 @@ def get_vcflib_sources():
 
 compat_extension = Extension(
     'vcfnp.compat',
+    language='c++',
     sources=['vcfnp/compat.pyx']
 )
 
@@ -52,18 +53,14 @@ vcflib_extension = Extension(
 )
 
 
-array_extension = Extension(
-    'vcfnp.array_ext',
-    sources=['vcfnp/array_ext.pyx']
+iter_extension = Extension(
+    'vcfnp.iter',
+    sources=['vcfnp/iter.pyx'] + get_vcflib_sources(),
+    language='c++',
+    include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp'],
+    libraries=['m', 'z'],
+    extra_compile_args=['-O3']
 )
-
-
-# vcfnp_extension = Extension('vcfnp',
-#                             sources=['vcfnp.pyx'] + get_vcflib_sources(),
-#                             language='c++',
-#                             include_dirs=[np.get_include(), vcflib_dir,
-#                                           smithwaterman_dir, tabixpp_dir, '.'],
-#                             libraries=['m', 'z'], extra_compile_args=['-O3'], )
 
 
 setup(
@@ -81,10 +78,12 @@ setup(
                  'Topic :: Software Development :: Libraries :: Python Modules'
                  ],
     package_dir={'': '.'},
-    packages=['vcfnp.array'],
-    ext_modules=cythonize([compat_extension,
-                           vcflib_extension,
-                           array_extension]),
+    packages=['vcfnp'],
+    ext_modules=cythonize([
+        compat_extension,
+        vcflib_extension,
+        iter_extension,
+    ]),
     scripts=['scripts/vcf2npy',
              'scripts/qsub_vcf2npy',
              'scripts/vcfnpy2hdf5',

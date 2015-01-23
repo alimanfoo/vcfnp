@@ -1,36 +1,38 @@
 #!/usr/bin/env python
+from __future__ import print_function, division, absolute_import
 
 
-from __future__ import division
 import os
 import sys
 import argparse
 import numpy as np
 import h5py
-import vcflib
+import vcfnp
+import vcfnp.vcflib as vcflib
+from vcfnp.compat import b as _b
 from glob import glob
 from datetime import datetime
 import operator
 
 
+PY2 = sys.version_info[0] == 2
+if not PY2:
+    from functools import reduce
+
+
 def log(*msg):
-    print >>sys.stderr, ('[vcfnpy2hdf5] '
-                         + str(datetime.now())
-                         + ' :: '
-                         + ' '.join(map(str, msg)))
+    print('[vcfnpy2hdf5] '
+          + str(datetime.now())
+          + ' :: '
+          + ' '.join(map(str, msg)),
+          file=sys.stderr)
     sys.stderr.flush()
 
 
-def load_compound_arrays_into_dataset(input_filenames,
-                                      dataset_name,
-                                      parent_group,
-                                      chunk_size,
-                                      chunk_width,
-                                      compression,
-                                      compression_opts,
-                                      shuffle,
-                                      fletcher32,
-                                      scaleoffset):
+def load_compound_arrays_into_dataset(input_filenames, dataset_name,
+                                      parent_group, chunk_size, chunk_width,
+                                      compression, compression_opts, shuffle,
+                                      fletcher32, scaleoffset):
 
     a = np.load(input_filenames[0])
 
@@ -71,18 +73,12 @@ def load_compound_arrays_into_dataset(input_filenames,
         'fletcher32', fletcher32,
         'scaleoffset', scaleoffset
     )
-    ds = parent_group.create_dataset(
-        dataset_name,
-        shape=shape,
-        dtype=a.dtype,
-        chunks=chunks,
-        maxshape=maxshape,
-        compression=compression,
-        compression_opts=compression_opts,
-        shuffle=shuffle,
-        fletcher32=fletcher32,
-        scaleoffset=scaleoffset
-    )
+    ds = parent_group.create_dataset(dataset_name, shape=shape, dtype=a.dtype,
+                                     chunks=chunks, maxshape=maxshape,
+                                     compression=compression,
+                                     compression_opts=compression_opts,
+                                     shuffle=shuffle, fletcher32=fletcher32,
+                                     scaleoffset=scaleoffset)
 
     log(dataset_name, 'load data')
     for fn in input_filenames:
@@ -98,15 +94,9 @@ def load_compound_arrays_into_dataset(input_filenames,
     return ds
 
 
-def load_compound_arrays_into_group(input_filenames,
-                                    group_name,
-                                    parent_group,
-                                    chunk_size,
-                                    chunk_width,
-                                    compression,
-                                    compression_opts,
-                                    shuffle,
-                                    fletcher32,
+def load_compound_arrays_into_group(input_filenames, group_name, parent_group,
+                                    chunk_size, chunk_width, compression,
+                                    compression_opts, shuffle, fletcher32,
                                     scaleoffset):
 
     a = np.load(input_filenames[0])
@@ -150,18 +140,10 @@ def load_compound_arrays_into_group(input_filenames,
             'fletcher32', fletcher32,
             'scaleoffset', scaleoffset
         )
-        grp.create_dataset(
-            f,
-            shape=shape,
-            dtype=a[f].dtype,
-            chunks=chunks,
-            maxshape=maxshape,
-            compression=compression,
-            compression_opts=compression_opts,
-            shuffle=shuffle,
-            fletcher32=fletcher32,
-            scaleoffset=scaleoffset
-        )
+        grp.create_dataset(f, shape=shape, dtype=a[f].dtype, chunks=chunks,
+                           maxshape=maxshape, compression=compression,
+                           compression_opts=compression_opts, shuffle=shuffle,
+                           fletcher32=fletcher32, scaleoffset=scaleoffset)
 
     log(group_name, 'load data')
     for fn in input_filenames:
@@ -178,20 +160,12 @@ def load_compound_arrays_into_group(input_filenames,
     return grp
 
 
-def load_hdf5(input_dir,
-              output_filename,
-              input_filename_template='{array_type}*.npy',
-              vcf_filename=None,
-              variants_only=False,
-              tabulate_variants=False,
-              parent_group_name='/',
-              chunk_size=100000,
-              chunk_width=10,
-              compression=None,
-              compression_opts=None,
-              shuffle=False,
-              fletcher32=False,
-              scaleoffset=None):
+def load_hdf5(input_dir, output_filename,
+              input_filename_template='{array_type}*.npy', vcf_filename=None,
+              variants_only=False, tabulate_variants=False,
+              parent_group_name='/', chunk_size=100000, chunk_width=10,
+              compression=None, compression_opts=None, shuffle=False,
+              fletcher32=False, scaleoffset=None):
 
     # guard conditions
     assert input_dir is not None and os.path.exists(input_dir)
@@ -212,7 +186,7 @@ def load_hdf5(input_dir,
             vcf = vcflib.PyVariantCallFile(vcf_filename)
             if 'samples' in parent_group:
                 del parent_group['samples']
-            samples = np.array(vcf.sampleNames)
+            samples = np.array(_b(vcf.sample_names))
             parent_group.create_dataset('samples', data=samples)
         else:
             log('no VCF file provided, skipping metadata storage')
@@ -225,28 +199,26 @@ def load_hdf5(input_dir,
 
         if tabulate_variants:
             log('variants use dataset layout')
-            variants = load_compound_arrays_into_dataset(
-                variants_input_filenames, 'variants', parent_group,
-                chunk_size=chunk_size,
-                chunk_width=chunk_width,
-                compression=compression,
-                compression_opts=compression_opts,
-                shuffle=shuffle,
-                fletcher32=fletcher32,
-                scaleoffset=scaleoffset
-            )
+            load_compound_arrays_into_dataset(variants_input_filenames,
+                                              'variants', parent_group,
+                                              chunk_size=chunk_size,
+                                              chunk_width=chunk_width,
+                                              compression=compression,
+                                              compression_opts=compression_opts,
+                                              shuffle=shuffle,
+                                              fletcher32=fletcher32,
+                                              scaleoffset=scaleoffset)
         else:
             log('variants use group layout')
-            variants = load_compound_arrays_into_group(
-                variants_input_filenames, 'variants', parent_group,
-                chunk_size=chunk_size,
-                chunk_width=chunk_width,
-                compression=compression,
-                compression_opts=compression_opts,
-                shuffle=shuffle,
-                fletcher32=fletcher32,
-                scaleoffset=scaleoffset
-            )
+            load_compound_arrays_into_group(variants_input_filenames,
+                                            'variants', parent_group,
+                                            chunk_size=chunk_size,
+                                            chunk_width=chunk_width,
+                                            compression=compression,
+                                            compression_opts=compression_opts,
+                                            shuffle=shuffle,
+                                            fletcher32=fletcher32,
+                                            scaleoffset=scaleoffset)
 
         if not variants_only:
 
@@ -266,7 +238,7 @@ def load_hdf5(input_dir,
                 % (nvf, nc2df)
             )
 
-            calldata = load_compound_arrays_into_group(
+            load_compound_arrays_into_group(
                 calldata_input_filenames, 'calldata', parent_group,
                 chunk_size=chunk_size,
                 chunk_width=chunk_width,
@@ -283,7 +255,9 @@ def load_hdf5(input_dir,
 def main():
 
     # handle command line args
-    parser = argparse.ArgumentParser()
+    pyv = '.'.join(map(str, sys.version_info[:3]))
+    epilog = "Version: vcfnp %s (Python %s)" % (vcfnp.__version__, pyv)
+    parser = argparse.ArgumentParser(epilog=epilog)
     parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='VCF', default=None,
                         help='VCF file to extract metadata from')
@@ -348,19 +322,13 @@ def main():
     compression = args.compression
     compression_opts = args.compression_opts if compression == 'gzip' else None
 
-    load_hdf5(input_dir=args.input_dir,
-              output_filename=args.output_filename,
+    load_hdf5(input_dir=args.input_dir, output_filename=args.output_filename,
               input_filename_template=args.input_filename_template,
-              vcf_filename=args.vcf_filename,
-              parent_group_name=args.group,
-              chunk_size=args.chunk_size,
-              chunk_width=args.chunk_width,
-              compression=compression,
-              compression_opts=compression_opts,
-              shuffle=args.shuffle,
-              fletcher32=args.fletcher32,
-              scaleoffset=args.scaleoffset,
-              variants_only=args.variants_only,
+              vcf_filename=args.vcf_filename, parent_group_name=args.group,
+              chunk_size=args.chunk_size, chunk_width=args.chunk_width,
+              compression=compression, compression_opts=compression_opts,
+              shuffle=args.shuffle, fletcher32=args.fletcher32,
+              scaleoffset=args.scaleoffset, variants_only=args.variants_only,
               tabulate_variants=args.tabulate_variants)
 
 

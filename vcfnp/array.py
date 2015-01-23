@@ -17,165 +17,21 @@ import numpy as np
 
 
 # internal dependencies
-from vcfnp.vcflib import PyVariantCallFile, FIELD_BOOL, FIELD_FLOAT, \
-    FIELD_INTEGER, FIELD_STRING, FIELD_UNKNOWN, ALLELE_NUMBER
+from vcfnp.vcflib import PyVariantCallFile, TYPE_STRING, NUMBER_ALLELE, \
+    NUMBER_GENOTYPE
 from vcfnp.compat import string_types
-from vcfnp.array_ext import itervariants
+from vcfnp.iter import itervariants, itercalldata
+import vcfnp.config as config
 
 
 logger = logging.getLogger(__name__)
-debug = lambda msg: logger.debug('%s: %s' % (inspect.stack()[0][3], msg))
-
-
-# default configuration
-CACHEDIR_SUFFIX = '.vcfnp_cache'
-
-# these are the standard fields in the variants array
-STANDARD_VARIANT_FIELDS = (
-    'CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER',
-    'num_alleles', 'is_snp', 'svlen'
-)
-
-
-TYPESTRING2KEY = {
-    'Float': FIELD_FLOAT,
-    'Integer': FIELD_INTEGER,
-    'String': FIELD_STRING,
-    'Flag': FIELD_BOOL,
-}
-
-
-# default dtypes for the variants array fields
-DEFAULT_VARIANT_DTYPE = {
-    'CHROM': 'a12',
-    'POS': 'i4',
-    'ID': 'a12',
-    'REF': 'a12',
-    'ALT': 'a12',
-    'QUAL': 'f4',
-    'num_alleles': 'u1',
-    'is_snp': 'b1',
-    'svlen': 'i4',
-}
-
-
-# default arities for the variants array fields
-DEFAULT_VARIANT_ARITY = {
-    'CHROM': 1,
-    'POS': 1,
-    'ID': 1,
-    'REF': 1,
-    'ALT': 1,  # default assume biallelic (1 alt allele)
-    'QUAL': 1,
-    'num_alleles': 1,
-    'is_snp': 1,
-    'svlen': 1,  # default assume biallelic
-}
-
-
-# default fill values for the variants fields if values are missing
-DEFAULT_VARIANT_FILL = {
-    'CHROM': '',
-    'POS': 0,
-    'ID': '',
-    'REF': '',
-    'ALT': '',
-    'QUAL': 0,
-    'num_alleles': 0,
-    'is_snp': False,
-    'svlen': 0,
-}
-
-
-# default mapping from VCF field types to numpy dtypes
-DEFAULT_TYPE_MAP = {
-    FIELD_FLOAT: 'f4',
-    FIELD_INTEGER: 'i4',
-    FIELD_STRING: 'a12',
-    FIELD_BOOL: 'b1',
-    FIELD_UNKNOWN: 'a12'  # leave as string
-}
-
-
-# default mapping from VCF field types to fill values for missing values
-DEFAULT_FILL_MAP = {
-    FIELD_FLOAT: 0.,
-    FIELD_INTEGER: 0,
-    FIELD_STRING: '',
-    FIELD_BOOL: False,
-    FIELD_UNKNOWN: ''
-}
-
-
-# default dtypes for some known INFO fields where lower precision is
-# acceptable in most cases
-DEFAULT_INFO_DTYPE = {
-    'ABHet': 'f2',
-    'ABHom': 'f2',
-    'AC': 'u2',
-    'AF': 'f2',
-    'AN': 'u2',
-    'BaseQRankSum': 'f2',
-    'ClippingRankSum': 'f2',
-    'Dels': 'f2',
-    'FS': 'f2',
-    'HRun': 'u1',
-    'HaplotypeScore': 'f2',
-    'InbreedingCoeff': 'f2',
-    'VariantType': 'a12',
-    'MLEAC': 'u2',
-    'MLEAF': 'f2',
-    'MQ': 'f2',
-    'MQ0Fraction': 'f2',
-    'MQRankSum': 'f2',
-    'OND': 'f2',
-    'QD': 'f2',
-    'RPA': 'u2',
-    'RU': 'a12',
-    'ReadPosRankSum': 'f2',
-}
-
-
-DEFAULT_TRANSFORMER = dict()
-
-
-STANDARD_CALLDATA_FIELDS = ('is_called', 'is_phased', 'genotype')
-
-
-DEFAULT_CALLDATA_DTYPE = {
-    'is_called': 'b1',
-    'is_phased': 'b1',
-    'genotype': 'i1',
-    # set some lower precision defaults for known FORMAT fields
-    'AD': 'u2',
-    'DP': 'u2',
-    'GQ': 'u1',
-    'MLPSAC': 'u1',
-    'MLPSAF': 'f2',
-    'MQ0': 'u2',
-    'PL': 'u2',
-}
-
-
-DEFAULT_CALLDATA_FILL = {
-    'is_called': False,
-    'is_phased': False,
-    'genotype': -1,
-}
-
-
-DEFAULT_CALLDATA_ARITY = {
-    'is_called': 1,
-    'is_phased': 1,
-    # N.B., set genotype arity to ploidy
-    'AD': 2,  # default to biallelic
-}
+debug = lambda msg: logger.debug('%s: %s' % (inspect.stack()[1][3], msg))
 
 
 def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
              arities=None, fills=None, transformers=None, vcf_types=None,
              count=None, progress=0, logstream=None, condition=None,
-             slice_args=None, flatten_filter=False, verbose=True, cache=True,
+             slice_args=None, flatten_filter=False, verbose=True, cache=False,
              cachedir=None, skip_cached=False):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
@@ -277,7 +133,7 @@ class _ArrayLoader(object):
     # to be overridden in subclass
     array_type = None
 
-    def __init__(self, vcf_fn, logstream, verbose, **kwargs):
+    def __init__(self, vcf_fn, logstream=None, verbose=True, **kwargs):
         debug('init')
         self.vcf_fn = vcf_fn
         # deal with polymorphic vcf_fn argument
@@ -373,7 +229,7 @@ def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
     file name (where the original data came from) and other parameters."""
     if cachedir is None:
         # use the VCF file name as the base for a directory name
-        cachedir = vcf_fn + CACHEDIR_SUFFIX
+        cachedir = vcf_fn + config.CACHEDIR_SUFFIX
     if not os.path.exists(cachedir):
         # ensure cache dir exists
         os.makedirs(cachedir)
@@ -450,19 +306,20 @@ class _VariantsLoader(_ArrayLoader):
         fields = _variants_fields(self.fields, self.exclude_fields, info_ids)
 
         # determine whether we need to parse the INFO field at all
-        parse_info = any([f not in STANDARD_VARIANT_FIELDS for f in fields])
+        parse_info = any([f not in config.STANDARD_VARIANT_FIELDS
+                          for f in fields])
 
         # support for working around VCFs with bad INFO headers
         vcf_types = self.vcf_types
         for f in fields:
-            if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
+            if f not in config.STANDARD_VARIANT_FIELDS and f not in info_ids:
                 # fall back to unary string; can be overridden with
                 # vcf_types, dtypes and arities args
-                info_types[f] = FIELD_STRING
+                info_types[f] = TYPE_STRING
                 info_counts[f] = 1
             if vcf_types is not None and f in vcf_types:
                 # override type declared in VCF header
-                info_types[f] = TYPESTRING2KEY[vcf_types[f]]
+                info_types[f] = config.TYPESTRING2KEY[vcf_types[f]]
 
         # convert to tuples for convenience
         info_types = tuple(info_types[f] if f in info_types else -1
@@ -488,6 +345,8 @@ class _VariantsLoader(_ArrayLoader):
         # set up iterator
         region = self.region
         condition = self.condition
+        if condition is not None:
+            condition = np.asarray(condition).astype('uint8')
         it = itervariants(vcf_fns, region=region, fields=fields,
                           arities=arities, fills=fills,
                           info_types=info_types, transformers=transformers,
@@ -520,12 +379,12 @@ def _variants_fields(fields, exclude_fields, info_ids):
     if fields is None:
         # no fields specified by user
         # by default extract all standard and INFO fields
-        fields = STANDARD_VARIANT_FIELDS + info_ids
+        fields = config.STANDARD_VARIANT_FIELDS + info_ids
     else:
         # fields have been specified
         for f in fields:
             # check for non-standard fields not declared in INFO header
-            if f not in STANDARD_VARIANT_FIELDS and f not in info_ids:
+            if f not in config.STANDARD_VARIANT_FIELDS and f not in info_ids:
                 # support extracting INFO even if not declared in header,
                 # but warn...
                 print('WARNING: no INFO definition found for field %s' % f,
@@ -547,9 +406,9 @@ def _variants_arities(fields, arities, info_counts):
             arities[f] = 1  # force one value for the FILTER field
         elif f not in arities:
             # arity not specified by user
-            if f in STANDARD_VARIANT_FIELDS:
-                arities[f] = DEFAULT_VARIANT_ARITY[f]
-            elif vcf_count == ALLELE_NUMBER:
+            if f in config.STANDARD_VARIANT_FIELDS:
+                arities[f] = config.DEFAULT_VARIANT_ARITY[f]
+            elif vcf_count == NUMBER_ALLELE:
                 # default to 1 (biallelic)
                 arities[f] = 1
             elif vcf_count <= 0:
@@ -573,10 +432,10 @@ def _variants_fills(fields, fills, info_types):
         if f == 'FILTER':
             fills[f] = False
         elif f not in fills:
-            if f in STANDARD_VARIANT_FIELDS:
-                fills[f] = DEFAULT_VARIANT_FILL[f]
+            if f in config.STANDARD_VARIANT_FIELDS:
+                fills[f] = config.DEFAULT_VARIANT_FILL[f]
             else:
-                fills[f] = DEFAULT_FILL_MAP[vcf_type]
+                fills[f] = config.DEFAULT_FILL_MAP[vcf_type]
     # convert to tuple for zipping with fields
     fills = tuple(fills[f] for f in fields)
     return fills
@@ -590,7 +449,7 @@ def _info_transformers(fields, transformers):
         transformers = dict()
     for f in fields:
         if f not in transformers:
-            transformers[f] = DEFAULT_TRANSFORMER.get(f, None)
+            transformers[f] = config.DEFAULT_TRANSFORMER.get(f, None)
     return tuple(transformers[f] for f in fields)
 
 
@@ -613,13 +472,13 @@ def _variants_dtype(fields, dtypes, arities, filter_ids, flatten_filter,
             if dtypes is not None and f in dtypes:
                 # user overrides default dtype
                 t = dtypes[f]
-            elif f in STANDARD_VARIANT_FIELDS:
-                t = DEFAULT_VARIANT_DTYPE[f]
-            elif f in DEFAULT_INFO_DTYPE:
+            elif f in config.STANDARD_VARIANT_FIELDS:
+                t = config.DEFAULT_VARIANT_DTYPE[f]
+            elif f in config.DEFAULT_INFO_DTYPE:
                 # known INFO field
-                t = DEFAULT_INFO_DTYPE[f]
+                t = config.DEFAULT_INFO_DTYPE[f]
             else:
-                t = DEFAULT_TYPE_MAP[vcf_type]
+                t = config.DEFAULT_TYPE_MAP[vcf_type]
             # deal with arity
             if n == 1:
                 dtype.append((f, t))
@@ -656,3 +515,498 @@ def _iter_withprogress(iterable, progress, log):
     after_all = time.time()
     log('%s rows in %.2fs (%d rows/s)'
         % (n, after_all-before_all, n/(after_all-before_all)))
+
+
+def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
+             exclude_fields=None, dtypes=None, arities=None, fills=None,
+             vcf_types=None, count=None, progress=0, logstream=None,
+             condition=None, slice_args=None, verbose=False, cache=False,
+             cachedir=None, skip_cached=False):
+    """
+    Load a numpy 1-dimensional structured array with data from the sample
+    columns of a VCF file.
+
+    Parameters
+    ----------
+
+    vcf_fn: string or list
+        Name of the VCF file or list of file names.
+    region: string
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'.
+    fields: list or array-like
+        List of fields to extract from the VCF.
+    exclude_fields: list or array-like
+        Fields to exclude from extraction.
+    dtypes: dict or dict-like
+        Dictionary cotaining dtypes to use instead of the default inferred ones
+    arities: dict or dict-like
+        Override the amount of values to expect.
+    fills: dict or dict-like
+        Dictionary containing field:fillvalue mappings used to override the
+        default fill in values in VCF fields.
+    vcf_types: dict or dict-like
+        Dictionary containing field:string mappings used to override any
+        bogus type declarations in the VCF header.
+    count: int
+        Attempt to extract a specific number of records.
+    progress: int
+        If greater than 0, log parsing progress.
+    logstream: file or file-like object
+        Stream to use for logging progress.
+    condition: array
+        Boolean array defining which rows to load.
+    slice_args: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every
+        10th row from the first 1000.
+    verbose: bool
+        Log more messages.
+    cache: bool
+        If True, save the resulting numpy array to disk, and load from the
+        cache if present rather than rebuilding from the VCF.
+    cachedir: string
+        Manually specify the directory to use to store cache files.
+    skip_cached: bool
+        If True and cache file is fresh, do not load and return None.
+
+    Examples
+    --------
+
+        >>> from vcfnp import calldata, view2d
+        >>> C = calldata('fixture/sample.vcf')
+        >>> C
+        array([ ((True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, False, [0, 1], 0, 0, '0/1', [3, 3])),
+               ((True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, False, [0, 1], 0, 0, '0/1', [3, 3])),
+               ((True, True, [0, 0], 1, 48, '0|0', [51, 51]), (True, True, [1, 0], 8, 48, '1|0', [51, 51]), (True, False, [1, 1], 5, 43, '1/1', [0, 0])),
+               ((True, True, [0, 0], 3, 49, '0|0', [58, 50]), (True, True, [0, 1], 5, 3, '0|1', [65, 3]), (True, False, [0, 0], 3, 41, '0/0', [0, 0])),
+               ((True, True, [1, 2], 6, 21, '1|2', [23, 27]), (True, True, [2, 1], 0, 2, '2|1', [18, 2]), (True, False, [2, 2], 4, 35, '2/2', [0, 0])),
+               ((True, True, [0, 0], 0, 54, '0|0', [56, 60]), (True, True, [0, 0], 4, 48, '0|0', [51, 51]), (True, False, [0, 0], 2, 61, '0/0', [0, 0])),
+               ((True, False, [0, 1], 4, 0, '0/1', [0, 0]), (True, False, [0, 2], 2, 17, '0/2', [0, 0]), (False, False, [-1, -1], 3, 40, './.', [0, 0])),
+               ((True, False, [0, 0], 0, 0, '0/0', [0, 0]), (True, True, [0, 0], 0, 0, '0|0', [0, 0]), (False, False, [-1, -1], 0, 0, './.', [0, 0])),
+               ((True, False, [0, -1], 0, 0, '0', [0, 0]), (True, False, [0, 1], 0, 0, '0/1', [0, 0]), (True, True, [0, 2], 0, 0, '0|2', [0, 0]))],
+              dtype=[('NA00001', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])])
+        >>> C['NA00001']
+        array([(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
+               (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
+               (True, True, [0, 0], 1, 48, '0|0', [51, 51]),
+               (True, True, [0, 0], 3, 49, '0|0', [58, 50]),
+               (True, True, [1, 2], 6, 21, '1|2', [23, 27]),
+               (True, True, [0, 0], 0, 54, '0|0', [56, 60]),
+               (True, False, [0, 1], 4, 0, '0/1', [0, 0]),
+               (True, False, [0, 0], 0, 0, '0/0', [0, 0]),
+               (True, False, [0, -1], 0, 0, '0', [0, 0])],
+              dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
+        >>> C2d = view2d(C)
+        >>> C2d
+        array([[(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
+                (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
+                (True, False, [0, 1], 0, 0, '0/1', [3, 3])],
+               [(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
+                (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
+                (True, False, [0, 1], 0, 0, '0/1', [3, 3])],
+               [(True, True, [0, 0], 1, 48, '0|0', [51, 51]),
+                (True, True, [1, 0], 8, 48, '1|0', [51, 51]),
+                (True, False, [1, 1], 5, 43, '1/1', [0, 0])],
+               [(True, True, [0, 0], 3, 49, '0|0', [58, 50]),
+                (True, True, [0, 1], 5, 3, '0|1', [65, 3]),
+                (True, False, [0, 0], 3, 41, '0/0', [0, 0])],
+               [(True, True, [1, 2], 6, 21, '1|2', [23, 27]),
+                (True, True, [2, 1], 0, 2, '2|1', [18, 2]),
+                (True, False, [2, 2], 4, 35, '2/2', [0, 0])],
+               [(True, True, [0, 0], 0, 54, '0|0', [56, 60]),
+                (True, True, [0, 0], 4, 48, '0|0', [51, 51]),
+                (True, False, [0, 0], 2, 61, '0/0', [0, 0])],
+               [(True, False, [0, 1], 4, 0, '0/1', [0, 0]),
+                (True, False, [0, 2], 2, 17, '0/2', [0, 0]),
+                (False, False, [-1, -1], 3, 40, './.', [0, 0])],
+               [(True, False, [0, 0], 0, 0, '0/0', [0, 0]),
+                (True, True, [0, 0], 0, 0, '0|0', [0, 0]),
+                (False, False, [-1, -1], 0, 0, './.', [0, 0])],
+               [(True, False, [0, -1], 0, 0, '0', [0, 0]),
+                (True, False, [0, 1], 0, 0, '0/1', [0, 0]),
+                (True, True, [0, 2], 0, 0, '0|2', [0, 0])]],
+              dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
+        >>> C2d['genotype']
+        array([[[ 0,  0],
+                [ 0,  0],
+                [ 0,  1]],
+
+               [[ 0,  0],
+                [ 0,  0],
+                [ 0,  1]],
+
+               [[ 0,  0],
+                [ 1,  0],
+                [ 1,  1]],
+
+               [[ 0,  0],
+                [ 0,  1],
+                [ 0,  0]],
+
+               [[ 1,  2],
+                [ 2,  1],
+                [ 2,  2]],
+
+               [[ 0,  0],
+                [ 0,  0],
+                [ 0,  0]],
+
+               [[ 0,  1],
+                [ 0,  2],
+                [-1, -1]],
+
+               [[ 0,  0],
+                [ 0,  0],
+                [-1, -1]],
+
+               [[ 0, -1],
+                [ 0,  1],
+                [ 0,  2]]], dtype=int8)
+        >>> C2d['genotype'][3, :]
+        array([[0, 0],
+               [0, 1],
+               [0, 0]], dtype=int8)
+
+    """
+
+    loader = _CalldataLoader(vcf_fn, region=region, samples=samples,
+                             ploidy=ploidy, fields=fields,
+                             exclude_fields=exclude_fields, dtypes=dtypes,
+                             arities=arities, fills=fills, vcf_types=vcf_types,
+                             count=count, progress=progress,
+                             logstream=logstream, condition=condition,
+                             slice_args=slice_args, verbose=verbose,
+                             cache=cache, cachedir=cachedir,
+                             skip_cached=skip_cached)
+    arr = loader.load()
+    return arr
+
+
+class _CalldataLoader(_ArrayLoader):
+
+    array_type = 'calldata'
+
+    def build(self):
+        log = self.log
+
+        # open VCF file to inspect header
+        vcf_fns = self.vcf_fns
+        vcf = PyVariantCallFile(vcf_fns[0])
+
+        # extract FORMAT definitions
+        _warn_duplicates(vcf.format_ids)
+        format_ids = tuple(sorted(set(vcf.format_ids)))
+        format_types = vcf.format_types
+        format_counts = vcf.format_counts
+
+        # extract sample IDs
+        all_samples = vcf.sample_names
+
+        # determine which samples to extract
+        samples = self.samples
+        if samples is None:
+            samples = all_samples
+        else:
+            # guard against unknown samples requested by user
+            for s in samples:
+                assert s in all_samples, 'unknown sample: %s' % s
+        samples = tuple(samples)
+        debug(samples)
+
+        # determine which fields to extract
+        fields = _calldata_fields(self.fields, self.exclude_fields, format_ids)
+
+        # support for working around VCFs with bad FORMAT headers
+        vcf_types = self.vcf_types
+        for f in fields:
+            if f not in config.STANDARD_CALLDATA_FIELDS and f not in format_ids:
+                # fall back to unary string; can be overridden with
+                # vcf_types, dtypes and arities args
+                format_types[f] = TYPE_STRING
+                format_counts[f] = 1
+            if vcf_types is not None and f in vcf_types:
+                # override type declared in VCF header
+                format_types[f] = config.TYPESTRING2KEY[vcf_types[f]]
+
+        # conveniences
+        format_types = tuple(format_types[f] if f in format_types else -1
+                             for f in fields)
+        format_counts = tuple(format_counts[f] if f in format_counts else -1
+                              for f in fields)
+
+        # determine expected number of values for each field
+        ploidy = self.ploidy
+        arities = _calldata_arities(fields, self.arities, format_counts, ploidy)
+
+        # determine fill values to use where number of values is less than
+        # expectation
+        fills = _calldata_fills(fields, self.fills, format_types, ploidy)
+
+        # construct a numpy dtype for structured array
+        dtype = _calldata_dtype(fields, self.dtypes, format_types, arities,
+                                samples, ploidy)
+
+        # set up iterator
+        condition = self.condition
+        if condition is not None:
+            condition = np.asarray(condition).astype('uint8')
+        region = self.region
+        it = itercalldata(vcf_fns=vcf_fns, region=region, samples=samples,
+                          ploidy=ploidy, fields=fields, arities=arities,
+                          fills=fills, format_types=format_types,
+                          condition=condition)
+
+        # slice iterator
+        slice_args = self.slice_args
+        if slice_args:
+            it = islice(it, *slice_args)
+
+        # build an array from the iterator
+        arr = _fromiter(it, dtype, self.count, self.progress, log)
+
+        return arr
+
+
+def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
+                exclude_fields=None, dtypes=None, arities=None, fills=None,
+                vcf_types=None, count=None, progress=0, logstream=None,
+                condition=None, slice_args=None, verbose=False, cache=False,
+                cachedir=None, skip_cached=False):
+    """
+    Load a numpy 2-dimensional structured array with data from the sample
+    columns of a VCF file. Convenience function, equivalent to calldata()
+    followed by view2d(), except that if caching is enabled, files will be
+    cached as 2D.
+
+    Parameters
+    ----------
+
+    vcf_fn: string or list
+        Name of the VCF file or list of file names.
+    region: string
+        Region to extract, e.g., 'chr1' or 'chr1:0-100000'.
+    fields: list or array-like
+        List of fields to extract from the VCF.
+    exclude_fields: list or array-like
+        Fields to exclude from extraction.
+    dtypes: dict or dict-like
+        Dictionary cotaining dtypes to use instead of the default inferred ones.
+    arities: dict or dict-like
+        Override the amount of values to expect
+    fills: dict or dict-like
+        Dictionary containing field:fillvalue mappings used to override the
+        default fill in values in VCF fields.
+    vcf_types: dict or dict-like
+        Dictionary containing field:string mappings used to override any
+        bogus type declarations in the VCF header.
+    count: int
+        Attempt to extract a specific number of records.
+    progress: int
+        If greater than 0, log parsing progress.
+    logstream: file or file-like object
+        Stream to use for logging progress.
+    condition: array
+        Boolean array defining which rows to load.
+    slice_args: tuple or list
+        Slice of the underlying iterator, e.g., (0, 1000, 10) takes every
+        10th row from the first 1000.
+    verbose: bool
+        Log more messages.
+    cache: bool
+        If True, save the resulting numpy array to disk, and load from the
+        cache if present rather than rebuilding from the VCF.
+    cachedir: string
+        Manually specify the directory to use to store cache files.
+    skip_cached: bool
+        If True and cache file is fresh, do not load and return None.
+
+    """
+
+    loader = _Calldata2DLoader(vcf_fn, region=region, samples=samples,
+                               ploidy=ploidy, fields=fields,
+                               exclude_fields=exclude_fields, dtypes=dtypes,
+                               arities=arities, fills=fills,
+                               vcf_types=vcf_types, count=count,
+                               progress=progress, logstream=logstream,
+                               condition=condition, slice_args=slice_args,
+                               verbose=verbose, cache=cache, cachedir=cachedir,
+                               skip_cached=skip_cached)
+    arr = loader.load()
+    return arr
+
+
+class _Calldata2DLoader(_CalldataLoader):
+
+    array_type = 'calldata_2d'
+
+    def build(self):
+        arr = super(_Calldata2DLoader, self).build()
+        return view2d(arr)
+
+
+def _calldata_fields(fields, exclude_fields, format_ids):
+    """Utility function to determine which calldata (i.e., FORMAT) fields to
+    extract."""
+    if fields is None:
+        # no fields specified by user
+        # default to all standard fields plus all FORMAT fields in VCF header
+        fields = config.STANDARD_CALLDATA_FIELDS + format_ids
+    else:
+        # fields specified by user
+        for f in fields:
+            # check if field is standard or defined in VCF header
+            if f not in config.STANDARD_CALLDATA_FIELDS and f not in format_ids:
+                # support extracting FORMAT even if not declared in header,
+                # but warn...
+                print('WARNING: no definition found for field %s' % f,
+                      file=sys.stderr)
+    # process exclusions
+    if exclude_fields is not None:
+        fields = [f for f in fields if f not in exclude_fields]
+    return tuple(fields)
+
+
+def _calldata_arities(fields, arities, format_counts, ploidy):
+    if arities is None:
+        arities = dict()
+    for f, vcf_count in zip(fields, format_counts):
+        if f not in arities:
+            if f == 'genotype':
+                arities[f] = ploidy
+            elif f in config.DEFAULT_CALLDATA_ARITY:
+                arities[f] = config.DEFAULT_CALLDATA_ARITY[f]
+            elif vcf_count == NUMBER_ALLELE:
+                # default to 2 (biallelic)
+                arities[f] = 2
+            elif vcf_count == NUMBER_GENOTYPE:
+                # arity = (n + p - 1) choose p (n is number of alleles; p is
+                # ploidy)
+                # default to biallelic (n = 2)
+                arities[f] = ploidy + 1
+            elif vcf_count <= 0:
+                # catch any other cases of non-specific arity
+                arities[f] = 1
+            else:
+                arities[f] = vcf_count
+    return tuple(arities[f] for f in fields)
+
+
+def _calldata_fills(fields, fills, format_types, ploidy):
+    if fills is None:
+        fills = dict()
+    for f, vcf_type in zip(fields, format_types):
+        if f not in fills:
+            if f == 'GT':
+                fills[f] = '/'.join(['.'] * ploidy)
+            elif f in config.DEFAULT_CALLDATA_FILL:
+                fills[f] = config.DEFAULT_CALLDATA_FILL[f]
+            else:
+                fills[f] = config.DEFAULT_FILL_MAP[vcf_type]
+    return tuple(fills[f] for f in fields)
+
+
+def _calldata_dtype(fields, dtypes, format_types, arities, samples, ploidy):
+
+    # construct a numpy dtype for structured array cells
+    cell_dtype = list()
+    for f, vcf_type, n in zip(fields, format_types, arities):
+        if dtypes is not None and f in dtypes:
+            t = dtypes[f]
+        elif f == 'GT':
+            t = 'a%d' % ((ploidy*2)-1)
+        elif f in config.DEFAULT_CALLDATA_DTYPE:
+            # known field
+            t = config.DEFAULT_CALLDATA_DTYPE[f]
+        else:
+            t = config.DEFAULT_TYPE_MAP[vcf_type]
+        if n == 1:
+            cell_dtype.append((f, t))
+        else:
+            cell_dtype.append((f, t, (n,)))
+
+    # construct a numpy dtype for structured array
+    dtype = [(s, cell_dtype) for s in samples]
+    return dtype
+
+
+def view2d(a):
+    """
+    Utility function to view a structured 1D array where all fields have a
+    uniform dtype (e.g., an array constructed by :func:calldata) as a 2D array.
+
+    Parameters
+    ----------
+
+    a: numpy array or array-like
+        The array to be viewed as 2D, must have a uniform dtype
+
+    Returns
+    -------
+
+    A 2D view of the array.
+
+    Examples
+    --------
+
+        >>> from vcfnp import calldata
+        >>> a = calldata('sample.vcf')
+        >>> a
+        array([ ((True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, False, [0, 1], '0/1', 0, 0, [3, 3])),
+               ((True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, False, [0, 1], '0/1', 0, 0, [3, 3])),
+               ((True, True, [0, 0], '0|0', 48, 1, [51, 51]), (True, True, [1, 0], '1|0', 48, 8, [51, 51]), (True, False, [1, 1], '1/1', 43, 5, [0, 0])),
+               ((True, True, [0, 0], '0|0', 49, 3, [58, 50]), (True, True, [0, 1], '0|1', 3, 5, [65, 3]), (True, False, [0, 0], '0/0', 41, 3, [0, 0])),
+               ((True, True, [1, 2], '1|2', 21, 6, [23, 27]), (True, True, [2, 1], '2|1', 2, 0, [18, 2]), (True, False, [2, 2], '2/2', 35, 4, [0, 0])),
+               ((True, True, [0, 0], '0|0', 54, 0, [56, 60]), (True, True, [0, 0], '0|0', 48, 4, [51, 51]), (True, False, [0, 0], '0/0', 61, 2, [0, 0])),
+               ((True, False, [0, 1], '0/1', 0, 4, [0, 0]), (True, False, [0, 2], '0/2', 17, 2, [0, 0]), (True, False, [1, 1], '1/1', 40, 3, [0, 0])),
+               ((True, False, [0, 0], '0/0', 0, 0, [0, 0]), (True, True, [0, 0], '0|0', 0, 0, [0, 0]), (False, False, [-1, -1], './.', 0, 0, [0, 0])),
+               ((True, False, [0, -1], '0', 0, 0, [0, 0]), (True, False, [0, 1], '0/1', 0, 0, [0, 0]), (True, True, [0, 2], '0|2', 0, 0, [0, 0]))],
+              dtype=[('NA00001', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])])
+        >>> from vcfnp import view2d
+        >>> b = view2d(a)
+        >>> b
+        array([[(True, True, [0, 0], '0|0', 0, 0, [10, 10]),
+                (True, True, [0, 0], '0|0', 0, 0, [10, 10]),
+                (True, False, [0, 1], '0/1', 0, 0, [3, 3])],
+               [(True, True, [0, 0], '0|0', 0, 0, [10, 10]),
+                (True, True, [0, 0], '0|0', 0, 0, [10, 10]),
+                (True, False, [0, 1], '0/1', 0, 0, [3, 3])],
+               [(True, True, [0, 0], '0|0', 48, 1, [51, 51]),
+                (True, True, [1, 0], '1|0', 48, 8, [51, 51]),
+                (True, False, [1, 1], '1/1', 43, 5, [0, 0])],
+               [(True, True, [0, 0], '0|0', 49, 3, [58, 50]),
+                (True, True, [0, 1], '0|1', 3, 5, [65, 3]),
+                (True, False, [0, 0], '0/0', 41, 3, [0, 0])],
+               [(True, True, [1, 2], '1|2', 21, 6, [23, 27]),
+                (True, True, [2, 1], '2|1', 2, 0, [18, 2]),
+                (True, False, [2, 2], '2/2', 35, 4, [0, 0])],
+               [(True, True, [0, 0], '0|0', 54, 0, [56, 60]),
+                (True, True, [0, 0], '0|0', 48, 4, [51, 51]),
+                (True, False, [0, 0], '0/0', 61, 2, [0, 0])],
+               [(True, False, [0, 1], '0/1', 0, 4, [0, 0]),
+                (True, False, [0, 2], '0/2', 17, 2, [0, 0]),
+                (True, False, [1, 1], '1/1', 40, 3, [0, 0])],
+               [(True, False, [0, 0], '0/0', 0, 0, [0, 0]),
+                (True, True, [0, 0], '0|0', 0, 0, [0, 0]),
+                (False, False, [-1, -1], './.', 0, 0, [0, 0])],
+               [(True, False, [0, -1], '0', 0, 0, [0, 0]),
+                (True, False, [0, 1], '0/1', 0, 0, [0, 0]),
+                (True, True, [0, 2], '0|2', 0, 0, [0, 0])]],
+              dtype=[('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])
+        >>> b['GT']
+        array([['0|0', '0|0', '0/1'],
+               ['0|0', '0|0', '0/1'],
+               ['0|0', '1|0', '1/1'],
+               ['0|0', '0|1', '0/0'],
+               ['1|2', '2|1', '2/2'],
+               ['0|0', '0|0', '0/0'],
+               ['0/1', '0/2', '1/1'],
+               ['0/0', '0|0', './.'],
+               ['0', '0/1', '0|2']],
+              dtype='|S3')
+
+    """
+
+    rows = a.size
+    cols = len(a.dtype)
+    dtype = a.dtype[0]
+    b = a.view(dtype).reshape(rows, cols)
+    return b
