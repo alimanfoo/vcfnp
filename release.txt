@@ -1,5 +1,5 @@
-sed -i -e 's/-SNAPSHOT//' vcfnp.pyx
-version=`grep __version__ vcfnp.pyx | sed -e "s/__version__[ ]=[ ]'\(.*\)'/\1/"`
+sed -i -e 's/.dev0//' vcfnp/__init__.py
+version=`grep __version__ vcfnp/__init__.py | sed -e "s/__version__[ ]=[ ]'\(.*\)'/\1/"`
 echo $version
 python setup.py build_ext --inplace
 nosetests
