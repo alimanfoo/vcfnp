@@ -3,3 +3,5 @@ cython
 numpy
 pyfasta
 h5py
+matplotlib
+ipython[all]
