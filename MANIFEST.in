@@ -3,3 +3,4 @@ include *.pyx
 include *.pxd
 include *.cpp
 recursive-include vcflib *
+recursive-include vcfnp *

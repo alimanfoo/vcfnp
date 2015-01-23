@@ -78,7 +78,7 @@ setup(
                  'Topic :: Software Development :: Libraries :: Python Modules'
                  ],
     package_dir={'': '.'},
-    packages=['vcfnp'],
+    packages=['vcfnp', 'vcfnp.test'],
     ext_modules=cythonize([
         compat_extension,
         vcflib_extension,
