@@ -30,6 +30,12 @@ EFF_DEFAULT_DTYPE = [
 ]
 
 
+# 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO'
+ANN_DEFAULT_DTYPE = [
+    ('Allele', 'a12'),
+    ('Annotation', 'a34'),
+]
+
 config.DEFAULT_INFO_DTYPE['EFF'] = EFF_DEFAULT_DTYPE
 config.DEFAULT_VARIANT_ARITY['EFF'] = 1
 
