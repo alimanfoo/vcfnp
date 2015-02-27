@@ -7,9 +7,8 @@ import numpy as np
 import logging
 
 
+import vcfnp
 from vcfnp.array import variants, calldata, calldata_2d
-import vcfnp.array
-import vcfnp.eff
 
 
 logger = logging.getLogger(__name__)
@@ -165,7 +164,7 @@ def test_override_vcf_types():
     assert_almost_equal(0.03, v['MQ0FractionTest'][2], )
 
 
-def test_variants_transformers():
+def test_variants_transformers_eff():
 
     def _test(v):
 
