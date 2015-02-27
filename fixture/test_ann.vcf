@@ -5,6 +5,5 @@
 ##INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
 2L	103	.	C	T	53.36	.	AC=4;ANN=T|intergenic_region|MODIFIER|AGAP004677|AGAP004677|intergenic_region|AGAP004677|||||||||
-2L	163	.	G	A	515.87	.	AC=38;ANN=A|intergenic_region|MODIFIER|AGAP004677|AGAP004677|intergenic_region|AGAP004677|||||||||
 2L	192	.	G	A	181.16	.	AC=8;
 2L	13513722	.	A	T	284.06	PASS	AC=1;ANN=T|missense_variant|MODERATE|AGAP005273|AGAP005273|transcript|AGAP005273-RA|VectorBase|1/4|n.17A>T|p.Asp6Val|17/4788|17/-1|6/-1||

@@ -30,17 +30,37 @@ EFF_DEFAULT_DTYPE = [
 ]
 
 
-# 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO'
 ANN_DEFAULT_DTYPE = [
     ('Allele', 'a12'),
     ('Annotation', 'a34'),
+    ('Annotation_Impact', 'a8'),
+    ('Gene_Name', 'a14'),
+    ('Gene_ID', 'a14'),
+    ('Feature_Type', 'a20'),
+    ('Feature_ID', 'a14'),
+    ('Transcript_BioType', 'a20'),
+    ('Rank', 'i1'),
+    ('HGVS_c', 'a12'),
+    ('HGVS_p', 'a14'),
+    ('cDNA_pos', 'i4'),
+    ('cDNA_length', 'i4'),
+    ('CDS_pos', 'i4'),
+    ('CDS_length', 'i4'),
+    ('AA_pos', 'i4'),
+    ('AA_length', 'i4'),
+    ('Distance', 'i4')
 ]
 
 config.DEFAULT_INFO_DTYPE['EFF'] = EFF_DEFAULT_DTYPE
 config.DEFAULT_VARIANT_ARITY['EFF'] = 1
+config.DEFAULT_INFO_DTYPE['ANN'] = ANN_DEFAULT_DTYPE
+config.DEFAULT_VARIANT_ARITY['ANN'] = 1
 
 
-EFF_DEFAULT_FILLS = (b'.', b'.', b'.', b'.', b'.', -1, b'.', b'.', -1, b'.', -1)
+EFF_DEFAULT_FILLS = (b'.', b'.', b'.', b'.', b'.', -1, b'.', b'.', -1, b'.',
+                     -1)
+ANN_DEFAULT_FILLS = (b'.', b'.', b'.', b'.', b'.', b'.', b'.', b'.', -1, b'.',
+                     b'.', -1, -1, -1, -1, -1, -1, -1)
 
 
 _prog_eff_main = re.compile(b'([^(]+)\(([^)]+)\)')
@@ -71,22 +91,46 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
     return _transformer
 
 
+def ann_default_transformer(fills=ANN_DEFAULT_FILLS):
+    """
+    Return a simple transformer function for parsing ANN annotations. N.B.,
+    ignores all but the first effect.
+
+    """
+    def _transformer(vals):
+        if len(vals) == 0:
+            return fills
+        else:
+            # ignore all but first effect
+            print(vals[0])
+            ann = vals[0].split(b'|')
+            print(ann)
+
+            def split2(b):
+                x, _, y = b.partition(b'/')
+                return [x, y]
+            ann = ann[:11] + split2(ann[11]) + split2(ann[12]) + \
+                split2(ann[13]) + ann[14:]
+            print(len(ann), ann)
+            result = tuple(
+                fill if v == b''
+                else int(v.partition(b'/')[0]) if i == 8
+                else int(v) if 11 <= i < 18
+                else v
+                for i, (v, fill) in enumerate(list(zip(ann, fills))[:18])
+            )
+            print(len(result), result)
+            return result
+    return _transformer
+
+
 config.DEFAULT_TRANSFORMER['EFF'] = eff_default_transformer()
+config.DEFAULT_TRANSFORMER['ANN'] = ann_default_transformer()
 
 
-EFF_FIELDS = (
-    'Effect',
-    'Effect_Impact',
-    'Functional_Class',
-    'Codon_Change',
-    'Amino_Acid_Change',
-    'Amino_Acid_Length',
-    'Gene_Name',
-    'Transcript_BioType',
-    'Gene_Coding',
-    'Transcript_ID',
-    'Exon',
-)
+EFF_FIELDS = tuple(n for n, _ in EFF_DEFAULT_DTYPE)
+# noinspection PyRedeclaration
+ANN_FIELDS = tuple(n for n, _ in ANN_DEFAULT_DTYPE)
 
 
 def flatten_eff(fill=b'.'):
@@ -103,4 +147,17 @@ def flatten_eff(fill=b'.'):
     return _flatten
 
 
+def flatten_ann(fill=b'.'):
+    def _flatten(vals):
+        if len(vals) == 0:
+            return [fill] * 18
+        else:
+            # ignore all but first effect
+            ann = vals[0].split(b'|')
+            ann = [fill if v == b'' else v for v in ann[:18]]
+            return ann
+    return _flatten
+
+
 config.DEFAULT_FLATTEN['EFF'] = (EFF_FIELDS, flatten_eff)
+config.DEFAULT_FLATTEN['ANN'] = (ANN_FIELDS, flatten_ann)

@@ -215,6 +215,78 @@ def test_variants_transformers_eff():
     _test(varr)
 
 
+def test_variants_transformers_ann():
+
+    def _test(v):
+
+        eq_(b'T', v['ANN']['Allele'][0])
+        eq_(b'intergenic_region', v['ANN']['Annotation'][0])
+        eq_(b'MODIFIER', v['ANN']['Annotation_Impact'][0])
+        eq_(b'AGAP004677', v['ANN']['Gene_Name'][0])
+        eq_(b'AGAP004677', v['ANN']['Gene_ID'][0])
+        eq_(b'intergenic_region', v['ANN']['Feature_Type'][0])
+        eq_(b'AGAP004677', v['ANN']['Feature_ID'][0])
+        eq_(b'.', v['ANN']['Transcript_BioType'][0])
+        eq_(-1, v['ANN']['Rank'][0])
+        eq_(b'.', v['ANN']['HGVS_c'][0])
+        eq_(b'.', v['ANN']['HGVS_p'][0])
+        eq_(-1, v['ANN']['cDNA_pos'][0])
+        eq_(-1, v['ANN']['cDNA_length'][0])
+        eq_(-1, v['ANN']['CDS_pos'][0])
+        eq_(-1, v['ANN']['CDS_length'][0])
+        eq_(-1, v['ANN']['AA_pos'][0])
+        eq_(-1, v['ANN']['AA_length'][0])
+        eq_(-1, v['ANN']['Distance'][0])
+
+        eq_(b'.', v['ANN']['Allele'][1])
+        eq_(b'.', v['ANN']['Annotation'][1])
+        eq_(b'.', v['ANN']['Annotation_Impact'][1])
+        eq_(b'.', v['ANN']['Gene_Name'][1])
+        eq_(b'.', v['ANN']['Gene_ID'][1])
+        eq_(b'.', v['ANN']['Feature_Type'][1])
+        eq_(b'.', v['ANN']['Feature_ID'][1])
+        eq_(b'.', v['ANN']['Transcript_BioType'][1])
+        eq_(-1, v['ANN']['Rank'][1])
+        eq_(b'.', v['ANN']['HGVS_c'][1])
+        eq_(b'.', v['ANN']['HGVS_p'][1])
+        eq_(-1, v['ANN']['cDNA_pos'][1])
+        eq_(-1, v['ANN']['cDNA_length'][1])
+        eq_(-1, v['ANN']['CDS_pos'][1])
+        eq_(-1, v['ANN']['CDS_length'][1])
+        eq_(-1, v['ANN']['AA_pos'][1])
+        eq_(-1, v['ANN']['AA_length'][1])
+        eq_(-1, v['ANN']['Distance'][1])
+
+        eq_(b'T', v['ANN']['Allele'][2])
+        eq_(b'missense_variant', v['ANN']['Annotation'][2])
+        eq_(b'MODERATE', v['ANN']['Annotation_Impact'][2])
+        eq_(b'AGAP005273', v['ANN']['Gene_Name'][2])
+        eq_(b'AGAP005273', v['ANN']['Gene_ID'][2])
+        eq_(b'transcript', v['ANN']['Feature_Type'][2])
+        eq_(b'AGAP005273-RA', v['ANN']['Feature_ID'][2])
+        eq_(b'VectorBase', v['ANN']['Transcript_BioType'][2])
+        eq_(1, v['ANN']['Rank'][2])
+        eq_(b'n.17A>T', v['ANN']['HGVS_c'][2])
+        eq_(b'p.Asp6Val', v['ANN']['HGVS_p'][2])
+        eq_(17, v['ANN']['cDNA_pos'][2])
+        eq_(4788, v['ANN']['cDNA_length'][2])
+        eq_(17, v['ANN']['CDS_pos'][2])
+        eq_(-1, v['ANN']['CDS_length'][2])
+        eq_(6, v['ANN']['AA_pos'][2])
+        eq_(-1, v['ANN']['AA_length'][2])
+        eq_(-1, v['ANN']['Distance'][2])
+
+    varr = variants('fixture/test_ann.vcf',
+                    dtypes={'ANN': vcfnp.eff.ANN_DEFAULT_DTYPE},
+                    arities={'ANN': 1},
+                    transformers={'ANN': vcfnp.eff.ann_default_transformer()})
+    _test(varr)
+
+    # test ANN is included in defaults
+    varr = variants('fixture/test_ann.vcf')
+    _test(varr)
+
+
 def test_svlen():
     # v = variants('fixture/test13.vcf').view(np.recarray)
     # assert hasattr(v, 'svlen')
