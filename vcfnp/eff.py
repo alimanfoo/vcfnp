@@ -91,6 +91,11 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
     return _transformer
 
 
+def _ann_split2(b):
+    x, _, y = b.partition(b'/')
+    return [x, y]
+
+
 def ann_default_transformer(fills=ANN_DEFAULT_FILLS):
     """
     Return a simple transformer function for parsing ANN annotations. N.B.,
@@ -105,12 +110,8 @@ def ann_default_transformer(fills=ANN_DEFAULT_FILLS):
             print(vals[0])
             ann = vals[0].split(b'|')
             print(ann)
-
-            def split2(b):
-                x, _, y = b.partition(b'/')
-                return [x, y]
-            ann = ann[:11] + split2(ann[11]) + split2(ann[12]) + \
-                split2(ann[13]) + ann[14:]
+            ann = ann[:11] + _ann_split2(ann[11]) + _ann_split2(ann[12]) + \
+                _ann_split2(ann[13]) + ann[14:]
             print(len(ann), ann)
             result = tuple(
                 fill if v == b''
@@ -154,6 +155,8 @@ def flatten_ann(fill=b'.'):
         else:
             # ignore all but first effect
             ann = vals[0].split(b'|')
+            ann = ann[:11] + _ann_split2(ann[11]) + _ann_split2(ann[12]) + \
+                _ann_split2(ann[13]) + ann[14:]
             ann = [fill if v == b'' else v for v in ann[:18]]
             return ann
     return _flatten
