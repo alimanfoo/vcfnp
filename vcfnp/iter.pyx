@@ -589,7 +589,7 @@ cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,
         elif field == FIELD_NAME_QUAL:
             out.append(variant.quality)
         elif field == FIELD_NAME_FILTER:
-            flt = variant.filter
+            flt = variant.filter    
             if flatten_filter:
                 out.extend(_mkfilterval(variant, filter_ids))
             elif flt == b'.':
