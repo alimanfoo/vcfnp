@@ -107,12 +107,9 @@ def ann_default_transformer(fills=ANN_DEFAULT_FILLS):
             return fills
         else:
             # ignore all but first effect
-            print(vals[0])
             ann = vals[0].split(b'|')
-            print(ann)
             ann = ann[:11] + _ann_split2(ann[11]) + _ann_split2(ann[12]) + \
                 _ann_split2(ann[13]) + ann[14:]
-            print(len(ann), ann)
             result = tuple(
                 fill if v == b''
                 else int(v.partition(b'/')[0]) if i == 8
@@ -120,7 +117,6 @@ def ann_default_transformer(fills=ANN_DEFAULT_FILLS):
                 else v
                 for i, (v, fill) in enumerate(list(zip(ann, fills))[:18])
             )
-            print(len(result), result)
             return result
     return _transformer
 

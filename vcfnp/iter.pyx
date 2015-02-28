@@ -504,7 +504,8 @@ cdef inline object _genotype(map[string, vector[string]]& sample_data,
         split(gts.at(0), GT_DELIMS, allele_strings)
         if ploidy == 1:
             if allele_strings.size() > 0:
-                if allele_strings.at(0) == DOT:
+                s = allele_strings.at(0)
+                if s == b'.':
                     return -1
                 else:
                     return atoi(allele_strings.at(0).c_str())
@@ -513,7 +514,8 @@ cdef inline object _genotype(map[string, vector[string]]& sample_data,
         else:
             for i in range(ploidy):
                 if i < allele_strings.size():
-                    if allele_strings.at(i) == DOT:
+                    s = allele_strings.at(i)
+                    if s == b'.':
                         alleles.push_back(-1)
                     else:
                         alleles.push_back(atoi(allele_strings.at(i).c_str()))
@@ -564,6 +566,7 @@ cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,
                               object fill, tuple flatteners):
     out = list()
     cdef string field
+    cdef string flt
     for field, arity, vcf_type, flattener in zip(fields, arities, info_types,
                                                  flatteners):
         if field == FIELD_NAME_CHROM:
@@ -586,12 +589,13 @@ cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,
         elif field == FIELD_NAME_QUAL:
             out.append(variant.quality)
         elif field == FIELD_NAME_FILTER:
+            flt = variant.filter
             if flatten_filter:
                 out.extend(_mkfilterval(variant, filter_ids))
-            elif variant.filter == DOT:
+            elif flt == b'.':
                 out.append(fill)
             else:
-                out.append(variant.filter)
+                out.append(flt)
         elif field == FIELD_NAME_NUM_ALLELES:
             out.append(variant.alt.size() + 1)
         elif field == FIELD_NAME_IS_SNP:
