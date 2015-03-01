@@ -7,13 +7,19 @@ import sys
 import argparse
 from datetime import datetime
 import subprocess
-import pyfasta
 
 
 def log(*msg):
     print('[vcf2npy] ' + str(datetime.now()) + ' :: ' + ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
+
+
+log(sys.executable)
+log(sys.version_info)
+
+
+import pyfasta
 
 
 def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,

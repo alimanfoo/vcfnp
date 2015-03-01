@@ -5,11 +5,6 @@ from __future__ import print_function, division, absolute_import
 import os
 import sys
 import argparse
-import numpy as np
-import h5py
-import vcfnp
-import vcfnp.vcflib as vcflib
-from vcfnp.compat import b as _b
 from glob import glob
 from datetime import datetime
 import operator
@@ -27,6 +22,20 @@ def log(*msg):
           + ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
+
+
+log(sys.executable)
+log(sys.version_info)
+
+
+import numpy as np
+log('numpy', np.__version__)
+import h5py
+log('h5py', h5py.__version__)
+import vcfnp
+log('vcfnp', vcfnp.__version__)
+import vcfnp.vcflib as vcflib
+from vcfnp.compat import b as _b
 
 
 def load_compound_arrays_into_dataset(input_filenames, dataset_name,

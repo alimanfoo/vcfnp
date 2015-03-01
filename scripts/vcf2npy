@@ -6,9 +6,6 @@ import os
 import sys
 import argparse
 from datetime import datetime
-import numpy as np
-import pyfasta
-import vcfnp
 
 
 def log(*msg):
@@ -18,6 +15,16 @@ def log(*msg):
           + ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
+
+
+log(sys.executable)
+log(sys.version_info)
+
+import numpy as np
+log('numpy', np.__version__)
+import pyfasta
+import vcfnp
+log('vcfnp', vcfnp.__version__)
 
 
 def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
