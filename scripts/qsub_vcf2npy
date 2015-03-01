@@ -40,7 +40,7 @@ def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
     if tasks is None:
         log(chromosome, 'determine tasks to run')
         chrom_size = len(genome[chromosome])
-        n_tasks = (chrom_size / task_size) + 1
+        n_tasks = (chrom_size // task_size) + 1
         tasks = '1-%s' % n_tasks
         log(tasks)
 
