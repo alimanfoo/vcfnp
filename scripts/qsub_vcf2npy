@@ -91,7 +91,10 @@ if __name__ == '__main__':
 
     # handle command line options
     parser = argparse.ArgumentParser(
+        add_help=False,
         epilog='Any other arguments are passed through to qsub.')
+    parser.add_argument("--help", action="help",
+                        help="show this help message and exit")
     parser.add_argument('--vcf', dest='vcf_filename', metavar='VCF',
                         default=None, help='input VCF file')
     parser.add_argument('--fasta', dest='fasta_filename', metavar='FASTA',
