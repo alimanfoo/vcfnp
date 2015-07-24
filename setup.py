@@ -3,6 +3,7 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 import os
 from ast import literal_eval
+import numpy as np
 
 
 def get_version(source='vcfnp/__init__.py'):
@@ -88,4 +89,5 @@ setup(
              'scripts/qsub_vcf2npy',
              'scripts/vcfnpy2hdf5',
              'scripts/vcf2csv'],
+    include_dirs=[np.get_include()]             
 )
