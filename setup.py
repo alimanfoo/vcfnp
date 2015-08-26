@@ -1,9 +1,20 @@
+from __future__ import print_function
 from distutils.core import setup
 from distutils.extension import Extension
-from Cython.Build import cythonize
 import os
 from ast import literal_eval
-import numpy as np
+
+try:
+    from Cython.Build import cythonize
+except ImportError:
+    print('Cython is required.')
+    raise
+
+try:
+    import numpy as np
+except ImportError:
+    print('Numpy is required.')
+    raise
 
 
 def get_version(source='vcfnp/__init__.py'):
