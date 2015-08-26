@@ -51,7 +51,7 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
     dtypes: dict or dict-like, optional
         Dictionary cotaining dtypes to use instead of the default inferred ones.
     arities: dict or dict-like, optional
-        Dictinoary containing field:integer mappings used to override the number
+        Dictionary containing field:integer mappings used to override the number
         of values to expect.
     fills: dict or dict-like, optional
         Dictionary containing field:fillvalue mappings used to override the
