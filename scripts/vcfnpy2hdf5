@@ -8,6 +8,11 @@ import argparse
 from glob import glob
 from datetime import datetime
 import operator
+import numpy as np
+import h5py
+import vcfnp
+import vcfnp.vcflib as vcflib
+from vcfnp.compat import b as _b
 
 
 PY2 = sys.version_info[0] == 2
@@ -22,20 +27,6 @@ def log(*msg):
           + ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
-
-
-log(sys.executable)
-log(sys.version_info)
-
-
-import numpy as np
-log('numpy', np.__version__)
-import h5py
-log('h5py', h5py.__version__)
-import vcfnp
-log('vcfnp', vcfnp.__version__)
-import vcfnp.vcflib as vcflib
-from vcfnp.compat import b as _b
 
 
 def load_compound_arrays_into_dataset(input_filenames, dataset_name,
@@ -70,7 +61,7 @@ def load_compound_arrays_into_dataset(input_filenames, dataset_name,
         raise Exception('unexpected number of dimensions: %r' % a)
 
     log(
-        dataset_name,
+        dataset_name, 'creating dataset',
         'dtype', a.dtype,
         'shape', shape,
         'maxshape', maxshape,
@@ -90,15 +81,16 @@ def load_compound_arrays_into_dataset(input_filenames, dataset_name,
                                      scaleoffset=scaleoffset)
 
     log(dataset_name, 'load data')
+    n = 0
     for fn in input_filenames:
         a = np.load(fn)
         if a.size > 0:
-            n = ds.shape[0]
             n_add = a.shape[0]
             n_new = n + n_add
             log(dataset_name, 'loading', n, n_new)
             ds.resize(n_new, axis=0)
             ds[n:n_new] = a
+            n = n_new
 
     return ds
 
@@ -137,7 +129,7 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group,
             raise Exception('unexpected number of dimensions: %r' % a[f])
 
         log(
-            group_name, f,
+            group_name, f, 'creating dataset',
             'dtype', a[f].dtype,
             'shape', shape,
             'maxshape', maxshape,
@@ -155,16 +147,17 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group,
                            fletcher32=fletcher32, scaleoffset=scaleoffset)
 
     log(group_name, 'load data')
+    n = 0
     for fn in input_filenames:
         a = np.load(fn)
         if a.size > 0:
+            n_add = a.shape[0]
+            n_new = n + n_add
+            log(group_name, 'loading', n, n_new)
             for f in a.dtype.names:
-                n = grp[f].shape[0]
-                n_add = a.shape[0]
-                n_new = n + n_add
-                log(group_name, f, 'loading', n, n_new)
                 grp[f].resize(n_new, axis=0)
                 grp[f][n:n_new, ...] = a[f]
+            n = n_new
 
     return grp
 
@@ -200,13 +193,25 @@ def load_hdf5(input_dir, output_filename,
         else:
             log('no VCF file provided, skipping metadata storage')
 
-        log('process variants')
+        # find input files
         variants_input_filenames = sorted(
             glob(input_path_template.format(array_type='variants'))
         )
-        log('variants found', len(variants_input_filenames), 'files to load')
+        calldata_input_filenames = sorted(
+            glob(input_path_template.format(array_type='calldata_2d'))
+        )
+        nvf = len(variants_input_filenames)
+        nc2df = len(calldata_input_filenames)
+        log('variants found', nvf, 'array files')
+        log('calldata found', nc2df, 'array files')
+
+        if not (calldata_only or variants_only):
+            assert nvf == nc2df, "number of files doesn't match"
 
         if not calldata_only:
+
+            log('process variants')
+
             if tabulate_variants:
                 log('variants use dataset layout')
                 load_compound_arrays_into_dataset(variants_input_filenames,
@@ -233,21 +238,6 @@ def load_hdf5(input_dir, output_filename,
         if not variants_only:
 
             log('process calldata')
-            calldata_input_filenames = sorted(
-                glob(input_path_template.format(array_type='calldata_2d'))
-            )
-            log('calldata found',
-                len(calldata_input_filenames),
-                'files to load')
-
-            if not calldata_only:
-                log('calldata check number of input files')
-                nvf = len(variants_input_filenames)
-                nc2df = len(calldata_input_filenames)
-                assert nvf == nc2df, (
-                    'bad number of calldata files, expected %s, found %s'
-                    % (nvf, nc2df)
-                )
 
             load_compound_arrays_into_group(
                 calldata_input_filenames, 'calldata', parent_group,
@@ -267,7 +257,8 @@ def main():
 
     # handle command line args
     pyv = '.'.join(map(str, sys.version_info[:3]))
-    epilog = "Version: vcfnp %s (Python %s)" % (vcfnp.__version__, pyv)
+    epilog = "Version: vcfnp %s (Python %s, NumPy %s, h5py %s)" % \
+             (vcfnp.__version__, pyv, np.__version__, h5py.__version__)
     parser = argparse.ArgumentParser(epilog=epilog)
     parser.add_argument('--vcf',
                         dest='vcf_filename', metavar='VCF', default=None,
@@ -344,7 +335,8 @@ def main():
               compression=compression, compression_opts=compression_opts,
               shuffle=args.shuffle, fletcher32=args.fletcher32,
               scaleoffset=args.scaleoffset, variants_only=args.variants_only,
-              calldata_only=args.calldata_only, tabulate_variants=args.tabulate_variants)
+              calldata_only=args.calldata_only,
+              tabulate_variants=args.tabulate_variants)
 
 
 if __name__ == '__main__':

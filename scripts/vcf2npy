@@ -6,6 +6,9 @@ import os
 import sys
 import argparse
 from datetime import datetime
+import numpy as np
+import pyfasta
+import vcfnp
 
 
 def log(*msg):
@@ -15,16 +18,6 @@ def log(*msg):
           + ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
-
-
-log(sys.executable)
-log(sys.version_info)
-
-import numpy as np
-log('numpy', np.__version__)
-import pyfasta
-import vcfnp
-log('vcfnp', vcfnp.__version__)
 
 
 def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
@@ -88,7 +81,8 @@ if __name__ == '__main__':
 
     # handle command line options
     pyv = '.'.join(map(str, sys.version_info[:3]))
-    epilog = "Version: vcfnp %s (Python %s)" % (vcfnp.__version__, pyv)
+    epilog = "Version: vcfnp %s (Python %s, NumPy %s)" % \
+             (vcfnp.__version__, pyv, np.__version__)
     parser = argparse.ArgumentParser(epilog=epilog)
     parser.add_argument('--vcf', dest='vcf_filename', metavar='FILE',
                         default=None, help='input VCF file')
