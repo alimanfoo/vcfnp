@@ -171,7 +171,7 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group,
 
 def load_hdf5(input_dir, output_filename,
               input_filename_template='{array_type}*.npy', vcf_filename=None,
-              variants_only=False, tabulate_variants=False,
+              variants_only=False, calldata_only=False, tabulate_variants=False,
               parent_group_name='/', chunk_size=100000, chunk_width=10,
               compression=None, compression_opts=None, shuffle=False,
               fletcher32=False, scaleoffset=None):
@@ -206,28 +206,29 @@ def load_hdf5(input_dir, output_filename,
         )
         log('variants found', len(variants_input_filenames), 'files to load')
 
-        if tabulate_variants:
-            log('variants use dataset layout')
-            load_compound_arrays_into_dataset(variants_input_filenames,
-                                              'variants', parent_group,
-                                              chunk_size=chunk_size,
-                                              chunk_width=chunk_width,
-                                              compression=compression,
-                                              compression_opts=compression_opts,
-                                              shuffle=shuffle,
-                                              fletcher32=fletcher32,
-                                              scaleoffset=scaleoffset)
-        else:
-            log('variants use group layout')
-            load_compound_arrays_into_group(variants_input_filenames,
-                                            'variants', parent_group,
-                                            chunk_size=chunk_size,
-                                            chunk_width=chunk_width,
-                                            compression=compression,
-                                            compression_opts=compression_opts,
-                                            shuffle=shuffle,
-                                            fletcher32=fletcher32,
-                                            scaleoffset=scaleoffset)
+        if not calldata_only:
+            if tabulate_variants:
+                log('variants use dataset layout')
+                load_compound_arrays_into_dataset(variants_input_filenames,
+                                                  'variants', parent_group,
+                                                  chunk_size=chunk_size,
+                                                  chunk_width=chunk_width,
+                                                  compression=compression,
+                                                  compression_opts=compression_opts,
+                                                  shuffle=shuffle,
+                                                  fletcher32=fletcher32,
+                                                  scaleoffset=scaleoffset)
+            else:
+                log('variants use group layout')
+                load_compound_arrays_into_group(variants_input_filenames,
+                                                'variants', parent_group,
+                                                chunk_size=chunk_size,
+                                                chunk_width=chunk_width,
+                                                compression=compression,
+                                                compression_opts=compression_opts,
+                                                shuffle=shuffle,
+                                                fletcher32=fletcher32,
+                                                scaleoffset=scaleoffset)
 
         if not variants_only:
 
@@ -239,13 +240,14 @@ def load_hdf5(input_dir, output_filename,
                 len(calldata_input_filenames),
                 'files to load')
 
-            log('calldata check number of input files')
-            nvf = len(variants_input_filenames)
-            nc2df = len(calldata_input_filenames)
-            assert nvf == nc2df, (
-                'bad number of calldata files, expected %s, found %s'
-                % (nvf, nc2df)
-            )
+            if not calldata_only:
+                log('calldata check number of input files')
+                nvf = len(variants_input_filenames)
+                nc2df = len(calldata_input_filenames)
+                assert nvf == nc2df, (
+                    'bad number of calldata files, expected %s, found %s'
+                    % (nvf, nc2df)
+                )
 
             load_compound_arrays_into_group(
                 calldata_input_filenames, 'calldata', parent_group,
@@ -319,6 +321,10 @@ def main():
                         dest='variants_only', action='store_true',
                         default=False,
                         help="load variants only, don't look for calldata")
+    parser.add_argument('--calldata-only',
+                        dest='calldata_only', action='store_true',
+                        default=False,
+                        help="load calldata only, don't look for variants")
     parser.add_argument('--tabulate-variants',
                         dest='tabulate_variants', action='store_true',
                         default=False,
@@ -338,7 +344,7 @@ def main():
               compression=compression, compression_opts=compression_opts,
               shuffle=args.shuffle, fletcher32=args.fletcher32,
               scaleoffset=args.scaleoffset, variants_only=args.variants_only,
-              tabulate_variants=args.tabulate_variants)
+              calldata_only=args.calldata_only, tabulate_variants=args.tabulate_variants)
 
 
 if __name__ == '__main__':
