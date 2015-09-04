@@ -58,12 +58,12 @@ cdef extern from "Variant.h" namespace "vcf":
         vector[string] infoIds()
         vector[string] formatIds()
         vector[string] filterIds()
-        bool open(string& filename) 
-        bool openFile(string& filename)
-        bool openTabix(string& filename)
+        bool open(string& filename) except +
+        bool openFile(string& filename) except +
+        bool openTabix(string& filename) except +
 #        bool open(istream& stream) 
 #        bool open(ifstream& stream) 
-        bool openForOutput(string& headerStr)
+        bool openForOutput(string& headerStr) except +
         bool is_open()
         bool eof()
         bool done()

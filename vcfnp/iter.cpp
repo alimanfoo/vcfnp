@@ -3041,7 +3041,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
  *         variant_file.parseInfo = parse_info
  */
     __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    try {
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    } catch(...) {
+      __Pyx_CppExn2PyErr();
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
 
     /* "vcfnp/iter.pyx":106
  *         variant_file.open(vcf_fn)
@@ -3488,7 +3493,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
  *         variant_file.parseSamples = False
  */
     __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    try {
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    } catch(...) {
+      __Pyx_CppExn2PyErr();
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
 
     /* "vcfnp/iter.pyx":138
  *         variant_file = new VariantCallFile()
@@ -7068,7 +7078,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
  *         variant_file.parseSamples = True
  */
     __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    try {
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    } catch(...) {
+      __Pyx_CppExn2PyErr();
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
 
     /* "vcfnp/iter.pyx":395
  *         variant_file = new VariantCallFile()
@@ -7505,7 +7520,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  *         variant_file.parseSamples = False
  */
     __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    try {
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+    } catch(...) {
+      __Pyx_CppExn2PyErr();
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
 
     /* "vcfnp/iter.pyx":421
  *         variant_file = new VariantCallFile()
@@ -9314,7 +9334,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  *         variant_file.parseSamples = False
  */
     __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_8);
+    try {
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_8);
+    } catch(...) {
+      __Pyx_CppExn2PyErr();
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
 
     /* "vcfnp/iter.pyx":547
  *         variant_file = new VariantCallFile()

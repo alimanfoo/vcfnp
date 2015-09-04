@@ -189,7 +189,9 @@ def _filenames_from_arg(filename):
         raise Exception('filename argument must be string, list or tuple')
     for fn in filenames:
         if not os.path.exists(fn):
-            raise Exception('file not found: %s' % fn)
+            raise ValueError('file not found: %s' % fn)
+        if not os.path.isfile(fn):
+            raise ValueError('not a file: %s' % fn)
     return filenames
 
 

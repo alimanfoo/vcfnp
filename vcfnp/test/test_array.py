@@ -2,7 +2,7 @@ from __future__ import print_function, division, absolute_import
 
 
 import os
-from nose.tools import eq_, assert_almost_equal
+from nose.tools import eq_, assert_almost_equal, assert_raises
 import numpy as np
 import logging
 
@@ -391,3 +391,21 @@ def test_caching_cachedir():
     a = calldata_2d(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
     a2 = np.load(cache_fn)
     assert np.all(a == a2)
+
+
+def test_error_handling():
+
+    # try to open a directory
+    vcf_fn = '.'
+    with assert_raises(ValueError):
+        a = vcfnp.variants(vcf_fn)
+
+    # try to open a file that doesn't exist
+    vcf_fn = 'doesnotexist'
+    with assert_raises(ValueError):
+        a = vcfnp.variants(vcf_fn)
+
+    # file is nothing like a VCF (has no header etc.)
+    vcf_fn = 'fixture/test48a.vcf'
+    with assert_raises(RuntimeError):
+        a = vcfnp.variants(vcf_fn)

@@ -1043,7 +1043,12 @@ static int __pyx_pf_5vcfnp_6vcflib_17PyVariantCallFile___cinit__(struct __pyx_ob
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = __pyx_convert_string_from_py_std__in_string(__pyx_t_2); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_self->thisptr->open(__pyx_t_3);
+  try {
+    __pyx_v_self->thisptr->open(__pyx_t_3);
+  } catch(...) {
+    __Pyx_CppExn2PyErr();
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
 
   /* "vcfnp/vcflib.pyx":27
  * cdef class PyVariantCallFile:
