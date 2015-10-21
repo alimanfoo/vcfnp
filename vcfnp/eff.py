@@ -78,6 +78,9 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
         else:
             # ignore all but first effect
             match_eff_main = _prog_eff_main.match(vals[0])
+            if match_eff_main is None:
+                logging.warning('match_eff_main is None: vals={}'.format(str(vals[0])))
+                return fills
             eff = [match_eff_main.group(1)] \
                   + match_eff_main.group(2).split(b'|')
             result = tuple(
