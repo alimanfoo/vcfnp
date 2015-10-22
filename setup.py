@@ -99,6 +99,8 @@ setup(
     scripts=['scripts/vcf2npy',
              'scripts/qsub_vcf2npy',
              'scripts/vcfnpy2hdf5',
-             'scripts/vcf2csv'],
+             'scripts/vcf2csv'
+             'scripts/vcf2hdf5_parallel'
+            ],
     include_dirs=[np.get_include()]             
 )
