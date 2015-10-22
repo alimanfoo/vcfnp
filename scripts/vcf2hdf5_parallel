@@ -329,6 +329,7 @@ def Main(argv=None):
                 '--input-dir', outdir,
                 '--input-filename-template', 
                         '{{array_type}}.{}*.npy'.format(chrom),
+                '--group', chrom,
                 '--output', hdf5_out_filename,
                 '--compression', args.compression,
                 '--compression-opts', args.compression_opts,
