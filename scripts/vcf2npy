@@ -21,7 +21,7 @@ def log(*msg):
 
 
 def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
-         task_size, task_index, exclude_fields, ploidy, dtypes, arities,
+         task_size, task_index, region, exclude_fields, ploidy, dtypes, arities,
          progress):
 
     assert vcf_filename is not None, 'missing VCF filename, try vcf2npy --help'
@@ -29,28 +29,36 @@ def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
     log('loading', array_type, 'from', vcf_filename)
 
     # determine region to extract
-    if chromosome is None:
-        log('extract whole genome')
-        region = None
-    elif task_size is None:
-        log('extract whole chromosome', chromosome)
-        region = chromosome
-    else:
-        log('extract a chromosome split', chromosome, task_size, task_index)
-        # N.B., make sure regions will work as sortable file names by
-        # left-padding with zeros
-        assert fasta_filename is not None, \
-            'missing FASTA filename, try vcf2npy --help'
-        assert os.path.exists(fasta_filename), 'FASTA file not found'
-        genome = pyfasta.Fasta(fasta_filename)
-        chrom_size = len(genome[chromosome])
-        n_fill = int(np.ceil(np.log10(chrom_size)))
-        start = range(0, chrom_size, task_size)[task_index]
-        startstr = str(start+1).zfill(n_fill)
-        stop = start + task_size
-        stopstr = str(stop).zfill(n_fill)
-        region = str(chromosome) + ':' + startstr + '-' + stopstr
+    if region is not None:
+        if( chromosome is not None or
+            task_index is not None or
+            task_size is not None ):
+            raise Exception('region is incompatibile with chromosome, '
+                            'task-index, and task-size arguments')
         log(region)
+    else:
+        if chromosome is None:
+            log('extract whole genome')
+            region = None
+        elif task_size is None:
+            log('extract whole chromosome', chromosome)
+            region = chromosome
+        else:
+            log('extract a chromosome split', chromosome, task_size, task_index)
+            # N.B., make sure regions will work as sortable file names by
+            # left-padding with zeros
+            assert fasta_filename is not None, \
+                'missing FASTA filename, try vcf2npy --help'
+            assert os.path.exists(fasta_filename), 'FASTA file not found'
+            genome = pyfasta.Fasta(fasta_filename)
+            chrom_size = len(genome[chromosome])
+            n_fill = int(np.ceil(np.log10(chrom_size)))
+            start = range(0, chrom_size, task_size)[task_index]
+            startstr = str(start+1).zfill(n_fill)
+            stop = start + task_size
+            stopstr = str(stop).zfill(n_fill)
+            region = str(chromosome) + ':' + startstr + '-' + stopstr
+            log(region)
 
     if array_type == 'variants':
         arr = vcfnp.variants(vcf_filename, region=region, progress=progress,
@@ -108,6 +116,12 @@ if __name__ == '__main__':
                         default=None,
                         help='task index as integer or string to get task '
                              'from environment variable (e.g., "SGE_TASK_ID")')
+    parser.add_argument('--region', default=None,
+                        help='region to extract '
+                             'in (chr:start-end | chr:start | chr) format '
+                             '(omit to extract whole genome) '
+                             'Note: not compatable with --chromosome, '
+                             '--task-size, or --task-index')
     parser.add_argument('--exclude-field', dest='exclude_fields',
                         metavar='FIELD', default=None, action='append',
                         help='field to exclude')
@@ -125,6 +139,14 @@ if __name__ == '__main__':
                         default=10000, type=int,
                         help='log progress every N rows')
     args = parser.parse_args()
+
+    # region or chromosome [[task-index] task-size]
+    if args.region is not None and (
+        args.chromosome is not None or
+        args.task_index is not None or
+        args.task_size is not None ):
+        raise Exception('--region is incompatibile with --chromosome, '
+                        '--task-index, and --task-size arguments')
 
     # determine task index
     task_index = None
@@ -157,9 +179,16 @@ if __name__ == '__main__':
     else:
         arities = None
 
-    main(vcf_filename=args.vcf_filename, fasta_filename=args.fasta_filename,
-         output_dir=args.output_dir, array_type=args.array_type,
-         chromosome=args.chromosome, task_size=args.task_size,
-         task_index=task_index, exclude_fields=args.exclude_fields,
-         ploidy=args.ploidy, dtypes=dtypes, arities=arities,
+    main(vcf_filename=args.vcf_filename,
+         fasta_filename=args.fasta_filename,
+         output_dir=args.output_dir,
+         array_type=args.array_type,
+         chromosome=args.chromosome,
+         task_size=args.task_size,
+         task_index=task_index,
+         region=args.region,
+         exclude_fields=args.exclude_fields,
+         ploidy=args.ploidy,
+         dtypes=dtypes,
+         arities=arities,
          progress=args.progress)
