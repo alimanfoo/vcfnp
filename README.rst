@@ -133,8 +133,15 @@ following for each chromosome separately::
         --output /path/to/my.h5 \
         --group chr20
 
-There is also a script fo converting the fixed fields of a VCF file to
-CSV, e.g.::
+There is also a script which will process a VCF file in parallel on the
+local machine and load into an HDF5 file, e.g.::
+
+    $ vcf2hdf5_parallel \
+        --vcf /path/to/my.vcf \
+        --fasta /path/to/refseq.fa
+
+Finally, there is a script fo converting the fixed fields of a VCF
+file to CSV, e.g.::
 
     $ vcf2csv \
         --vcf /path/to/my.vcf \
@@ -144,6 +151,7 @@ CSV, e.g.::
 Release Notes
 -------------
 
+* `2.1.0 <https://github.com/alimanfoo/vcfnp/issues?q=milestone%3Av2.1.0+is%3Aclosed>`_
 * `2.0.0 <https://github.com/alimanfoo/vcfnp/issues?q=milestone%3Av2.0+is%3Aclosed>`_
 * `1.10 <https://github.com/alimanfoo/vcfnp/issues?milestone=7&state=closed>`_
 * `1.9 <https://github.com/alimanfoo/vcfnp/issues?milestone=6&state=closed>`_
