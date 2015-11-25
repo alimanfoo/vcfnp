@@ -21,10 +21,10 @@ if not PY2:
 
 
 def log(*msg):
-    print('[vcfnpy2hdf5] '
-          + str(datetime.now())
-          + ' :: '
-          + ' '.join(map(str, msg)),
+    print('[vcfnpy2hdf5] ' +
+          str(datetime.now()) +
+          ' :: ' +
+          ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
 
@@ -165,7 +165,7 @@ def load_compound_arrays_into_group(input_filenames, group_name, parent_group,
 def load_hdf5(input_dir, output_filename,
               input_filename_template='{array_type}*.npy', vcf_filename=None,
               variants_only=False, calldata_only=False, tabulate_variants=False,
-              parent_group_name='/', chunk_size=100000, chunk_width=10,
+              parent_group_name='/', chunk_size=2**20, chunk_width=10,
               compression=None, compression_opts=None, shuffle=False,
               fletcher32=False, scaleoffset=None):
 
@@ -280,8 +280,8 @@ def main():
                              'root group')
     parser.add_argument('--chunk-size',
                         dest='chunk_size', type=int, metavar='NBYTES',
-                        default=2**17,
-                        help='chunk size (defaults to 128kb)')
+                        default=2**20,
+                        help='chunk size (defaults to 1Mb)')
     parser.add_argument('--chunk-width',
                         dest='chunk_width', type=int, metavar='N',
                         default=10,
@@ -292,9 +292,9 @@ def main():
                         help='compression, default is gzip')
     parser.add_argument('--compression-opts',
                         dest='compression_opts', metavar='LEVEL', type=int,
-                        default=3,
+                        default=1,
                         help='compression level, applies only to gzip ('
-                             'defaults to 3)')
+                             'defaults to 1)')
     parser.add_argument('--shuffle',
                         dest='shuffle', action='store_true',
                         default=False,
