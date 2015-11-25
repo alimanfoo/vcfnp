@@ -19,7 +19,7 @@ import argparse
 import logging
 import math
 import shlex # for split
-import shutil # for rmtree
+import shutil # for rmtree and which
 import subprocess
 import errno
 from collections import OrderedDict
@@ -273,7 +273,7 @@ def Main(argv=None):
     # the vcf2npy part of the command (a single string)
     subcmd = ""
     subcmd += python_exec
-    subcmd += " "+args.vcf2npy_exec
+    subcmd += " "+shutil.which(args.vcf2npy_exec)
     subcmd += " --vcf "+args.vcf
     subcmd += " --output-dir "+outdir
     subcmd += " --array-type {1} "
@@ -324,7 +324,7 @@ def Main(argv=None):
     for chrom in chrom_list:
         logging.info("adding '{}' to hdf5 file".format(chrom))
         cmd = [ python_exec ]
-        cmd += [ args.vcfnpy2hdf5_exec,
+        cmd += [ shutil.which(args.vcfnpy2hdf5_exec),
                 '--vcf', args.vcf,
                 '--input-dir', outdir,
                 '--input-filename-template', 
