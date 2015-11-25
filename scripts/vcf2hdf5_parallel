@@ -124,21 +124,21 @@ def Main(argv=None):
     opt_group.add_argument('-h', '--help', action='help',
                            help="show this help message and exit")
 
-    opt_group.add_argument('--compression', default='gzip',
+    opt_group.add_argument('--hdf5-compression', default='gzip',
                            help="compression method for HDF5 output file "
                                 "(default=%(default)s)")
-    opt_group.add_argument('--compression-opts', default='1',
+    opt_group.add_argument('--hdf5-compression-opts', default='1',
                            help="compression option (level) for HDF5 output "
                                 "file (default=%(default)s)")
-    parser.add_argument('--chunk-size',
-                        dest='chunk_size', type=int, metavar='NBYTES',
-                        default=2**20,
-                        help='HDF5 chunk size (defaults to 1Mb)')
-    parser.add_argument('--chunk-width',
-                        dest='chunk_width', type=int, metavar='N',
-                        default=10,
-                        help='HDF5 chunk width for 2 dimensional datasets ('
-                             'defaults to 10)')
+    opt_group.add_argument('--hdf5-chunk-size',
+                           dest='hdf5_chunk_size', type=int, metavar='NBYTES',
+                           default=2 ** 20,
+                           help='HDF5 chunk size (defaults to 1Mb)')
+    opt_group.add_argument('--hdf5-chunk-width',
+                           dest='hdf5_chunk_width', type=int, metavar='N',
+                           default=10,
+                           help='HDF5 chunk width for 2 dimensional datasets ('
+                                'defaults to 10)')
 
     parallel_options_group = parser.add_argument_group(
         title="options passed to parallel")
@@ -218,12 +218,13 @@ def Main(argv=None):
             chrom_size = chrom_list[chrom]
             n_fill = int(math.ceil(math.log10(chrom_size)))
             region_list.extend([
-                                   chrom + ':' +
-                                   str(x + 1).zfill(n_fill) + '-' +
-                                   str(min((x + args.task_size,
-                                            chrom_size))).zfill(n_fill)
-                                   for x in
-                                   range(0, int(chrom_size), args.task_size)])
+                chrom + ':' +
+                str(x + 1).zfill(n_fill) + '-' +
+                str(min((x + args.task_size,
+                        chrom_size))).zfill(n_fill)
+                for x in
+                range(0, int(chrom_size), args.task_size)
+            ])
     else:
         # regions from regions_string and/or regions_file
         if args.regions_string is None and args.regions_file is None:
@@ -350,10 +351,10 @@ def Main(argv=None):
                 '{{array_type}}.{}*.npy'.format(chrom),
                 '--group', chrom,
                 '--output', hdf5_out_filename,
-                '--compression', args.compression,
-                '--compression-opts', args.compression_opts,
-                '--chunk-size', args.chunk_size,
-                '--chunk-width', args.chunk_width,
+                '--compression', args.hdf5_compression,
+                '--compression-opts', args.hdf5_compression_opts,
+                '--chunk-size', args.hdf5_chunk_size,
+                '--chunk-width', args.hdf5_chunk_width,
                 ]
         logging.debug("cmd={}".format(cmd))
         with open(hdf5_out_filename + '.log', 'a') as logfile:
