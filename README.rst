@@ -148,19 +148,6 @@ file to CSV, e.g.::
         --dialect excel-tab \
         --flatten-filter
 
-Release Notes
--------------
-
-* `2.1.0 <https://github.com/alimanfoo/vcfnp/issues?q=milestone%3Av2.1.0+is%3Aclosed>`_
-* `2.0.0 <https://github.com/alimanfoo/vcfnp/issues?q=milestone%3Av2.0+is%3Aclosed>`_
-* `1.10 <https://github.com/alimanfoo/vcfnp/issues?milestone=7&state=closed>`_
-* `1.9 <https://github.com/alimanfoo/vcfnp/issues?milestone=6&state=closed>`_
-* `1.8 <https://github.com/alimanfoo/vcfnp/issues?milestone=5&state=closed>`_
-* `1.7 <https://github.com/alimanfoo/vcfnp/issues?milestone=4&page=1&state=closed>`_
-* `1.6 <https://github.com/alimanfoo/vcfnp/issues?milestone=3&page=1&state=closed>`_
-* `1.5 <https://github.com/alimanfoo/vcfnp/issues?milestone=1&state=closed>`_
-* `1.0 <https://github.com/alimanfoo/vcfnp/issues?milestone=2&page=1&state=closed>`_ - Note that as of version 1.0 the info() function has been removed and the variants() function now loads data from any of the VCF fixed fields including INFO. I.e., the variants() function gives access to all variant-level data in a single structured array. This is convenient for many use cases, e.g., using PyTables in-kernel queries to select variants passing some filtering criteria.
-
 Acknowledgments
 ---------------
 
