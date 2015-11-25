@@ -12,17 +12,17 @@ import vcfnp
 
 
 def log(*msg):
-    print('[vcf2npy] '
-          + str(datetime.now())
-          + ' :: '
-          + ' '.join(map(str, msg)),
+    print('[vcf2npy] ' +
+          str(datetime.now()) +
+          ' :: ' +
+          ' '.join(map(str, msg)),
           file=sys.stderr)
     sys.stderr.flush()
 
 
 def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
          task_size, task_index, region, exclude_fields, ploidy, dtypes, arities,
-         progress):
+         progress, truncate):
 
     assert vcf_filename is not None, 'missing VCF filename, try vcf2npy --help'
     assert os.path.exists(vcf_filename), 'VCF file not found'
@@ -30,9 +30,9 @@ def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
 
     # determine region to extract
     if region is not None:
-        if( chromosome is not None or
-            task_index is not None or
-            task_size is not None ):
+        if (chromosome is not None or
+                task_index is not None or
+                task_size is not None ):
             raise Exception('region is incompatibile with chromosome, '
                             'task-index, and task-size arguments')
         log(region)
@@ -65,19 +65,19 @@ def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
                              exclude_fields=exclude_fields, dtypes=dtypes,
                              arities=arities, flatten_filter=True, cache=True,
                              cachedir=output_dir, skip_cached=True,
-                             verbose=True)
+                             verbose=True, truncate=truncate)
     elif array_type == 'calldata':
         arr = vcfnp.calldata(vcf_filename, region=region, progress=progress,
                              ploidy=ploidy, exclude_fields=exclude_fields,
                              dtypes=dtypes, arities=arities, cache=True,
                              cachedir=output_dir, skip_cached=True,
-                             verbose=True)
+                             verbose=True, truncate=truncate)
     elif array_type == 'calldata_2d':
         arr = vcfnp.calldata_2d(vcf_filename, region=region, progress=progress,
                                 ploidy=ploidy, exclude_fields=exclude_fields,
                                 dtypes=dtypes, arities=arities, cache=True,
                                 cachedir=output_dir, skip_cached=True,
-                                verbose=True)
+                                verbose=True, truncate=truncate)
     else:
         raise Exception('unexpected array type: %s' % array_type)
     if arr is not None:
@@ -138,13 +138,18 @@ if __name__ == '__main__':
     parser.add_argument('--progress', dest='progress', metavar='N',
                         default=10000, type=int,
                         help='log progress every N rows')
+    parser.add_argument('--no-truncate', dest='no_truncate',
+                        action='store_true',
+                        default=False,
+                        help='do not truncate variants to region boundary ('
+                             'i.e., use default tabix behaviour)')
     args = parser.parse_args()
 
     # region or chromosome [[task-index] task-size]
     if args.region is not None and (
-        args.chromosome is not None or
-        args.task_index is not None or
-        args.task_size is not None ):
+            args.chromosome is not None or
+            args.task_index is not None or
+            args.task_size is not None ):
         raise Exception('--region is incompatibile with --chromosome, '
                         '--task-index, and --task-size arguments')
 
@@ -191,4 +196,5 @@ if __name__ == '__main__':
          ploidy=args.ploidy,
          dtypes=dtypes,
          arities=arities,
-         progress=args.progress)
+         progress=args.progress,
+         truncate=(not args.no_truncate))

@@ -888,106 +888,134 @@ struct __pyx_obj_5vcfnp_6vcflib_PyVariantCallFile {
 /* "vcfnp/iter.pyx":94
  * 
  * 
- * def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                   tuple filter_ids, bint flatten_filter, bint parse_info):
+ * def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,             # <<<<<<<<<<<<<<
+ *                   parse_info, truncate):
  * 
  */
 struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants {
   PyObject_HEAD
+  PyObject *__pyx_v__;
   PyObject *__pyx_v_fieldspec;
   PyObject *__pyx_v_filter_ids;
-  int __pyx_v_flatten_filter;
-  int __pyx_v_parse_info;
+  PyObject *__pyx_v_flatten_filter;
+  PyObject *__pyx_v_parse_info;
   PyObject *__pyx_v_region;
   bool __pyx_v_region_set;
+  PyObject *__pyx_v_region_start;
+  PyObject *__pyx_v_region_start_stop;
+  PyObject *__pyx_v_region_stop;
+  PyObject *__pyx_v_truncate;
+  PyObject *__pyx_v_v;
   vcf::Variant *__pyx_v_variant;
   vcf::VariantCallFile *__pyx_v_variant_file;
   PyObject *__pyx_v_vcf_fn;
   PyObject *__pyx_v_vcf_fns;
   PyObject *__pyx_t_0;
   Py_ssize_t __pyx_t_1;
+  PyObject *(*__pyx_t_2)(PyObject *);
 };
 
 
-/* "vcfnp/iter.pyx":125
+/* "vcfnp/iter.pyx":133
  * 
  * 
- * def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                                  tuple filter_ids, bint flatten_filter,
- *                                  bint parse_info, np.uint8_t[:] condition):
+ * def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,             # <<<<<<<<<<<<<<
+ *                                  flatten_filter, parse_info, np.uint8_t[:]
+ *                                  condition, truncate):
  */
 struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition {
   PyObject_HEAD
+  PyObject *__pyx_v__;
   __Pyx_memviewslice __pyx_v_condition;
   PyObject *__pyx_v_fieldspec;
   PyObject *__pyx_v_filter_ids;
-  int __pyx_v_flatten_filter;
+  PyObject *__pyx_v_flatten_filter;
   long __pyx_v_i;
   long __pyx_v_n;
-  int __pyx_v_parse_info;
+  PyObject *__pyx_v_parse_info;
   PyObject *__pyx_v_region;
   bool __pyx_v_region_set;
+  PyObject *__pyx_v_region_start;
+  PyObject *__pyx_v_region_start_stop;
+  PyObject *__pyx_v_region_stop;
+  PyObject *__pyx_v_truncate;
+  PyObject *__pyx_v_v;
   vcf::Variant *__pyx_v_variant;
   vcf::VariantCallFile *__pyx_v_variant_file;
   PyObject *__pyx_v_vcf_fn;
   PyObject *__pyx_v_vcf_fns;
   PyObject *__pyx_t_0;
   Py_ssize_t __pyx_t_1;
-  Py_ssize_t __pyx_t_2;
+  PyObject *(*__pyx_t_2)(PyObject *);
+  Py_ssize_t __pyx_t_3;
 };
 
 
-/* "vcfnp/iter.pyx":387
+/* "vcfnp/iter.pyx":405
  * 
  * 
- * def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
- *                   tuple fieldspec):
+ * def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):             # <<<<<<<<<<<<<<
  *     cdef VariantCallFile *variant_file
+ *     cdef Variant *variant
  */
 struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata {
   PyObject_HEAD
+  PyObject *__pyx_v__;
   PyObject *__pyx_v_fieldspec;
-  int __pyx_v_ploidy;
+  PyObject *__pyx_v_ploidy;
   PyObject *__pyx_v_region;
   bool __pyx_v_region_set;
+  PyObject *__pyx_v_region_start;
+  PyObject *__pyx_v_region_start_stop;
+  PyObject *__pyx_v_region_stop;
   PyObject *__pyx_v_samples;
+  PyObject *__pyx_v_truncate;
+  PyObject *__pyx_v_v;
   vcf::Variant *__pyx_v_variant;
   vcf::VariantCallFile *__pyx_v_variant_file;
   PyObject *__pyx_v_vcf_fn;
   PyObject *__pyx_v_vcf_fns;
   PyObject *__pyx_t_0;
   Py_ssize_t __pyx_t_1;
+  PyObject *(*__pyx_t_2)(PyObject *);
 };
 
 
-/* "vcfnp/iter.pyx":410
+/* "vcfnp/iter.pyx":435
  * 
  * 
- * def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,             # <<<<<<<<<<<<<<
- *                                  int ploidy, tuple fieldspec,
- *                                  np.uint8_t[:] condition):
+ * def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,             # <<<<<<<<<<<<<<
+ *                                  np.uint8_t[:] condition, truncate):
+ *     cdef VariantCallFile *variant_file
  */
 struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition {
   PyObject_HEAD
+  PyObject *__pyx_v__;
   __Pyx_memviewslice __pyx_v_condition;
   PyObject *__pyx_v_fieldspec;
   long __pyx_v_i;
   long __pyx_v_n;
-  int __pyx_v_ploidy;
+  PyObject *__pyx_v_ploidy;
   PyObject *__pyx_v_region;
   bool __pyx_v_region_set;
+  PyObject *__pyx_v_region_start;
+  PyObject *__pyx_v_region_start_stop;
+  PyObject *__pyx_v_region_stop;
   PyObject *__pyx_v_samples;
+  PyObject *__pyx_v_truncate;
+  PyObject *__pyx_v_v;
   vcf::Variant *__pyx_v_variant;
   vcf::VariantCallFile *__pyx_v_variant_file;
   PyObject *__pyx_v_vcf_fn;
   PyObject *__pyx_v_vcf_fns;
   PyObject *__pyx_t_0;
   Py_ssize_t __pyx_t_1;
-  Py_ssize_t __pyx_t_2;
+  PyObject *(*__pyx_t_2)(PyObject *);
+  Py_ssize_t __pyx_t_3;
 };
 
 
-/* "vcfnp/iter.pyx":527
+/* "vcfnp/iter.pyx":559
  * 
  * 
  * def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,             # <<<<<<<<<<<<<<
@@ -1223,13 +1251,39 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
-static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
-    const char *name, int exact);
-
 static CYTHON_INLINE void __Pyx_ErrRestore(PyObject *type, PyObject *value, PyObject *tb);
 static CYTHON_INLINE void __Pyx_ErrFetch(PyObject **type, PyObject **value, PyObject **tb);
 
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
+
+static CYTHON_INLINE int __Pyx_PySequence_ContainsTF(PyObject* item, PyObject* seq, int eq) {
+    int result = PySequence_Contains(seq, item);
+    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
+}
+
+static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
+
+static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index);
+
+static CYTHON_INLINE int __Pyx_IterFinish(void);
+
+static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
+
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len)) {
+        Py_INCREF(x);
+        PyList_SET_ITEM(list, len, x);
+        Py_SIZE(list) = len+1;
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
+#endif
 
 static CYTHON_INLINE int  __Pyx_GetBufferAndValidate(Py_buffer* buf, PyObject* obj,
     __Pyx_TypeInfo* dtype, int flags, int nd, int cast, __Pyx_BufFmt_StackElem* stack);
@@ -1261,14 +1315,6 @@ static CYTHON_INLINE void __Pyx_INC_MEMVIEW(__Pyx_memviewslice *, int, int);
 static CYTHON_INLINE void __Pyx_XDEC_MEMVIEW(__Pyx_memviewslice *, int, int);
 
 static void __Pyx_RaiseBufferIndexError(int axis);
-
-static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
-
-static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index);
-
-static CYTHON_INLINE int __Pyx_IterFinish(void);
-
-static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
 
 #include <string.h>
 
@@ -1312,27 +1358,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(
         PyObject* obj, Py_ssize_t cstart, Py_ssize_t cstop,
         PyObject** py_start, PyObject** py_stop, PyObject** py_slice,
         int has_cstart, int has_cstop, int wraparound);
-
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
-    PyListObject* L = (PyListObject*) list;
-    Py_ssize_t len = Py_SIZE(list);
-    if (likely(L->allocated > len)) {
-        Py_INCREF(x);
-        PyList_SET_ITEM(list, len, x);
-        Py_SIZE(list) = len+1;
-        return 0;
-    }
-    return PyList_Append(list, x);
-}
-#else
-#define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
-#endif
-
-static CYTHON_INLINE int __Pyx_PySequence_ContainsTF(PyObject* item, PyObject* seq, int eq) {
-    int result = PySequence_Contains(seq, item);
-    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
-}
 
 static void __Pyx_WriteUnraisable(const char *name, int clineno,
                                   int lineno, const char *filename,
@@ -1378,6 +1403,9 @@ static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key) {
 static CYTHON_INLINE void __Pyx_RaiseNoneNotIterableError(void);
 
 static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
+
+static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
+    const char *name, int exact);
 
 static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
 
@@ -1515,8 +1543,6 @@ static int __Pyx_ValidateAndInit_memviewslice(
 
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_uint8_t(PyObject *);
 
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
-
 #ifndef __Pyx_CppExn2PyErr
 #include <new>
 #include <typeinfo>
@@ -1556,6 +1582,8 @@ static void __Pyx_CppExn2PyErr() {
 }
 #endif
 
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
+
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_npy_uint8(npy_uint8 value);
 
 static CYTHON_INLINE npy_uint8 __Pyx_PyInt_As_npy_uint8(PyObject *);
@@ -1563,7 +1591,7 @@ static CYTHON_INLINE npy_uint8 __Pyx_PyInt_As_npy_uint8(PyObject *);
 static PyObject *__pyx_memview_get_nn___pyx_t_5numpy_uint8_t(const char *itemp);
 static int __pyx_memview_set_nn___pyx_t_5numpy_uint8_t(const char *itemp, PyObject *obj);
 
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
@@ -1923,7 +1951,7 @@ static PyObject *__pyx_builtin_Ellipsis;
 static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_id;
 static PyObject *__pyx_builtin_IndexError;
-static char __pyx_k_[] = ".";
+static char __pyx_k_[] = ":";
 static char __pyx_k_A[] = "A";
 static char __pyx_k_B[] = "B";
 static char __pyx_k_C[] = "C";
@@ -1944,19 +1972,23 @@ static char __pyx_k_i[] = "i";
 static char __pyx_k_l[] = "l";
 static char __pyx_k_n[] = "n";
 static char __pyx_k_q[] = "q";
+static char __pyx_k_v[] = "v";
 static char __pyx_k_GT[] = "GT";
 static char __pyx_k_ID[] = "ID";
 static char __pyx_k_Zd[] = "Zd";
 static char __pyx_k_Zf[] = "Zf";
 static char __pyx_k_Zg[] = "Zg";
-static char __pyx_k__2[] = "|";
-static char __pyx_k__4[] = ",";
+static char __pyx_k__3[] = "-";
 static char __pyx_k_id[] = "id";
 static char __pyx_k_np[] = "np";
 static char __pyx_k_ALT[] = "ALT";
 static char __pyx_k_POS[] = "POS";
 static char __pyx_k_REF[] = "REF";
-static char __pyx_k__24[] = "/|";
+static char __pyx_k__11[] = ".";
+static char __pyx_k__12[] = "|";
+static char __pyx_k__14[] = ",";
+static char __pyx_k__34[] = "/|";
+static char __pyx_k__37[] = "_";
 static char __pyx_k_obj[] = "obj";
 static char __pyx_k_zip[] = "zip";
 static char __pyx_k_INFO[] = "INFO";
@@ -1986,6 +2018,7 @@ static char __pyx_k_flags[] = "flags";
 static char __pyx_k_numpy[] = "numpy";
 static char __pyx_k_range[] = "range";
 static char __pyx_k_shape[] = "shape";
+static char __pyx_k_split[] = "split";
 static char __pyx_k_start[] = "start";
 static char __pyx_k_svlen[] = "svlen";
 static char __pyx_k_throw[] = "throw";
@@ -2012,6 +2045,7 @@ static char __pyx_k_vcf_fns[] = "vcf_fns";
 static char __pyx_k_Ellipsis[] = "Ellipsis";
 static char __pyx_k_genotype[] = "genotype";
 static char __pyx_k_itemsize[] = "itemsize";
+static char __pyx_k_truncate[] = "truncate";
 static char __pyx_k_TypeError[] = "TypeError";
 static char __pyx_k_condition[] = "condition";
 static char __pyx_k_enumerate[] = "enumerate";
@@ -2030,10 +2064,12 @@ static char __pyx_k_region_set[] = "region_set";
 static char __pyx_k_vcfnp_iter[] = "vcfnp.iter";
 static char __pyx_k_MemoryError[] = "MemoryError";
 static char __pyx_k_num_alleles[] = "num_alleles";
+static char __pyx_k_region_stop[] = "region_stop";
 static char __pyx_k_RuntimeError[] = "RuntimeError";
 static char __pyx_k_format_types[] = "format_types";
 static char __pyx_k_itercalldata[] = "_itercalldata";
 static char __pyx_k_itervariants[] = "_itervariants";
+static char __pyx_k_region_start[] = "region_start";
 static char __pyx_k_transformers[] = "transformers";
 static char __pyx_k_variant_file[] = "variant_file";
 static char __pyx_k_StopIteration[] = "StopIteration";
@@ -2044,6 +2080,7 @@ static char __pyx_k_itervariants_2[] = "itervariants";
 static char __pyx_k_allocate_buffer[] = "allocate_buffer";
 static char __pyx_k_dtype_is_object[] = "dtype_is_object";
 static char __pyx_k_itervariantstable[] = "itervariantstable";
+static char __pyx_k_region_start_stop[] = "region_start_stop";
 static char __pyx_k_strided_and_direct[] = "<strided and direct>";
 static char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
@@ -2079,7 +2116,7 @@ static char __pyx_k_got_differing_extents_in_dimensi[] = "got differing extents 
 static char __pyx_k_ndarray_is_not_Fortran_contiguou[] = "ndarray is not Fortran contiguous";
 static char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
 static char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
-static PyObject *__pyx_kp_b_;
+static PyObject *__pyx_kp_s_;
 static PyObject *__pyx_n_b_A;
 static PyObject *__pyx_n_b_ALT;
 static PyObject *__pyx_n_s_ASCII;
@@ -2116,9 +2153,12 @@ static PyObject *__pyx_n_b_T;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s_Unable_to_convert_item_to_object;
 static PyObject *__pyx_n_s_ValueError;
-static PyObject *__pyx_kp_b__2;
-static PyObject *__pyx_kp_b__24;
-static PyObject *__pyx_kp_b__4;
+static PyObject *__pyx_kp_b__11;
+static PyObject *__pyx_kp_b__12;
+static PyObject *__pyx_kp_b__14;
+static PyObject *__pyx_kp_s__3;
+static PyObject *__pyx_kp_b__34;
+static PyObject *__pyx_n_s__37;
 static PyObject *__pyx_n_s_allocate_buffer;
 static PyObject *__pyx_n_s_args;
 static PyObject *__pyx_n_s_arities;
@@ -2191,10 +2231,14 @@ static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_region;
 static PyObject *__pyx_n_s_region_set;
+static PyObject *__pyx_n_s_region_start;
+static PyObject *__pyx_n_s_region_start_stop;
+static PyObject *__pyx_n_s_region_stop;
 static PyObject *__pyx_n_s_samples;
 static PyObject *__pyx_n_s_send;
 static PyObject *__pyx_n_s_shape;
 static PyObject *__pyx_n_s_size;
+static PyObject *__pyx_n_s_split;
 static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_step;
 static PyObject *__pyx_n_s_stop;
@@ -2206,22 +2250,24 @@ static PyObject *__pyx_n_b_svlen;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_throw;
 static PyObject *__pyx_n_s_transformers;
+static PyObject *__pyx_n_s_truncate;
 static PyObject *__pyx_kp_s_unable_to_allocate_array_data;
 static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_unpack;
+static PyObject *__pyx_n_s_v;
 static PyObject *__pyx_n_s_variant;
 static PyObject *__pyx_n_s_variant_file;
 static PyObject *__pyx_n_s_vcf_fn;
 static PyObject *__pyx_n_s_vcf_fns;
 static PyObject *__pyx_n_s_vcfnp_iter;
 static PyObject *__pyx_n_s_zip;
-static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_info_types, PyObject *__pyx_v_transformers, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_condition); /* proto */
-static PyObject *__pyx_pf_5vcfnp_4iter_2_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, int __pyx_v_flatten_filter, int __pyx_v_parse_info); /* proto */
-static PyObject *__pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, int __pyx_v_flatten_filter, int __pyx_v_parse_info, __Pyx_memviewslice __pyx_v_condition); /* proto */
-static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_format_types, PyObject *__pyx_v_condition); /* proto */
-static PyObject *__pyx_pf_5vcfnp_4iter_10_itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, int __pyx_v_ploidy, PyObject *__pyx_v_fieldspec); /* proto */
-static PyObject *__pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, int __pyx_v_ploidy, PyObject *__pyx_v_fieldspec, __Pyx_memviewslice __pyx_v_condition); /* proto */
+static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_info_types, PyObject *__pyx_v_transformers, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_condition, PyObject *__pyx_v_truncate); /* proto */
+static PyObject *__pyx_pf_5vcfnp_4iter_2_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_truncate); /* proto */
+static PyObject *__pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, __Pyx_memviewslice __pyx_v_condition, PyObject *__pyx_v_truncate); /* proto */
+static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_format_types, PyObject *__pyx_v_condition, PyObject *__pyx_v_truncate); /* proto */
+static PyObject *__pyx_pf_5vcfnp_4iter_10_itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_truncate); /* proto */
+static PyObject *__pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fieldspec, __Pyx_memviewslice __pyx_v_condition, PyObject *__pyx_v_truncate); /* proto */
 static PyObject *__pyx_pf_5vcfnp_4iter_16itervariantstable(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_info_types, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_fill, PyObject *__pyx_v_flatteners); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
@@ -2269,57 +2315,65 @@ static PyObject *__pyx_tp_new__memoryviewslice(PyTypeObject *t, PyObject *a, PyO
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_neg_1;
-static PyObject *__pyx_tuple__3;
+static PyObject *__pyx_tuple__2;
+static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_slice__20;
-static PyObject *__pyx_slice__21;
-static PyObject *__pyx_slice__22;
+static PyObject *__pyx_slice__30;
+static PyObject *__pyx_slice__31;
+static PyObject *__pyx_slice__32;
 static PyObject *__pyx_tuple__10;
-static PyObject *__pyx_tuple__11;
-static PyObject *__pyx_tuple__12;
 static PyObject *__pyx_tuple__13;
-static PyObject *__pyx_tuple__14;
 static PyObject *__pyx_tuple__15;
 static PyObject *__pyx_tuple__16;
 static PyObject *__pyx_tuple__17;
 static PyObject *__pyx_tuple__18;
 static PyObject *__pyx_tuple__19;
+static PyObject *__pyx_tuple__20;
+static PyObject *__pyx_tuple__21;
+static PyObject *__pyx_tuple__22;
 static PyObject *__pyx_tuple__23;
+static PyObject *__pyx_tuple__24;
 static PyObject *__pyx_tuple__25;
+static PyObject *__pyx_tuple__26;
 static PyObject *__pyx_tuple__27;
+static PyObject *__pyx_tuple__28;
 static PyObject *__pyx_tuple__29;
-static PyObject *__pyx_tuple__31;
 static PyObject *__pyx_tuple__33;
 static PyObject *__pyx_tuple__35;
-static PyObject *__pyx_tuple__37;
-static PyObject *__pyx_tuple__39;
+static PyObject *__pyx_tuple__38;
 static PyObject *__pyx_tuple__40;
-static PyObject *__pyx_tuple__41;
 static PyObject *__pyx_tuple__42;
-static PyObject *__pyx_tuple__43;
-static PyObject *__pyx_codeobj__26;
-static PyObject *__pyx_codeobj__28;
-static PyObject *__pyx_codeobj__30;
-static PyObject *__pyx_codeobj__32;
-static PyObject *__pyx_codeobj__34;
+static PyObject *__pyx_tuple__44;
+static PyObject *__pyx_tuple__46;
+static PyObject *__pyx_tuple__48;
+static PyObject *__pyx_tuple__50;
+static PyObject *__pyx_tuple__51;
+static PyObject *__pyx_tuple__52;
+static PyObject *__pyx_tuple__53;
+static PyObject *__pyx_tuple__54;
 static PyObject *__pyx_codeobj__36;
-static PyObject *__pyx_codeobj__38;
+static PyObject *__pyx_codeobj__39;
+static PyObject *__pyx_codeobj__41;
+static PyObject *__pyx_codeobj__43;
+static PyObject *__pyx_codeobj__45;
+static PyObject *__pyx_codeobj__47;
+static PyObject *__pyx_codeobj__49;
 
 /* "vcfnp/iter.pyx":61
  * 
  * 
  * def itervariants(vcf_fns, region, fields, arities, fills, info_types,             # <<<<<<<<<<<<<<
  *                  transformers, filter_ids, flatten_filter, parse_info,
- *                  condition):
+ *                  condition, truncate):
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5vcfnp_4iter_itervariants[] = "itervariants(vcf_fns, region, fields, arities, fills, info_types, transformers, filter_ids, flatten_filter, parse_info, condition)\nIterate over variants from a VCF file, and generate a tuple for each\n    variant suitable for loading into a numpy array.";
+static char __pyx_doc_5vcfnp_4iter_itervariants[] = "itervariants(vcf_fns, region, fields, arities, fills, info_types, transformers, filter_ids, flatten_filter, parse_info, condition, truncate)\nIterate over variants from a VCF file, and generate a tuple for each\n    variant suitable for loading into a numpy array.";
 static PyMethodDef __pyx_mdef_5vcfnp_4iter_1itervariants = {"itervariants", (PyCFunction)__pyx_pw_5vcfnp_4iter_1itervariants, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5vcfnp_4iter_itervariants};
 static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vcf_fns = 0;
@@ -2333,6 +2387,7 @@ static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObj
   PyObject *__pyx_v_flatten_filter = 0;
   PyObject *__pyx_v_parse_info = 0;
   PyObject *__pyx_v_condition = 0;
+  PyObject *__pyx_v_truncate = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2340,12 +2395,13 @@ static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("itervariants (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_fields,&__pyx_n_s_arities,&__pyx_n_s_fills,&__pyx_n_s_info_types,&__pyx_n_s_transformers,&__pyx_n_s_filter_ids,&__pyx_n_s_flatten_filter,&__pyx_n_s_parse_info,&__pyx_n_s_condition,0};
-    PyObject* values[11] = {0,0,0,0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_fields,&__pyx_n_s_arities,&__pyx_n_s_fills,&__pyx_n_s_info_types,&__pyx_n_s_transformers,&__pyx_n_s_filter_ids,&__pyx_n_s_flatten_filter,&__pyx_n_s_parse_info,&__pyx_n_s_condition,&__pyx_n_s_truncate,0};
+    PyObject* values[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 12: values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
         case 11: values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
         case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
         case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
@@ -2368,58 +2424,63 @@ static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fields)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_arities)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fills)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_info_types)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_transformers)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_filter_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  8:
         if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_flatten_filter)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  9:
         if (likely((values[9] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_parse_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 10:
         if (likely((values[10] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_condition)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, 10); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 10); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case 11:
+        if (likely((values[11] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_truncate)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, 11); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "itervariants") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 11) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 12) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -2433,6 +2494,7 @@ static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObj
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
       values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
+      values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
     }
     __pyx_v_vcf_fns = values[0];
     __pyx_v_region = values[1];
@@ -2445,23 +2507,24 @@ static PyObject *__pyx_pw_5vcfnp_4iter_1itervariants(PyObject *__pyx_self, PyObj
     __pyx_v_flatten_filter = values[8];
     __pyx_v_parse_info = values[9];
     __pyx_v_condition = values[10];
+    __pyx_v_truncate = values[11];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("itervariants", 1, 11, 11, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("itervariants", 1, 12, 12, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter.itervariants", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5vcfnp_4iter_itervariants(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_fields, __pyx_v_arities, __pyx_v_fills, __pyx_v_info_types, __pyx_v_transformers, __pyx_v_filter_ids, __pyx_v_flatten_filter, __pyx_v_parse_info, __pyx_v_condition);
+  __pyx_r = __pyx_pf_5vcfnp_4iter_itervariants(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_fields, __pyx_v_arities, __pyx_v_fills, __pyx_v_info_types, __pyx_v_transformers, __pyx_v_filter_ids, __pyx_v_flatten_filter, __pyx_v_parse_info, __pyx_v_condition, __pyx_v_truncate);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_info_types, PyObject *__pyx_v_transformers, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_condition) {
+static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_info_types, PyObject *__pyx_v_transformers, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_condition, PyObject *__pyx_v_truncate) {
   PyObject *__pyx_v_fieldspec = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -2475,7 +2538,6 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("itervariants", 0);
   __Pyx_INCREF(__pyx_v_vcf_fns);
-  __Pyx_INCREF(__pyx_v_region);
   __Pyx_INCREF(__pyx_v_fields);
   __Pyx_INCREF(__pyx_v_arities);
   __Pyx_INCREF(__pyx_v_fills);
@@ -2487,8 +2549,8 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
  * 
  *     # force to bytes
  *     vcf_fns = _b(tuple(vcf_fns))             # <<<<<<<<<<<<<<
- *     region = _b(region)
  *     fields = _b(tuple(fields))
+ *     arities = tuple(arities)
  */
   __pyx_t_1 = PySequence_Tuple(__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
@@ -2501,101 +2563,89 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
   /* "vcfnp/iter.pyx":69
  *     # force to bytes
  *     vcf_fns = _b(tuple(vcf_fns))
- *     region = _b(region)             # <<<<<<<<<<<<<<
- *     fields = _b(tuple(fields))
- *     arities = tuple(arities)
- */
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_v_region, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF_SET(__pyx_v_region, __pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "vcfnp/iter.pyx":70
- *     vcf_fns = _b(tuple(vcf_fns))
- *     region = _b(region)
  *     fields = _b(tuple(fields))             # <<<<<<<<<<<<<<
  *     arities = tuple(arities)
  *     fills = tuple(fills)
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_fields); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_fields); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __pyx_f_5vcfnp_6compat_b(__pyx_t_2, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_5vcfnp_6compat_b(__pyx_t_2, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF_SET(__pyx_v_fields, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":71
- *     region = _b(region)
+  /* "vcfnp/iter.pyx":70
+ *     vcf_fns = _b(tuple(vcf_fns))
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)             # <<<<<<<<<<<<<<
  *     fills = tuple(fills)
  *     info_types = tuple(info_types)
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_arities); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_arities); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_arities, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":72
+  /* "vcfnp/iter.pyx":71
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)
  *     fills = tuple(fills)             # <<<<<<<<<<<<<<
  *     info_types = tuple(info_types)
  *     transformers = tuple(transformers)
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_fills); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_fills); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_fills, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":73
+  /* "vcfnp/iter.pyx":72
  *     arities = tuple(arities)
  *     fills = tuple(fills)
  *     info_types = tuple(info_types)             # <<<<<<<<<<<<<<
  *     transformers = tuple(transformers)
  *     filter_ids = _b(tuple(filter_ids))
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_info_types); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_info_types); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_info_types, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":74
+  /* "vcfnp/iter.pyx":73
  *     fills = tuple(fills)
  *     info_types = tuple(info_types)
  *     transformers = tuple(transformers)             # <<<<<<<<<<<<<<
  *     filter_ids = _b(tuple(filter_ids))
  * 
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_transformers); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_transformers); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_transformers, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":75
+  /* "vcfnp/iter.pyx":74
  *     info_types = tuple(info_types)
  *     transformers = tuple(transformers)
  *     filter_ids = _b(tuple(filter_ids))             # <<<<<<<<<<<<<<
  * 
  *     # zip up field information for convenience
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_filter_ids); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_filter_ids); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_filter_ids, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":78
+  /* "vcfnp/iter.pyx":77
  * 
  *     # zip up field information for convenience
  *     fieldspec = tuple(zip(fields, arities, fills, info_types, transformers))             # <<<<<<<<<<<<<<
  * 
  *     if condition is None:
  */
-  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_fields);
   __Pyx_GIVEREF(__pyx_v_fields);
@@ -2612,16 +2662,16 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
   __Pyx_INCREF(__pyx_v_transformers);
   __Pyx_GIVEREF(__pyx_v_transformers);
   PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_v_transformers);
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PySequence_Tuple(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_fieldspec = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":80
+  /* "vcfnp/iter.pyx":79
  *     fieldspec = tuple(zip(fields, arities, fills, info_types, transformers))
  * 
  *     if condition is None:             # <<<<<<<<<<<<<<
@@ -2632,7 +2682,7 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
   __pyx_t_4 = (__pyx_t_3 != 0);
   if (__pyx_t_4) {
 
-    /* "vcfnp/iter.pyx":81
+    /* "vcfnp/iter.pyx":80
  * 
  *     if condition is None:
  *         return _itervariants(vcf_fns=vcf_fns, region=region,             # <<<<<<<<<<<<<<
@@ -2640,49 +2690,50 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
  *                              flatten_filter=flatten_filter,
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_itervariants); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_itervariants); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_vcf_fns, __pyx_v_vcf_fns) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_region, __pyx_v_region) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_vcf_fns, __pyx_v_vcf_fns) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_region, __pyx_v_region) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":82
+    /* "vcfnp/iter.pyx":81
  *     if condition is None:
  *         return _itervariants(vcf_fns=vcf_fns, region=region,
  *                              fieldspec=fieldspec, filter_ids=filter_ids,             # <<<<<<<<<<<<<<
  *                              flatten_filter=flatten_filter,
- *                              parse_info=parse_info)
+ *                              parse_info=parse_info, truncate=truncate)
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_fieldspec, __pyx_v_fieldspec) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_filter_ids, __pyx_v_filter_ids) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_fieldspec, __pyx_v_fieldspec) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_filter_ids, __pyx_v_filter_ids) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":83
+    /* "vcfnp/iter.pyx":82
  *         return _itervariants(vcf_fns=vcf_fns, region=region,
  *                              fieldspec=fieldspec, filter_ids=filter_ids,
  *                              flatten_filter=flatten_filter,             # <<<<<<<<<<<<<<
- *                              parse_info=parse_info)
+ *                              parse_info=parse_info, truncate=truncate)
  *     else:
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_flatten_filter, __pyx_v_flatten_filter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_flatten_filter, __pyx_v_flatten_filter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":84
+    /* "vcfnp/iter.pyx":83
  *                              fieldspec=fieldspec, filter_ids=filter_ids,
  *                              flatten_filter=flatten_filter,
- *                              parse_info=parse_info)             # <<<<<<<<<<<<<<
+ *                              parse_info=parse_info, truncate=truncate)             # <<<<<<<<<<<<<<
  *     else:
  *         return _itervariants_with_condition(vcf_fns=vcf_fns, region=region,
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_parse_info, __pyx_v_parse_info) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_parse_info, __pyx_v_parse_info) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_truncate, __pyx_v_truncate) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":81
+    /* "vcfnp/iter.pyx":80
  * 
  *     if condition is None:
  *         return _itervariants(vcf_fns=vcf_fns, region=region,             # <<<<<<<<<<<<<<
  *                              fieldspec=fieldspec, filter_ids=filter_ids,
  *                              flatten_filter=flatten_filter,
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -2690,7 +2741,7 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
     __pyx_t_5 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":80
+    /* "vcfnp/iter.pyx":79
  *     fieldspec = tuple(zip(fields, arities, fills, info_types, transformers))
  * 
  *     if condition is None:             # <<<<<<<<<<<<<<
@@ -2699,8 +2750,8 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
  */
   }
 
-  /* "vcfnp/iter.pyx":86
- *                              parse_info=parse_info)
+  /* "vcfnp/iter.pyx":85
+ *                              parse_info=parse_info, truncate=truncate)
  *     else:
  *         return _itervariants_with_condition(vcf_fns=vcf_fns, region=region,             # <<<<<<<<<<<<<<
  *                                             fieldspec=fieldspec,
@@ -2708,66 +2759,75 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_itervariants_with_condition); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_itervariants_with_condition); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_vcf_fns, __pyx_v_vcf_fns) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_region, __pyx_v_region) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_vcf_fns, __pyx_v_vcf_fns) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_region, __pyx_v_region) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":87
+    /* "vcfnp/iter.pyx":86
  *     else:
  *         return _itervariants_with_condition(vcf_fns=vcf_fns, region=region,
  *                                             fieldspec=fieldspec,             # <<<<<<<<<<<<<<
  *                                             filter_ids=filter_ids,
  *                                             flatten_filter=flatten_filter,
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_fieldspec, __pyx_v_fieldspec) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_fieldspec, __pyx_v_fieldspec) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":88
+    /* "vcfnp/iter.pyx":87
  *         return _itervariants_with_condition(vcf_fns=vcf_fns, region=region,
  *                                             fieldspec=fieldspec,
  *                                             filter_ids=filter_ids,             # <<<<<<<<<<<<<<
  *                                             flatten_filter=flatten_filter,
  *                                             parse_info=parse_info,
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_filter_ids, __pyx_v_filter_ids) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_filter_ids, __pyx_v_filter_ids) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":89
+    /* "vcfnp/iter.pyx":88
  *                                             fieldspec=fieldspec,
  *                                             filter_ids=filter_ids,
  *                                             flatten_filter=flatten_filter,             # <<<<<<<<<<<<<<
  *                                             parse_info=parse_info,
- *                                             condition=condition)
+ *                                             condition=condition,
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_flatten_filter, __pyx_v_flatten_filter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_flatten_filter, __pyx_v_flatten_filter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":90
+    /* "vcfnp/iter.pyx":89
  *                                             filter_ids=filter_ids,
  *                                             flatten_filter=flatten_filter,
  *                                             parse_info=parse_info,             # <<<<<<<<<<<<<<
- *                                             condition=condition)
- * 
+ *                                             condition=condition,
+ *                                             truncate=truncate)
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_parse_info, __pyx_v_parse_info) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_parse_info, __pyx_v_parse_info) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":91
+    /* "vcfnp/iter.pyx":90
  *                                             flatten_filter=flatten_filter,
  *                                             parse_info=parse_info,
- *                                             condition=condition)             # <<<<<<<<<<<<<<
+ *                                             condition=condition,             # <<<<<<<<<<<<<<
+ *                                             truncate=truncate)
+ * 
+ */
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_condition, __pyx_v_condition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+    /* "vcfnp/iter.pyx":91
+ *                                             parse_info=parse_info,
+ *                                             condition=condition,
+ *                                             truncate=truncate)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_condition, __pyx_v_condition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_truncate, __pyx_v_truncate) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":86
- *                              parse_info=parse_info)
+    /* "vcfnp/iter.pyx":85
+ *                              parse_info=parse_info, truncate=truncate)
  *     else:
  *         return _itervariants_with_condition(vcf_fns=vcf_fns, region=region,             # <<<<<<<<<<<<<<
  *                                             fieldspec=fieldspec,
  *                                             filter_ids=filter_ids,
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -2781,7 +2841,7 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
  * 
  * def itervariants(vcf_fns, region, fields, arities, fills, info_types,             # <<<<<<<<<<<<<<
  *                  transformers, filter_ids, flatten_filter, parse_info,
- *                  condition):
+ *                  condition, truncate):
  */
 
   /* function exit code */
@@ -2794,7 +2854,6 @@ static PyObject *__pyx_pf_5vcfnp_4iter_itervariants(CYTHON_UNUSED PyObject *__py
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_fieldspec);
   __Pyx_XDECREF(__pyx_v_vcf_fns);
-  __Pyx_XDECREF(__pyx_v_region);
   __Pyx_XDECREF(__pyx_v_fields);
   __Pyx_XDECREF(__pyx_v_arities);
   __Pyx_XDECREF(__pyx_v_fills);
@@ -2810,22 +2869,23 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
 /* "vcfnp/iter.pyx":94
  * 
  * 
- * def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                   tuple filter_ids, bint flatten_filter, bint parse_info):
+ * def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,             # <<<<<<<<<<<<<<
+ *                   parse_info, truncate):
  * 
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_5vcfnp_4iter_3_itervariants(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5vcfnp_4iter_2_itervariants[] = "_itervariants(tuple vcf_fns, bytes region, tuple fieldspec, tuple filter_ids, bool flatten_filter, bool parse_info)";
+static char __pyx_doc_5vcfnp_4iter_2_itervariants[] = "_itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter, parse_info, truncate)";
 static PyMethodDef __pyx_mdef_5vcfnp_4iter_3_itervariants = {"_itervariants", (PyCFunction)__pyx_pw_5vcfnp_4iter_3_itervariants, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5vcfnp_4iter_2_itervariants};
 static PyObject *__pyx_pw_5vcfnp_4iter_3_itervariants(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vcf_fns = 0;
   PyObject *__pyx_v_region = 0;
   PyObject *__pyx_v_fieldspec = 0;
   PyObject *__pyx_v_filter_ids = 0;
-  int __pyx_v_flatten_filter;
-  int __pyx_v_parse_info;
+  PyObject *__pyx_v_flatten_filter = 0;
+  PyObject *__pyx_v_parse_info = 0;
+  PyObject *__pyx_v_truncate = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2833,12 +2893,13 @@ static PyObject *__pyx_pw_5vcfnp_4iter_3_itervariants(PyObject *__pyx_self, PyOb
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_itervariants (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_fieldspec,&__pyx_n_s_filter_ids,&__pyx_n_s_flatten_filter,&__pyx_n_s_parse_info,0};
-    PyObject* values[6] = {0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_fieldspec,&__pyx_n_s_filter_ids,&__pyx_n_s_flatten_filter,&__pyx_n_s_parse_info,&__pyx_n_s_truncate,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
@@ -2856,33 +2917,38 @@ static PyObject *__pyx_pw_5vcfnp_4iter_3_itervariants(PyObject *__pyx_self, PyOb
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fieldspec)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_filter_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_flatten_filter)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_parse_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case  6:
+        if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_truncate)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itervariants") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -2891,38 +2957,32 @@ static PyObject *__pyx_pw_5vcfnp_4iter_3_itervariants(PyObject *__pyx_self, PyOb
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
     }
-    __pyx_v_vcf_fns = ((PyObject*)values[0]);
-    __pyx_v_region = ((PyObject*)values[1]);
-    __pyx_v_fieldspec = ((PyObject*)values[2]);
-    __pyx_v_filter_ids = ((PyObject*)values[3]);
-    __pyx_v_flatten_filter = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_flatten_filter == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_parse_info = __Pyx_PyObject_IsTrue(values[5]); if (unlikely((__pyx_v_parse_info == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_vcf_fns = values[0];
+    __pyx_v_region = values[1];
+    __pyx_v_fieldspec = values[2];
+    __pyx_v_filter_ids = values[3];
+    __pyx_v_flatten_filter = values[4];
+    __pyx_v_parse_info = values[5];
+    __pyx_v_truncate = values[6];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_itervariants", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter._itervariants", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_vcf_fns), (&PyTuple_Type), 1, "vcf_fns", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_region), (&PyBytes_Type), 1, "region", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_fieldspec), (&PyTuple_Type), 1, "fieldspec", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_filter_ids), (&PyTuple_Type), 1, "filter_ids", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_5vcfnp_4iter_2_itervariants(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_fieldspec, __pyx_v_filter_ids, __pyx_v_flatten_filter, __pyx_v_parse_info);
+  __pyx_r = __pyx_pf_5vcfnp_4iter_2_itervariants(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_fieldspec, __pyx_v_filter_ids, __pyx_v_flatten_filter, __pyx_v_parse_info, __pyx_v_truncate);
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5vcfnp_4iter_2_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, int __pyx_v_flatten_filter, int __pyx_v_parse_info) {
+static PyObject *__pyx_pf_5vcfnp_4iter_2_itervariants(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, PyObject *__pyx_v_truncate) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -2949,7 +3009,14 @@ static PyObject *__pyx_pf_5vcfnp_4iter_2_itervariants(CYTHON_UNUSED PyObject *__
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_filter_ids);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_filter_ids);
   __pyx_cur_scope->__pyx_v_flatten_filter = __pyx_v_flatten_filter;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_flatten_filter);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_flatten_filter);
   __pyx_cur_scope->__pyx_v_parse_info = __pyx_v_parse_info;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_parse_info);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_parse_info);
+  __pyx_cur_scope->__pyx_v_truncate = __pyx_v_truncate;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_truncate);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_truncate);
   {
     __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_4generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_itervariants, __pyx_n_s_itervariants); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_cur_scope);
@@ -2973,11 +3040,20 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
   PyObject *__pyx_r = NULL;
   PyObject *__pyx_t_1 = NULL;
   Py_ssize_t __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  vcf::VariantCallFile *__pyx_t_4;
-  std::string __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
+  PyObject *(*__pyx_t_3)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
+  vcf::VariantCallFile *__pyx_t_5;
+  std::string __pyx_t_6;
+  bool __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *(*__pyx_t_13)(PyObject *);
+  Py_ssize_t __pyx_t_14;
+  PyObject *(*__pyx_t_15)(PyObject *);
+  int __pyx_t_16;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2985,7 +3061,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
   __Pyx_RefNannySetupContext("None", 0);
   switch (__pyx_generator->resume_label) {
     case 0: goto __pyx_L3_first_run;
-    case 1: goto __pyx_L10_resume_from_yield;
+    case 1: goto __pyx_L19_resume_from_yield;
     default: /* CPython raises the right error here */
     __Pyx_RefNannyFinishContext();
     return NULL;
@@ -3000,23 +3076,49 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  */
-  if (unlikely(__pyx_cur_scope->__pyx_v_vcf_fns == Py_None)) {
-    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) {
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+    __pyx_t_3 = NULL;
+  } else {
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
-    if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
-    #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    #endif
+    if (likely(!__pyx_t_3)) {
+      if (likely(PyList_CheckExact(__pyx_t_1))) {
+        if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      } else {
+        if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      }
+    } else {
+      __pyx_t_4 = __pyx_t_3(__pyx_t_1);
+      if (unlikely(!__pyx_t_4)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_4);
+    }
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_vcf_fn);
-    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_3);
-    __pyx_t_3 = 0;
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
 
     /* "vcfnp/iter.pyx":103
  *     # work through multiple VCFs if provided
@@ -3026,12 +3128,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
  *         # set whether INFO field needs to be parsed
  */
     try {
-      __pyx_t_4 = new vcf::VariantCallFile();
+      __pyx_t_5 = new vcf::VariantCallFile();
     } catch(...) {
       __Pyx_CppExn2PyErr();
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_4;
+    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_5;
 
     /* "vcfnp/iter.pyx":104
  *     for vcf_fn in vcf_fns:
@@ -3040,9 +3142,9 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
  *         # set whether INFO field needs to be parsed
  *         variant_file.parseInfo = parse_info
  */
-    __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     try {
-      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_6);
     } catch(...) {
       __Pyx_CppExn2PyErr();
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -3055,124 +3157,423 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
  *         # set whether samples fields need to be parsed
  *         variant_file.parseSamples = False
  */
-    __pyx_cur_scope->__pyx_v_variant_file->parseInfo = __pyx_cur_scope->__pyx_v_parse_info;
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_parse_info); if (unlikely((__pyx_t_7 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_cur_scope->__pyx_v_variant_file->parseInfo = __pyx_t_7;
 
     /* "vcfnp/iter.pyx":108
  *         variant_file.parseInfo = parse_info
  *         # set whether samples fields need to be parsed
  *         variant_file.parseSamples = False             # <<<<<<<<<<<<<<
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             # set genome region to extract variants from
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 0;
 
     /* "vcfnp/iter.pyx":109
  *         # set whether samples fields need to be parsed
  *         variant_file.parseSamples = False
- *         if region is not None:             # <<<<<<<<<<<<<<
- *             # set genome region to extract variants from
- *             region_set = variant_file.setRegion(region)
- */
-    __pyx_t_6 = (__pyx_cur_scope->__pyx_v_region != ((PyObject*)Py_None));
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (__pyx_t_7) {
-
-      /* "vcfnp/iter.pyx":111
+ *         region_start, region_stop = None, None             # <<<<<<<<<<<<<<
  *         if region is not None:
  *             # set genome region to extract variants from
- *             region_set = variant_file.setRegion(region)             # <<<<<<<<<<<<<<
- *             if not region_set:
- *                 raise StopIteration
  */
-      __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_region); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_5);
+    __pyx_t_4 = Py_None;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_8 = Py_None;
+    __Pyx_INCREF(__pyx_t_8);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_8);
+    __Pyx_GIVEREF(__pyx_t_8);
+    __pyx_t_8 = 0;
+
+    /* "vcfnp/iter.pyx":110
+ *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None
+ *         if region is not None:             # <<<<<<<<<<<<<<
+ *             # set genome region to extract variants from
+ *             region_set = variant_file.setRegion(_b(region))
+ */
+    __pyx_t_9 = (__pyx_cur_scope->__pyx_v_region != Py_None);
+    __pyx_t_10 = (__pyx_t_9 != 0);
+    if (__pyx_t_10) {
 
       /* "vcfnp/iter.pyx":112
+ *         if region is not None:
  *             # set genome region to extract variants from
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))             # <<<<<<<<<<<<<<
+ *             if not region_set:
+ *                 raise StopIteration
+ */
+      __pyx_t_8 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_region, 0); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_t_8); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_6);
+
+      /* "vcfnp/iter.pyx":113
+ *             # set genome region to extract variants from
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
-      __pyx_t_7 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
-      if (__pyx_t_7) {
+      __pyx_t_10 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
+      if (__pyx_t_10) {
 
-        /* "vcfnp/iter.pyx":113
- *             region_set = variant_file.setRegion(region)
+        /* "vcfnp/iter.pyx":114
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  *                 raise StopIteration             # <<<<<<<<<<<<<<
- *         variant = new Variant(deref(variant_file))
- * 
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
  */
         __Pyx_Raise(__pyx_builtin_StopIteration, 0, 0, 0);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":112
+        /* "vcfnp/iter.pyx":113
  *             # set genome region to extract variants from
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
       }
 
-      /* "vcfnp/iter.pyx":109
- *         # set whether samples fields need to be parsed
+      /* "vcfnp/iter.pyx":115
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_kp_s_, __pyx_cur_scope->__pyx_v_region, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = (__pyx_t_10 != 0);
+      if (__pyx_t_9) {
+
+        /* "vcfnp/iter.pyx":116
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region, __pyx_n_s_split); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          if (likely(PyTuple_CheckExact(sequence))) {
+            __pyx_t_8 = PyTuple_GET_ITEM(sequence, 0); 
+            __pyx_t_11 = PyTuple_GET_ITEM(sequence, 1); 
+          } else {
+            __pyx_t_8 = PyList_GET_ITEM(sequence, 0); 
+            __pyx_t_11 = PyList_GET_ITEM(sequence, 1); 
+          }
+          __Pyx_INCREF(__pyx_t_8);
+          __Pyx_INCREF(__pyx_t_11);
+          #else
+          __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_8);
+          __pyx_t_11 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        } else {
+          Py_ssize_t index = -1;
+          __pyx_t_12 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_12);
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __pyx_t_13 = Py_TYPE(__pyx_t_12)->tp_iternext;
+          index = 0; __pyx_t_8 = __pyx_t_13(__pyx_t_12); if (unlikely(!__pyx_t_8)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_8);
+          index = 1; __pyx_t_11 = __pyx_t_13(__pyx_t_12); if (unlikely(!__pyx_t_11)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_11);
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_13(__pyx_t_12), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_13 = NULL;
+          __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+          goto __pyx_L10_unpacking_done;
+          __pyx_L9_unpacking_failed:;
+          __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+          __pyx_t_13 = NULL;
+          if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_L10_unpacking_done:;
+        }
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v__);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v__, __pyx_t_8);
+        __Pyx_GIVEREF(__pyx_t_8);
+        __pyx_t_8 = 0;
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start_stop);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_t_11);
+        __Pyx_GIVEREF(__pyx_t_11);
+        __pyx_t_11 = 0;
+
+        /* "vcfnp/iter.pyx":117
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+        __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+
+        /* "vcfnp/iter.pyx":118
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_n_s_split); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_11);
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        if (likely(PyList_CheckExact(__pyx_t_8)) || PyTuple_CheckExact(__pyx_t_8)) {
+          __pyx_t_11 = __pyx_t_8; __Pyx_INCREF(__pyx_t_11); __pyx_t_14 = 0;
+          __pyx_t_15 = NULL;
+        } else {
+          __pyx_t_14 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_t_8); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          __pyx_t_15 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_15)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        for (;;) {
+          if (likely(!__pyx_t_15)) {
+            if (likely(PyList_CheckExact(__pyx_t_11))) {
+              if (__pyx_t_14 >= PyList_GET_SIZE(__pyx_t_11)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_8 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_14); __Pyx_INCREF(__pyx_t_8); __pyx_t_14++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_8 = PySequence_ITEM(__pyx_t_11, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_8);
+              #endif
+            } else {
+              if (__pyx_t_14 >= PyTuple_GET_SIZE(__pyx_t_11)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_8 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_14); __Pyx_INCREF(__pyx_t_8); __pyx_t_14++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_8 = PySequence_ITEM(__pyx_t_11, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_8);
+              #endif
+            }
+          } else {
+            __pyx_t_8 = __pyx_t_15(__pyx_t_11);
+            if (unlikely(!__pyx_t_8)) {
+              PyObject* exc_type = PyErr_Occurred();
+              if (exc_type) {
+                if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+                else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              }
+              break;
+            }
+            __Pyx_GOTREF(__pyx_t_8);
+          }
+          __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_v);
+          __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_v, __pyx_t_8);
+          __Pyx_GIVEREF(__pyx_t_8);
+          __pyx_t_8 = 0;
+
+          /* "vcfnp/iter.pyx":117
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+          __pyx_t_8 = PyNumber_Int(__pyx_cur_scope->__pyx_v_v); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_8);
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_8))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        }
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        if (1) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_11 = PyList_GET_ITEM(sequence, 0); 
+          __pyx_t_8 = PyList_GET_ITEM(sequence, 1); 
+          __Pyx_INCREF(__pyx_t_11);
+          __Pyx_INCREF(__pyx_t_8);
+          #else
+          __pyx_t_11 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_8);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        }
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_start);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_11);
+        __Pyx_GIVEREF(__pyx_t_11);
+        __pyx_t_11 = 0;
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_8);
+        __Pyx_GIVEREF(__pyx_t_8);
+        __pyx_t_8 = 0;
+
+        /* "vcfnp/iter.pyx":115
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      }
+
+      /* "vcfnp/iter.pyx":110
  *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
  *             # set genome region to extract variants from
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  */
     }
 
-    /* "vcfnp/iter.pyx":114
- *             if not region_set:
- *                 raise StopIteration
+    /* "vcfnp/iter.pyx":119
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
  *         variant = new Variant(deref(variant_file))             # <<<<<<<<<<<<<<
  * 
  *         # iterate over variants
  */
     __pyx_cur_scope->__pyx_v_variant = new vcf::Variant((*__pyx_cur_scope->__pyx_v_variant_file));
 
-    /* "vcfnp/iter.pyx":117
+    /* "vcfnp/iter.pyx":122
  * 
  *         # iterate over variants
  *         while _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:
+ */
+    while (1) {
+      __pyx_t_9 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
+      if (!__pyx_t_9) break;
+
+      /* "vcfnp/iter.pyx":123
+ *         # iterate over variants
+ *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 continue
+ */
+      __pyx_t_10 = (__pyx_cur_scope->__pyx_v_region_start != Py_None);
+      __pyx_t_16 = (__pyx_t_10 != 0);
+      if (__pyx_t_16) {
+      } else {
+        __pyx_t_9 = __pyx_t_16;
+        goto __pyx_L16_bool_binop_done;
+      }
+      __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_truncate); if (unlikely(__pyx_t_16 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__pyx_t_16) {
+      } else {
+        __pyx_t_9 = __pyx_t_16;
+        goto __pyx_L16_bool_binop_done;
+      }
+
+      /* "vcfnp/iter.pyx":124
+ *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:             # <<<<<<<<<<<<<<
+ *                 continue
+ *             yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
+ */
+      __pyx_t_4 = __Pyx_PyInt_From_long(__pyx_cur_scope->__pyx_v_variant->position); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_8 = PyObject_RichCompare(__pyx_t_4, __pyx_cur_scope->__pyx_v_region_start, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_16 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_9 = __pyx_t_16;
+      __pyx_L16_bool_binop_done:;
+
+      /* "vcfnp/iter.pyx":123
+ *         # iterate over variants
+ *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 continue
+ */
+      if (__pyx_t_9) {
+
+        /* "vcfnp/iter.pyx":125
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:
+ *                 continue             # <<<<<<<<<<<<<<
  *             yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
  * 
  */
-    while (1) {
-      __pyx_t_7 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
-      if (!__pyx_t_7) break;
+        goto __pyx_L13_continue;
 
-      /* "vcfnp/iter.pyx":118
+        /* "vcfnp/iter.pyx":123
  *         # iterate over variants
  *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 continue
+ */
+      }
+
+      /* "vcfnp/iter.pyx":126
+ *                     variant.position < region_start:
+ *                 continue
  *             yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)             # <<<<<<<<<<<<<<
  * 
  *         # clean up
  */
-      __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkvrow(__pyx_cur_scope->__pyx_v_variant, __pyx_cur_scope->__pyx_v_fieldspec, __pyx_cur_scope->__pyx_v_filter_ids, __pyx_cur_scope->__pyx_v_flatten_filter); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_r = __pyx_t_3;
-      __pyx_t_3 = 0;
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_fieldspec))||((__pyx_cur_scope->__pyx_v_fieldspec) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_fieldspec)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_filter_ids))||((__pyx_cur_scope->__pyx_v_filter_ids) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_filter_ids)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_flatten_filter); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __pyx_f_5vcfnp_4iter__mkvrow(__pyx_cur_scope->__pyx_v_variant, ((PyObject*)__pyx_cur_scope->__pyx_v_fieldspec), ((PyObject*)__pyx_cur_scope->__pyx_v_filter_ids), __pyx_t_9); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_r = __pyx_t_8;
+      __pyx_t_8 = 0;
       __Pyx_XGIVEREF(__pyx_t_1);
       __pyx_cur_scope->__pyx_t_0 = __pyx_t_1;
       __pyx_cur_scope->__pyx_t_1 = __pyx_t_2;
+      __pyx_cur_scope->__pyx_t_2 = __pyx_t_3;
       __Pyx_XGIVEREF(__pyx_r);
       __Pyx_RefNannyFinishContext();
       /* return from generator, yielding value */
       __pyx_generator->resume_label = 1;
       return __pyx_r;
-      __pyx_L10_resume_from_yield:;
+      __pyx_L19_resume_from_yield:;
       __pyx_t_1 = __pyx_cur_scope->__pyx_t_0;
       __pyx_cur_scope->__pyx_t_0 = 0;
       __Pyx_XGOTREF(__pyx_t_1);
       __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
-      if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __pyx_cur_scope->__pyx_t_2;
+      if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_L13_continue:;
     }
 
-    /* "vcfnp/iter.pyx":121
+    /* "vcfnp/iter.pyx":129
  * 
  *         # clean up
  *         del variant_file             # <<<<<<<<<<<<<<
@@ -3181,7 +3582,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
  */
     delete __pyx_cur_scope->__pyx_v_variant_file;
 
-    /* "vcfnp/iter.pyx":122
+    /* "vcfnp/iter.pyx":130
  *         # clean up
  *         del variant_file
  *         del variant             # <<<<<<<<<<<<<<
@@ -3203,8 +3604,8 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
   /* "vcfnp/iter.pyx":94
  * 
  * 
- * def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                   tuple filter_ids, bint flatten_filter, bint parse_info):
+ * def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,             # <<<<<<<<<<<<<<
+ *                   parse_info, truncate):
  * 
  */
 
@@ -3213,7 +3614,10 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_AddTraceback("_itervariants", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
@@ -3224,26 +3628,27 @@ static PyObject *__pyx_gb_5vcfnp_4iter_4generator(__pyx_CoroutineObject *__pyx_g
 }
 static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
 
-/* "vcfnp/iter.pyx":125
+/* "vcfnp/iter.pyx":133
  * 
  * 
- * def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                                  tuple filter_ids, bint flatten_filter,
- *                                  bint parse_info, np.uint8_t[:] condition):
+ * def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,             # <<<<<<<<<<<<<<
+ *                                  flatten_filter, parse_info, np.uint8_t[:]
+ *                                  condition, truncate):
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_5vcfnp_4iter_6_itervariants_with_condition(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5vcfnp_4iter_5_itervariants_with_condition[] = "_itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec, tuple filter_ids, bool flatten_filter, bool parse_info, __Pyx_memviewslice condition)";
+static char __pyx_doc_5vcfnp_4iter_5_itervariants_with_condition[] = "_itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids, flatten_filter, parse_info, __Pyx_memviewslice condition, truncate)";
 static PyMethodDef __pyx_mdef_5vcfnp_4iter_6_itervariants_with_condition = {"_itervariants_with_condition", (PyCFunction)__pyx_pw_5vcfnp_4iter_6_itervariants_with_condition, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5vcfnp_4iter_5_itervariants_with_condition};
 static PyObject *__pyx_pw_5vcfnp_4iter_6_itervariants_with_condition(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vcf_fns = 0;
   PyObject *__pyx_v_region = 0;
   PyObject *__pyx_v_fieldspec = 0;
   PyObject *__pyx_v_filter_ids = 0;
-  int __pyx_v_flatten_filter;
-  int __pyx_v_parse_info;
+  PyObject *__pyx_v_flatten_filter = 0;
+  PyObject *__pyx_v_parse_info = 0;
   __Pyx_memviewslice __pyx_v_condition = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_v_truncate = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3251,12 +3656,13 @@ static PyObject *__pyx_pw_5vcfnp_4iter_6_itervariants_with_condition(PyObject *_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_itervariants_with_condition (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_fieldspec,&__pyx_n_s_filter_ids,&__pyx_n_s_flatten_filter,&__pyx_n_s_parse_info,&__pyx_n_s_condition,0};
-    PyObject* values[7] = {0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_fieldspec,&__pyx_n_s_filter_ids,&__pyx_n_s_flatten_filter,&__pyx_n_s_parse_info,&__pyx_n_s_condition,&__pyx_n_s_truncate,0};
+    PyObject* values[8] = {0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -3275,38 +3681,43 @@ static PyObject *__pyx_pw_5vcfnp_4iter_6_itervariants_with_condition(PyObject *_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fieldspec)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_filter_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_flatten_filter)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_parse_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_condition)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case  7:
+        if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_truncate)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itervariants_with_condition") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itervariants_with_condition") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -3316,39 +3727,33 @@ static PyObject *__pyx_pw_5vcfnp_4iter_6_itervariants_with_condition(PyObject *_
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+      values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
-    __pyx_v_vcf_fns = ((PyObject*)values[0]);
-    __pyx_v_region = ((PyObject*)values[1]);
-    __pyx_v_fieldspec = ((PyObject*)values[2]);
-    __pyx_v_filter_ids = ((PyObject*)values[3]);
-    __pyx_v_flatten_filter = __Pyx_PyObject_IsTrue(values[4]); if (unlikely((__pyx_v_flatten_filter == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_parse_info = __Pyx_PyObject_IsTrue(values[5]); if (unlikely((__pyx_v_parse_info == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_condition = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_uint8_t(values[6]); if (unlikely(!__pyx_v_condition.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_vcf_fns = values[0];
+    __pyx_v_region = values[1];
+    __pyx_v_fieldspec = values[2];
+    __pyx_v_filter_ids = values[3];
+    __pyx_v_flatten_filter = values[4];
+    __pyx_v_parse_info = values[5];
+    __pyx_v_condition = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_uint8_t(values[6]); if (unlikely(!__pyx_v_condition.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_truncate = values[7];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_itervariants_with_condition", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter._itervariants_with_condition", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_vcf_fns), (&PyTuple_Type), 1, "vcf_fns", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_region), (&PyBytes_Type), 1, "region", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_fieldspec), (&PyTuple_Type), 1, "fieldspec", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_filter_ids), (&PyTuple_Type), 1, "filter_ids", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_fieldspec, __pyx_v_filter_ids, __pyx_v_flatten_filter, __pyx_v_parse_info, __pyx_v_condition);
+  __pyx_r = __pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_fieldspec, __pyx_v_filter_ids, __pyx_v_flatten_filter, __pyx_v_parse_info, __pyx_v_condition, __pyx_v_truncate);
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, int __pyx_v_flatten_filter, int __pyx_v_parse_info, __Pyx_memviewslice __pyx_v_condition) {
+static PyObject *__pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_filter_ids, PyObject *__pyx_v_flatten_filter, PyObject *__pyx_v_parse_info, __Pyx_memviewslice __pyx_v_condition, PyObject *__pyx_v_truncate) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3375,10 +3780,17 @@ static PyObject *__pyx_pf_5vcfnp_4iter_5_itervariants_with_condition(CYTHON_UNUS
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_filter_ids);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_filter_ids);
   __pyx_cur_scope->__pyx_v_flatten_filter = __pyx_v_flatten_filter;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_flatten_filter);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_flatten_filter);
   __pyx_cur_scope->__pyx_v_parse_info = __pyx_v_parse_info;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_parse_info);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_parse_info);
   __pyx_cur_scope->__pyx_v_condition = __pyx_v_condition;
+  __pyx_cur_scope->__pyx_v_truncate = __pyx_v_truncate;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_truncate);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_truncate);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_7generator1, (PyObject *) __pyx_cur_scope, __pyx_n_s_itervariants_with_condition, __pyx_n_s_itervariants_with_condition); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_7generator1, (PyObject *) __pyx_cur_scope, __pyx_n_s_itervariants_with_condition, __pyx_n_s_itervariants_with_condition); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -3401,13 +3813,22 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
   PyObject *__pyx_r = NULL;
   PyObject *__pyx_t_1 = NULL;
   Py_ssize_t __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  vcf::VariantCallFile *__pyx_t_4;
-  std::string __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
+  PyObject *(*__pyx_t_3)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
+  vcf::VariantCallFile *__pyx_t_5;
+  std::string __pyx_t_6;
+  bool __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
   int __pyx_t_9;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *(*__pyx_t_13)(PyObject *);
+  Py_ssize_t __pyx_t_14;
+  PyObject *(*__pyx_t_15)(PyObject *);
+  int __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
+  int __pyx_t_18;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3415,15 +3836,15 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
   __Pyx_RefNannySetupContext("None", 0);
   switch (__pyx_generator->resume_label) {
     case 0: goto __pyx_L3_first_run;
-    case 1: goto __pyx_L13_resume_from_yield;
+    case 1: goto __pyx_L22_resume_from_yield;
     default: /* CPython raises the right error here */
     __Pyx_RefNannyFinishContext();
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":132
+  /* "vcfnp/iter.pyx":140
  *     cdef VariantCallFile *variant_file
  *     cdef Variant *variant
  *     cdef long i = 0             # <<<<<<<<<<<<<<
@@ -3432,45 +3853,71 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
  */
   __pyx_cur_scope->__pyx_v_i = 0;
 
-  /* "vcfnp/iter.pyx":133
+  /* "vcfnp/iter.pyx":141
  *     cdef Variant *variant
  *     cdef long i = 0
  *     cdef long n = len(condition)             # <<<<<<<<<<<<<<
  * 
  *     for vcf_fn in vcf_fns:
  */
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_cur_scope->__pyx_v_condition, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_uint8_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_uint8_t, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_cur_scope->__pyx_v_condition, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_uint8_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_uint8_t, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 141; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 141; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_cur_scope->__pyx_v_n = __pyx_t_2;
 
-  /* "vcfnp/iter.pyx":135
+  /* "vcfnp/iter.pyx":143
  *     cdef long n = len(condition)
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  */
-  if (unlikely(__pyx_cur_scope->__pyx_v_vcf_fns == Py_None)) {
-    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) {
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+    __pyx_t_3 = NULL;
+  } else {
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
-    if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
-    #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    #endif
+    if (likely(!__pyx_t_3)) {
+      if (likely(PyList_CheckExact(__pyx_t_1))) {
+        if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      } else {
+        if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      }
+    } else {
+      __pyx_t_4 = __pyx_t_3(__pyx_t_1);
+      if (unlikely(!__pyx_t_4)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_4);
+    }
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_vcf_fn);
-    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_3);
-    __pyx_t_3 = 0;
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
 
-    /* "vcfnp/iter.pyx":136
+    /* "vcfnp/iter.pyx":144
  * 
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()             # <<<<<<<<<<<<<<
@@ -3478,190 +3925,497 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
  *         variant_file.parseInfo = parse_info
  */
     try {
-      __pyx_t_4 = new vcf::VariantCallFile();
+      __pyx_t_5 = new vcf::VariantCallFile();
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_4;
+    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_5;
 
-    /* "vcfnp/iter.pyx":137
+    /* "vcfnp/iter.pyx":145
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)             # <<<<<<<<<<<<<<
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False
  */
-    __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     try {
-      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_6);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "vcfnp/iter.pyx":138
+    /* "vcfnp/iter.pyx":146
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = parse_info             # <<<<<<<<<<<<<<
  *         variant_file.parseSamples = False
- *         if region is not None:
+ *         region_start, region_stop = None, None
  */
-    __pyx_cur_scope->__pyx_v_variant_file->parseInfo = __pyx_cur_scope->__pyx_v_parse_info;
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_parse_info); if (unlikely((__pyx_t_7 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_cur_scope->__pyx_v_variant_file->parseInfo = __pyx_t_7;
 
-    /* "vcfnp/iter.pyx":139
+    /* "vcfnp/iter.pyx":147
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False             # <<<<<<<<<<<<<<
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 0;
 
-    /* "vcfnp/iter.pyx":140
+    /* "vcfnp/iter.pyx":148
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None             # <<<<<<<<<<<<<<
+ *         if region is not None:
+ *             region_set = variant_file.setRegion(_b(region))
+ */
+    __pyx_t_4 = Py_None;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_8 = Py_None;
+    __Pyx_INCREF(__pyx_t_8);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_8);
+    __Pyx_GIVEREF(__pyx_t_8);
+    __pyx_t_8 = 0;
+
+    /* "vcfnp/iter.pyx":149
+ *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  */
-    __pyx_t_6 = (__pyx_cur_scope->__pyx_v_region != ((PyObject*)Py_None));
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (__pyx_t_7) {
+    __pyx_t_9 = (__pyx_cur_scope->__pyx_v_region != Py_None);
+    __pyx_t_10 = (__pyx_t_9 != 0);
+    if (__pyx_t_10) {
 
-      /* "vcfnp/iter.pyx":141
- *         variant_file.parseSamples = False
+      /* "vcfnp/iter.pyx":150
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)             # <<<<<<<<<<<<<<
+ *             region_set = variant_file.setRegion(_b(region))             # <<<<<<<<<<<<<<
  *             if not region_set:
  *                 raise StopIteration
  */
-      __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_region); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 141; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_5);
+      __pyx_t_8 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_region, 0); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_t_8); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_6);
 
-      /* "vcfnp/iter.pyx":142
+      /* "vcfnp/iter.pyx":151
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
-      __pyx_t_7 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
-      if (__pyx_t_7) {
+      __pyx_t_10 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
+      if (__pyx_t_10) {
 
-        /* "vcfnp/iter.pyx":143
- *             region_set = variant_file.setRegion(region)
+        /* "vcfnp/iter.pyx":152
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  *                 raise StopIteration             # <<<<<<<<<<<<<<
- *         variant = new Variant(deref(variant_file))
- * 
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
  */
         __Pyx_Raise(__pyx_builtin_StopIteration, 0, 0, 0);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":142
+        /* "vcfnp/iter.pyx":151
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
       }
 
-      /* "vcfnp/iter.pyx":140
- *         variant_file.parseInfo = parse_info
+      /* "vcfnp/iter.pyx":153
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_kp_s_, __pyx_cur_scope->__pyx_v_region, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = (__pyx_t_10 != 0);
+      if (__pyx_t_9) {
+
+        /* "vcfnp/iter.pyx":154
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region, __pyx_n_s_split); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          if (likely(PyTuple_CheckExact(sequence))) {
+            __pyx_t_8 = PyTuple_GET_ITEM(sequence, 0); 
+            __pyx_t_11 = PyTuple_GET_ITEM(sequence, 1); 
+          } else {
+            __pyx_t_8 = PyList_GET_ITEM(sequence, 0); 
+            __pyx_t_11 = PyList_GET_ITEM(sequence, 1); 
+          }
+          __Pyx_INCREF(__pyx_t_8);
+          __Pyx_INCREF(__pyx_t_11);
+          #else
+          __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_8);
+          __pyx_t_11 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        } else {
+          Py_ssize_t index = -1;
+          __pyx_t_12 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_12);
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __pyx_t_13 = Py_TYPE(__pyx_t_12)->tp_iternext;
+          index = 0; __pyx_t_8 = __pyx_t_13(__pyx_t_12); if (unlikely(!__pyx_t_8)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_8);
+          index = 1; __pyx_t_11 = __pyx_t_13(__pyx_t_12); if (unlikely(!__pyx_t_11)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_11);
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_13(__pyx_t_12), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_13 = NULL;
+          __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+          goto __pyx_L10_unpacking_done;
+          __pyx_L9_unpacking_failed:;
+          __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+          __pyx_t_13 = NULL;
+          if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_L10_unpacking_done:;
+        }
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v__);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v__, __pyx_t_8);
+        __Pyx_GIVEREF(__pyx_t_8);
+        __pyx_t_8 = 0;
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start_stop);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_t_11);
+        __Pyx_GIVEREF(__pyx_t_11);
+        __pyx_t_11 = 0;
+
+        /* "vcfnp/iter.pyx":155
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+        __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+
+        /* "vcfnp/iter.pyx":156
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_n_s_split); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_11);
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        if (likely(PyList_CheckExact(__pyx_t_8)) || PyTuple_CheckExact(__pyx_t_8)) {
+          __pyx_t_11 = __pyx_t_8; __Pyx_INCREF(__pyx_t_11); __pyx_t_14 = 0;
+          __pyx_t_15 = NULL;
+        } else {
+          __pyx_t_14 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_t_8); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          __pyx_t_15 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_15)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        for (;;) {
+          if (likely(!__pyx_t_15)) {
+            if (likely(PyList_CheckExact(__pyx_t_11))) {
+              if (__pyx_t_14 >= PyList_GET_SIZE(__pyx_t_11)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_8 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_14); __Pyx_INCREF(__pyx_t_8); __pyx_t_14++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_8 = PySequence_ITEM(__pyx_t_11, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_8);
+              #endif
+            } else {
+              if (__pyx_t_14 >= PyTuple_GET_SIZE(__pyx_t_11)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_8 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_14); __Pyx_INCREF(__pyx_t_8); __pyx_t_14++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_8 = PySequence_ITEM(__pyx_t_11, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_8);
+              #endif
+            }
+          } else {
+            __pyx_t_8 = __pyx_t_15(__pyx_t_11);
+            if (unlikely(!__pyx_t_8)) {
+              PyObject* exc_type = PyErr_Occurred();
+              if (exc_type) {
+                if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+                else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              }
+              break;
+            }
+            __Pyx_GOTREF(__pyx_t_8);
+          }
+          __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_v);
+          __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_v, __pyx_t_8);
+          __Pyx_GIVEREF(__pyx_t_8);
+          __pyx_t_8 = 0;
+
+          /* "vcfnp/iter.pyx":155
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+          __pyx_t_8 = PyNumber_Int(__pyx_cur_scope->__pyx_v_v); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_8);
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_8))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        }
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        if (1) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_11 = PyList_GET_ITEM(sequence, 0); 
+          __pyx_t_8 = PyList_GET_ITEM(sequence, 1); 
+          __Pyx_INCREF(__pyx_t_11);
+          __Pyx_INCREF(__pyx_t_8);
+          #else
+          __pyx_t_11 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 155; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_8);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        }
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_start);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_11);
+        __Pyx_GIVEREF(__pyx_t_11);
+        __pyx_t_11 = 0;
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_8);
+        __Pyx_GIVEREF(__pyx_t_8);
+        __pyx_t_8 = 0;
+
+        /* "vcfnp/iter.pyx":153
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      }
+
+      /* "vcfnp/iter.pyx":149
  *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  */
     }
 
-    /* "vcfnp/iter.pyx":144
- *             if not region_set:
- *                 raise StopIteration
+    /* "vcfnp/iter.pyx":157
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
  *         variant = new Variant(deref(variant_file))             # <<<<<<<<<<<<<<
  * 
  *         while i < n and _get_next_variant(variant_file, variant):
  */
     __pyx_cur_scope->__pyx_v_variant = new vcf::Variant((*__pyx_cur_scope->__pyx_v_variant_file));
 
-    /* "vcfnp/iter.pyx":146
+    /* "vcfnp/iter.pyx":159
  *         variant = new Variant(deref(variant_file))
  * 
  *         while i < n and _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:
+ */
+    while (1) {
+      __pyx_t_10 = ((__pyx_cur_scope->__pyx_v_i < __pyx_cur_scope->__pyx_v_n) != 0);
+      if (__pyx_t_10) {
+      } else {
+        __pyx_t_9 = __pyx_t_10;
+        goto __pyx_L15_bool_binop_done;
+      }
+      __pyx_t_10 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
+      __pyx_t_9 = __pyx_t_10;
+      __pyx_L15_bool_binop_done:;
+      if (!__pyx_t_9) break;
+
+      /* "vcfnp/iter.pyx":160
+ * 
+ *         while i < n and _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 i += 1
+ */
+      __pyx_t_10 = (__pyx_cur_scope->__pyx_v_region_start != Py_None);
+      __pyx_t_16 = (__pyx_t_10 != 0);
+      if (__pyx_t_16) {
+      } else {
+        __pyx_t_9 = __pyx_t_16;
+        goto __pyx_L18_bool_binop_done;
+      }
+      __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_truncate); if (unlikely(__pyx_t_16 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__pyx_t_16) {
+      } else {
+        __pyx_t_9 = __pyx_t_16;
+        goto __pyx_L18_bool_binop_done;
+      }
+
+      /* "vcfnp/iter.pyx":161
+ *         while i < n and _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:             # <<<<<<<<<<<<<<
+ *                 i += 1
+ *                 continue
+ */
+      __pyx_t_4 = __Pyx_PyInt_From_long(__pyx_cur_scope->__pyx_v_variant->position); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_8 = PyObject_RichCompare(__pyx_t_4, __pyx_cur_scope->__pyx_v_region_start, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_16 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_9 = __pyx_t_16;
+      __pyx_L18_bool_binop_done:;
+
+      /* "vcfnp/iter.pyx":160
+ * 
+ *         while i < n and _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 i += 1
+ */
+      if (__pyx_t_9) {
+
+        /* "vcfnp/iter.pyx":162
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:
+ *                 i += 1             # <<<<<<<<<<<<<<
+ *                 continue
+ *             if condition[i]:
+ */
+        __pyx_cur_scope->__pyx_v_i = (__pyx_cur_scope->__pyx_v_i + 1);
+
+        /* "vcfnp/iter.pyx":163
+ *                     variant.position < region_start:
+ *                 i += 1
+ *                 continue             # <<<<<<<<<<<<<<
  *             if condition[i]:
  *                 yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
  */
-    while (1) {
-      __pyx_t_6 = ((__pyx_cur_scope->__pyx_v_i < __pyx_cur_scope->__pyx_v_n) != 0);
-      if (__pyx_t_6) {
-      } else {
-        __pyx_t_7 = __pyx_t_6;
-        goto __pyx_L10_bool_binop_done;
-      }
-      __pyx_t_6 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
-      __pyx_t_7 = __pyx_t_6;
-      __pyx_L10_bool_binop_done:;
-      if (!__pyx_t_7) break;
+        goto __pyx_L13_continue;
 
-      /* "vcfnp/iter.pyx":147
+        /* "vcfnp/iter.pyx":160
  * 
  *         while i < n and _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 i += 1
+ */
+      }
+
+      /* "vcfnp/iter.pyx":164
+ *                 i += 1
+ *                 continue
  *             if condition[i]:             # <<<<<<<<<<<<<<
  *                 yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
  *             i += 1
  */
-      __pyx_t_8 = __pyx_cur_scope->__pyx_v_i;
-      __pyx_t_9 = -1;
-      if (__pyx_t_8 < 0) {
-        __pyx_t_9 = 0;
-      } else if (unlikely(__pyx_t_8 >= __pyx_cur_scope->__pyx_v_condition.shape[0])) __pyx_t_9 = 0;
-      if (unlikely(__pyx_t_9 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_9);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_17 = __pyx_cur_scope->__pyx_v_i;
+      __pyx_t_18 = -1;
+      if (__pyx_t_17 < 0) {
+        __pyx_t_18 = 0;
+      } else if (unlikely(__pyx_t_17 >= __pyx_cur_scope->__pyx_v_condition.shape[0])) __pyx_t_18 = 0;
+      if (unlikely(__pyx_t_18 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_18);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_7 = ((*((__pyx_t_5numpy_uint8_t *) ( /* dim=0 */ (__pyx_cur_scope->__pyx_v_condition.data + __pyx_t_8 * __pyx_cur_scope->__pyx_v_condition.strides[0]) ))) != 0);
-      if (__pyx_t_7) {
+      __pyx_t_9 = ((*((__pyx_t_5numpy_uint8_t *) ( /* dim=0 */ (__pyx_cur_scope->__pyx_v_condition.data + __pyx_t_17 * __pyx_cur_scope->__pyx_v_condition.strides[0]) ))) != 0);
+      if (__pyx_t_9) {
 
-        /* "vcfnp/iter.pyx":148
- *         while i < n and _get_next_variant(variant_file, variant):
+        /* "vcfnp/iter.pyx":165
+ *                 continue
  *             if condition[i]:
  *                 yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)             # <<<<<<<<<<<<<<
  *             i += 1
  * 
  */
-        __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkvrow(__pyx_cur_scope->__pyx_v_variant, __pyx_cur_scope->__pyx_v_fieldspec, __pyx_cur_scope->__pyx_v_filter_ids, __pyx_cur_scope->__pyx_v_flatten_filter); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-        __Pyx_GOTREF(__pyx_t_3);
-        __pyx_r = __pyx_t_3;
-        __pyx_t_3 = 0;
+        if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_fieldspec))||((__pyx_cur_scope->__pyx_v_fieldspec) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_fieldspec)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_filter_ids))||((__pyx_cur_scope->__pyx_v_filter_ids) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_filter_ids)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_flatten_filter); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_8 = __pyx_f_5vcfnp_4iter__mkvrow(__pyx_cur_scope->__pyx_v_variant, ((PyObject*)__pyx_cur_scope->__pyx_v_fieldspec), ((PyObject*)__pyx_cur_scope->__pyx_v_filter_ids), __pyx_t_9); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_r = __pyx_t_8;
+        __pyx_t_8 = 0;
         __Pyx_XGIVEREF(__pyx_t_1);
         __pyx_cur_scope->__pyx_t_0 = __pyx_t_1;
         __pyx_cur_scope->__pyx_t_1 = __pyx_t_2;
-        __pyx_cur_scope->__pyx_t_2 = __pyx_t_8;
+        __pyx_cur_scope->__pyx_t_2 = __pyx_t_3;
+        __pyx_cur_scope->__pyx_t_3 = __pyx_t_17;
         __Pyx_XGIVEREF(__pyx_r);
         __Pyx_RefNannyFinishContext();
         /* return from generator, yielding value */
         __pyx_generator->resume_label = 1;
         return __pyx_r;
-        __pyx_L13_resume_from_yield:;
+        __pyx_L22_resume_from_yield:;
         __pyx_t_1 = __pyx_cur_scope->__pyx_t_0;
         __pyx_cur_scope->__pyx_t_0 = 0;
         __Pyx_XGOTREF(__pyx_t_1);
         __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
-        __pyx_t_8 = __pyx_cur_scope->__pyx_t_2;
-        if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_3 = __pyx_cur_scope->__pyx_t_2;
+        __pyx_t_17 = __pyx_cur_scope->__pyx_t_3;
+        if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":147
- * 
- *         while i < n and _get_next_variant(variant_file, variant):
+        /* "vcfnp/iter.pyx":164
+ *                 i += 1
+ *                 continue
  *             if condition[i]:             # <<<<<<<<<<<<<<
  *                 yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
  *             i += 1
  */
       }
 
-      /* "vcfnp/iter.pyx":149
+      /* "vcfnp/iter.pyx":166
  *             if condition[i]:
  *                 yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
  *             i += 1             # <<<<<<<<<<<<<<
@@ -3669,9 +4423,10 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
  *         del variant_file
  */
       __pyx_cur_scope->__pyx_v_i = (__pyx_cur_scope->__pyx_v_i + 1);
+      __pyx_L13_continue:;
     }
 
-    /* "vcfnp/iter.pyx":151
+    /* "vcfnp/iter.pyx":168
  *             i += 1
  * 
  *         del variant_file             # <<<<<<<<<<<<<<
@@ -3680,7 +4435,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
  */
     delete __pyx_cur_scope->__pyx_v_variant_file;
 
-    /* "vcfnp/iter.pyx":152
+    /* "vcfnp/iter.pyx":169
  * 
  *         del variant_file
  *         del variant             # <<<<<<<<<<<<<<
@@ -3689,7 +4444,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
  */
     delete __pyx_cur_scope->__pyx_v_variant;
 
-    /* "vcfnp/iter.pyx":135
+    /* "vcfnp/iter.pyx":143
  *     cdef long n = len(condition)
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
@@ -3699,12 +4454,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":125
+  /* "vcfnp/iter.pyx":133
  * 
  * 
- * def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                                  tuple filter_ids, bint flatten_filter,
- *                                  bint parse_info, np.uint8_t[:] condition):
+ * def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,             # <<<<<<<<<<<<<<
+ *                                  flatten_filter, parse_info, np.uint8_t[:]
+ *                                  condition, truncate):
  */
 
   /* function exit code */
@@ -3712,7 +4467,10 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_AddTraceback("_itervariants_with_condition", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
@@ -3722,7 +4480,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_7generator1(__pyx_CoroutineObject *__pyx_
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":155
+/* "vcfnp/iter.pyx":172
  * 
  * 
  * cdef inline bool _get_next_variant(VariantCallFile *variant_file,             # <<<<<<<<<<<<<<
@@ -3735,7 +4493,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__get_next_variant(vcf::VariantCal
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_get_next_variant", 0);
 
-  /* "vcfnp/iter.pyx":158
+  /* "vcfnp/iter.pyx":175
  *                                    Variant *variant):
  *     # break this out into a separate function so we can profile it
  *     return variant_file.getNextVariant(deref(variant))             # <<<<<<<<<<<<<<
@@ -3745,7 +4503,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__get_next_variant(vcf::VariantCal
   __pyx_r = __pyx_v_variant_file->getNextVariant((*__pyx_v_variant));
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":155
+  /* "vcfnp/iter.pyx":172
  * 
  * 
  * cdef inline bool _get_next_variant(VariantCallFile *variant_file,             # <<<<<<<<<<<<<<
@@ -3759,7 +4517,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__get_next_variant(vcf::VariantCal
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":161
+/* "vcfnp/iter.pyx":178
  * 
  * 
  * cdef inline object _mkvrow(Variant *variant, tuple fieldspec, tuple filter_ids,             # <<<<<<<<<<<<<<
@@ -3798,19 +4556,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkvrow", 0);
 
-  /* "vcfnp/iter.pyx":164
+  /* "vcfnp/iter.pyx":181
  *                            bint flatten_filter):
  *     """Make a row of variant data."""
  *     out = list()             # <<<<<<<<<<<<<<
  *     for f, arity, fill, vcf_type, transformer in fieldspec:
  *         val = _mkvval(variant, f, arity, fill, vcf_type, transformer,
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":165
+  /* "vcfnp/iter.pyx":182
  *     """Make a row of variant data."""
  *     out = list()
  *     for f, arity, fill, vcf_type, transformer in fieldspec:             # <<<<<<<<<<<<<<
@@ -3819,15 +4577,15 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
  */
   if (unlikely(__pyx_v_fieldspec == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_1 = __pyx_v_fieldspec; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
     if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     if ((likely(PyTuple_CheckExact(__pyx_t_3))) || (PyList_CheckExact(__pyx_t_3))) {
@@ -3840,7 +4598,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
       if (unlikely(size != 5)) {
         if (size > 5) __Pyx_RaiseTooManyValuesError(5);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       #if CYTHON_COMPILING_IN_CPYTHON
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -3866,7 +4624,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
         Py_ssize_t i;
         PyObject** temps[5] = {&__pyx_t_4,&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
         for (i=0; i < 5; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -3876,7 +4634,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
     } else {
       Py_ssize_t index = -1;
       PyObject** temps[5] = {&__pyx_t_4,&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
-      __pyx_t_9 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -3885,7 +4643,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
         __Pyx_GOTREF(item);
         *(temps[index]) = item;
       }
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 5) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 5) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_10 = NULL;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       goto __pyx_L6_unpacking_done;
@@ -3893,7 +4651,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_L6_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_f, __pyx_t_4);
@@ -3907,37 +4665,37 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
     __Pyx_XDECREF_SET(__pyx_v_transformer, __pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "vcfnp/iter.pyx":166
+    /* "vcfnp/iter.pyx":183
  *     out = list()
  *     for f, arity, fill, vcf_type, transformer in fieldspec:
  *         val = _mkvval(variant, f, arity, fill, vcf_type, transformer,             # <<<<<<<<<<<<<<
  *                       filter_ids)
  *         if (f == b'FILTER') and flatten_filter:
  */
-    __pyx_t_11 = __pyx_convert_string_from_py_std__in_string(__pyx_v_f); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_v_vcf_type); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = __pyx_convert_string_from_py_std__in_string(__pyx_v_f); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_v_vcf_type); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "vcfnp/iter.pyx":167
+    /* "vcfnp/iter.pyx":184
  *     for f, arity, fill, vcf_type, transformer in fieldspec:
  *         val = _mkvval(variant, f, arity, fill, vcf_type, transformer,
  *                       filter_ids)             # <<<<<<<<<<<<<<
  *         if (f == b'FILTER') and flatten_filter:
  *             out.extend(val)
  */
-    __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkvval(__pyx_v_variant, __pyx_t_11, __pyx_t_12, __pyx_v_fill, __pyx_t_13, __pyx_v_transformer, __pyx_v_filter_ids); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkvval(__pyx_v_variant, __pyx_t_11, __pyx_t_12, __pyx_v_fill, __pyx_t_13, __pyx_v_transformer, __pyx_v_filter_ids); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF_SET(__pyx_v_val, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "vcfnp/iter.pyx":168
+    /* "vcfnp/iter.pyx":185
  *         val = _mkvval(variant, f, arity, fill, vcf_type, transformer,
  *                       filter_ids)
  *         if (f == b'FILTER') and flatten_filter:             # <<<<<<<<<<<<<<
  *             out.extend(val)
  *         else:
  */
-    __pyx_t_15 = (__Pyx_PyBytes_Equals(__pyx_v_f, __pyx_n_b_FILTER, Py_EQ)); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_15 = (__Pyx_PyBytes_Equals(__pyx_v_f, __pyx_n_b_FILTER, Py_EQ)); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (__pyx_t_15) {
     } else {
       __pyx_t_14 = __pyx_t_15;
@@ -3948,16 +4706,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
     __pyx_L8_bool_binop_done:;
     if (__pyx_t_14) {
 
-      /* "vcfnp/iter.pyx":169
+      /* "vcfnp/iter.pyx":186
  *                       filter_ids)
  *         if (f == b'FILTER') and flatten_filter:
  *             out.extend(val)             # <<<<<<<<<<<<<<
  *         else:
  *             out.append(val)
  */
-      __pyx_t_16 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_16 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "vcfnp/iter.pyx":168
+      /* "vcfnp/iter.pyx":185
  *         val = _mkvval(variant, f, arity, fill, vcf_type, transformer,
  *                       filter_ids)
  *         if (f == b'FILTER') and flatten_filter:             # <<<<<<<<<<<<<<
@@ -3967,7 +4725,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":171
+    /* "vcfnp/iter.pyx":188
  *             out.extend(val)
  *         else:
  *             out.append(val)             # <<<<<<<<<<<<<<
@@ -3975,11 +4733,11 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
  * 
  */
     /*else*/ {
-      __pyx_t_16 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_16 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L7:;
 
-    /* "vcfnp/iter.pyx":165
+    /* "vcfnp/iter.pyx":182
  *     """Make a row of variant data."""
  *     out = list()
  *     for f, arity, fill, vcf_type, transformer in fieldspec:             # <<<<<<<<<<<<<<
@@ -3989,7 +4747,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":172
+  /* "vcfnp/iter.pyx":189
  *         else:
  *             out.append(val)
  *     return tuple(out)             # <<<<<<<<<<<<<<
@@ -3997,13 +4755,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":161
+  /* "vcfnp/iter.pyx":178
  * 
  * 
  * cdef inline object _mkvrow(Variant *variant, tuple fieldspec, tuple filter_ids,             # <<<<<<<<<<<<<<
@@ -4036,7 +4794,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvrow(vcf::Variant *__pyx_
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":175
+/* "vcfnp/iter.pyx":192
  * 
  * 
  * cdef inline object _mkvval(Variant *variant, string field, int arity,             # <<<<<<<<<<<<<<
@@ -4060,7 +4818,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkvval", 0);
 
-  /* "vcfnp/iter.pyx":178
+  /* "vcfnp/iter.pyx":195
  *                            object fill, int vcf_type, transformer,
  *                            tuple filter_ids):
  *     if field == FIELD_NAME_CHROM:             # <<<<<<<<<<<<<<
@@ -4070,19 +4828,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_CHROM) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":179
+    /* "vcfnp/iter.pyx":196
  *                            tuple filter_ids):
  *     if field == FIELD_NAME_CHROM:
  *         out = variant.sequenceName             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_POS:
  *         out = variant.position
  */
-    __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->sequenceName); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->sequenceName); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":178
+    /* "vcfnp/iter.pyx":195
  *                            object fill, int vcf_type, transformer,
  *                            tuple filter_ids):
  *     if field == FIELD_NAME_CHROM:             # <<<<<<<<<<<<<<
@@ -4092,7 +4850,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":180
+  /* "vcfnp/iter.pyx":197
  *     if field == FIELD_NAME_CHROM:
  *         out = variant.sequenceName
  *     elif field == FIELD_NAME_POS:             # <<<<<<<<<<<<<<
@@ -4102,19 +4860,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_POS) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":181
+    /* "vcfnp/iter.pyx":198
  *         out = variant.sequenceName
  *     elif field == FIELD_NAME_POS:
  *         out = variant.position             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_ID:
  *         out = variant.id
  */
-    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_variant->position); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_variant->position); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":180
+    /* "vcfnp/iter.pyx":197
  *     if field == FIELD_NAME_CHROM:
  *         out = variant.sequenceName
  *     elif field == FIELD_NAME_POS:             # <<<<<<<<<<<<<<
@@ -4124,7 +4882,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":182
+  /* "vcfnp/iter.pyx":199
  *     elif field == FIELD_NAME_POS:
  *         out = variant.position
  *     elif field == FIELD_NAME_ID:             # <<<<<<<<<<<<<<
@@ -4134,19 +4892,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_ID) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":183
+    /* "vcfnp/iter.pyx":200
  *         out = variant.position
  *     elif field == FIELD_NAME_ID:
  *         out = variant.id             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_REF:
  *         out = variant.ref
  */
-    __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->id); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->id); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":182
+    /* "vcfnp/iter.pyx":199
  *     elif field == FIELD_NAME_POS:
  *         out = variant.position
  *     elif field == FIELD_NAME_ID:             # <<<<<<<<<<<<<<
@@ -4156,7 +4914,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":184
+  /* "vcfnp/iter.pyx":201
  *     elif field == FIELD_NAME_ID:
  *         out = variant.id
  *     elif field == FIELD_NAME_REF:             # <<<<<<<<<<<<<<
@@ -4166,19 +4924,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_REF) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":185
+    /* "vcfnp/iter.pyx":202
  *         out = variant.id
  *     elif field == FIELD_NAME_REF:
  *         out = variant.ref             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_ALT:
  *         out = _mkaltval(variant, arity, fill)
  */
-    __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->ref); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->ref); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":184
+    /* "vcfnp/iter.pyx":201
  *     elif field == FIELD_NAME_ID:
  *         out = variant.id
  *     elif field == FIELD_NAME_REF:             # <<<<<<<<<<<<<<
@@ -4188,7 +4946,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":186
+  /* "vcfnp/iter.pyx":203
  *     elif field == FIELD_NAME_REF:
  *         out = variant.ref
  *     elif field == FIELD_NAME_ALT:             # <<<<<<<<<<<<<<
@@ -4198,19 +4956,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_ALT) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":187
+    /* "vcfnp/iter.pyx":204
  *         out = variant.ref
  *     elif field == FIELD_NAME_ALT:
  *         out = _mkaltval(variant, arity, fill)             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_QUAL:
  *         out = variant.quality
  */
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkaltval(__pyx_v_variant, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkaltval(__pyx_v_variant, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":186
+    /* "vcfnp/iter.pyx":203
  *     elif field == FIELD_NAME_REF:
  *         out = variant.ref
  *     elif field == FIELD_NAME_ALT:             # <<<<<<<<<<<<<<
@@ -4220,7 +4978,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":188
+  /* "vcfnp/iter.pyx":205
  *     elif field == FIELD_NAME_ALT:
  *         out = _mkaltval(variant, arity, fill)
  *     elif field == FIELD_NAME_QUAL:             # <<<<<<<<<<<<<<
@@ -4230,19 +4988,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_QUAL) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":189
+    /* "vcfnp/iter.pyx":206
  *         out = _mkaltval(variant, arity, fill)
  *     elif field == FIELD_NAME_QUAL:
  *         out = variant.quality             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_FILTER:
  *         out = _mkfilterval(variant, filter_ids)
  */
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_variant->quality); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_variant->quality); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 206; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":188
+    /* "vcfnp/iter.pyx":205
  *     elif field == FIELD_NAME_ALT:
  *         out = _mkaltval(variant, arity, fill)
  *     elif field == FIELD_NAME_QUAL:             # <<<<<<<<<<<<<<
@@ -4252,7 +5010,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":190
+  /* "vcfnp/iter.pyx":207
  *     elif field == FIELD_NAME_QUAL:
  *         out = variant.quality
  *     elif field == FIELD_NAME_FILTER:             # <<<<<<<<<<<<<<
@@ -4262,19 +5020,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_FILTER) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":191
+    /* "vcfnp/iter.pyx":208
  *         out = variant.quality
  *     elif field == FIELD_NAME_FILTER:
  *         out = _mkfilterval(variant, filter_ids)             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_NUM_ALLELES:
  *         out = <int>(variant.alt.size() + 1)
  */
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkfilterval(__pyx_v_variant, __pyx_v_filter_ids); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkfilterval(__pyx_v_variant, __pyx_v_filter_ids); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":190
+    /* "vcfnp/iter.pyx":207
  *     elif field == FIELD_NAME_QUAL:
  *         out = variant.quality
  *     elif field == FIELD_NAME_FILTER:             # <<<<<<<<<<<<<<
@@ -4284,7 +5042,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":192
+  /* "vcfnp/iter.pyx":209
  *     elif field == FIELD_NAME_FILTER:
  *         out = _mkfilterval(variant, filter_ids)
  *     elif field == FIELD_NAME_NUM_ALLELES:             # <<<<<<<<<<<<<<
@@ -4294,19 +5052,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_NUM_ALLELES) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":193
+    /* "vcfnp/iter.pyx":210
  *         out = _mkfilterval(variant, filter_ids)
  *     elif field == FIELD_NAME_NUM_ALLELES:
  *         out = <int>(variant.alt.size() + 1)             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_IS_SNP:
  *         out = _is_snp(variant)
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(((int)(__pyx_v_variant->alt.size() + 1))); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyInt_From_int(((int)(__pyx_v_variant->alt.size() + 1))); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":192
+    /* "vcfnp/iter.pyx":209
  *     elif field == FIELD_NAME_FILTER:
  *         out = _mkfilterval(variant, filter_ids)
  *     elif field == FIELD_NAME_NUM_ALLELES:             # <<<<<<<<<<<<<<
@@ -4316,7 +5074,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":194
+  /* "vcfnp/iter.pyx":211
  *     elif field == FIELD_NAME_NUM_ALLELES:
  *         out = <int>(variant.alt.size() + 1)
  *     elif field == FIELD_NAME_IS_SNP:             # <<<<<<<<<<<<<<
@@ -4326,19 +5084,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_IS_SNP) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":195
+    /* "vcfnp/iter.pyx":212
  *         out = <int>(variant.alt.size() + 1)
  *     elif field == FIELD_NAME_IS_SNP:
  *         out = _is_snp(variant)             # <<<<<<<<<<<<<<
  *     elif field == FIELD_NAME_SVLEN:
  *         out = _svlen(variant, arity, fill)
  */
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__is_snp(__pyx_v_variant); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__is_snp(__pyx_v_variant); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":194
+    /* "vcfnp/iter.pyx":211
  *     elif field == FIELD_NAME_NUM_ALLELES:
  *         out = <int>(variant.alt.size() + 1)
  *     elif field == FIELD_NAME_IS_SNP:             # <<<<<<<<<<<<<<
@@ -4348,7 +5106,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":196
+  /* "vcfnp/iter.pyx":213
  *     elif field == FIELD_NAME_IS_SNP:
  *         out = _is_snp(variant)
  *     elif field == FIELD_NAME_SVLEN:             # <<<<<<<<<<<<<<
@@ -4358,19 +5116,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_SVLEN) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":197
+    /* "vcfnp/iter.pyx":214
  *         out = _is_snp(variant)
  *     elif field == FIELD_NAME_SVLEN:
  *         out = _svlen(variant, arity, fill)             # <<<<<<<<<<<<<<
  *     elif transformer is not None:
  *         out = transformer(variant.info[field])
  */
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__svlen(__pyx_v_variant, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__svlen(__pyx_v_variant, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":196
+    /* "vcfnp/iter.pyx":213
  *     elif field == FIELD_NAME_IS_SNP:
  *         out = _is_snp(variant)
  *     elif field == FIELD_NAME_SVLEN:             # <<<<<<<<<<<<<<
@@ -4380,7 +5138,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":198
+  /* "vcfnp/iter.pyx":215
  *     elif field == FIELD_NAME_SVLEN:
  *         out = _svlen(variant, arity, fill)
  *     elif transformer is not None:             # <<<<<<<<<<<<<<
@@ -4391,14 +5149,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_3 = (__pyx_t_1 != 0);
   if (__pyx_t_3) {
 
-    /* "vcfnp/iter.pyx":199
+    /* "vcfnp/iter.pyx":216
  *         out = _svlen(variant, arity, fill)
  *     elif transformer is not None:
  *         out = transformer(variant.info[field])             # <<<<<<<<<<<<<<
  *     elif vcf_type == FIELD_BOOL:
  *         # ignore arity, this is a flag
  */
-    __pyx_t_4 = __pyx_convert_vector_to_py_std_3a__3a_string((__pyx_v_variant->info[__pyx_v_field])); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __pyx_convert_vector_to_py_std_3a__3a_string((__pyx_v_variant->info[__pyx_v_field])); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 216; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(__pyx_v_transformer);
     __pyx_t_5 = __pyx_v_transformer; __pyx_t_6 = NULL;
@@ -4412,17 +5170,17 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 216; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
-      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 216; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 216; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
@@ -4430,7 +5188,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":198
+    /* "vcfnp/iter.pyx":215
  *     elif field == FIELD_NAME_SVLEN:
  *         out = _svlen(variant, arity, fill)
  *     elif transformer is not None:             # <<<<<<<<<<<<<<
@@ -4440,7 +5198,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":200
+  /* "vcfnp/iter.pyx":217
  *     elif transformer is not None:
  *         out = transformer(variant.info[field])
  *     elif vcf_type == FIELD_BOOL:             # <<<<<<<<<<<<<<
@@ -4450,19 +5208,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_t_3 = ((__pyx_v_vcf_type == vcf::FIELD_BOOL) != 0);
   if (__pyx_t_3) {
 
-    /* "vcfnp/iter.pyx":202
+    /* "vcfnp/iter.pyx":219
  *     elif vcf_type == FIELD_BOOL:
  *         # ignore arity, this is a flag
  *         out = (variant.infoFlags.count(field) > 0)             # <<<<<<<<<<<<<<
  *     else:
  *         out = _mkval(variant.info[field], arity, fill, vcf_type)
  */
-    __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_variant->infoFlags.count(__pyx_v_field) > 0)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_variant->infoFlags.count(__pyx_v_field) > 0)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":200
+    /* "vcfnp/iter.pyx":217
  *     elif transformer is not None:
  *         out = transformer(variant.info[field])
  *     elif vcf_type == FIELD_BOOL:             # <<<<<<<<<<<<<<
@@ -4472,7 +5230,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":204
+  /* "vcfnp/iter.pyx":221
  *         out = (variant.infoFlags.count(field) > 0)
  *     else:
  *         out = _mkval(variant.info[field], arity, fill, vcf_type)             # <<<<<<<<<<<<<<
@@ -4480,14 +5238,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
  * 
  */
   /*else*/ {
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval((__pyx_v_variant->info[__pyx_v_field]), __pyx_v_arity, __pyx_v_fill, __pyx_v_vcf_type); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval((__pyx_v_variant->info[__pyx_v_field]), __pyx_v_arity, __pyx_v_fill, __pyx_v_vcf_type); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
   }
   __pyx_L3:;
 
-  /* "vcfnp/iter.pyx":205
+  /* "vcfnp/iter.pyx":222
  *     else:
  *         out = _mkval(variant.info[field], arity, fill, vcf_type)
  *     return out             # <<<<<<<<<<<<<<
@@ -4499,7 +5257,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":175
+  /* "vcfnp/iter.pyx":192
  * 
  * 
  * cdef inline object _mkvval(Variant *variant, string field, int arity,             # <<<<<<<<<<<<<<
@@ -4523,7 +5281,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvval(vcf::Variant *__pyx_
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":208
+/* "vcfnp/iter.pyx":225
  * 
  * 
  * cdef inline object _mkaltval(Variant *variant, int arity, object fill):             # <<<<<<<<<<<<<<
@@ -4544,7 +5302,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkaltval", 0);
 
-  /* "vcfnp/iter.pyx":209
+  /* "vcfnp/iter.pyx":226
  * 
  * cdef inline object _mkaltval(Variant *variant, int arity, object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -4554,7 +5312,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
   __pyx_t_1 = ((__pyx_v_arity == 1) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":210
+    /* "vcfnp/iter.pyx":227
  * cdef inline object _mkaltval(Variant *variant, int arity, object fill):
  *     if arity == 1:
  *         if variant.alt.size() == 0:             # <<<<<<<<<<<<<<
@@ -4564,7 +5322,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
     __pyx_t_1 = ((__pyx_v_variant->alt.size() == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "vcfnp/iter.pyx":211
+      /* "vcfnp/iter.pyx":228
  *     if arity == 1:
  *         if variant.alt.size() == 0:
  *             out = fill             # <<<<<<<<<<<<<<
@@ -4574,7 +5332,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
       __Pyx_INCREF(__pyx_v_fill);
       __pyx_v_out = __pyx_v_fill;
 
-      /* "vcfnp/iter.pyx":210
+      /* "vcfnp/iter.pyx":227
  * cdef inline object _mkaltval(Variant *variant, int arity, object fill):
  *     if arity == 1:
  *         if variant.alt.size() == 0:             # <<<<<<<<<<<<<<
@@ -4584,7 +5342,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
       goto __pyx_L4;
     }
 
-    /* "vcfnp/iter.pyx":213
+    /* "vcfnp/iter.pyx":230
  *             out = fill
  *         else:
  *             out = variant.alt.at(0)             # <<<<<<<<<<<<<<
@@ -4596,16 +5354,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
         __pyx_t_2 = __pyx_v_variant->alt.at(0);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_3 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_v_out = __pyx_t_3;
       __pyx_t_3 = 0;
     }
     __pyx_L4:;
 
-    /* "vcfnp/iter.pyx":209
+    /* "vcfnp/iter.pyx":226
  * 
  * cdef inline object _mkaltval(Variant *variant, int arity, object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -4615,7 +5373,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":214
+  /* "vcfnp/iter.pyx":231
  *         else:
  *             out = variant.alt.at(0)
  *     elif variant.alt.size() == arity:             # <<<<<<<<<<<<<<
@@ -4625,31 +5383,31 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
   __pyx_t_1 = ((__pyx_v_variant->alt.size() == __pyx_v_arity) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":215
+    /* "vcfnp/iter.pyx":232
  *             out = variant.alt.at(0)
  *     elif variant.alt.size() == arity:
  *         out = variant.alt             # <<<<<<<<<<<<<<
  *         out = tuple(out)
  *     elif variant.alt.size() > arity:
  */
-    __pyx_t_3 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_out = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "vcfnp/iter.pyx":216
+    /* "vcfnp/iter.pyx":233
  *     elif variant.alt.size() == arity:
  *         out = variant.alt
  *         out = tuple(out)             # <<<<<<<<<<<<<<
  *     elif variant.alt.size() > arity:
  *         out = variant.alt
  */
-    __pyx_t_3 = PySequence_Tuple(__pyx_v_out); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 216; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PySequence_Tuple(__pyx_v_out); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_out, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "vcfnp/iter.pyx":214
+    /* "vcfnp/iter.pyx":231
  *         else:
  *             out = variant.alt.at(0)
  *     elif variant.alt.size() == arity:             # <<<<<<<<<<<<<<
@@ -4659,7 +5417,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":217
+  /* "vcfnp/iter.pyx":234
  *         out = variant.alt
  *         out = tuple(out)
  *     elif variant.alt.size() > arity:             # <<<<<<<<<<<<<<
@@ -4669,34 +5427,34 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
   __pyx_t_1 = ((__pyx_v_variant->alt.size() > __pyx_v_arity) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":218
+    /* "vcfnp/iter.pyx":235
  *         out = tuple(out)
  *     elif variant.alt.size() > arity:
  *         out = variant.alt             # <<<<<<<<<<<<<<
  *         out = tuple(out[:arity])
  *     else:
  */
-    __pyx_t_3 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 235; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_out = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "vcfnp/iter.pyx":219
+    /* "vcfnp/iter.pyx":236
  *     elif variant.alt.size() > arity:
  *         out = variant.alt
  *         out = tuple(out[:arity])             # <<<<<<<<<<<<<<
  *     else:
  *         out = variant.alt
  */
-    __pyx_t_3 = __Pyx_PyObject_GetSlice(__pyx_v_out, 0, __pyx_v_arity, NULL, NULL, NULL, 0, 1, 0); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetSlice(__pyx_v_out, 0, __pyx_v_arity, NULL, NULL, NULL, 0, 1, 0); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PySequence_Tuple(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PySequence_Tuple(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_out, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "vcfnp/iter.pyx":217
+    /* "vcfnp/iter.pyx":234
  *         out = variant.alt
  *         out = tuple(out)
  *     elif variant.alt.size() > arity:             # <<<<<<<<<<<<<<
@@ -4706,7 +5464,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":221
+  /* "vcfnp/iter.pyx":238
  *         out = tuple(out[:arity])
  *     else:
  *         out = variant.alt             # <<<<<<<<<<<<<<
@@ -4714,19 +5472,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
  *         out = tuple(out)
  */
   /*else*/ {
-    __pyx_t_4 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 238; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_v_out = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "vcfnp/iter.pyx":222
+    /* "vcfnp/iter.pyx":239
  *     else:
  *         out = variant.alt
  *         out += [fill] * (arity-variant.alt.size())             # <<<<<<<<<<<<<<
  *         out = tuple(out)
  *     return out
  */
-    __pyx_t_4 = PyList_New(1 * ((__pyx_v_arity - __pyx_v_variant->alt.size()))); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyList_New(1 * ((__pyx_v_arity - __pyx_v_variant->alt.size()))); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     { Py_ssize_t __pyx_temp;
       for (__pyx_temp=0; __pyx_temp < (__pyx_v_arity - __pyx_v_variant->alt.size()); __pyx_temp++) {
@@ -4735,27 +5493,27 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
         PyList_SET_ITEM(__pyx_t_4, __pyx_temp, __pyx_v_fill);
       }
     }
-    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_out, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_out, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF_SET(__pyx_v_out, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "vcfnp/iter.pyx":223
+    /* "vcfnp/iter.pyx":240
  *         out = variant.alt
  *         out += [fill] * (arity-variant.alt.size())
  *         out = tuple(out)             # <<<<<<<<<<<<<<
  *     return out
  * 
  */
-    __pyx_t_3 = PySequence_Tuple(__pyx_v_out); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PySequence_Tuple(__pyx_v_out); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_out, __pyx_t_3);
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "vcfnp/iter.pyx":224
+  /* "vcfnp/iter.pyx":241
  *         out += [fill] * (arity-variant.alt.size())
  *         out = tuple(out)
  *     return out             # <<<<<<<<<<<<<<
@@ -4767,7 +5525,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":208
+  /* "vcfnp/iter.pyx":225
  * 
  * 
  * cdef inline object _mkaltval(Variant *variant, int arity, object fill):             # <<<<<<<<<<<<<<
@@ -4788,7 +5546,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkaltval(vcf::Variant *__py
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":227
+/* "vcfnp/iter.pyx":244
  * 
  * 
  * cdef inline object _mkfilterval(Variant *variant, tuple filter_ids):             # <<<<<<<<<<<<<<
@@ -4812,69 +5570,69 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkfilterval(vcf::Variant *_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkfilterval", 0);
 
-  /* "vcfnp/iter.pyx":228
+  /* "vcfnp/iter.pyx":245
  * 
  * cdef inline object _mkfilterval(Variant *variant, tuple filter_ids):
  *     filters = <list>split(variant.filter, SEMICOLON)             # <<<<<<<<<<<<<<
  *     out = [(f in filters) for f in filter_ids]
  *     out = tuple(out)
  */
-  __pyx_t_1 = __pyx_convert_vector_to_py_std_3a__3a_string(split(__pyx_v_variant->filter, __pyx_v_5vcfnp_4iter_SEMICOLON)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_convert_vector_to_py_std_3a__3a_string(split(__pyx_v_variant->filter, __pyx_v_5vcfnp_4iter_SEMICOLON)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(PyList_CheckExact(__pyx_t_1))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_1)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(PyList_CheckExact(__pyx_t_1))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_1)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = __pyx_t_1;
   __Pyx_INCREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_filters = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":229
+  /* "vcfnp/iter.pyx":246
  * cdef inline object _mkfilterval(Variant *variant, tuple filter_ids):
  *     filters = <list>split(variant.filter, SEMICOLON)
  *     out = [(f in filters) for f in filter_ids]             # <<<<<<<<<<<<<<
  *     out = tuple(out)
  *     return out
  */
-  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   if (unlikely(__pyx_v_filter_ids == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_1 = __pyx_v_filter_ids; __Pyx_INCREF(__pyx_t_1); __pyx_t_3 = 0;
   for (;;) {
     if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     #else
-    __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_f, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_f, __pyx_v_filters, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_f, __pyx_v_filters, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_out = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":230
+  /* "vcfnp/iter.pyx":247
  *     filters = <list>split(variant.filter, SEMICOLON)
  *     out = [(f in filters) for f in filter_ids]
  *     out = tuple(out)             # <<<<<<<<<<<<<<
  *     return out
  * 
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_out); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_out); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 247; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF_SET(__pyx_v_out, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":231
+  /* "vcfnp/iter.pyx":248
  *     out = [(f in filters) for f in filter_ids]
  *     out = tuple(out)
  *     return out             # <<<<<<<<<<<<<<
@@ -4886,7 +5644,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkfilterval(vcf::Variant *_
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":227
+  /* "vcfnp/iter.pyx":244
  * 
  * 
  * cdef inline object _mkfilterval(Variant *variant, tuple filter_ids):             # <<<<<<<<<<<<<<
@@ -4910,7 +5668,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkfilterval(vcf::Variant *_
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":234
+/* "vcfnp/iter.pyx":251
  * 
  * 
  * cdef inline object _is_snp(Variant *variant):             # <<<<<<<<<<<<<<
@@ -4936,7 +5694,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_is_snp", 0);
 
-  /* "vcfnp/iter.pyx":237
+  /* "vcfnp/iter.pyx":254
  *     cdef int i
  *     cdef bytes alt
  *     if variant.ref.size() > 1:             # <<<<<<<<<<<<<<
@@ -4946,7 +5704,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
   __pyx_t_1 = ((__pyx_v_variant->ref.size() > 1) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":238
+    /* "vcfnp/iter.pyx":255
  *     cdef bytes alt
  *     if variant.ref.size() > 1:
  *         return False             # <<<<<<<<<<<<<<
@@ -4958,7 +5716,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":237
+    /* "vcfnp/iter.pyx":254
  *     cdef int i
  *     cdef bytes alt
  *     if variant.ref.size() > 1:             # <<<<<<<<<<<<<<
@@ -4967,7 +5725,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
  */
   }
 
-  /* "vcfnp/iter.pyx":239
+  /* "vcfnp/iter.pyx":256
  *     if variant.ref.size() > 1:
  *         return False
  *     for i in range(variant.alt.size()):             # <<<<<<<<<<<<<<
@@ -4978,7 +5736,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "vcfnp/iter.pyx":240
+    /* "vcfnp/iter.pyx":257
  *         return False
  *     for i in range(variant.alt.size()):
  *         alt = variant.alt.at(i)             # <<<<<<<<<<<<<<
@@ -4989,14 +5747,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
       __pyx_t_4 = __pyx_v_variant->alt.at(__pyx_v_i);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_5 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_4); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_XDECREF_SET(__pyx_v_alt, ((PyObject*)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "vcfnp/iter.pyx":241
+    /* "vcfnp/iter.pyx":258
  *     for i in range(variant.alt.size()):
  *         alt = variant.alt.at(i)
  *         if alt not in {b'A', b'C', b'G', b'T'}:             # <<<<<<<<<<<<<<
@@ -5005,28 +5763,28 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
  */
     __Pyx_INCREF(__pyx_v_alt);
     __pyx_t_6 = __pyx_v_alt;
-    __pyx_t_7 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_A, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_A, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_8 = (__pyx_t_7 != 0);
     if (__pyx_t_8) {
     } else {
       __pyx_t_1 = __pyx_t_8;
       goto __pyx_L7_bool_binop_done;
     }
-    __pyx_t_8 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_C, Py_NE)); if (unlikely(__pyx_t_8 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_C, Py_NE)); if (unlikely(__pyx_t_8 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_7 = (__pyx_t_8 != 0);
     if (__pyx_t_7) {
     } else {
       __pyx_t_1 = __pyx_t_7;
       goto __pyx_L7_bool_binop_done;
     }
-    __pyx_t_7 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_G, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_G, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_8 = (__pyx_t_7 != 0);
     if (__pyx_t_8) {
     } else {
       __pyx_t_1 = __pyx_t_8;
       goto __pyx_L7_bool_binop_done;
     }
-    __pyx_t_8 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_T, Py_NE)); if (unlikely(__pyx_t_8 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = (__Pyx_PyBytes_Equals(__pyx_t_6, __pyx_n_b_T, Py_NE)); if (unlikely(__pyx_t_8 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_7 = (__pyx_t_8 != 0);
     __pyx_t_1 = __pyx_t_7;
     __pyx_L7_bool_binop_done:;
@@ -5034,7 +5792,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
     __pyx_t_7 = (__pyx_t_1 != 0);
     if (__pyx_t_7) {
 
-      /* "vcfnp/iter.pyx":242
+      /* "vcfnp/iter.pyx":259
  *         alt = variant.alt.at(i)
  *         if alt not in {b'A', b'C', b'G', b'T'}:
  *             return False             # <<<<<<<<<<<<<<
@@ -5046,7 +5804,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
       __pyx_r = Py_False;
       goto __pyx_L0;
 
-      /* "vcfnp/iter.pyx":241
+      /* "vcfnp/iter.pyx":258
  *     for i in range(variant.alt.size()):
  *         alt = variant.alt.at(i)
  *         if alt not in {b'A', b'C', b'G', b'T'}:             # <<<<<<<<<<<<<<
@@ -5056,7 +5814,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
     }
   }
 
-  /* "vcfnp/iter.pyx":243
+  /* "vcfnp/iter.pyx":260
  *         if alt not in {b'A', b'C', b'G', b'T'}:
  *             return False
  *     return True             # <<<<<<<<<<<<<<
@@ -5068,7 +5826,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
   __pyx_r = Py_True;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":234
+  /* "vcfnp/iter.pyx":251
  * 
  * 
  * cdef inline object _is_snp(Variant *variant):             # <<<<<<<<<<<<<<
@@ -5089,7 +5847,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__is_snp(vcf::Variant *__pyx_
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":246
+/* "vcfnp/iter.pyx":263
  * 
  * 
  * cdef inline object _svlen(Variant *variant, int arity, object fill):             # <<<<<<<<<<<<<<
@@ -5107,7 +5865,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen(vcf::Variant *__pyx_v
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_svlen", 0);
 
-  /* "vcfnp/iter.pyx":247
+  /* "vcfnp/iter.pyx":264
  * 
  * cdef inline object _svlen(Variant *variant, int arity, object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -5117,7 +5875,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen(vcf::Variant *__pyx_v
   __pyx_t_1 = ((__pyx_v_arity == 1) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":248
+    /* "vcfnp/iter.pyx":265
  * cdef inline object _svlen(Variant *variant, int arity, object fill):
  *     if arity == 1:
  *         return _svlen_single(variant.ref, variant.alt, fill)             # <<<<<<<<<<<<<<
@@ -5125,13 +5883,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen(vcf::Variant *__pyx_v
  *         return _svlen_multi(variant.ref, variant.alt, arity, fill)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__svlen_single(__pyx_v_variant->ref, __pyx_v_variant->alt, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__svlen_single(__pyx_v_variant->ref, __pyx_v_variant->alt, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 265; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":247
+    /* "vcfnp/iter.pyx":264
  * 
  * cdef inline object _svlen(Variant *variant, int arity, object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -5140,7 +5898,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen(vcf::Variant *__pyx_v
  */
   }
 
-  /* "vcfnp/iter.pyx":250
+  /* "vcfnp/iter.pyx":267
  *         return _svlen_single(variant.ref, variant.alt, fill)
  *     else:
  *         return _svlen_multi(variant.ref, variant.alt, arity, fill)             # <<<<<<<<<<<<<<
@@ -5149,14 +5907,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen(vcf::Variant *__pyx_v
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__svlen_multi(__pyx_v_variant->ref, __pyx_v_variant->alt, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 250; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__svlen_multi(__pyx_v_variant->ref, __pyx_v_variant->alt, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
   }
 
-  /* "vcfnp/iter.pyx":246
+  /* "vcfnp/iter.pyx":263
  * 
  * 
  * cdef inline object _svlen(Variant *variant, int arity, object fill):             # <<<<<<<<<<<<<<
@@ -5175,7 +5933,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen(vcf::Variant *__pyx_v
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":253
+/* "vcfnp/iter.pyx":270
  * 
  * 
  * cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):             # <<<<<<<<<<<<<<
@@ -5194,7 +5952,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_single(std::string __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_svlen_single", 0);
 
-  /* "vcfnp/iter.pyx":254
+  /* "vcfnp/iter.pyx":271
  * 
  * cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
  *     if alt.size() > 0:             # <<<<<<<<<<<<<<
@@ -5204,7 +5962,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_single(std::string __
   __pyx_t_1 = ((__pyx_v_alt.size() > 0) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":255
+    /* "vcfnp/iter.pyx":272
  * cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
  *     if alt.size() > 0:
  *         return <int>(alt.at(0).size() - ref.size())             # <<<<<<<<<<<<<<
@@ -5216,15 +5974,15 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_single(std::string __
       __pyx_t_2 = __pyx_v_alt.at(0);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_3 = __Pyx_PyInt_From_int(((int)(__pyx_t_2->size() - __pyx_v_ref.size()))); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyInt_From_int(((int)(__pyx_t_2->size() - __pyx_v_ref.size()))); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":254
+    /* "vcfnp/iter.pyx":271
  * 
  * cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
  *     if alt.size() > 0:             # <<<<<<<<<<<<<<
@@ -5233,7 +5991,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_single(std::string __
  */
   }
 
-  /* "vcfnp/iter.pyx":256
+  /* "vcfnp/iter.pyx":273
  *     if alt.size() > 0:
  *         return <int>(alt.at(0).size() - ref.size())
  *     return fill             # <<<<<<<<<<<<<<
@@ -5245,7 +6003,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_single(std::string __
   __pyx_r = __pyx_v_fill;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":253
+  /* "vcfnp/iter.pyx":270
  * 
  * 
  * cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):             # <<<<<<<<<<<<<<
@@ -5264,7 +6022,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_single(std::string __
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":259
+/* "vcfnp/iter.pyx":276
  * 
  * 
  * cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity,             # <<<<<<<<<<<<<<
@@ -5288,19 +6046,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_svlen_multi", 0);
 
-  /* "vcfnp/iter.pyx":262
+  /* "vcfnp/iter.pyx":279
  *                                 object fill):
  *     cdef int i
  *     out = list()             # <<<<<<<<<<<<<<
  *     for i in range(arity):
  *         if i < alt.size():
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 262; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":263
+  /* "vcfnp/iter.pyx":280
  *     cdef int i
  *     out = list()
  *     for i in range(arity):             # <<<<<<<<<<<<<<
@@ -5311,7 +6069,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "vcfnp/iter.pyx":264
+    /* "vcfnp/iter.pyx":281
  *     out = list()
  *     for i in range(arity):
  *         if i < alt.size():             # <<<<<<<<<<<<<<
@@ -5321,7 +6079,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
     __pyx_t_4 = ((__pyx_v_i < __pyx_v_alt.size()) != 0);
     if (__pyx_t_4) {
 
-      /* "vcfnp/iter.pyx":265
+      /* "vcfnp/iter.pyx":282
  *     for i in range(arity):
  *         if i < alt.size():
  *             out.append(<int>(alt.at(i).size() - ref.size()))             # <<<<<<<<<<<<<<
@@ -5332,14 +6090,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
         __pyx_t_5 = __pyx_v_alt.at(__pyx_v_i);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 265; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_1 = __Pyx_PyInt_From_int(((int)(__pyx_t_5->size() - __pyx_v_ref.size()))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 265; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyInt_From_int(((int)(__pyx_t_5->size() - __pyx_v_ref.size()))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 265; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "vcfnp/iter.pyx":264
+      /* "vcfnp/iter.pyx":281
  *     out = list()
  *     for i in range(arity):
  *         if i < alt.size():             # <<<<<<<<<<<<<<
@@ -5349,7 +6107,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
       goto __pyx_L5;
     }
 
-    /* "vcfnp/iter.pyx":267
+    /* "vcfnp/iter.pyx":284
  *             out.append(<int>(alt.at(i).size() - ref.size()))
  *         else:
  *             out.append(fill)             # <<<<<<<<<<<<<<
@@ -5357,12 +6115,12 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
  * 
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L5:;
   }
 
-  /* "vcfnp/iter.pyx":268
+  /* "vcfnp/iter.pyx":285
  *         else:
  *             out.append(fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -5374,7 +6132,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":259
+  /* "vcfnp/iter.pyx":276
  * 
  * 
  * cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity,             # <<<<<<<<<<<<<<
@@ -5394,7 +6152,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__svlen_multi(std::string __p
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":271
+/* "vcfnp/iter.pyx":288
  * 
  * 
  * cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,             # <<<<<<<<<<<<<<
@@ -5412,7 +6170,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval", 0);
 
-  /* "vcfnp/iter.pyx":273
+  /* "vcfnp/iter.pyx":290
  * cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,
  *                           int vcf_type):
  *     if vcf_type == FIELD_FLOAT:             # <<<<<<<<<<<<<<
@@ -5422,19 +6180,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
   switch (__pyx_v_vcf_type) {
     case vcf::FIELD_FLOAT:
 
-    /* "vcfnp/iter.pyx":274
+    /* "vcfnp/iter.pyx":291
  *                           int vcf_type):
  *     if vcf_type == FIELD_FLOAT:
  *         out = _mkval_double(string_vals, arity, fill)             # <<<<<<<<<<<<<<
  *     elif vcf_type == FIELD_INTEGER:
  *         out = _mkval_long(string_vals, arity, fill)
  */
-    __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkval_double(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 274; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkval_double(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 291; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_v_out = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "vcfnp/iter.pyx":273
+    /* "vcfnp/iter.pyx":290
  * cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,
  *                           int vcf_type):
  *     if vcf_type == FIELD_FLOAT:             # <<<<<<<<<<<<<<
@@ -5443,7 +6201,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
  */
     break;
 
-    /* "vcfnp/iter.pyx":275
+    /* "vcfnp/iter.pyx":292
  *     if vcf_type == FIELD_FLOAT:
  *         out = _mkval_double(string_vals, arity, fill)
  *     elif vcf_type == FIELD_INTEGER:             # <<<<<<<<<<<<<<
@@ -5452,19 +6210,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
  */
     case vcf::FIELD_INTEGER:
 
-    /* "vcfnp/iter.pyx":276
+    /* "vcfnp/iter.pyx":293
  *         out = _mkval_double(string_vals, arity, fill)
  *     elif vcf_type == FIELD_INTEGER:
  *         out = _mkval_long(string_vals, arity, fill)             # <<<<<<<<<<<<<<
  *     else:
  *         # make strings by default
  */
-    __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkval_long(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkval_long(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 293; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_v_out = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "vcfnp/iter.pyx":275
+    /* "vcfnp/iter.pyx":292
  *     if vcf_type == FIELD_FLOAT:
  *         out = _mkval_double(string_vals, arity, fill)
  *     elif vcf_type == FIELD_INTEGER:             # <<<<<<<<<<<<<<
@@ -5474,21 +6232,21 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
     break;
     default:
 
-    /* "vcfnp/iter.pyx":279
+    /* "vcfnp/iter.pyx":296
  *     else:
  *         # make strings by default
  *         out = _mkval_string(string_vals, arity, fill)             # <<<<<<<<<<<<<<
  *     return out
  * 
  */
-    __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkval_string(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkval_string(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 296; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_v_out = __pyx_t_1;
     __pyx_t_1 = 0;
     break;
   }
 
-  /* "vcfnp/iter.pyx":280
+  /* "vcfnp/iter.pyx":297
  *         # make strings by default
  *         out = _mkval_string(string_vals, arity, fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -5500,7 +6258,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":271
+  /* "vcfnp/iter.pyx":288
  * 
  * 
  * cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,             # <<<<<<<<<<<<<<
@@ -5520,7 +6278,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval(std::vector<std::stri
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":283
+/* "vcfnp/iter.pyx":300
  * 
  * 
  * cdef inline object _mkval_string(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5539,7 +6297,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_string", 0);
 
-  /* "vcfnp/iter.pyx":285
+  /* "vcfnp/iter.pyx":302
  * cdef inline object _mkval_string(vector[string]& string_vals, int arity,
  *                                  object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -5549,7 +6307,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
   __pyx_t_1 = ((__pyx_v_arity == 1) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":286
+    /* "vcfnp/iter.pyx":303
  *                                  object fill):
  *     if arity == 1:
  *         if string_vals.size() > 0:             # <<<<<<<<<<<<<<
@@ -5559,7 +6317,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
     __pyx_t_1 = ((__pyx_v_string_vals.size() > 0) != 0);
     if (__pyx_t_1) {
 
-      /* "vcfnp/iter.pyx":287
+      /* "vcfnp/iter.pyx":304
  *     if arity == 1:
  *         if string_vals.size() > 0:
  *             return string_vals.at(0)             # <<<<<<<<<<<<<<
@@ -5571,15 +6329,15 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
         __pyx_t_2 = __pyx_v_string_vals.at(0);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 287; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 304; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_3 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 287; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 304; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_r = __pyx_t_3;
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "vcfnp/iter.pyx":286
+      /* "vcfnp/iter.pyx":303
  *                                  object fill):
  *     if arity == 1:
  *         if string_vals.size() > 0:             # <<<<<<<<<<<<<<
@@ -5588,7 +6346,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
  */
     }
 
-    /* "vcfnp/iter.pyx":289
+    /* "vcfnp/iter.pyx":306
  *             return string_vals.at(0)
  *         else:
  *             return fill             # <<<<<<<<<<<<<<
@@ -5602,7 +6360,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
       goto __pyx_L0;
     }
 
-    /* "vcfnp/iter.pyx":285
+    /* "vcfnp/iter.pyx":302
  * cdef inline object _mkval_string(vector[string]& string_vals, int arity,
  *                                  object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -5611,7 +6369,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
  */
   }
 
-  /* "vcfnp/iter.pyx":291
+  /* "vcfnp/iter.pyx":308
  *             return fill
  *     else:
  *         return _mkval_string_multi(string_vals, arity, fill)             # <<<<<<<<<<<<<<
@@ -5620,14 +6378,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkval_string_multi(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 291; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkval_string_multi(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 308; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
   }
 
-  /* "vcfnp/iter.pyx":283
+  /* "vcfnp/iter.pyx":300
  * 
  * 
  * cdef inline object _mkval_string(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5646,7 +6404,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string(std::vector<st
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":294
+/* "vcfnp/iter.pyx":311
  * 
  * 
  * cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5670,19 +6428,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_string_multi", 0);
 
-  /* "vcfnp/iter.pyx":297
+  /* "vcfnp/iter.pyx":314
  *                                        object fill):
  *     cdef int i
  *     out = list()             # <<<<<<<<<<<<<<
  *     for i in range(arity):
  *         if i < string_vals.size():
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 297; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":298
+  /* "vcfnp/iter.pyx":315
  *     cdef int i
  *     out = list()
  *     for i in range(arity):             # <<<<<<<<<<<<<<
@@ -5693,7 +6451,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "vcfnp/iter.pyx":299
+    /* "vcfnp/iter.pyx":316
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -5703,7 +6461,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
     __pyx_t_4 = ((__pyx_v_i < __pyx_v_string_vals.size()) != 0);
     if (__pyx_t_4) {
 
-      /* "vcfnp/iter.pyx":300
+      /* "vcfnp/iter.pyx":317
  *     for i in range(arity):
  *         if i < string_vals.size():
  *             out.append(string_vals.at(i))             # <<<<<<<<<<<<<<
@@ -5714,14 +6472,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
         __pyx_t_5 = __pyx_v_string_vals.at(__pyx_v_i);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 317; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 317; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 317; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "vcfnp/iter.pyx":299
+      /* "vcfnp/iter.pyx":316
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -5731,7 +6489,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
       goto __pyx_L5;
     }
 
-    /* "vcfnp/iter.pyx":302
+    /* "vcfnp/iter.pyx":319
  *             out.append(string_vals.at(i))
  *         else:
  *             out.append(fill)             # <<<<<<<<<<<<<<
@@ -5739,12 +6497,12 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
  * 
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 302; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 319; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L5:;
   }
 
-  /* "vcfnp/iter.pyx":303
+  /* "vcfnp/iter.pyx":320
  *         else:
  *             out.append(fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -5756,7 +6514,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":294
+  /* "vcfnp/iter.pyx":311
  * 
  * 
  * cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5776,7 +6534,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_string_multi(std::vec
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":306
+/* "vcfnp/iter.pyx":323
  * 
  * 
  * cdef inline object _mkval_double(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5795,7 +6553,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double(std::vector<st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_double", 0);
 
-  /* "vcfnp/iter.pyx":308
+  /* "vcfnp/iter.pyx":325
  * cdef inline object _mkval_double(vector[string]& string_vals, int arity,
  *                                  object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -5805,19 +6563,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double(std::vector<st
   __pyx_t_1 = ((__pyx_v_arity == 1) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":309
+    /* "vcfnp/iter.pyx":326
  *                                  object fill):
  *     if arity == 1:
  *         out = _mkval_double_single(string_vals, fill)             # <<<<<<<<<<<<<<
  *     else:
  *         out = _mkval_double_multi(string_vals, arity, fill)
  */
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_double_single(__pyx_v_string_vals, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 309; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_double_single(__pyx_v_string_vals, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":308
+    /* "vcfnp/iter.pyx":325
  * cdef inline object _mkval_double(vector[string]& string_vals, int arity,
  *                                  object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -5827,7 +6585,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double(std::vector<st
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":311
+  /* "vcfnp/iter.pyx":328
  *         out = _mkval_double_single(string_vals, fill)
  *     else:
  *         out = _mkval_double_multi(string_vals, arity, fill)             # <<<<<<<<<<<<<<
@@ -5835,14 +6593,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double(std::vector<st
  * 
  */
   /*else*/ {
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_double_multi(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 311; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_double_multi(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 328; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
   }
   __pyx_L3:;
 
-  /* "vcfnp/iter.pyx":312
+  /* "vcfnp/iter.pyx":329
  *     else:
  *         out = _mkval_double_multi(string_vals, arity, fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -5854,7 +6612,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double(std::vector<st
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":306
+  /* "vcfnp/iter.pyx":323
  * 
  * 
  * cdef inline object _mkval_double(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5874,7 +6632,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double(std::vector<st
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":315
+/* "vcfnp/iter.pyx":332
  * 
  * 
  * cdef inline object _mkval_double_single(vector[string]& string_vals,             # <<<<<<<<<<<<<<
@@ -5893,7 +6651,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_single(std::ve
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_double_single", 0);
 
-  /* "vcfnp/iter.pyx":318
+  /* "vcfnp/iter.pyx":335
  *                                         object fill):
  *     cdef double v
  *     if string_vals.size() > 0:             # <<<<<<<<<<<<<<
@@ -5903,7 +6661,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_single(std::ve
   __pyx_t_1 = ((__pyx_v_string_vals.size() > 0) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":319
+    /* "vcfnp/iter.pyx":336
  *     cdef double v
  *     if string_vals.size() > 0:
  *         return atof(string_vals.at(0).c_str())             # <<<<<<<<<<<<<<
@@ -5915,15 +6673,15 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_single(std::ve
       __pyx_t_2 = __pyx_v_string_vals.at(0);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 319; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 336; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_3 = PyFloat_FromDouble(atof(__pyx_t_2->c_str())); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 319; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyFloat_FromDouble(atof(__pyx_t_2->c_str())); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 336; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":318
+    /* "vcfnp/iter.pyx":335
  *                                         object fill):
  *     cdef double v
  *     if string_vals.size() > 0:             # <<<<<<<<<<<<<<
@@ -5932,7 +6690,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_single(std::ve
  */
   }
 
-  /* "vcfnp/iter.pyx":320
+  /* "vcfnp/iter.pyx":337
  *     if string_vals.size() > 0:
  *         return atof(string_vals.at(0).c_str())
  *     return fill             # <<<<<<<<<<<<<<
@@ -5944,7 +6702,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_single(std::ve
   __pyx_r = __pyx_v_fill;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":315
+  /* "vcfnp/iter.pyx":332
  * 
  * 
  * cdef inline object _mkval_double_single(vector[string]& string_vals,             # <<<<<<<<<<<<<<
@@ -5963,7 +6721,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_single(std::ve
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":323
+/* "vcfnp/iter.pyx":340
  * 
  * 
  * cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -5987,19 +6745,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_double_multi", 0);
 
-  /* "vcfnp/iter.pyx":326
+  /* "vcfnp/iter.pyx":343
  *                                        object fill):
  *     cdef int i
  *     out = list()             # <<<<<<<<<<<<<<
  *     for i in range(arity):
  *         if i < string_vals.size():
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":327
+  /* "vcfnp/iter.pyx":344
  *     cdef int i
  *     out = list()
  *     for i in range(arity):             # <<<<<<<<<<<<<<
@@ -6010,7 +6768,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "vcfnp/iter.pyx":328
+    /* "vcfnp/iter.pyx":345
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -6020,7 +6778,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
     __pyx_t_4 = ((__pyx_v_i < __pyx_v_string_vals.size()) != 0);
     if (__pyx_t_4) {
 
-      /* "vcfnp/iter.pyx":329
+      /* "vcfnp/iter.pyx":346
  *     for i in range(arity):
  *         if i < string_vals.size():
  *             out.append(atof(string_vals.at(i).c_str()))             # <<<<<<<<<<<<<<
@@ -6031,14 +6789,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
         __pyx_t_5 = __pyx_v_string_vals.at(__pyx_v_i);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 329; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_1 = PyFloat_FromDouble(atof(__pyx_t_5->c_str())); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 329; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyFloat_FromDouble(atof(__pyx_t_5->c_str())); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 329; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "vcfnp/iter.pyx":328
+      /* "vcfnp/iter.pyx":345
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -6048,7 +6806,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
       goto __pyx_L5;
     }
 
-    /* "vcfnp/iter.pyx":331
+    /* "vcfnp/iter.pyx":348
  *             out.append(atof(string_vals.at(i).c_str()))
  *         else:
  *             out.append(fill)             # <<<<<<<<<<<<<<
@@ -6056,12 +6814,12 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
  * 
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 348; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L5:;
   }
 
-  /* "vcfnp/iter.pyx":332
+  /* "vcfnp/iter.pyx":349
  *         else:
  *             out.append(fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -6073,7 +6831,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":323
+  /* "vcfnp/iter.pyx":340
  * 
  * 
  * cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -6093,7 +6851,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_double_multi(std::vec
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":335
+/* "vcfnp/iter.pyx":352
  * 
  * 
  * cdef inline object _mkval_long(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -6112,7 +6870,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long(std::vector<std:
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_long", 0);
 
-  /* "vcfnp/iter.pyx":337
+  /* "vcfnp/iter.pyx":354
  * cdef inline object _mkval_long(vector[string]& string_vals, int arity,
  *                                object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -6122,19 +6880,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long(std::vector<std:
   __pyx_t_1 = ((__pyx_v_arity == 1) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":338
+    /* "vcfnp/iter.pyx":355
  *                                object fill):
  *     if arity == 1:
  *         out = _mkval_long_single(string_vals, fill)             # <<<<<<<<<<<<<<
  *     else:
  *         out = _mkval_long_multi(string_vals, arity, fill)
  */
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_long_single(__pyx_v_string_vals, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_long_single(__pyx_v_string_vals, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 355; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "vcfnp/iter.pyx":337
+    /* "vcfnp/iter.pyx":354
  * cdef inline object _mkval_long(vector[string]& string_vals, int arity,
  *                                object fill):
  *     if arity == 1:             # <<<<<<<<<<<<<<
@@ -6144,7 +6902,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long(std::vector<std:
     goto __pyx_L3;
   }
 
-  /* "vcfnp/iter.pyx":340
+  /* "vcfnp/iter.pyx":357
  *         out = _mkval_long_single(string_vals, fill)
  *     else:
  *         out = _mkval_long_multi(string_vals, arity, fill)             # <<<<<<<<<<<<<<
@@ -6152,14 +6910,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long(std::vector<std:
  * 
  */
   /*else*/ {
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_long_multi(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 340; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval_long_multi(__pyx_v_string_vals, __pyx_v_arity, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_out = __pyx_t_2;
     __pyx_t_2 = 0;
   }
   __pyx_L3:;
 
-  /* "vcfnp/iter.pyx":341
+  /* "vcfnp/iter.pyx":358
  *     else:
  *         out = _mkval_long_multi(string_vals, arity, fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -6171,7 +6929,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long(std::vector<std:
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":335
+  /* "vcfnp/iter.pyx":352
  * 
  * 
  * cdef inline object _mkval_long(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -6191,7 +6949,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long(std::vector<std:
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":344
+/* "vcfnp/iter.pyx":361
  * 
  * 
  * cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):             # <<<<<<<<<<<<<<
@@ -6210,7 +6968,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_single(std::vect
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_long_single", 0);
 
-  /* "vcfnp/iter.pyx":345
+  /* "vcfnp/iter.pyx":362
  * 
  * cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):
  *     if string_vals.size() > 0:             # <<<<<<<<<<<<<<
@@ -6220,7 +6978,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_single(std::vect
   __pyx_t_1 = ((__pyx_v_string_vals.size() > 0) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":346
+    /* "vcfnp/iter.pyx":363
  * cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):
  *     if string_vals.size() > 0:
  *         return atol(string_vals.at(0).c_str())             # <<<<<<<<<<<<<<
@@ -6232,15 +6990,15 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_single(std::vect
       __pyx_t_2 = __pyx_v_string_vals.at(0);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 363; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_3 = __Pyx_PyInt_From_long(atol(__pyx_t_2->c_str())); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyInt_From_long(atol(__pyx_t_2->c_str())); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 363; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":345
+    /* "vcfnp/iter.pyx":362
  * 
  * cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):
  *     if string_vals.size() > 0:             # <<<<<<<<<<<<<<
@@ -6249,7 +7007,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_single(std::vect
  */
   }
 
-  /* "vcfnp/iter.pyx":347
+  /* "vcfnp/iter.pyx":364
  *     if string_vals.size() > 0:
  *         return atol(string_vals.at(0).c_str())
  *     return fill             # <<<<<<<<<<<<<<
@@ -6261,7 +7019,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_single(std::vect
   __pyx_r = __pyx_v_fill;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":344
+  /* "vcfnp/iter.pyx":361
  * 
  * 
  * cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):             # <<<<<<<<<<<<<<
@@ -6280,7 +7038,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_single(std::vect
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":350
+/* "vcfnp/iter.pyx":367
  * 
  * 
  * cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -6304,19 +7062,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkval_long_multi", 0);
 
-  /* "vcfnp/iter.pyx":353
+  /* "vcfnp/iter.pyx":370
  *                                      object fill):
  *     cdef int i
  *     out = list()             # <<<<<<<<<<<<<<
  *     for i in range(arity):
  *         if i < string_vals.size():
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 353; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":354
+  /* "vcfnp/iter.pyx":371
  *     cdef int i
  *     out = list()
  *     for i in range(arity):             # <<<<<<<<<<<<<<
@@ -6327,7 +7085,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "vcfnp/iter.pyx":355
+    /* "vcfnp/iter.pyx":372
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -6337,7 +7095,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
     __pyx_t_4 = ((__pyx_v_i < __pyx_v_string_vals.size()) != 0);
     if (__pyx_t_4) {
 
-      /* "vcfnp/iter.pyx":356
+      /* "vcfnp/iter.pyx":373
  *     for i in range(arity):
  *         if i < string_vals.size():
  *             out.append(atol(string_vals.at(i).c_str()))             # <<<<<<<<<<<<<<
@@ -6348,14 +7106,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
         __pyx_t_5 = __pyx_v_string_vals.at(__pyx_v_i);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 356; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 373; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_1 = __Pyx_PyInt_From_long(atol(__pyx_t_5->c_str())); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 356; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyInt_From_long(atol(__pyx_t_5->c_str())); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 373; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 356; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 373; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "vcfnp/iter.pyx":355
+      /* "vcfnp/iter.pyx":372
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -6365,7 +7123,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
       goto __pyx_L5;
     }
 
-    /* "vcfnp/iter.pyx":358
+    /* "vcfnp/iter.pyx":375
  *             out.append(atol(string_vals.at(i).c_str()))
  *         else:
  *             out.append(fill)             # <<<<<<<<<<<<<<
@@ -6373,12 +7131,12 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
  * 
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 375; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L5:;
   }
 
-  /* "vcfnp/iter.pyx":359
+  /* "vcfnp/iter.pyx":376
  *         else:
  *             out.append(fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -6390,7 +7148,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":350
+  /* "vcfnp/iter.pyx":367
  * 
  * 
  * cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -6410,17 +7168,17 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkval_long_multi(std::vecto
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":362
+/* "vcfnp/iter.pyx":379
  * 
  * 
  * def itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills,             # <<<<<<<<<<<<<<
- *                  format_types, condition):
+ *                  format_types, condition, truncate):
  *     """Iterate over call data (genotypes, etc.) returning tuples suitable for
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5vcfnp_4iter_8itercalldata[] = "itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills, format_types, condition)\nIterate over call data (genotypes, etc.) returning tuples suitable for\n    loading into a numpy structured array.";
+static char __pyx_doc_5vcfnp_4iter_8itercalldata[] = "itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills, format_types, condition, truncate)\nIterate over call data (genotypes, etc.) returning tuples suitable for\n    loading into a numpy structured array.";
 static PyMethodDef __pyx_mdef_5vcfnp_4iter_9itercalldata = {"itercalldata", (PyCFunction)__pyx_pw_5vcfnp_4iter_9itercalldata, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5vcfnp_4iter_8itercalldata};
 static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vcf_fns = 0;
@@ -6432,6 +7190,7 @@ static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObj
   PyObject *__pyx_v_fills = 0;
   PyObject *__pyx_v_format_types = 0;
   PyObject *__pyx_v_condition = 0;
+  PyObject *__pyx_v_truncate = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -6439,12 +7198,13 @@ static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("itercalldata (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_samples,&__pyx_n_s_ploidy,&__pyx_n_s_fields,&__pyx_n_s_arities,&__pyx_n_s_fills,&__pyx_n_s_format_types,&__pyx_n_s_condition,0};
-    PyObject* values[9] = {0,0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_samples,&__pyx_n_s_ploidy,&__pyx_n_s_fields,&__pyx_n_s_arities,&__pyx_n_s_fills,&__pyx_n_s_format_types,&__pyx_n_s_condition,&__pyx_n_s_truncate,0};
+    PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
         case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
         case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
@@ -6465,48 +7225,53 @@ static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_samples)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ploidy)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fields)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_arities)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fills)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_format_types)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  8:
         if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_condition)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case  9:
+        if (likely((values[9] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_truncate)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "itercalldata") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "itercalldata") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -6518,6 +7283,7 @@ static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObj
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+      values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
     }
     __pyx_v_vcf_fns = values[0];
     __pyx_v_region = values[1];
@@ -6528,23 +7294,24 @@ static PyObject *__pyx_pw_5vcfnp_4iter_9itercalldata(PyObject *__pyx_self, PyObj
     __pyx_v_fills = values[6];
     __pyx_v_format_types = values[7];
     __pyx_v_condition = values[8];
+    __pyx_v_truncate = values[9];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("itercalldata", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter.itercalldata", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5vcfnp_4iter_8itercalldata(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_samples, __pyx_v_ploidy, __pyx_v_fields, __pyx_v_arities, __pyx_v_fills, __pyx_v_format_types, __pyx_v_condition);
+  __pyx_r = __pyx_pf_5vcfnp_4iter_8itercalldata(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_samples, __pyx_v_ploidy, __pyx_v_fields, __pyx_v_arities, __pyx_v_fills, __pyx_v_format_types, __pyx_v_condition, __pyx_v_truncate);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_format_types, PyObject *__pyx_v_condition) {
+static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fields, PyObject *__pyx_v_arities, PyObject *__pyx_v_fills, PyObject *__pyx_v_format_types, PyObject *__pyx_v_condition, PyObject *__pyx_v_truncate) {
   PyObject *__pyx_v_fieldspec = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6567,107 +7334,105 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
   __Pyx_INCREF(__pyx_v_fills);
   __Pyx_INCREF(__pyx_v_format_types);
 
-  /* "vcfnp/iter.pyx":368
+  /* "vcfnp/iter.pyx":385
  * 
  *     # force bytes
  *     vcf_fns = _b(tuple(vcf_fns))             # <<<<<<<<<<<<<<
- *     region = _b(region)
+ *     region = region
  *     samples = _b(tuple(samples))
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 368; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 368; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_vcf_fns, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":369
+  /* "vcfnp/iter.pyx":386
  *     # force bytes
  *     vcf_fns = _b(tuple(vcf_fns))
- *     region = _b(region)             # <<<<<<<<<<<<<<
+ *     region = region             # <<<<<<<<<<<<<<
  *     samples = _b(tuple(samples))
  *     fields = _b(tuple(fields))
  */
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_v_region, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 369; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF_SET(__pyx_v_region, __pyx_t_2);
-  __pyx_t_2 = 0;
+  __Pyx_INCREF(__pyx_v_region);
+  __Pyx_DECREF_SET(__pyx_v_region, __pyx_v_region);
 
-  /* "vcfnp/iter.pyx":370
+  /* "vcfnp/iter.pyx":387
  *     vcf_fns = _b(tuple(vcf_fns))
- *     region = _b(region)
+ *     region = region
  *     samples = _b(tuple(samples))             # <<<<<<<<<<<<<<
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_samples); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_samples); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __pyx_f_5vcfnp_6compat_b(__pyx_t_2, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_5vcfnp_6compat_b(__pyx_t_2, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF_SET(__pyx_v_samples, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":371
- *     region = _b(region)
+  /* "vcfnp/iter.pyx":388
+ *     region = region
  *     samples = _b(tuple(samples))
  *     fields = _b(tuple(fields))             # <<<<<<<<<<<<<<
  *     arities = tuple(arities)
  *     fills = tuple(fills)
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_v_fields); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_v_fields); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 388; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 371; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 388; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_fields, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":372
+  /* "vcfnp/iter.pyx":389
  *     samples = _b(tuple(samples))
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)             # <<<<<<<<<<<<<<
  *     fills = tuple(fills)
  *     format_types = tuple(format_types)
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_arities); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 372; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_arities); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 389; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF_SET(__pyx_v_arities, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":373
+  /* "vcfnp/iter.pyx":390
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)
  *     fills = tuple(fills)             # <<<<<<<<<<<<<<
  *     format_types = tuple(format_types)
  * 
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_fills); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 373; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_fills); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 390; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF_SET(__pyx_v_fills, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":374
+  /* "vcfnp/iter.pyx":391
  *     arities = tuple(arities)
  *     fills = tuple(fills)
  *     format_types = tuple(format_types)             # <<<<<<<<<<<<<<
  * 
  *     # zip up field parameters
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_v_format_types); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 374; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_v_format_types); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 391; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF_SET(__pyx_v_format_types, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":377
+  /* "vcfnp/iter.pyx":394
  * 
  *     # zip up field parameters
  *     fieldspec = tuple(zip(fields, arities, fills, format_types))             # <<<<<<<<<<<<<<
  * 
  *     if condition is None:
  */
-  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 377; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_fields);
   __Pyx_GIVEREF(__pyx_v_fields);
@@ -6681,36 +7446,44 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
   __Pyx_INCREF(__pyx_v_format_types);
   __Pyx_GIVEREF(__pyx_v_format_types);
   PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_format_types);
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 377; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PySequence_Tuple(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 377; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_fieldspec = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":379
+  /* "vcfnp/iter.pyx":396
  *     fieldspec = tuple(zip(fields, arities, fills, format_types))
  * 
  *     if condition is None:             # <<<<<<<<<<<<<<
- *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec)
- *     else:
+ *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec,
+ *                              truncate)
  */
   __pyx_t_3 = (__pyx_v_condition == Py_None);
   __pyx_t_4 = (__pyx_t_3 != 0);
   if (__pyx_t_4) {
 
-    /* "vcfnp/iter.pyx":380
+    /* "vcfnp/iter.pyx":397
  * 
  *     if condition is None:
- *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec)             # <<<<<<<<<<<<<<
+ *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec,             # <<<<<<<<<<<<<<
+ *                              truncate)
+ *     else:
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_itercalldata); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 397; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+
+    /* "vcfnp/iter.pyx":398
+ *     if condition is None:
+ *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec,
+ *                              truncate)             # <<<<<<<<<<<<<<
  *     else:
  *         return _itercalldata_with_condition(vcf_fns, region, samples, ploidy,
  */
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_itercalldata); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_5 = NULL;
     __pyx_t_6 = 0;
     if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_1))) {
@@ -6723,7 +7496,7 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
         __pyx_t_6 = 1;
       }
     }
-    __pyx_t_7 = PyTuple_New(5+__pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyTuple_New(6+__pyx_t_6); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 397; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -6743,7 +7516,10 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
     __Pyx_INCREF(__pyx_v_fieldspec);
     __Pyx_GIVEREF(__pyx_v_fieldspec);
     PyTuple_SET_ITEM(__pyx_t_7, 4+__pyx_t_6, __pyx_v_fieldspec);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_INCREF(__pyx_v_truncate);
+    __Pyx_GIVEREF(__pyx_v_truncate);
+    PyTuple_SET_ITEM(__pyx_t_7, 5+__pyx_t_6, __pyx_v_truncate);
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 397; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -6751,31 +7527,31 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":379
+    /* "vcfnp/iter.pyx":396
  *     fieldspec = tuple(zip(fields, arities, fills, format_types))
  * 
  *     if condition is None:             # <<<<<<<<<<<<<<
- *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec)
- *     else:
+ *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec,
+ *                              truncate)
  */
   }
 
-  /* "vcfnp/iter.pyx":382
- *         return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec)
+  /* "vcfnp/iter.pyx":400
+ *                              truncate)
  *     else:
  *         return _itercalldata_with_condition(vcf_fns, region, samples, ploidy,             # <<<<<<<<<<<<<<
- *                                             fieldspec, condition)
+ *                                             fieldspec, condition, truncate)
  * 
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_itercalldata_with_condition); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_itercalldata_with_condition); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "vcfnp/iter.pyx":383
+    /* "vcfnp/iter.pyx":401
  *     else:
  *         return _itercalldata_with_condition(vcf_fns, region, samples, ploidy,
- *                                             fieldspec, condition)             # <<<<<<<<<<<<<<
+ *                                             fieldspec, condition, truncate)             # <<<<<<<<<<<<<<
  * 
  * 
  */
@@ -6791,7 +7567,7 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
         __pyx_t_6 = 1;
       }
     }
-    __pyx_t_5 = PyTuple_New(6+__pyx_t_6); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyTuple_New(7+__pyx_t_6); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -6814,7 +7590,10 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
     __Pyx_INCREF(__pyx_v_condition);
     __Pyx_GIVEREF(__pyx_v_condition);
     PyTuple_SET_ITEM(__pyx_t_5, 5+__pyx_t_6, __pyx_v_condition);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_INCREF(__pyx_v_truncate);
+    __Pyx_GIVEREF(__pyx_v_truncate);
+    PyTuple_SET_ITEM(__pyx_t_5, 6+__pyx_t_6, __pyx_v_truncate);
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -6823,11 +7602,11 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
     goto __pyx_L0;
   }
 
-  /* "vcfnp/iter.pyx":362
+  /* "vcfnp/iter.pyx":379
  * 
  * 
  * def itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills,             # <<<<<<<<<<<<<<
- *                  format_types, condition):
+ *                  format_types, condition, truncate):
  *     """Iterate over call data (genotypes, etc.) returning tuples suitable for
  */
 
@@ -6854,24 +7633,25 @@ static PyObject *__pyx_pf_5vcfnp_4iter_8itercalldata(CYTHON_UNUSED PyObject *__p
 }
 static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
 
-/* "vcfnp/iter.pyx":387
+/* "vcfnp/iter.pyx":405
  * 
  * 
- * def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
- *                   tuple fieldspec):
+ * def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):             # <<<<<<<<<<<<<<
  *     cdef VariantCallFile *variant_file
+ *     cdef Variant *variant
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_5vcfnp_4iter_11_itercalldata(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5vcfnp_4iter_10_itercalldata[] = "_itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy, tuple fieldspec)";
+static char __pyx_doc_5vcfnp_4iter_10_itercalldata[] = "_itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate)";
 static PyMethodDef __pyx_mdef_5vcfnp_4iter_11_itercalldata = {"_itercalldata", (PyCFunction)__pyx_pw_5vcfnp_4iter_11_itercalldata, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5vcfnp_4iter_10_itercalldata};
 static PyObject *__pyx_pw_5vcfnp_4iter_11_itercalldata(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vcf_fns = 0;
   PyObject *__pyx_v_region = 0;
   PyObject *__pyx_v_samples = 0;
-  int __pyx_v_ploidy;
+  PyObject *__pyx_v_ploidy = 0;
   PyObject *__pyx_v_fieldspec = 0;
+  PyObject *__pyx_v_truncate = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -6879,12 +7659,13 @@ static PyObject *__pyx_pw_5vcfnp_4iter_11_itercalldata(PyObject *__pyx_self, PyO
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_itercalldata (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_samples,&__pyx_n_s_ploidy,&__pyx_n_s_fieldspec,0};
-    PyObject* values[5] = {0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_samples,&__pyx_n_s_ploidy,&__pyx_n_s_fieldspec,&__pyx_n_s_truncate,0};
+    PyObject* values[6] = {0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
@@ -6901,28 +7682,33 @@ static PyObject *__pyx_pw_5vcfnp_4iter_11_itercalldata(PyObject *__pyx_self, PyO
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_samples)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ploidy)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fieldspec)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case  5:
+        if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_truncate)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itercalldata") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itercalldata") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -6930,37 +7716,31 @@ static PyObject *__pyx_pw_5vcfnp_4iter_11_itercalldata(PyObject *__pyx_self, PyO
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+      values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
     }
-    __pyx_v_vcf_fns = ((PyObject*)values[0]);
-    __pyx_v_region = ((PyObject*)values[1]);
-    __pyx_v_samples = ((PyObject*)values[2]);
-    __pyx_v_ploidy = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_ploidy == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_fieldspec = ((PyObject*)values[4]);
+    __pyx_v_vcf_fns = values[0];
+    __pyx_v_region = values[1];
+    __pyx_v_samples = values[2];
+    __pyx_v_ploidy = values[3];
+    __pyx_v_fieldspec = values[4];
+    __pyx_v_truncate = values[5];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_itercalldata", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter._itercalldata", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_vcf_fns), (&PyTuple_Type), 1, "vcf_fns", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_region), (&PyBytes_Type), 1, "region", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_samples), (&PyTuple_Type), 1, "samples", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_fieldspec), (&PyTuple_Type), 1, "fieldspec", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 388; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_5vcfnp_4iter_10_itercalldata(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_samples, __pyx_v_ploidy, __pyx_v_fieldspec);
+  __pyx_r = __pyx_pf_5vcfnp_4iter_10_itercalldata(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_samples, __pyx_v_ploidy, __pyx_v_fieldspec, __pyx_v_truncate);
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5vcfnp_4iter_10_itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, int __pyx_v_ploidy, PyObject *__pyx_v_fieldspec) {
+static PyObject *__pyx_pf_5vcfnp_4iter_10_itercalldata(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fieldspec, PyObject *__pyx_v_truncate) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6984,11 +7764,16 @@ static PyObject *__pyx_pf_5vcfnp_4iter_10_itercalldata(CYTHON_UNUSED PyObject *_
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_samples);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_samples);
   __pyx_cur_scope->__pyx_v_ploidy = __pyx_v_ploidy;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_ploidy);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_ploidy);
   __pyx_cur_scope->__pyx_v_fieldspec = __pyx_v_fieldspec;
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_fieldspec);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_fieldspec);
+  __pyx_cur_scope->__pyx_v_truncate = __pyx_v_truncate;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_truncate);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_truncate);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_12generator2, (PyObject *) __pyx_cur_scope, __pyx_n_s_itercalldata, __pyx_n_s_itercalldata); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_12generator2, (PyObject *) __pyx_cur_scope, __pyx_n_s_itercalldata, __pyx_n_s_itercalldata); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -7010,11 +7795,20 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
   PyObject *__pyx_r = NULL;
   PyObject *__pyx_t_1 = NULL;
   Py_ssize_t __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  vcf::VariantCallFile *__pyx_t_4;
-  std::string __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
+  PyObject *(*__pyx_t_3)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
+  vcf::VariantCallFile *__pyx_t_5;
+  std::string __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *(*__pyx_t_12)(PyObject *);
+  Py_ssize_t __pyx_t_13;
+  PyObject *(*__pyx_t_14)(PyObject *);
+  int __pyx_t_15;
+  int __pyx_t_16;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -7022,40 +7816,66 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
   __Pyx_RefNannySetupContext("None", 0);
   switch (__pyx_generator->resume_label) {
     case 0: goto __pyx_L3_first_run;
-    case 1: goto __pyx_L10_resume_from_yield;
+    case 1: goto __pyx_L19_resume_from_yield;
     default: /* CPython raises the right error here */
     __Pyx_RefNannyFinishContext();
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":392
+  /* "vcfnp/iter.pyx":409
  *     cdef Variant *variant
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  */
-  if (unlikely(__pyx_cur_scope->__pyx_v_vcf_fns == Py_None)) {
-    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) {
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+    __pyx_t_3 = NULL;
+  } else {
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
-    if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
-    #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    #endif
+    if (likely(!__pyx_t_3)) {
+      if (likely(PyList_CheckExact(__pyx_t_1))) {
+        if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      } else {
+        if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      }
+    } else {
+      __pyx_t_4 = __pyx_t_3(__pyx_t_1);
+      if (unlikely(!__pyx_t_4)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_4);
+    }
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_vcf_fn);
-    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_3);
-    __pyx_t_3 = 0;
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
 
-    /* "vcfnp/iter.pyx":393
+    /* "vcfnp/iter.pyx":410
  * 
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()             # <<<<<<<<<<<<<<
@@ -7063,153 +7883,451 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
  *         variant_file.parseInfo = False
  */
     try {
-      __pyx_t_4 = new vcf::VariantCallFile();
+      __pyx_t_5 = new vcf::VariantCallFile();
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 393; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_4;
+    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_5;
 
-    /* "vcfnp/iter.pyx":394
+    /* "vcfnp/iter.pyx":411
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)             # <<<<<<<<<<<<<<
  *         variant_file.parseInfo = False
  *         variant_file.parseSamples = True
  */
-    __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 411; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     try {
-      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_6);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 411; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "vcfnp/iter.pyx":395
+    /* "vcfnp/iter.pyx":412
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = False             # <<<<<<<<<<<<<<
  *         variant_file.parseSamples = True
- *         if region is not None:
+ *         region_start, region_stop = None, None
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseInfo = 0;
 
-    /* "vcfnp/iter.pyx":396
+    /* "vcfnp/iter.pyx":413
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = False
  *         variant_file.parseSamples = True             # <<<<<<<<<<<<<<
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 1;
 
-    /* "vcfnp/iter.pyx":397
+    /* "vcfnp/iter.pyx":414
  *         variant_file.parseInfo = False
  *         variant_file.parseSamples = True
+ *         region_start, region_stop = None, None             # <<<<<<<<<<<<<<
+ *         if region is not None:
+ *             region_set = variant_file.setRegion(_b(region))
+ */
+    __pyx_t_4 = Py_None;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_7 = Py_None;
+    __Pyx_INCREF(__pyx_t_7);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_7);
+    __Pyx_GIVEREF(__pyx_t_7);
+    __pyx_t_7 = 0;
+
+    /* "vcfnp/iter.pyx":415
+ *         variant_file.parseSamples = True
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  */
-    __pyx_t_6 = (__pyx_cur_scope->__pyx_v_region != ((PyObject*)Py_None));
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (__pyx_t_7) {
+    __pyx_t_8 = (__pyx_cur_scope->__pyx_v_region != Py_None);
+    __pyx_t_9 = (__pyx_t_8 != 0);
+    if (__pyx_t_9) {
 
-      /* "vcfnp/iter.pyx":398
- *         variant_file.parseSamples = True
+      /* "vcfnp/iter.pyx":416
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)             # <<<<<<<<<<<<<<
+ *             region_set = variant_file.setRegion(_b(region))             # <<<<<<<<<<<<<<
  *             if not region_set:
  *                 raise StopIteration
  */
-      __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_region); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 398; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_5);
+      __pyx_t_7 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_region, 0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 416; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_t_7); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 416; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_6);
 
-      /* "vcfnp/iter.pyx":399
+      /* "vcfnp/iter.pyx":417
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
-      __pyx_t_7 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
-      if (__pyx_t_7) {
+      __pyx_t_9 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
+      if (__pyx_t_9) {
 
-        /* "vcfnp/iter.pyx":400
- *             region_set = variant_file.setRegion(region)
+        /* "vcfnp/iter.pyx":418
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  *                 raise StopIteration             # <<<<<<<<<<<<<<
- *         variant = new Variant(deref(variant_file))
- * 
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
  */
         __Pyx_Raise(__pyx_builtin_StopIteration, 0, 0, 0);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":399
+        /* "vcfnp/iter.pyx":417
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
       }
 
-      /* "vcfnp/iter.pyx":397
- *         variant_file.parseInfo = False
+      /* "vcfnp/iter.pyx":419
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_kp_s_, __pyx_cur_scope->__pyx_v_region, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 419; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = (__pyx_t_9 != 0);
+      if (__pyx_t_8) {
+
+        /* "vcfnp/iter.pyx":420
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region, __pyx_n_s_split); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_7);
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          if (likely(PyTuple_CheckExact(sequence))) {
+            __pyx_t_7 = PyTuple_GET_ITEM(sequence, 0); 
+            __pyx_t_10 = PyTuple_GET_ITEM(sequence, 1); 
+          } else {
+            __pyx_t_7 = PyList_GET_ITEM(sequence, 0); 
+            __pyx_t_10 = PyList_GET_ITEM(sequence, 1); 
+          }
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(__pyx_t_10);
+          #else
+          __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_7);
+          __pyx_t_10 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_10);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        } else {
+          Py_ssize_t index = -1;
+          __pyx_t_11 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __pyx_t_12 = Py_TYPE(__pyx_t_11)->tp_iternext;
+          index = 0; __pyx_t_7 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_7)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_7);
+          index = 1; __pyx_t_10 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_10)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_10);
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_12(__pyx_t_11), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_12 = NULL;
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          goto __pyx_L10_unpacking_done;
+          __pyx_L9_unpacking_failed:;
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          __pyx_t_12 = NULL;
+          if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_L10_unpacking_done:;
+        }
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v__);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v__, __pyx_t_7);
+        __Pyx_GIVEREF(__pyx_t_7);
+        __pyx_t_7 = 0;
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start_stop);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_10);
+        __pyx_t_10 = 0;
+
+        /* "vcfnp/iter.pyx":421
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+        __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+
+        /* "vcfnp/iter.pyx":422
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_n_s_split); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_10);
+        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+        if (likely(PyList_CheckExact(__pyx_t_7)) || PyTuple_CheckExact(__pyx_t_7)) {
+          __pyx_t_10 = __pyx_t_7; __Pyx_INCREF(__pyx_t_10); __pyx_t_13 = 0;
+          __pyx_t_14 = NULL;
+        } else {
+          __pyx_t_13 = -1; __pyx_t_10 = PyObject_GetIter(__pyx_t_7); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_10);
+          __pyx_t_14 = Py_TYPE(__pyx_t_10)->tp_iternext; if (unlikely(!__pyx_t_14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        for (;;) {
+          if (likely(!__pyx_t_14)) {
+            if (likely(PyList_CheckExact(__pyx_t_10))) {
+              if (__pyx_t_13 >= PyList_GET_SIZE(__pyx_t_10)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_7 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_13); __Pyx_INCREF(__pyx_t_7); __pyx_t_13++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_7 = PySequence_ITEM(__pyx_t_10, __pyx_t_13); __pyx_t_13++; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_7);
+              #endif
+            } else {
+              if (__pyx_t_13 >= PyTuple_GET_SIZE(__pyx_t_10)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_10, __pyx_t_13); __Pyx_INCREF(__pyx_t_7); __pyx_t_13++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_7 = PySequence_ITEM(__pyx_t_10, __pyx_t_13); __pyx_t_13++; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_7);
+              #endif
+            }
+          } else {
+            __pyx_t_7 = __pyx_t_14(__pyx_t_10);
+            if (unlikely(!__pyx_t_7)) {
+              PyObject* exc_type = PyErr_Occurred();
+              if (exc_type) {
+                if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+                else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              }
+              break;
+            }
+            __Pyx_GOTREF(__pyx_t_7);
+          }
+          __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_v);
+          __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_v, __pyx_t_7);
+          __Pyx_GIVEREF(__pyx_t_7);
+          __pyx_t_7 = 0;
+
+          /* "vcfnp/iter.pyx":421
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+          __pyx_t_7 = PyNumber_Int(__pyx_cur_scope->__pyx_v_v); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_7);
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_7))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        }
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+        if (1) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_10 = PyList_GET_ITEM(sequence, 0); 
+          __pyx_t_7 = PyList_GET_ITEM(sequence, 1); 
+          __Pyx_INCREF(__pyx_t_10);
+          __Pyx_INCREF(__pyx_t_7);
+          #else
+          __pyx_t_10 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_10);
+          __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_7);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        }
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_start);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_10);
+        __pyx_t_10 = 0;
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_7);
+        __Pyx_GIVEREF(__pyx_t_7);
+        __pyx_t_7 = 0;
+
+        /* "vcfnp/iter.pyx":419
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      }
+
+      /* "vcfnp/iter.pyx":415
  *         variant_file.parseSamples = True
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  */
     }
 
-    /* "vcfnp/iter.pyx":401
- *             if not region_set:
- *                 raise StopIteration
+    /* "vcfnp/iter.pyx":423
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
  *         variant = new Variant(deref(variant_file))             # <<<<<<<<<<<<<<
  * 
  *         while _get_next_variant(variant_file, variant):
  */
     __pyx_cur_scope->__pyx_v_variant = new vcf::Variant((*__pyx_cur_scope->__pyx_v_variant_file));
 
-    /* "vcfnp/iter.pyx":403
+    /* "vcfnp/iter.pyx":425
  *         variant = new Variant(deref(variant_file))
  * 
  *         while _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:
+ */
+    while (1) {
+      __pyx_t_8 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
+      if (!__pyx_t_8) break;
+
+      /* "vcfnp/iter.pyx":426
+ * 
+ *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 continue
+ */
+      __pyx_t_9 = (__pyx_cur_scope->__pyx_v_region_start != Py_None);
+      __pyx_t_15 = (__pyx_t_9 != 0);
+      if (__pyx_t_15) {
+      } else {
+        __pyx_t_8 = __pyx_t_15;
+        goto __pyx_L16_bool_binop_done;
+      }
+      __pyx_t_15 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_truncate); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 426; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__pyx_t_15) {
+      } else {
+        __pyx_t_8 = __pyx_t_15;
+        goto __pyx_L16_bool_binop_done;
+      }
+
+      /* "vcfnp/iter.pyx":427
+ *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:             # <<<<<<<<<<<<<<
+ *                 continue
+ *             yield _mkcrow(variant, samples, ploidy, fieldspec)
+ */
+      __pyx_t_4 = __Pyx_PyInt_From_long(__pyx_cur_scope->__pyx_v_variant->position); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_7 = PyObject_RichCompare(__pyx_t_4, __pyx_cur_scope->__pyx_v_region_start, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_15 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_8 = __pyx_t_15;
+      __pyx_L16_bool_binop_done:;
+
+      /* "vcfnp/iter.pyx":426
+ * 
+ *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 continue
+ */
+      if (__pyx_t_8) {
+
+        /* "vcfnp/iter.pyx":428
+ *             if region_start is not None and truncate and \
+ *                     variant.position < region_start:
+ *                 continue             # <<<<<<<<<<<<<<
  *             yield _mkcrow(variant, samples, ploidy, fieldspec)
  * 
  */
-    while (1) {
-      __pyx_t_7 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
-      if (!__pyx_t_7) break;
+        goto __pyx_L13_continue;
 
-      /* "vcfnp/iter.pyx":404
+        /* "vcfnp/iter.pyx":426
  * 
  *         while _get_next_variant(variant_file, variant):
+ *             if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                     variant.position < region_start:
+ *                 continue
+ */
+      }
+
+      /* "vcfnp/iter.pyx":429
+ *                     variant.position < region_start:
+ *                 continue
  *             yield _mkcrow(variant, samples, ploidy, fieldspec)             # <<<<<<<<<<<<<<
  * 
  *         del variant_file
  */
-      __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkcrow(__pyx_cur_scope->__pyx_v_variant, __pyx_cur_scope->__pyx_v_samples, __pyx_cur_scope->__pyx_v_ploidy, __pyx_cur_scope->__pyx_v_fieldspec); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_r = __pyx_t_3;
-      __pyx_t_3 = 0;
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_samples))||((__pyx_cur_scope->__pyx_v_samples) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_samples)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 429; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_16 = __Pyx_PyInt_As_int(__pyx_cur_scope->__pyx_v_ploidy); if (unlikely((__pyx_t_16 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 429; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_fieldspec))||((__pyx_cur_scope->__pyx_v_fieldspec) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_fieldspec)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 429; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __pyx_f_5vcfnp_4iter__mkcrow(__pyx_cur_scope->__pyx_v_variant, ((PyObject*)__pyx_cur_scope->__pyx_v_samples), __pyx_t_16, ((PyObject*)__pyx_cur_scope->__pyx_v_fieldspec)); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 429; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_r = __pyx_t_7;
+      __pyx_t_7 = 0;
       __Pyx_XGIVEREF(__pyx_t_1);
       __pyx_cur_scope->__pyx_t_0 = __pyx_t_1;
       __pyx_cur_scope->__pyx_t_1 = __pyx_t_2;
+      __pyx_cur_scope->__pyx_t_2 = __pyx_t_3;
       __Pyx_XGIVEREF(__pyx_r);
       __Pyx_RefNannyFinishContext();
       /* return from generator, yielding value */
       __pyx_generator->resume_label = 1;
       return __pyx_r;
-      __pyx_L10_resume_from_yield:;
+      __pyx_L19_resume_from_yield:;
       __pyx_t_1 = __pyx_cur_scope->__pyx_t_0;
       __pyx_cur_scope->__pyx_t_0 = 0;
       __Pyx_XGOTREF(__pyx_t_1);
       __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
-      if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __pyx_cur_scope->__pyx_t_2;
+      if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 429; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_L13_continue:;
     }
 
-    /* "vcfnp/iter.pyx":406
+    /* "vcfnp/iter.pyx":431
  *             yield _mkcrow(variant, samples, ploidy, fieldspec)
  * 
  *         del variant_file             # <<<<<<<<<<<<<<
@@ -7218,7 +8336,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
  */
     delete __pyx_cur_scope->__pyx_v_variant_file;
 
-    /* "vcfnp/iter.pyx":407
+    /* "vcfnp/iter.pyx":432
  * 
  *         del variant_file
  *         del variant             # <<<<<<<<<<<<<<
@@ -7227,7 +8345,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
  */
     delete __pyx_cur_scope->__pyx_v_variant;
 
-    /* "vcfnp/iter.pyx":392
+    /* "vcfnp/iter.pyx":409
  *     cdef Variant *variant
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
@@ -7237,12 +8355,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":387
+  /* "vcfnp/iter.pyx":405
  * 
  * 
- * def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
- *                   tuple fieldspec):
+ * def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):             # <<<<<<<<<<<<<<
  *     cdef VariantCallFile *variant_file
+ *     cdef Variant *variant
  */
 
   /* function exit code */
@@ -7250,7 +8368,10 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_AddTraceback("_itercalldata", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
@@ -7261,25 +8382,26 @@ static PyObject *__pyx_gb_5vcfnp_4iter_12generator2(__pyx_CoroutineObject *__pyx
 }
 static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
 
-/* "vcfnp/iter.pyx":410
+/* "vcfnp/iter.pyx":435
  * 
  * 
- * def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,             # <<<<<<<<<<<<<<
- *                                  int ploidy, tuple fieldspec,
- *                                  np.uint8_t[:] condition):
+ * def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,             # <<<<<<<<<<<<<<
+ *                                  np.uint8_t[:] condition, truncate):
+ *     cdef VariantCallFile *variant_file
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_5vcfnp_4iter_14_itercalldata_with_condition(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5vcfnp_4iter_13_itercalldata_with_condition[] = "_itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples, int ploidy, tuple fieldspec, __Pyx_memviewslice condition)";
+static char __pyx_doc_5vcfnp_4iter_13_itercalldata_with_condition[] = "_itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec, __Pyx_memviewslice condition, truncate)";
 static PyMethodDef __pyx_mdef_5vcfnp_4iter_14_itercalldata_with_condition = {"_itercalldata_with_condition", (PyCFunction)__pyx_pw_5vcfnp_4iter_14_itercalldata_with_condition, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5vcfnp_4iter_13_itercalldata_with_condition};
 static PyObject *__pyx_pw_5vcfnp_4iter_14_itercalldata_with_condition(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vcf_fns = 0;
   PyObject *__pyx_v_region = 0;
   PyObject *__pyx_v_samples = 0;
-  int __pyx_v_ploidy;
+  PyObject *__pyx_v_ploidy = 0;
   PyObject *__pyx_v_fieldspec = 0;
   __Pyx_memviewslice __pyx_v_condition = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_v_truncate = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -7287,12 +8409,13 @@ static PyObject *__pyx_pw_5vcfnp_4iter_14_itercalldata_with_condition(PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_itercalldata_with_condition (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_samples,&__pyx_n_s_ploidy,&__pyx_n_s_fieldspec,&__pyx_n_s_condition,0};
-    PyObject* values[6] = {0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_vcf_fns,&__pyx_n_s_region,&__pyx_n_s_samples,&__pyx_n_s_ploidy,&__pyx_n_s_fieldspec,&__pyx_n_s_condition,&__pyx_n_s_truncate,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
@@ -7310,33 +8433,38 @@ static PyObject *__pyx_pw_5vcfnp_4iter_14_itercalldata_with_condition(PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_samples)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ploidy)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fieldspec)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_condition)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        }
+        case  6:
+        if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_truncate)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itercalldata_with_condition") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_itercalldata_with_condition") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -7345,38 +8473,32 @@ static PyObject *__pyx_pw_5vcfnp_4iter_14_itercalldata_with_condition(PyObject *
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
     }
-    __pyx_v_vcf_fns = ((PyObject*)values[0]);
-    __pyx_v_region = ((PyObject*)values[1]);
-    __pyx_v_samples = ((PyObject*)values[2]);
-    __pyx_v_ploidy = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_ploidy == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 411; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_fieldspec = ((PyObject*)values[4]);
-    __pyx_v_condition = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_uint8_t(values[5]); if (unlikely(!__pyx_v_condition.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_vcf_fns = values[0];
+    __pyx_v_region = values[1];
+    __pyx_v_samples = values[2];
+    __pyx_v_ploidy = values[3];
+    __pyx_v_fieldspec = values[4];
+    __pyx_v_condition = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_uint8_t(values[5]); if (unlikely(!__pyx_v_condition.memview)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 436; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_truncate = values[6];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_itercalldata_with_condition", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter._itercalldata_with_condition", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_vcf_fns), (&PyTuple_Type), 1, "vcf_fns", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_region), (&PyBytes_Type), 1, "region", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_samples), (&PyTuple_Type), 1, "samples", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_fieldspec), (&PyTuple_Type), 1, "fieldspec", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 411; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_samples, __pyx_v_ploidy, __pyx_v_fieldspec, __pyx_v_condition);
+  __pyx_r = __pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(__pyx_self, __pyx_v_vcf_fns, __pyx_v_region, __pyx_v_samples, __pyx_v_ploidy, __pyx_v_fieldspec, __pyx_v_condition, __pyx_v_truncate);
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, int __pyx_v_ploidy, PyObject *__pyx_v_fieldspec, __Pyx_memviewslice __pyx_v_condition) {
+static PyObject *__pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vcf_fns, PyObject *__pyx_v_region, PyObject *__pyx_v_samples, PyObject *__pyx_v_ploidy, PyObject *__pyx_v_fieldspec, __Pyx_memviewslice __pyx_v_condition, PyObject *__pyx_v_truncate) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7400,12 +8522,17 @@ static PyObject *__pyx_pf_5vcfnp_4iter_13_itercalldata_with_condition(CYTHON_UNU
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_samples);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_samples);
   __pyx_cur_scope->__pyx_v_ploidy = __pyx_v_ploidy;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_ploidy);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_ploidy);
   __pyx_cur_scope->__pyx_v_fieldspec = __pyx_v_fieldspec;
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_fieldspec);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_fieldspec);
   __pyx_cur_scope->__pyx_v_condition = __pyx_v_condition;
+  __pyx_cur_scope->__pyx_v_truncate = __pyx_v_truncate;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_truncate);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_truncate);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_15generator3, (PyObject *) __pyx_cur_scope, __pyx_n_s_itercalldata_with_condition, __pyx_n_s_itercalldata_with_condition); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_15generator3, (PyObject *) __pyx_cur_scope, __pyx_n_s_itercalldata_with_condition, __pyx_n_s_itercalldata_with_condition); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -7428,13 +8555,21 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
   PyObject *__pyx_r = NULL;
   PyObject *__pyx_t_1 = NULL;
   Py_ssize_t __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  vcf::VariantCallFile *__pyx_t_4;
-  std::string __pyx_t_5;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
+  PyObject *(*__pyx_t_3)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
+  vcf::VariantCallFile *__pyx_t_5;
+  std::string __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  int __pyx_t_8;
   int __pyx_t_9;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *(*__pyx_t_12)(PyObject *);
+  Py_ssize_t __pyx_t_13;
+  PyObject *(*__pyx_t_14)(PyObject *);
+  Py_ssize_t __pyx_t_15;
+  int __pyx_t_16;
+  int __pyx_t_17;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -7442,15 +8577,15 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
   __Pyx_RefNannySetupContext("None", 0);
   switch (__pyx_generator->resume_label) {
     case 0: goto __pyx_L3_first_run;
-    case 1: goto __pyx_L12_resume_from_yield;
+    case 1: goto __pyx_L21_resume_from_yield;
     default: /* CPython raises the right error here */
     __Pyx_RefNannyFinishContext();
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":415
+  /* "vcfnp/iter.pyx":439
  *     cdef VariantCallFile *variant_file
  *     cdef Variant *variant
  *     cdef long i = 0             # <<<<<<<<<<<<<<
@@ -7459,45 +8594,71 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  */
   __pyx_cur_scope->__pyx_v_i = 0;
 
-  /* "vcfnp/iter.pyx":416
+  /* "vcfnp/iter.pyx":440
  *     cdef Variant *variant
  *     cdef long i = 0
  *     cdef long n = len(condition)             # <<<<<<<<<<<<<<
  * 
  *     for vcf_fn in vcf_fns:
  */
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_cur_scope->__pyx_v_condition, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_uint8_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_uint8_t, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 416; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_cur_scope->__pyx_v_condition, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_uint8_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_uint8_t, 0);; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 416; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_cur_scope->__pyx_v_n = __pyx_t_2;
 
-  /* "vcfnp/iter.pyx":418
+  /* "vcfnp/iter.pyx":442
  *     cdef long n = len(condition)
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  */
-  if (unlikely(__pyx_cur_scope->__pyx_v_vcf_fns == Py_None)) {
-    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (likely(PyList_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) || PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_vcf_fns)) {
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+    __pyx_t_3 = NULL;
+  } else {
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
-    if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
-    #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_3);
-    #endif
+    if (likely(!__pyx_t_3)) {
+      if (likely(PyList_CheckExact(__pyx_t_1))) {
+        if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      } else {
+        if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      }
+    } else {
+      __pyx_t_4 = __pyx_t_3(__pyx_t_1);
+      if (unlikely(!__pyx_t_4)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_4);
+    }
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_vcf_fn);
-    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_3);
-    __pyx_t_3 = 0;
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_vcf_fn, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
 
-    /* "vcfnp/iter.pyx":419
+    /* "vcfnp/iter.pyx":443
  * 
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()             # <<<<<<<<<<<<<<
@@ -7505,115 +8666,343 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  *         variant_file.parseInfo = False
  */
     try {
-      __pyx_t_4 = new vcf::VariantCallFile();
+      __pyx_t_5 = new vcf::VariantCallFile();
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 419; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 443; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_4;
+    __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_5;
 
-    /* "vcfnp/iter.pyx":420
+    /* "vcfnp/iter.pyx":444
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)             # <<<<<<<<<<<<<<
  *         variant_file.parseInfo = False
  *         variant_file.parseSamples = False
  */
-    __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 444; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     try {
-      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_5);
+      __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_6);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 444; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "vcfnp/iter.pyx":421
+    /* "vcfnp/iter.pyx":445
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = False             # <<<<<<<<<<<<<<
  *         variant_file.parseSamples = False
- *         if region is not None:
+ *         region_start, region_stop = None, None
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseInfo = 0;
 
-    /* "vcfnp/iter.pyx":422
+    /* "vcfnp/iter.pyx":446
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = False
  *         variant_file.parseSamples = False             # <<<<<<<<<<<<<<
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 0;
 
-    /* "vcfnp/iter.pyx":423
+    /* "vcfnp/iter.pyx":447
  *         variant_file.parseInfo = False
  *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None             # <<<<<<<<<<<<<<
+ *         if region is not None:
+ *             region_set = variant_file.setRegion(_b(region))
+ */
+    __pyx_t_4 = Py_None;
+    __Pyx_INCREF(__pyx_t_4);
+    __pyx_t_7 = Py_None;
+    __Pyx_INCREF(__pyx_t_7);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_7);
+    __Pyx_GIVEREF(__pyx_t_7);
+    __pyx_t_7 = 0;
+
+    /* "vcfnp/iter.pyx":448
+ *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  */
-    __pyx_t_6 = (__pyx_cur_scope->__pyx_v_region != ((PyObject*)Py_None));
-    __pyx_t_7 = (__pyx_t_6 != 0);
-    if (__pyx_t_7) {
+    __pyx_t_8 = (__pyx_cur_scope->__pyx_v_region != Py_None);
+    __pyx_t_9 = (__pyx_t_8 != 0);
+    if (__pyx_t_9) {
 
-      /* "vcfnp/iter.pyx":424
- *         variant_file.parseSamples = False
+      /* "vcfnp/iter.pyx":449
+ *         region_start, region_stop = None, None
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)             # <<<<<<<<<<<<<<
+ *             region_set = variant_file.setRegion(_b(region))             # <<<<<<<<<<<<<<
  *             if not region_set:
  *                 raise StopIteration
  */
-      __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_region); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 424; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_5);
+      __pyx_t_7 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_region, 0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_t_7); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_6);
 
-      /* "vcfnp/iter.pyx":425
+      /* "vcfnp/iter.pyx":450
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
-      __pyx_t_7 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
-      if (__pyx_t_7) {
+      __pyx_t_9 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
+      if (__pyx_t_9) {
 
-        /* "vcfnp/iter.pyx":426
- *             region_set = variant_file.setRegion(region)
+        /* "vcfnp/iter.pyx":451
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  *                 raise StopIteration             # <<<<<<<<<<<<<<
- *         variant = new Variant(deref(variant_file))
- * 
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
  */
         __Pyx_Raise(__pyx_builtin_StopIteration, 0, 0, 0);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 426; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 451; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":425
+        /* "vcfnp/iter.pyx":450
  *         if region is not None:
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:             # <<<<<<<<<<<<<<
  *                 raise StopIteration
- *         variant = new Variant(deref(variant_file))
+ *             if ':' in region:
  */
       }
 
-      /* "vcfnp/iter.pyx":423
- *         variant_file.parseInfo = False
+      /* "vcfnp/iter.pyx":452
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_kp_s_, __pyx_cur_scope->__pyx_v_region, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 452; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = (__pyx_t_9 != 0);
+      if (__pyx_t_8) {
+
+        /* "vcfnp/iter.pyx":453
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region, __pyx_n_s_split); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_7);
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          if (likely(PyTuple_CheckExact(sequence))) {
+            __pyx_t_7 = PyTuple_GET_ITEM(sequence, 0); 
+            __pyx_t_10 = PyTuple_GET_ITEM(sequence, 1); 
+          } else {
+            __pyx_t_7 = PyList_GET_ITEM(sequence, 0); 
+            __pyx_t_10 = PyList_GET_ITEM(sequence, 1); 
+          }
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(__pyx_t_10);
+          #else
+          __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_7);
+          __pyx_t_10 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_10);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        } else {
+          Py_ssize_t index = -1;
+          __pyx_t_11 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_11);
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __pyx_t_12 = Py_TYPE(__pyx_t_11)->tp_iternext;
+          index = 0; __pyx_t_7 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_7)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_7);
+          index = 1; __pyx_t_10 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_10)) goto __pyx_L9_unpacking_failed;
+          __Pyx_GOTREF(__pyx_t_10);
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_12(__pyx_t_11), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_12 = NULL;
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          goto __pyx_L10_unpacking_done;
+          __pyx_L9_unpacking_failed:;
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+          __pyx_t_12 = NULL;
+          if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_L10_unpacking_done:;
+        }
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v__);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v__, __pyx_t_7);
+        __Pyx_GIVEREF(__pyx_t_7);
+        __pyx_t_7 = 0;
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_region_start_stop);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_10);
+        __pyx_t_10 = 0;
+
+        /* "vcfnp/iter.pyx":454
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+        __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+
+        /* "vcfnp/iter.pyx":455
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_region_start_stop, __pyx_n_s_split); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_10);
+        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+        if (likely(PyList_CheckExact(__pyx_t_7)) || PyTuple_CheckExact(__pyx_t_7)) {
+          __pyx_t_10 = __pyx_t_7; __Pyx_INCREF(__pyx_t_10); __pyx_t_13 = 0;
+          __pyx_t_14 = NULL;
+        } else {
+          __pyx_t_13 = -1; __pyx_t_10 = PyObject_GetIter(__pyx_t_7); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_10);
+          __pyx_t_14 = Py_TYPE(__pyx_t_10)->tp_iternext; if (unlikely(!__pyx_t_14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        }
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        for (;;) {
+          if (likely(!__pyx_t_14)) {
+            if (likely(PyList_CheckExact(__pyx_t_10))) {
+              if (__pyx_t_13 >= PyList_GET_SIZE(__pyx_t_10)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_7 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_13); __Pyx_INCREF(__pyx_t_7); __pyx_t_13++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_7 = PySequence_ITEM(__pyx_t_10, __pyx_t_13); __pyx_t_13++; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_7);
+              #endif
+            } else {
+              if (__pyx_t_13 >= PyTuple_GET_SIZE(__pyx_t_10)) break;
+              #if CYTHON_COMPILING_IN_CPYTHON
+              __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_10, __pyx_t_13); __Pyx_INCREF(__pyx_t_7); __pyx_t_13++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              #else
+              __pyx_t_7 = PySequence_ITEM(__pyx_t_10, __pyx_t_13); __pyx_t_13++; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              __Pyx_GOTREF(__pyx_t_7);
+              #endif
+            }
+          } else {
+            __pyx_t_7 = __pyx_t_14(__pyx_t_10);
+            if (unlikely(!__pyx_t_7)) {
+              PyObject* exc_type = PyErr_Occurred();
+              if (exc_type) {
+                if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+                else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              }
+              break;
+            }
+            __Pyx_GOTREF(__pyx_t_7);
+          }
+          __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_v);
+          __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_v, __pyx_t_7);
+          __Pyx_GIVEREF(__pyx_t_7);
+          __pyx_t_7 = 0;
+
+          /* "vcfnp/iter.pyx":454
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in             # <<<<<<<<<<<<<<
+ *                                              region_start_stop.split('-')]
+ *         variant = new Variant(deref(variant_file))
+ */
+          __pyx_t_7 = PyNumber_Int(__pyx_cur_scope->__pyx_v_v); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_7);
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_7))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        }
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+        if (1) {
+          PyObject* sequence = __pyx_t_4;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          Py_ssize_t size = Py_SIZE(sequence);
+          #else
+          Py_ssize_t size = PySequence_Size(sequence);
+          #endif
+          if (unlikely(size != 2)) {
+            if (size > 2) __Pyx_RaiseTooManyValuesError(2);
+            else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_10 = PyList_GET_ITEM(sequence, 0); 
+          __pyx_t_7 = PyList_GET_ITEM(sequence, 1); 
+          __Pyx_INCREF(__pyx_t_10);
+          __Pyx_INCREF(__pyx_t_7);
+          #else
+          __pyx_t_10 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_10);
+          __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __Pyx_GOTREF(__pyx_t_7);
+          #endif
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        }
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_start);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_start, __pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_10);
+        __pyx_t_10 = 0;
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region_stop);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region_stop, __pyx_t_7);
+        __Pyx_GIVEREF(__pyx_t_7);
+        __pyx_t_7 = 0;
+
+        /* "vcfnp/iter.pyx":452
+ *             if not region_set:
+ *                 raise StopIteration
+ *             if ':' in region:             # <<<<<<<<<<<<<<
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ */
+      }
+
+      /* "vcfnp/iter.pyx":448
  *         variant_file.parseSamples = False
+ *         region_start, region_stop = None, None
  *         if region is not None:             # <<<<<<<<<<<<<<
- *             region_set = variant_file.setRegion(region)
+ *             region_set = variant_file.setRegion(_b(region))
  *             if not region_set:
  */
     }
 
-    /* "vcfnp/iter.pyx":427
- *             if not region_set:
- *                 raise StopIteration
+    /* "vcfnp/iter.pyx":456
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
  *         variant = new Variant(deref(variant_file))             # <<<<<<<<<<<<<<
  * 
  *         while i < n:
  */
     __pyx_cur_scope->__pyx_v_variant = new vcf::Variant((*__pyx_cur_scope->__pyx_v_variant_file));
 
-    /* "vcfnp/iter.pyx":429
+    /* "vcfnp/iter.pyx":458
  *         variant = new Variant(deref(variant_file))
  * 
  *         while i < n:             # <<<<<<<<<<<<<<
@@ -7621,29 +9010,29 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  *             if condition[i]:
  */
     while (1) {
-      __pyx_t_7 = ((__pyx_cur_scope->__pyx_v_i < __pyx_cur_scope->__pyx_v_n) != 0);
-      if (!__pyx_t_7) break;
+      __pyx_t_8 = ((__pyx_cur_scope->__pyx_v_i < __pyx_cur_scope->__pyx_v_n) != 0);
+      if (!__pyx_t_8) break;
 
-      /* "vcfnp/iter.pyx":431
+      /* "vcfnp/iter.pyx":460
  *         while i < n:
  *             # only worth parsing samples if we know we want the variant
  *             if condition[i]:             # <<<<<<<<<<<<<<
  *                 variant_file.parseSamples = True
  *                 if not _get_next_variant(variant_file, variant):
  */
-      __pyx_t_8 = __pyx_cur_scope->__pyx_v_i;
-      __pyx_t_9 = -1;
-      if (__pyx_t_8 < 0) {
-        __pyx_t_9 = 0;
-      } else if (unlikely(__pyx_t_8 >= __pyx_cur_scope->__pyx_v_condition.shape[0])) __pyx_t_9 = 0;
-      if (unlikely(__pyx_t_9 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_9);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 431; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_15 = __pyx_cur_scope->__pyx_v_i;
+      __pyx_t_16 = -1;
+      if (__pyx_t_15 < 0) {
+        __pyx_t_16 = 0;
+      } else if (unlikely(__pyx_t_15 >= __pyx_cur_scope->__pyx_v_condition.shape[0])) __pyx_t_16 = 0;
+      if (unlikely(__pyx_t_16 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_16);
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 460; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_7 = ((*((__pyx_t_5numpy_uint8_t *) ( /* dim=0 */ (__pyx_cur_scope->__pyx_v_condition.data + __pyx_t_8 * __pyx_cur_scope->__pyx_v_condition.strides[0]) ))) != 0);
-      if (__pyx_t_7) {
+      __pyx_t_8 = ((*((__pyx_t_5numpy_uint8_t *) ( /* dim=0 */ (__pyx_cur_scope->__pyx_v_condition.data + __pyx_t_15 * __pyx_cur_scope->__pyx_v_condition.strides[0]) ))) != 0);
+      if (__pyx_t_8) {
 
-        /* "vcfnp/iter.pyx":432
+        /* "vcfnp/iter.pyx":461
  *             # only worth parsing samples if we know we want the variant
  *             if condition[i]:
  *                 variant_file.parseSamples = True             # <<<<<<<<<<<<<<
@@ -7652,73 +9041,142 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  */
         __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 1;
 
-        /* "vcfnp/iter.pyx":433
+        /* "vcfnp/iter.pyx":462
  *             if condition[i]:
  *                 variant_file.parseSamples = True
  *                 if not _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
  *                     break
- *                 yield _mkcrow(variant, samples, ploidy, fieldspec)
+ *                 if region_start is not None and truncate and \
  */
-        __pyx_t_7 = ((!(__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0)) != 0);
-        if (__pyx_t_7) {
+        __pyx_t_8 = ((!(__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0)) != 0);
+        if (__pyx_t_8) {
 
-          /* "vcfnp/iter.pyx":434
+          /* "vcfnp/iter.pyx":463
  *                 variant_file.parseSamples = True
  *                 if not _get_next_variant(variant_file, variant):
  *                     break             # <<<<<<<<<<<<<<
- *                 yield _mkcrow(variant, samples, ploidy, fieldspec)
- *             else:
+ *                 if region_start is not None and truncate and \
+ *                         variant.position < region_start:
  */
-          goto __pyx_L9_break;
+          goto __pyx_L14_break;
 
-          /* "vcfnp/iter.pyx":433
+          /* "vcfnp/iter.pyx":462
  *             if condition[i]:
  *                 variant_file.parseSamples = True
  *                 if not _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
  *                     break
- *                 yield _mkcrow(variant, samples, ploidy, fieldspec)
+ *                 if region_start is not None and truncate and \
  */
         }
 
-        /* "vcfnp/iter.pyx":435
+        /* "vcfnp/iter.pyx":464
  *                 if not _get_next_variant(variant_file, variant):
  *                     break
+ *                 if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                         variant.position < region_start:
+ *                     continue
+ */
+        __pyx_t_9 = (__pyx_cur_scope->__pyx_v_region_start != Py_None);
+        __pyx_t_17 = (__pyx_t_9 != 0);
+        if (__pyx_t_17) {
+        } else {
+          __pyx_t_8 = __pyx_t_17;
+          goto __pyx_L18_bool_binop_done;
+        }
+        __pyx_t_17 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_truncate); if (unlikely(__pyx_t_17 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 464; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        if (__pyx_t_17) {
+        } else {
+          __pyx_t_8 = __pyx_t_17;
+          goto __pyx_L18_bool_binop_done;
+        }
+
+        /* "vcfnp/iter.pyx":465
+ *                     break
+ *                 if region_start is not None and truncate and \
+ *                         variant.position < region_start:             # <<<<<<<<<<<<<<
+ *                     continue
+ *                 yield _mkcrow(variant, samples, ploidy, fieldspec)
+ */
+        __pyx_t_4 = __Pyx_PyInt_From_long(__pyx_cur_scope->__pyx_v_variant->position); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_7 = PyObject_RichCompare(__pyx_t_4, __pyx_cur_scope->__pyx_v_region_start, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __pyx_t_17 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_17 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __pyx_t_8 = __pyx_t_17;
+        __pyx_L18_bool_binop_done:;
+
+        /* "vcfnp/iter.pyx":464
+ *                 if not _get_next_variant(variant_file, variant):
+ *                     break
+ *                 if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                         variant.position < region_start:
+ *                     continue
+ */
+        if (__pyx_t_8) {
+
+          /* "vcfnp/iter.pyx":466
+ *                 if region_start is not None and truncate and \
+ *                         variant.position < region_start:
+ *                     continue             # <<<<<<<<<<<<<<
+ *                 yield _mkcrow(variant, samples, ploidy, fieldspec)
+ *             else:
+ */
+          goto __pyx_L13_continue;
+
+          /* "vcfnp/iter.pyx":464
+ *                 if not _get_next_variant(variant_file, variant):
+ *                     break
+ *                 if region_start is not None and truncate and \             # <<<<<<<<<<<<<<
+ *                         variant.position < region_start:
+ *                     continue
+ */
+        }
+
+        /* "vcfnp/iter.pyx":467
+ *                         variant.position < region_start:
+ *                     continue
  *                 yield _mkcrow(variant, samples, ploidy, fieldspec)             # <<<<<<<<<<<<<<
  *             else:
  *                 variant_file.parseSamples = False
  */
-        __pyx_t_3 = __pyx_f_5vcfnp_4iter__mkcrow(__pyx_cur_scope->__pyx_v_variant, __pyx_cur_scope->__pyx_v_samples, __pyx_cur_scope->__pyx_v_ploidy, __pyx_cur_scope->__pyx_v_fieldspec); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-        __Pyx_GOTREF(__pyx_t_3);
-        __pyx_r = __pyx_t_3;
-        __pyx_t_3 = 0;
+        if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_samples))||((__pyx_cur_scope->__pyx_v_samples) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_samples)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_16 = __Pyx_PyInt_As_int(__pyx_cur_scope->__pyx_v_ploidy); if (unlikely((__pyx_t_16 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_fieldspec))||((__pyx_cur_scope->__pyx_v_fieldspec) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_fieldspec)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_7 = __pyx_f_5vcfnp_4iter__mkcrow(__pyx_cur_scope->__pyx_v_variant, ((PyObject*)__pyx_cur_scope->__pyx_v_samples), __pyx_t_16, ((PyObject*)__pyx_cur_scope->__pyx_v_fieldspec)); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_GOTREF(__pyx_t_7);
+        __pyx_r = __pyx_t_7;
+        __pyx_t_7 = 0;
         __Pyx_XGIVEREF(__pyx_t_1);
         __pyx_cur_scope->__pyx_t_0 = __pyx_t_1;
         __pyx_cur_scope->__pyx_t_1 = __pyx_t_2;
-        __pyx_cur_scope->__pyx_t_2 = __pyx_t_8;
+        __pyx_cur_scope->__pyx_t_2 = __pyx_t_3;
+        __pyx_cur_scope->__pyx_t_3 = __pyx_t_15;
         __Pyx_XGIVEREF(__pyx_r);
         __Pyx_RefNannyFinishContext();
         /* return from generator, yielding value */
         __pyx_generator->resume_label = 1;
         return __pyx_r;
-        __pyx_L12_resume_from_yield:;
+        __pyx_L21_resume_from_yield:;
         __pyx_t_1 = __pyx_cur_scope->__pyx_t_0;
         __pyx_cur_scope->__pyx_t_0 = 0;
         __Pyx_XGOTREF(__pyx_t_1);
         __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
-        __pyx_t_8 = __pyx_cur_scope->__pyx_t_2;
-        if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_3 = __pyx_cur_scope->__pyx_t_2;
+        __pyx_t_15 = __pyx_cur_scope->__pyx_t_3;
+        if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":431
+        /* "vcfnp/iter.pyx":460
  *         while i < n:
  *             # only worth parsing samples if we know we want the variant
  *             if condition[i]:             # <<<<<<<<<<<<<<
  *                 variant_file.parseSamples = True
  *                 if not _get_next_variant(variant_file, variant):
  */
-        goto __pyx_L10;
+        goto __pyx_L15;
       }
 
-      /* "vcfnp/iter.pyx":437
+      /* "vcfnp/iter.pyx":469
  *                 yield _mkcrow(variant, samples, ploidy, fieldspec)
  *             else:
  *                 variant_file.parseSamples = False             # <<<<<<<<<<<<<<
@@ -7728,26 +9186,26 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
       /*else*/ {
         __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 0;
 
-        /* "vcfnp/iter.pyx":438
+        /* "vcfnp/iter.pyx":470
  *             else:
  *                 variant_file.parseSamples = False
  *                 if not _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
  *                     break
  *             i += 1
  */
-        __pyx_t_7 = ((!(__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0)) != 0);
-        if (__pyx_t_7) {
+        __pyx_t_8 = ((!(__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0)) != 0);
+        if (__pyx_t_8) {
 
-          /* "vcfnp/iter.pyx":439
+          /* "vcfnp/iter.pyx":471
  *                 variant_file.parseSamples = False
  *                 if not _get_next_variant(variant_file, variant):
  *                     break             # <<<<<<<<<<<<<<
  *             i += 1
  * 
  */
-          goto __pyx_L9_break;
+          goto __pyx_L14_break;
 
-          /* "vcfnp/iter.pyx":438
+          /* "vcfnp/iter.pyx":470
  *             else:
  *                 variant_file.parseSamples = False
  *                 if not _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
@@ -7756,9 +9214,9 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  */
         }
       }
-      __pyx_L10:;
+      __pyx_L15:;
 
-      /* "vcfnp/iter.pyx":440
+      /* "vcfnp/iter.pyx":472
  *                 if not _get_next_variant(variant_file, variant):
  *                     break
  *             i += 1             # <<<<<<<<<<<<<<
@@ -7766,10 +9224,11 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  *         del variant_file
  */
       __pyx_cur_scope->__pyx_v_i = (__pyx_cur_scope->__pyx_v_i + 1);
+      __pyx_L13_continue:;
     }
-    __pyx_L9_break:;
+    __pyx_L14_break:;
 
-    /* "vcfnp/iter.pyx":442
+    /* "vcfnp/iter.pyx":474
  *             i += 1
  * 
  *         del variant_file             # <<<<<<<<<<<<<<
@@ -7778,7 +9237,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  */
     delete __pyx_cur_scope->__pyx_v_variant_file;
 
-    /* "vcfnp/iter.pyx":443
+    /* "vcfnp/iter.pyx":475
  * 
  *         del variant_file
  *         del variant             # <<<<<<<<<<<<<<
@@ -7787,7 +9246,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
  */
     delete __pyx_cur_scope->__pyx_v_variant;
 
-    /* "vcfnp/iter.pyx":418
+    /* "vcfnp/iter.pyx":442
  *     cdef long n = len(condition)
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
@@ -7797,12 +9256,12 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":410
+  /* "vcfnp/iter.pyx":435
  * 
  * 
- * def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,             # <<<<<<<<<<<<<<
- *                                  int ploidy, tuple fieldspec,
- *                                  np.uint8_t[:] condition):
+ * def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,             # <<<<<<<<<<<<<<
+ *                                  np.uint8_t[:] condition, truncate):
+ *     cdef VariantCallFile *variant_file
  */
 
   /* function exit code */
@@ -7810,7 +9269,10 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_AddTraceback("_itercalldata_with_condition", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
@@ -7820,7 +9282,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_15generator3(__pyx_CoroutineObject *__pyx
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":446
+/* "vcfnp/iter.pyx":478
  * 
  * 
  * cdef inline object _mkcrow(Variant *variant, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
@@ -7843,41 +9305,41 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcrow(vcf::Variant *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkcrow", 0);
 
-  /* "vcfnp/iter.pyx":448
+  /* "vcfnp/iter.pyx":480
  * cdef inline object _mkcrow(Variant *variant, tuple samples, int ploidy,
  *                            tuple fieldspec):
  *     out = [_mkcvals(variant, s, ploidy, fieldspec) for s in samples]             # <<<<<<<<<<<<<<
  *     return tuple(out)
  * 
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__pyx_v_samples == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_2 = __pyx_v_samples; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
   for (;;) {
     if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
     #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     #else
-    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_s, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_v_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_4 = __pyx_f_5vcfnp_4iter__mkcvals(__pyx_v_variant, __pyx_t_5, __pyx_v_ploidy, __pyx_v_fieldspec); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_convert_string_from_py_std__in_string(__pyx_v_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __pyx_f_5vcfnp_4iter__mkcvals(__pyx_v_variant, __pyx_t_5, __pyx_v_ploidy, __pyx_v_fieldspec); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 448; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 480; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":449
+  /* "vcfnp/iter.pyx":481
  *                            tuple fieldspec):
  *     out = [_mkcvals(variant, s, ploidy, fieldspec) for s in samples]
  *     return tuple(out)             # <<<<<<<<<<<<<<
@@ -7885,13 +9347,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcrow(vcf::Variant *__pyx_
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 481; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":446
+  /* "vcfnp/iter.pyx":478
  * 
  * 
  * cdef inline object _mkcrow(Variant *variant, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
@@ -7914,7 +9376,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcrow(vcf::Variant *__pyx_
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":452
+/* "vcfnp/iter.pyx":484
  * 
  * 
  * cdef inline object _mkcvals(Variant *variant, string sample, int ploidy,             # <<<<<<<<<<<<<<
@@ -7948,17 +9410,17 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkcvals", 0);
 
-  /* "vcfnp/iter.pyx":454
+  /* "vcfnp/iter.pyx":486
  * cdef inline object _mkcvals(Variant *variant, string sample, int ploidy,
  *                             tuple fieldspec):
  *     out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)             # <<<<<<<<<<<<<<
  *            for (f, arity, fill, format_type) in fieldspec]
  *     return tuple(out)
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 486; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "vcfnp/iter.pyx":455
+  /* "vcfnp/iter.pyx":487
  *                             tuple fieldspec):
  *     out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)
  *            for (f, arity, fill, format_type) in fieldspec]             # <<<<<<<<<<<<<<
@@ -7967,15 +9429,15 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
  */
   if (unlikely(__pyx_v_fieldspec == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_2 = __pyx_v_fieldspec; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
   for (;;) {
     if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
     #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     #else
-    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
@@ -7988,7 +9450,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
       if (unlikely(size != 4)) {
         if (size > 4) __Pyx_RaiseTooManyValuesError(4);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       #if CYTHON_COMPILING_IN_CPYTHON
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -8011,7 +9473,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
         Py_ssize_t i;
         PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
         for (i=0; i < 4; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -8021,7 +9483,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
     } else {
       Py_ssize_t index = -1;
       PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
-      __pyx_t_9 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -8030,7 +9492,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
         __Pyx_GOTREF(item);
         *(temps[index]) = item;
       }
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_10 = NULL;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       goto __pyx_L6_unpacking_done;
@@ -8038,7 +9500,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_L6_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_f, __pyx_t_5);
@@ -8050,22 +9512,22 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
     __Pyx_XDECREF_SET(__pyx_v_format_type, __pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "vcfnp/iter.pyx":454
+    /* "vcfnp/iter.pyx":486
  * cdef inline object _mkcvals(Variant *variant, string sample, int ploidy,
  *                             tuple fieldspec):
  *     out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)             # <<<<<<<<<<<<<<
  *            for (f, arity, fill, format_type) in fieldspec]
  *     return tuple(out)
  */
-    __pyx_t_11 = __pyx_convert_string_from_py_std__in_string(__pyx_v_f); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_v_format_type); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_4 = __pyx_f_5vcfnp_4iter__mkcval((__pyx_v_variant->samples[__pyx_v_sample]), __pyx_v_ploidy, __pyx_t_11, __pyx_t_12, __pyx_v_fill, __pyx_t_13); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = __pyx_convert_string_from_py_std__in_string(__pyx_v_f); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 486; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 486; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_v_format_type); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 486; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __pyx_f_5vcfnp_4iter__mkcval((__pyx_v_variant->samples[__pyx_v_sample]), __pyx_v_ploidy, __pyx_t_11, __pyx_t_12, __pyx_v_fill, __pyx_t_13); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 486; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 486; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "vcfnp/iter.pyx":455
+    /* "vcfnp/iter.pyx":487
  *                             tuple fieldspec):
  *     out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)
  *            for (f, arity, fill, format_type) in fieldspec]             # <<<<<<<<<<<<<<
@@ -8077,7 +9539,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":456
+  /* "vcfnp/iter.pyx":488
  *     out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)
  *            for (f, arity, fill, format_type) in fieldspec]
  *     return tuple(out)             # <<<<<<<<<<<<<<
@@ -8085,13 +9547,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 456; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 488; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":452
+  /* "vcfnp/iter.pyx":484
  * 
  * 
  * cdef inline object _mkcvals(Variant *variant, string sample, int ploidy,             # <<<<<<<<<<<<<<
@@ -8122,7 +9584,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcvals(vcf::Variant *__pyx
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":459
+/* "vcfnp/iter.pyx":491
  * 
  * 
  * cdef inline object _mkcval(map[string, vector[string]]& sample_data, int ploidy,             # <<<<<<<<<<<<<<
@@ -8140,7 +9602,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkcval", 0);
 
-  /* "vcfnp/iter.pyx":462
+  /* "vcfnp/iter.pyx":494
  *                            string field, int arity, object fill,
  *                            int format_type):
  *     if field == FIELD_NAME_IS_CALLED:             # <<<<<<<<<<<<<<
@@ -8150,7 +9612,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_IS_CALLED) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":463
+    /* "vcfnp/iter.pyx":495
  *                            int format_type):
  *     if field == FIELD_NAME_IS_CALLED:
  *         return _is_called(sample_data)             # <<<<<<<<<<<<<<
@@ -8158,13 +9620,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  *         return _is_phased(sample_data)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_5vcfnp_4iter__is_called(__pyx_v_sample_data)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 463; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_5vcfnp_4iter__is_called(__pyx_v_sample_data)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 495; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":462
+    /* "vcfnp/iter.pyx":494
  *                            string field, int arity, object fill,
  *                            int format_type):
  *     if field == FIELD_NAME_IS_CALLED:             # <<<<<<<<<<<<<<
@@ -8173,7 +9635,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  */
   }
 
-  /* "vcfnp/iter.pyx":464
+  /* "vcfnp/iter.pyx":496
  *     if field == FIELD_NAME_IS_CALLED:
  *         return _is_called(sample_data)
  *     elif field == FIELD_NAME_IS_PHASED:             # <<<<<<<<<<<<<<
@@ -8183,7 +9645,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_IS_PHASED) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":465
+    /* "vcfnp/iter.pyx":497
  *         return _is_called(sample_data)
  *     elif field == FIELD_NAME_IS_PHASED:
  *         return _is_phased(sample_data)             # <<<<<<<<<<<<<<
@@ -8191,13 +9653,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  *         return _genotype(sample_data, ploidy)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_5vcfnp_4iter__is_phased(__pyx_v_sample_data)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_5vcfnp_4iter__is_phased(__pyx_v_sample_data)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 497; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":464
+    /* "vcfnp/iter.pyx":496
  *     if field == FIELD_NAME_IS_CALLED:
  *         return _is_called(sample_data)
  *     elif field == FIELD_NAME_IS_PHASED:             # <<<<<<<<<<<<<<
@@ -8206,7 +9668,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  */
   }
 
-  /* "vcfnp/iter.pyx":466
+  /* "vcfnp/iter.pyx":498
  *     elif field == FIELD_NAME_IS_PHASED:
  *         return _is_phased(sample_data)
  *     elif field == FIELD_NAME_GENOTYPE:             # <<<<<<<<<<<<<<
@@ -8216,7 +9678,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
   __pyx_t_1 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_GENOTYPE) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":467
+    /* "vcfnp/iter.pyx":499
  *         return _is_phased(sample_data)
  *     elif field == FIELD_NAME_GENOTYPE:
  *         return _genotype(sample_data, ploidy)             # <<<<<<<<<<<<<<
@@ -8224,13 +9686,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  *         return _mkval(sample_data[field], arity, fill, format_type)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__genotype(__pyx_v_sample_data, __pyx_v_ploidy); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__genotype(__pyx_v_sample_data, __pyx_v_ploidy); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 499; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":466
+    /* "vcfnp/iter.pyx":498
  *     elif field == FIELD_NAME_IS_PHASED:
  *         return _is_phased(sample_data)
  *     elif field == FIELD_NAME_GENOTYPE:             # <<<<<<<<<<<<<<
@@ -8239,7 +9701,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  */
   }
 
-  /* "vcfnp/iter.pyx":469
+  /* "vcfnp/iter.pyx":501
  *         return _genotype(sample_data, ploidy)
  *     else:
  *         return _mkval(sample_data[field], arity, fill, format_type)             # <<<<<<<<<<<<<<
@@ -8248,14 +9710,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval((__pyx_v_sample_data[__pyx_v_field]), __pyx_v_arity, __pyx_v_fill, __pyx_v_format_type); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 469; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_f_5vcfnp_4iter__mkval((__pyx_v_sample_data[__pyx_v_field]), __pyx_v_arity, __pyx_v_fill, __pyx_v_format_type); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 501; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
   }
 
-  /* "vcfnp/iter.pyx":459
+  /* "vcfnp/iter.pyx":491
  * 
  * 
  * cdef inline object _mkcval(map[string, vector[string]]& sample_data, int ploidy,             # <<<<<<<<<<<<<<
@@ -8274,7 +9736,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkcval(std::map<std::string
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":472
+/* "vcfnp/iter.pyx":504
  * 
  * 
  * cdef inline bool _is_called(map[string, vector[string]]& sample_data):             # <<<<<<<<<<<<<<
@@ -8294,7 +9756,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_is_called", 0);
 
-  /* "vcfnp/iter.pyx":474
+  /* "vcfnp/iter.pyx":506
  * cdef inline bool _is_called(map[string, vector[string]]& sample_data):
  *     cdef vector[string] *gts
  *     gts = &sample_data[FIELD_NAME_GT]             # <<<<<<<<<<<<<<
@@ -8303,7 +9765,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
  */
   __pyx_v_gts = (&(__pyx_v_sample_data[__pyx_v_5vcfnp_4iter_FIELD_NAME_GT]));
 
-  /* "vcfnp/iter.pyx":475
+  /* "vcfnp/iter.pyx":507
  *     cdef vector[string] *gts
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:             # <<<<<<<<<<<<<<
@@ -8313,7 +9775,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
   __pyx_t_1 = ((__pyx_v_gts->size() == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":476
+    /* "vcfnp/iter.pyx":508
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:
  *         return False             # <<<<<<<<<<<<<<
@@ -8323,7 +9785,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":475
+    /* "vcfnp/iter.pyx":507
  *     cdef vector[string] *gts
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:             # <<<<<<<<<<<<<<
@@ -8332,7 +9794,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
  */
   }
 
-  /* "vcfnp/iter.pyx":478
+  /* "vcfnp/iter.pyx":510
  *         return False
  *     else:
  *         return gts.at(0).find(b'.') == npos             # <<<<<<<<<<<<<<
@@ -8344,14 +9806,14 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
       __pyx_t_2 = __pyx_v_gts->at(0);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 510; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_3 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b_); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b__11); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 510; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_r = (__pyx_t_2->find(__pyx_t_3) == __pyx_v_5vcfnp_4iter_npos);
     goto __pyx_L0;
   }
 
-  /* "vcfnp/iter.pyx":472
+  /* "vcfnp/iter.pyx":504
  * 
  * 
  * cdef inline bool _is_called(map[string, vector[string]]& sample_data):             # <<<<<<<<<<<<<<
@@ -8368,7 +9830,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_called(std::map<std::string,s
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":481
+/* "vcfnp/iter.pyx":513
  * 
  * 
  * cdef inline bool _is_phased(map[string, vector[string]]& sample_data):             # <<<<<<<<<<<<<<
@@ -8388,7 +9850,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_is_phased", 0);
 
-  /* "vcfnp/iter.pyx":483
+  /* "vcfnp/iter.pyx":515
  * cdef inline bool _is_phased(map[string, vector[string]]& sample_data):
  *     cdef vector[string] *gts
  *     gts = &sample_data[FIELD_NAME_GT]             # <<<<<<<<<<<<<<
@@ -8397,7 +9859,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
  */
   __pyx_v_gts = (&(__pyx_v_sample_data[__pyx_v_5vcfnp_4iter_FIELD_NAME_GT]));
 
-  /* "vcfnp/iter.pyx":484
+  /* "vcfnp/iter.pyx":516
  *     cdef vector[string] *gts
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:             # <<<<<<<<<<<<<<
@@ -8407,7 +9869,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
   __pyx_t_1 = ((__pyx_v_gts->size() == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":485
+    /* "vcfnp/iter.pyx":517
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:
  *         return False             # <<<<<<<<<<<<<<
@@ -8417,7 +9879,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "vcfnp/iter.pyx":484
+    /* "vcfnp/iter.pyx":516
  *     cdef vector[string] *gts
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:             # <<<<<<<<<<<<<<
@@ -8426,7 +9888,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
  */
   }
 
-  /* "vcfnp/iter.pyx":487
+  /* "vcfnp/iter.pyx":519
  *         return False
  *     else:
  *         return gts.at(0).find(b'|') != npos             # <<<<<<<<<<<<<<
@@ -8438,14 +9900,14 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
       __pyx_t_2 = __pyx_v_gts->at(0);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_3 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b__2); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b__12); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_r = (__pyx_t_2->find(__pyx_t_3) != __pyx_v_5vcfnp_4iter_npos);
     goto __pyx_L0;
   }
 
-  /* "vcfnp/iter.pyx":481
+  /* "vcfnp/iter.pyx":513
  * 
  * 
  * cdef inline bool _is_phased(map[string, vector[string]]& sample_data):             # <<<<<<<<<<<<<<
@@ -8462,7 +9924,7 @@ static CYTHON_INLINE bool __pyx_f_5vcfnp_4iter__is_phased(std::map<std::string,s
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":490
+/* "vcfnp/iter.pyx":522
  * 
  * 
  * cdef inline object _genotype(map[string, vector[string]]& sample_data,             # <<<<<<<<<<<<<<
@@ -8493,7 +9955,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_genotype", 0);
 
-  /* "vcfnp/iter.pyx":497
+  /* "vcfnp/iter.pyx":529
  *     cdef int i
  *     cdef int allele
  *     gts = &sample_data[FIELD_NAME_GT]             # <<<<<<<<<<<<<<
@@ -8502,7 +9964,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
   __pyx_v_gts = (&(__pyx_v_sample_data[__pyx_v_5vcfnp_4iter_FIELD_NAME_GT]));
 
-  /* "vcfnp/iter.pyx":498
+  /* "vcfnp/iter.pyx":530
  *     cdef int allele
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:             # <<<<<<<<<<<<<<
@@ -8512,7 +9974,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
   __pyx_t_1 = ((__pyx_v_gts->size() == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "vcfnp/iter.pyx":499
+    /* "vcfnp/iter.pyx":531
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:
  *         if ploidy == 1:             # <<<<<<<<<<<<<<
@@ -8522,7 +9984,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
     __pyx_t_1 = ((__pyx_v_ploidy == 1) != 0);
     if (__pyx_t_1) {
 
-      /* "vcfnp/iter.pyx":500
+      /* "vcfnp/iter.pyx":532
  *     if gts.size() == 0:
  *         if ploidy == 1:
  *             return -1             # <<<<<<<<<<<<<<
@@ -8534,7 +9996,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
       __pyx_r = __pyx_int_neg_1;
       goto __pyx_L0;
 
-      /* "vcfnp/iter.pyx":499
+      /* "vcfnp/iter.pyx":531
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:
  *         if ploidy == 1:             # <<<<<<<<<<<<<<
@@ -8543,7 +10005,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
     }
 
-    /* "vcfnp/iter.pyx":502
+    /* "vcfnp/iter.pyx":534
  *             return -1
  *         else:
  *             return (-1,) * ploidy             # <<<<<<<<<<<<<<
@@ -8552,9 +10014,9 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
     /*else*/ {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ploidy); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ploidy); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 534; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__3, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__13, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 534; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_r = __pyx_t_3;
@@ -8562,7 +10024,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
       goto __pyx_L0;
     }
 
-    /* "vcfnp/iter.pyx":498
+    /* "vcfnp/iter.pyx":530
  *     cdef int allele
  *     gts = &sample_data[FIELD_NAME_GT]
  *     if gts.size() == 0:             # <<<<<<<<<<<<<<
@@ -8571,7 +10033,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
   }
 
-  /* "vcfnp/iter.pyx":504
+  /* "vcfnp/iter.pyx":536
  *             return (-1,) * ploidy
  *     else:
  *         split(gts.at(0), GT_DELIMS, allele_strings)             # <<<<<<<<<<<<<<
@@ -8583,11 +10045,11 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
       __pyx_t_4 = __pyx_v_gts->at(0);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 504; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     split(__pyx_t_4, __pyx_v_5vcfnp_4iter_GT_DELIMS, __pyx_v_allele_strings);
 
-    /* "vcfnp/iter.pyx":505
+    /* "vcfnp/iter.pyx":537
  *     else:
  *         split(gts.at(0), GT_DELIMS, allele_strings)
  *         if ploidy == 1:             # <<<<<<<<<<<<<<
@@ -8597,7 +10059,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
     __pyx_t_1 = ((__pyx_v_ploidy == 1) != 0);
     if (__pyx_t_1) {
 
-      /* "vcfnp/iter.pyx":506
+      /* "vcfnp/iter.pyx":538
  *         split(gts.at(0), GT_DELIMS, allele_strings)
  *         if ploidy == 1:
  *             if allele_strings.size() > 0:             # <<<<<<<<<<<<<<
@@ -8607,7 +10069,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
       __pyx_t_1 = ((__pyx_v_allele_strings.size() > 0) != 0);
       if (__pyx_t_1) {
 
-        /* "vcfnp/iter.pyx":507
+        /* "vcfnp/iter.pyx":539
  *         if ploidy == 1:
  *             if allele_strings.size() > 0:
  *                 s = allele_strings.at(0)             # <<<<<<<<<<<<<<
@@ -8618,21 +10080,21 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
           __pyx_t_5 = __pyx_v_allele_strings.at(0);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 507; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         __pyx_v_s = __pyx_t_5;
 
-        /* "vcfnp/iter.pyx":508
+        /* "vcfnp/iter.pyx":540
  *             if allele_strings.size() > 0:
  *                 s = allele_strings.at(0)
  *                 if s == b'.':             # <<<<<<<<<<<<<<
  *                     return -1
  *                 else:
  */
-        __pyx_t_1 = ((__pyx_v_s == __pyx_k_) != 0);
+        __pyx_t_1 = ((__pyx_v_s == __pyx_k__11) != 0);
         if (__pyx_t_1) {
 
-          /* "vcfnp/iter.pyx":509
+          /* "vcfnp/iter.pyx":541
  *                 s = allele_strings.at(0)
  *                 if s == b'.':
  *                     return -1             # <<<<<<<<<<<<<<
@@ -8644,7 +10106,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
           __pyx_r = __pyx_int_neg_1;
           goto __pyx_L0;
 
-          /* "vcfnp/iter.pyx":508
+          /* "vcfnp/iter.pyx":540
  *             if allele_strings.size() > 0:
  *                 s = allele_strings.at(0)
  *                 if s == b'.':             # <<<<<<<<<<<<<<
@@ -8653,7 +10115,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
         }
 
-        /* "vcfnp/iter.pyx":511
+        /* "vcfnp/iter.pyx":543
  *                     return -1
  *                 else:
  *                     return atoi(allele_strings.at(0).c_str())             # <<<<<<<<<<<<<<
@@ -8666,16 +10128,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
             __pyx_t_6 = __pyx_v_allele_strings.at(0);
           } catch(...) {
             __Pyx_CppExn2PyErr();
-            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 511; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 543; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
-          __pyx_t_3 = __Pyx_PyInt_From_int(atoi(__pyx_t_6->c_str())); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 511; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_3 = __Pyx_PyInt_From_int(atoi(__pyx_t_6->c_str())); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 543; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_3);
           __pyx_r = __pyx_t_3;
           __pyx_t_3 = 0;
           goto __pyx_L0;
         }
 
-        /* "vcfnp/iter.pyx":506
+        /* "vcfnp/iter.pyx":538
  *         split(gts.at(0), GT_DELIMS, allele_strings)
  *         if ploidy == 1:
  *             if allele_strings.size() > 0:             # <<<<<<<<<<<<<<
@@ -8684,7 +10146,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
       }
 
-      /* "vcfnp/iter.pyx":513
+      /* "vcfnp/iter.pyx":545
  *                     return atoi(allele_strings.at(0).c_str())
  *             else:
  *                 return -1             # <<<<<<<<<<<<<<
@@ -8698,7 +10160,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
         goto __pyx_L0;
       }
 
-      /* "vcfnp/iter.pyx":505
+      /* "vcfnp/iter.pyx":537
  *     else:
  *         split(gts.at(0), GT_DELIMS, allele_strings)
  *         if ploidy == 1:             # <<<<<<<<<<<<<<
@@ -8707,7 +10169,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  */
     }
 
-    /* "vcfnp/iter.pyx":515
+    /* "vcfnp/iter.pyx":547
  *                 return -1
  *         else:
  *             for i in range(ploidy):             # <<<<<<<<<<<<<<
@@ -8719,7 +10181,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
       for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
         __pyx_v_i = __pyx_t_8;
 
-        /* "vcfnp/iter.pyx":516
+        /* "vcfnp/iter.pyx":548
  *         else:
  *             for i in range(ploidy):
  *                 if i < allele_strings.size():             # <<<<<<<<<<<<<<
@@ -8729,7 +10191,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
         __pyx_t_1 = ((__pyx_v_i < __pyx_v_allele_strings.size()) != 0);
         if (__pyx_t_1) {
 
-          /* "vcfnp/iter.pyx":517
+          /* "vcfnp/iter.pyx":549
  *             for i in range(ploidy):
  *                 if i < allele_strings.size():
  *                     s = allele_strings.at(i)             # <<<<<<<<<<<<<<
@@ -8740,21 +10202,21 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
             __pyx_t_9 = __pyx_v_allele_strings.at(__pyx_v_i);
           } catch(...) {
             __Pyx_CppExn2PyErr();
-            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 517; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 549; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
           __pyx_v_s = __pyx_t_9;
 
-          /* "vcfnp/iter.pyx":518
+          /* "vcfnp/iter.pyx":550
  *                 if i < allele_strings.size():
  *                     s = allele_strings.at(i)
  *                     if s == b'.':             # <<<<<<<<<<<<<<
  *                         alleles.push_back(-1)
  *                     else:
  */
-          __pyx_t_1 = ((__pyx_v_s == __pyx_k_) != 0);
+          __pyx_t_1 = ((__pyx_v_s == __pyx_k__11) != 0);
           if (__pyx_t_1) {
 
-            /* "vcfnp/iter.pyx":519
+            /* "vcfnp/iter.pyx":551
  *                     s = allele_strings.at(i)
  *                     if s == b'.':
  *                         alleles.push_back(-1)             # <<<<<<<<<<<<<<
@@ -8765,10 +10227,10 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
               __pyx_v_alleles.push_back(-1);
             } catch(...) {
               __Pyx_CppExn2PyErr();
-              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 551; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             }
 
-            /* "vcfnp/iter.pyx":518
+            /* "vcfnp/iter.pyx":550
  *                 if i < allele_strings.size():
  *                     s = allele_strings.at(i)
  *                     if s == b'.':             # <<<<<<<<<<<<<<
@@ -8778,7 +10240,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
             goto __pyx_L11;
           }
 
-          /* "vcfnp/iter.pyx":521
+          /* "vcfnp/iter.pyx":553
  *                         alleles.push_back(-1)
  *                     else:
  *                         alleles.push_back(atoi(allele_strings.at(i).c_str()))             # <<<<<<<<<<<<<<
@@ -8790,18 +10252,18 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
               __pyx_t_10 = __pyx_v_allele_strings.at(__pyx_v_i);
             } catch(...) {
               __Pyx_CppExn2PyErr();
-              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 521; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 553; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             }
             try {
               __pyx_v_alleles.push_back(atoi(__pyx_t_10->c_str()));
             } catch(...) {
               __Pyx_CppExn2PyErr();
-              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 521; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 553; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             }
           }
           __pyx_L11:;
 
-          /* "vcfnp/iter.pyx":516
+          /* "vcfnp/iter.pyx":548
  *         else:
  *             for i in range(ploidy):
  *                 if i < allele_strings.size():             # <<<<<<<<<<<<<<
@@ -8811,7 +10273,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
           goto __pyx_L10;
         }
 
-        /* "vcfnp/iter.pyx":523
+        /* "vcfnp/iter.pyx":555
  *                         alleles.push_back(atoi(allele_strings.at(i).c_str()))
  *                 else:
  *                     alleles.push_back(-1)             # <<<<<<<<<<<<<<
@@ -8823,13 +10285,13 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
             __pyx_v_alleles.push_back(-1);
           } catch(...) {
             __Pyx_CppExn2PyErr();
-            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 523; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 555; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
         }
         __pyx_L10:;
       }
 
-      /* "vcfnp/iter.pyx":524
+      /* "vcfnp/iter.pyx":556
  *                 else:
  *                     alleles.push_back(-1)
  *             return tuple(alleles)             # <<<<<<<<<<<<<<
@@ -8837,9 +10299,9 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
  * 
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __pyx_convert_vector_to_py_int(__pyx_v_alleles); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 524; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __pyx_convert_vector_to_py_int(__pyx_v_alleles); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PySequence_Tuple(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 524; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PySequence_Tuple(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_r = __pyx_t_2;
@@ -8848,7 +10310,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
     }
   }
 
-  /* "vcfnp/iter.pyx":490
+  /* "vcfnp/iter.pyx":522
  * 
  * 
  * cdef inline object _genotype(map[string, vector[string]]& sample_data,             # <<<<<<<<<<<<<<
@@ -8869,7 +10331,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__genotype(std::map<std::stri
 }
 static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
 
-/* "vcfnp/iter.pyx":527
+/* "vcfnp/iter.pyx":559
  * 
  * 
  * def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,             # <<<<<<<<<<<<<<
@@ -8926,51 +10388,51 @@ static PyObject *__pyx_pw_5vcfnp_4iter_17itervariantstable(PyObject *__pyx_self,
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_region)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fields)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_arities)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_info_types)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_parse_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_filter_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_flatten_filter)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  8:
         if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_fill)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  9:
         if (likely((values[9] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_flatteners)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "itervariantstable") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "itervariantstable") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
       goto __pyx_L5_argtuple_error;
@@ -8999,7 +10461,7 @@ static PyObject *__pyx_pw_5vcfnp_4iter_17itervariantstable(PyObject *__pyx_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("itervariantstable", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("vcfnp.iter.itervariantstable", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9057,7 +10519,7 @@ static PyObject *__pyx_pf_5vcfnp_4iter_16itervariantstable(CYTHON_UNUSED PyObjec
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_flatteners);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_flatteners);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_18generator4, (PyObject *) __pyx_cur_scope, __pyx_n_s_itervariantstable, __pyx_n_s_itervariantstable); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_5vcfnp_4iter_18generator4, (PyObject *) __pyx_cur_scope, __pyx_n_s_itervariantstable, __pyx_n_s_itervariantstable); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -9101,18 +10563,18 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":531
+  /* "vcfnp/iter.pyx":563
  * 
  *     # force bytes
  *     vcf_fns = _b(tuple(vcf_fns))             # <<<<<<<<<<<<<<
  *     region = _b(region)
  *     fields = _b(tuple(fields))
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 563; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 563; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_vcf_fns);
@@ -9120,30 +10582,30 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":532
+  /* "vcfnp/iter.pyx":564
  *     # force bytes
  *     vcf_fns = _b(tuple(vcf_fns))
  *     region = _b(region)             # <<<<<<<<<<<<<<
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)
  */
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_region, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 532; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_region, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 564; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_region);
   __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_region, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":533
+  /* "vcfnp/iter.pyx":565
  *     vcf_fns = _b(tuple(vcf_fns))
  *     region = _b(region)
  *     fields = _b(tuple(fields))             # <<<<<<<<<<<<<<
  *     arities = tuple(arities)
  *     info_types = tuple(info_types)
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_fields); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 533; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_fields); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 565; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __pyx_f_5vcfnp_6compat_b(__pyx_t_2, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 533; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_5vcfnp_6compat_b(__pyx_t_2, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 565; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_fields);
@@ -9151,44 +10613,44 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":534
+  /* "vcfnp/iter.pyx":566
  *     region = _b(region)
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)             # <<<<<<<<<<<<<<
  *     info_types = tuple(info_types)
  *     filter_ids = _b(tuple(filter_ids))
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_arities); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 534; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_arities); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 566; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_arities);
   __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_arities, __pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":535
+  /* "vcfnp/iter.pyx":567
  *     fields = _b(tuple(fields))
  *     arities = tuple(arities)
  *     info_types = tuple(info_types)             # <<<<<<<<<<<<<<
  *     filter_ids = _b(tuple(filter_ids))
  *     fill = _b(fill)
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_info_types); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 535; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_info_types); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_info_types);
   __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_info_types, __pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":536
+  /* "vcfnp/iter.pyx":568
  *     arities = tuple(arities)
  *     info_types = tuple(info_types)
  *     filter_ids = _b(tuple(filter_ids))             # <<<<<<<<<<<<<<
  *     fill = _b(fill)
  *     flatteners = tuple(flatteners)
  */
-  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_filter_ids); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_filter_ids); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 568; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_t_1, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 568; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_filter_ids);
@@ -9196,42 +10658,42 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":537
+  /* "vcfnp/iter.pyx":569
  *     info_types = tuple(info_types)
  *     filter_ids = _b(tuple(filter_ids))
  *     fill = _b(fill)             # <<<<<<<<<<<<<<
  *     flatteners = tuple(flatteners)
  *     debug(flatteners)
  */
-  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_fill, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 537; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_f_5vcfnp_6compat_b(__pyx_cur_scope->__pyx_v_fill, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 569; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_fill);
   __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_fill, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":538
+  /* "vcfnp/iter.pyx":570
  *     filter_ids = _b(tuple(filter_ids))
  *     fill = _b(fill)
  *     flatteners = tuple(flatteners)             # <<<<<<<<<<<<<<
  *     debug(flatteners)
  * 
  */
-  __pyx_t_2 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_flatteners); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 538; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_Tuple(__pyx_cur_scope->__pyx_v_flatteners); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_flatteners);
   __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_flatteners, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":539
+  /* "vcfnp/iter.pyx":571
  *     fill = _b(fill)
  *     flatteners = tuple(flatteners)
  *     debug(flatteners)             # <<<<<<<<<<<<<<
  * 
  *     cdef VariantCallFile *variant_file
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_debug); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_debug); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_1))) {
@@ -9244,23 +10706,23 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_flatteners); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_flatteners); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
   } else {
-    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
     __Pyx_INCREF(__pyx_cur_scope->__pyx_v_flatteners);
     __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_flatteners);
     PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_cur_scope->__pyx_v_flatteners);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 571; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":544
+  /* "vcfnp/iter.pyx":576
  *     cdef Variant *variant
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
@@ -9271,26 +10733,26 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
     __pyx_t_2 = __pyx_cur_scope->__pyx_v_vcf_fns; __Pyx_INCREF(__pyx_t_2); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_vcf_fns); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   for (;;) {
     if (likely(!__pyx_t_6)) {
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -9300,7 +10762,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -9311,7 +10773,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
     __Pyx_GIVEREF(__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "vcfnp/iter.pyx":545
+    /* "vcfnp/iter.pyx":577
  * 
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()             # <<<<<<<<<<<<<<
@@ -9322,36 +10784,36 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
       __pyx_t_7 = new vcf::VariantCallFile();
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 545; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 577; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_cur_scope->__pyx_v_variant_file = __pyx_t_7;
 
-    /* "vcfnp/iter.pyx":546
+    /* "vcfnp/iter.pyx":578
  *     for vcf_fn in vcf_fns:
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)             # <<<<<<<<<<<<<<
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False
  */
-    __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_vcf_fn); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 578; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     try {
       __pyx_cur_scope->__pyx_v_variant_file->open(__pyx_t_8);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 578; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "vcfnp/iter.pyx":547
+    /* "vcfnp/iter.pyx":579
  *         variant_file = new VariantCallFile()
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = parse_info             # <<<<<<<<<<<<<<
  *         variant_file.parseSamples = False
  *         if region is not None:
  */
-    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_parse_info); if (unlikely((__pyx_t_9 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 547; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_parse_info); if (unlikely((__pyx_t_9 == (bool)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_cur_scope->__pyx_v_variant_file->parseInfo = __pyx_t_9;
 
-    /* "vcfnp/iter.pyx":548
+    /* "vcfnp/iter.pyx":580
  *         variant_file.open(vcf_fn)
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False             # <<<<<<<<<<<<<<
@@ -9360,7 +10822,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  */
     __pyx_cur_scope->__pyx_v_variant_file->parseSamples = 0;
 
-    /* "vcfnp/iter.pyx":549
+    /* "vcfnp/iter.pyx":581
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False
  *         if region is not None:             # <<<<<<<<<<<<<<
@@ -9371,17 +10833,17 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
     __pyx_t_11 = (__pyx_t_10 != 0);
     if (__pyx_t_11) {
 
-      /* "vcfnp/iter.pyx":550
+      /* "vcfnp/iter.pyx":582
  *         variant_file.parseSamples = False
  *         if region is not None:
  *             region_set = variant_file.setRegion(region)             # <<<<<<<<<<<<<<
  *             if not region_set:
  *                 raise StopIteration
  */
-      __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_region); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 550; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __pyx_convert_string_from_py_std__in_string(__pyx_cur_scope->__pyx_v_region); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 582; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_cur_scope->__pyx_v_region_set = __pyx_cur_scope->__pyx_v_variant_file->setRegion(__pyx_t_8);
 
-      /* "vcfnp/iter.pyx":551
+      /* "vcfnp/iter.pyx":583
  *         if region is not None:
  *             region_set = variant_file.setRegion(region)
  *             if not region_set:             # <<<<<<<<<<<<<<
@@ -9391,7 +10853,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
       __pyx_t_11 = ((!(__pyx_cur_scope->__pyx_v_region_set != 0)) != 0);
       if (__pyx_t_11) {
 
-        /* "vcfnp/iter.pyx":552
+        /* "vcfnp/iter.pyx":584
  *             region_set = variant_file.setRegion(region)
  *             if not region_set:
  *                 raise StopIteration             # <<<<<<<<<<<<<<
@@ -9399,9 +10861,9 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  * 
  */
         __Pyx_Raise(__pyx_builtin_StopIteration, 0, 0, 0);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 552; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 584; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":551
+        /* "vcfnp/iter.pyx":583
  *         if region is not None:
  *             region_set = variant_file.setRegion(region)
  *             if not region_set:             # <<<<<<<<<<<<<<
@@ -9410,7 +10872,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  */
       }
 
-      /* "vcfnp/iter.pyx":549
+      /* "vcfnp/iter.pyx":581
  *         variant_file.parseInfo = parse_info
  *         variant_file.parseSamples = False
  *         if region is not None:             # <<<<<<<<<<<<<<
@@ -9419,7 +10881,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  */
     }
 
-    /* "vcfnp/iter.pyx":553
+    /* "vcfnp/iter.pyx":585
  *             if not region_set:
  *                 raise StopIteration
  *         variant = new Variant(deref(variant_file))             # <<<<<<<<<<<<<<
@@ -9428,7 +10890,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  */
     __pyx_cur_scope->__pyx_v_variant = new vcf::Variant((*__pyx_cur_scope->__pyx_v_variant_file));
 
-    /* "vcfnp/iter.pyx":555
+    /* "vcfnp/iter.pyx":587
  *         variant = new Variant(deref(variant_file))
  * 
  *         while _get_next_variant(variant_file, variant):             # <<<<<<<<<<<<<<
@@ -9439,36 +10901,36 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
       __pyx_t_11 = (__pyx_f_5vcfnp_4iter__get_next_variant(__pyx_cur_scope->__pyx_v_variant_file, __pyx_cur_scope->__pyx_v_variant) != 0);
       if (!__pyx_t_11) break;
 
-      /* "vcfnp/iter.pyx":556
+      /* "vcfnp/iter.pyx":588
  * 
  *         while _get_next_variant(variant_file, variant):
  *             yield _mkvtblrow(variant, fields, arities, info_types, filter_ids,             # <<<<<<<<<<<<<<
  *                              flatten_filter, fill, flatteners)
  * 
  */
-      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_fields))||((__pyx_cur_scope->__pyx_v_fields) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_fields)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_arities))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_arities)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_info_types))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_info_types)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_filter_ids))||((__pyx_cur_scope->__pyx_v_filter_ids) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_filter_ids)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_fields))||((__pyx_cur_scope->__pyx_v_fields) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_fields)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_arities))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_arities)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_info_types))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_info_types)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_filter_ids))||((__pyx_cur_scope->__pyx_v_filter_ids) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_filter_ids)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "vcfnp/iter.pyx":557
+      /* "vcfnp/iter.pyx":589
  *         while _get_next_variant(variant_file, variant):
  *             yield _mkvtblrow(variant, fields, arities, info_types, filter_ids,
  *                              flatten_filter, fill, flatteners)             # <<<<<<<<<<<<<<
  * 
  *         del variant_file
  */
-      __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_flatten_filter); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 557; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_flatteners))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_flatteners)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 557; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_flatten_filter); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 589; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyTuple_CheckExact(__pyx_cur_scope->__pyx_v_flatteners))||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_cur_scope->__pyx_v_flatteners)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 589; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "vcfnp/iter.pyx":556
+      /* "vcfnp/iter.pyx":588
  * 
  *         while _get_next_variant(variant_file, variant):
  *             yield _mkvtblrow(variant, fields, arities, info_types, filter_ids,             # <<<<<<<<<<<<<<
  *                              flatten_filter, fill, flatteners)
  * 
  */
-      __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkvtblrow(__pyx_cur_scope->__pyx_v_variant, ((PyObject*)__pyx_cur_scope->__pyx_v_fields), ((PyObject*)__pyx_cur_scope->__pyx_v_arities), ((PyObject*)__pyx_cur_scope->__pyx_v_info_types), ((PyObject*)__pyx_cur_scope->__pyx_v_filter_ids), __pyx_t_11, __pyx_cur_scope->__pyx_v_fill, ((PyObject*)__pyx_cur_scope->__pyx_v_flatteners)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __pyx_f_5vcfnp_4iter__mkvtblrow(__pyx_cur_scope->__pyx_v_variant, ((PyObject*)__pyx_cur_scope->__pyx_v_fields), ((PyObject*)__pyx_cur_scope->__pyx_v_arities), ((PyObject*)__pyx_cur_scope->__pyx_v_info_types), ((PyObject*)__pyx_cur_scope->__pyx_v_filter_ids), __pyx_t_11, __pyx_cur_scope->__pyx_v_fill, ((PyObject*)__pyx_cur_scope->__pyx_v_flatteners)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_r = __pyx_t_1;
       __pyx_t_1 = 0;
@@ -9487,10 +10949,10 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
       __Pyx_XGOTREF(__pyx_t_2);
       __pyx_t_5 = __pyx_cur_scope->__pyx_t_1;
       __pyx_t_6 = __pyx_cur_scope->__pyx_t_2;
-      if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "vcfnp/iter.pyx":559
+    /* "vcfnp/iter.pyx":591
  *                              flatten_filter, fill, flatteners)
  * 
  *         del variant_file             # <<<<<<<<<<<<<<
@@ -9499,7 +10961,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  */
     delete __pyx_cur_scope->__pyx_v_variant_file;
 
-    /* "vcfnp/iter.pyx":560
+    /* "vcfnp/iter.pyx":592
  * 
  *         del variant_file
  *         del variant             # <<<<<<<<<<<<<<
@@ -9508,7 +10970,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
  */
     delete __pyx_cur_scope->__pyx_v_variant;
 
-    /* "vcfnp/iter.pyx":544
+    /* "vcfnp/iter.pyx":576
  *     cdef Variant *variant
  * 
  *     for vcf_fn in vcf_fns:             # <<<<<<<<<<<<<<
@@ -9518,7 +10980,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "vcfnp/iter.pyx":527
+  /* "vcfnp/iter.pyx":559
  * 
  * 
  * def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,             # <<<<<<<<<<<<<<
@@ -9543,7 +11005,7 @@ static PyObject *__pyx_gb_5vcfnp_4iter_18generator4(__pyx_CoroutineObject *__pyx
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":563
+/* "vcfnp/iter.pyx":595
  * 
  * 
  * cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,             # <<<<<<<<<<<<<<
@@ -9584,26 +11046,26 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mkvtblrow", 0);
 
-  /* "vcfnp/iter.pyx":567
+  /* "vcfnp/iter.pyx":599
  *                               tuple filter_ids, bint flatten_filter,
  *                               object fill, tuple flatteners):
  *     out = list()             # <<<<<<<<<<<<<<
  *     cdef string field
  *     cdef string flt
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 599; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":570
+  /* "vcfnp/iter.pyx":602
  *     cdef string field
  *     cdef string flt
  *     for field, arity, vcf_type, flattener in zip(fields, arities, info_types,             # <<<<<<<<<<<<<<
  *                                                  flatteners):
  *         if field == FIELD_NAME_CHROM:
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_fields);
   __Pyx_GIVEREF(__pyx_v_fields);
@@ -9617,16 +11079,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
   __Pyx_INCREF(__pyx_v_flatteners);
   __Pyx_GIVEREF(__pyx_v_flatteners);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_v_flatteners);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
     __pyx_t_1 = __pyx_t_2; __Pyx_INCREF(__pyx_t_1); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -9634,17 +11096,17 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_3); __Pyx_INCREF(__pyx_t_2); __pyx_t_3++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -9654,7 +11116,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -9670,7 +11132,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       if (unlikely(size != 4)) {
         if (size > 4) __Pyx_RaiseTooManyValuesError(4);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       #if CYTHON_COMPILING_IN_CPYTHON
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -9693,7 +11155,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         Py_ssize_t i;
         PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
         for (i=0; i < 4; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -9703,7 +11165,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     } else {
       Py_ssize_t index = -1;
       PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
-      __pyx_t_9 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -9712,7 +11174,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         __Pyx_GOTREF(item);
         *(temps[index]) = item;
       }
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_10 = NULL;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       goto __pyx_L6_unpacking_done;
@@ -9720,10 +11182,10 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_L6_unpacking_done:;
     }
-    __pyx_t_11 = __pyx_convert_string_from_py_std__in_string(__pyx_t_5); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 570; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = __pyx_convert_string_from_py_std__in_string(__pyx_t_5); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_field = __pyx_t_11;
     __Pyx_XDECREF_SET(__pyx_v_arity, __pyx_t_6);
@@ -9733,7 +11195,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __Pyx_XDECREF_SET(__pyx_v_flattener, __pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "vcfnp/iter.pyx":572
+    /* "vcfnp/iter.pyx":604
  *     for field, arity, vcf_type, flattener in zip(fields, arities, info_types,
  *                                                  flatteners):
  *         if field == FIELD_NAME_CHROM:             # <<<<<<<<<<<<<<
@@ -9743,19 +11205,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_12 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_CHROM) != 0);
     if (__pyx_t_12) {
 
-      /* "vcfnp/iter.pyx":573
+      /* "vcfnp/iter.pyx":605
  *                                                  flatteners):
  *         if field == FIELD_NAME_CHROM:
  *             out.append(variant.sequenceName)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_POS:
  *             out.append(variant.position)
  */
-      __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->sequenceName); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 573; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->sequenceName); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 605; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 573; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 605; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "vcfnp/iter.pyx":572
+      /* "vcfnp/iter.pyx":604
  *     for field, arity, vcf_type, flattener in zip(fields, arities, info_types,
  *                                                  flatteners):
  *         if field == FIELD_NAME_CHROM:             # <<<<<<<<<<<<<<
@@ -9765,7 +11227,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":574
+    /* "vcfnp/iter.pyx":606
  *         if field == FIELD_NAME_CHROM:
  *             out.append(variant.sequenceName)
  *         elif field == FIELD_NAME_POS:             # <<<<<<<<<<<<<<
@@ -9775,19 +11237,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_12 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_POS) != 0);
     if (__pyx_t_12) {
 
-      /* "vcfnp/iter.pyx":575
+      /* "vcfnp/iter.pyx":607
  *             out.append(variant.sequenceName)
  *         elif field == FIELD_NAME_POS:
  *             out.append(variant.position)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_ID:
  *             out.append(variant.id)
  */
-      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_variant->position); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 575; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_variant->position); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 607; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 575; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 607; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "vcfnp/iter.pyx":574
+      /* "vcfnp/iter.pyx":606
  *         if field == FIELD_NAME_CHROM:
  *             out.append(variant.sequenceName)
  *         elif field == FIELD_NAME_POS:             # <<<<<<<<<<<<<<
@@ -9797,7 +11259,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":576
+    /* "vcfnp/iter.pyx":608
  *         elif field == FIELD_NAME_POS:
  *             out.append(variant.position)
  *         elif field == FIELD_NAME_ID:             # <<<<<<<<<<<<<<
@@ -9807,19 +11269,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_12 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_ID) != 0);
     if (__pyx_t_12) {
 
-      /* "vcfnp/iter.pyx":577
+      /* "vcfnp/iter.pyx":609
  *             out.append(variant.position)
  *         elif field == FIELD_NAME_ID:
  *             out.append(variant.id)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_REF:
  *             out.append(variant.ref)
  */
-      __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->id); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 577; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->id); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 609; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 577; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 609; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "vcfnp/iter.pyx":576
+      /* "vcfnp/iter.pyx":608
  *         elif field == FIELD_NAME_POS:
  *             out.append(variant.position)
  *         elif field == FIELD_NAME_ID:             # <<<<<<<<<<<<<<
@@ -9829,7 +11291,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":578
+    /* "vcfnp/iter.pyx":610
  *         elif field == FIELD_NAME_ID:
  *             out.append(variant.id)
  *         elif field == FIELD_NAME_REF:             # <<<<<<<<<<<<<<
@@ -9839,19 +11301,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_12 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_REF) != 0);
     if (__pyx_t_12) {
 
-      /* "vcfnp/iter.pyx":579
+      /* "vcfnp/iter.pyx":611
  *             out.append(variant.id)
  *         elif field == FIELD_NAME_REF:
  *             out.append(variant.ref)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_ALT:
  *             if arity is not None:
  */
-      __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->ref); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_variant->ref); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 611; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_2); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 611; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "vcfnp/iter.pyx":578
+      /* "vcfnp/iter.pyx":610
  *         elif field == FIELD_NAME_ID:
  *             out.append(variant.id)
  *         elif field == FIELD_NAME_REF:             # <<<<<<<<<<<<<<
@@ -9861,7 +11323,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":580
+    /* "vcfnp/iter.pyx":612
  *         elif field == FIELD_NAME_REF:
  *             out.append(variant.ref)
  *         elif field == FIELD_NAME_ALT:             # <<<<<<<<<<<<<<
@@ -9871,7 +11333,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_12 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_ALT) != 0);
     if (__pyx_t_12) {
 
-      /* "vcfnp/iter.pyx":581
+      /* "vcfnp/iter.pyx":613
  *             out.append(variant.ref)
  *         elif field == FIELD_NAME_ALT:
  *             if arity is not None:             # <<<<<<<<<<<<<<
@@ -9882,29 +11344,29 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       __pyx_t_14 = (__pyx_t_12 != 0);
       if (__pyx_t_14) {
 
-        /* "vcfnp/iter.pyx":582
+        /* "vcfnp/iter.pyx":614
  *         elif field == FIELD_NAME_ALT:
  *             if arity is not None:
  *                 vals = _mktblval_multi(variant.alt, arity, fill)             # <<<<<<<<<<<<<<
  *                 out.extend(vals)
  *             elif variant.alt.size() == 0:
  */
-        __pyx_t_15 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 582; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-        __pyx_t_2 = __pyx_f_5vcfnp_4iter__mktblval_multi(__pyx_v_variant->alt, __pyx_t_15, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 582; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_15 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 614; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __pyx_f_5vcfnp_4iter__mktblval_multi(__pyx_v_variant->alt, __pyx_t_15, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 614; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_XDECREF_SET(__pyx_v_vals, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "vcfnp/iter.pyx":583
+        /* "vcfnp/iter.pyx":615
  *             if arity is not None:
  *                 vals = _mktblval_multi(variant.alt, arity, fill)
  *                 out.extend(vals)             # <<<<<<<<<<<<<<
  *             elif variant.alt.size() == 0:
  *                 out.append(fill)
  */
-        __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_vals); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_vals); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 615; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":581
+        /* "vcfnp/iter.pyx":613
  *             out.append(variant.ref)
  *         elif field == FIELD_NAME_ALT:
  *             if arity is not None:             # <<<<<<<<<<<<<<
@@ -9914,7 +11376,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         goto __pyx_L8;
       }
 
-      /* "vcfnp/iter.pyx":584
+      /* "vcfnp/iter.pyx":616
  *                 vals = _mktblval_multi(variant.alt, arity, fill)
  *                 out.extend(vals)
  *             elif variant.alt.size() == 0:             # <<<<<<<<<<<<<<
@@ -9924,16 +11386,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       __pyx_t_14 = ((__pyx_v_variant->alt.size() == 0) != 0);
       if (__pyx_t_14) {
 
-        /* "vcfnp/iter.pyx":585
+        /* "vcfnp/iter.pyx":617
  *                 out.extend(vals)
  *             elif variant.alt.size() == 0:
  *                 out.append(fill)             # <<<<<<<<<<<<<<
  *             else:
  *                 val = b','.join(variant.alt)
  */
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 585; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 617; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":584
+        /* "vcfnp/iter.pyx":616
  *                 vals = _mktblval_multi(variant.alt, arity, fill)
  *                 out.extend(vals)
  *             elif variant.alt.size() == 0:             # <<<<<<<<<<<<<<
@@ -9943,7 +11405,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         goto __pyx_L8;
       }
 
-      /* "vcfnp/iter.pyx":587
+      /* "vcfnp/iter.pyx":619
  *                 out.append(fill)
  *             else:
  *                 val = b','.join(variant.alt)             # <<<<<<<<<<<<<<
@@ -9951,26 +11413,26 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
  *         elif field == FIELD_NAME_QUAL:
  */
       /*else*/ {
-        __pyx_t_2 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 587; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __pyx_convert_vector_to_py_std_3a__3a_string(__pyx_v_variant->alt); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 619; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_8 = __Pyx_PyBytes_Join(__pyx_kp_b__4, __pyx_t_2); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 587; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_8 = __Pyx_PyBytes_Join(__pyx_kp_b__14, __pyx_t_2); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 619; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_XDECREF_SET(__pyx_v_val, __pyx_t_8);
         __pyx_t_8 = 0;
 
-        /* "vcfnp/iter.pyx":588
+        /* "vcfnp/iter.pyx":620
  *             else:
  *                 val = b','.join(variant.alt)
  *                 out.append(val)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_QUAL:
  *             out.append(variant.quality)
  */
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 588; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 620; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __pyx_L8:;
 
-      /* "vcfnp/iter.pyx":580
+      /* "vcfnp/iter.pyx":612
  *         elif field == FIELD_NAME_REF:
  *             out.append(variant.ref)
  *         elif field == FIELD_NAME_ALT:             # <<<<<<<<<<<<<<
@@ -9980,7 +11442,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":589
+    /* "vcfnp/iter.pyx":621
  *                 val = b','.join(variant.alt)
  *                 out.append(val)
  *         elif field == FIELD_NAME_QUAL:             # <<<<<<<<<<<<<<
@@ -9990,19 +11452,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_14 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_QUAL) != 0);
     if (__pyx_t_14) {
 
-      /* "vcfnp/iter.pyx":590
+      /* "vcfnp/iter.pyx":622
  *                 out.append(val)
  *         elif field == FIELD_NAME_QUAL:
  *             out.append(variant.quality)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_FILTER:
  *             flt = variant.filter
  */
-      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_variant->quality); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 590; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_variant->quality); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 622; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 590; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 622; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "vcfnp/iter.pyx":589
+      /* "vcfnp/iter.pyx":621
  *                 val = b','.join(variant.alt)
  *                 out.append(val)
  *         elif field == FIELD_NAME_QUAL:             # <<<<<<<<<<<<<<
@@ -10012,7 +11474,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":591
+    /* "vcfnp/iter.pyx":623
  *         elif field == FIELD_NAME_QUAL:
  *             out.append(variant.quality)
  *         elif field == FIELD_NAME_FILTER:             # <<<<<<<<<<<<<<
@@ -10022,7 +11484,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_14 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_FILTER) != 0);
     if (__pyx_t_14) {
 
-      /* "vcfnp/iter.pyx":592
+      /* "vcfnp/iter.pyx":624
  *             out.append(variant.quality)
  *         elif field == FIELD_NAME_FILTER:
  *             flt = variant.filter             # <<<<<<<<<<<<<<
@@ -10032,7 +11494,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       __pyx_t_11 = __pyx_v_variant->filter;
       __pyx_v_flt = __pyx_t_11;
 
-      /* "vcfnp/iter.pyx":593
+      /* "vcfnp/iter.pyx":625
  *         elif field == FIELD_NAME_FILTER:
  *             flt = variant.filter
  *             if flatten_filter:             # <<<<<<<<<<<<<<
@@ -10042,19 +11504,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       __pyx_t_14 = (__pyx_v_flatten_filter != 0);
       if (__pyx_t_14) {
 
-        /* "vcfnp/iter.pyx":594
+        /* "vcfnp/iter.pyx":626
  *             flt = variant.filter
  *             if flatten_filter:
  *                 out.extend(_mkfilterval(variant, filter_ids))             # <<<<<<<<<<<<<<
  *             elif flt == b'.':
  *                 out.append(fill)
  */
-        __pyx_t_8 = __pyx_f_5vcfnp_4iter__mkfilterval(__pyx_v_variant, __pyx_v_filter_ids); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_8 = __pyx_f_5vcfnp_4iter__mkfilterval(__pyx_v_variant, __pyx_v_filter_ids); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 626; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 626; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "vcfnp/iter.pyx":593
+        /* "vcfnp/iter.pyx":625
  *         elif field == FIELD_NAME_FILTER:
  *             flt = variant.filter
  *             if flatten_filter:             # <<<<<<<<<<<<<<
@@ -10064,26 +11526,26 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         goto __pyx_L9;
       }
 
-      /* "vcfnp/iter.pyx":595
+      /* "vcfnp/iter.pyx":627
  *             if flatten_filter:
  *                 out.extend(_mkfilterval(variant, filter_ids))
  *             elif flt == b'.':             # <<<<<<<<<<<<<<
  *                 out.append(fill)
  *             else:
  */
-      __pyx_t_14 = ((__pyx_v_flt == __pyx_k_) != 0);
+      __pyx_t_14 = ((__pyx_v_flt == __pyx_k__11) != 0);
       if (__pyx_t_14) {
 
-        /* "vcfnp/iter.pyx":596
+        /* "vcfnp/iter.pyx":628
  *                 out.extend(_mkfilterval(variant, filter_ids))
  *             elif flt == b'.':
  *                 out.append(fill)             # <<<<<<<<<<<<<<
  *             else:
  *                 out.append(flt)
  */
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 596; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 628; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":595
+        /* "vcfnp/iter.pyx":627
  *             if flatten_filter:
  *                 out.extend(_mkfilterval(variant, filter_ids))
  *             elif flt == b'.':             # <<<<<<<<<<<<<<
@@ -10093,7 +11555,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         goto __pyx_L9;
       }
 
-      /* "vcfnp/iter.pyx":598
+      /* "vcfnp/iter.pyx":630
  *                 out.append(fill)
  *             else:
  *                 out.append(flt)             # <<<<<<<<<<<<<<
@@ -10101,14 +11563,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
  *             out.append(variant.alt.size() + 1)
  */
       /*else*/ {
-        __pyx_t_8 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_flt); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 598; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_8 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_flt); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 598; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
       __pyx_L9:;
 
-      /* "vcfnp/iter.pyx":591
+      /* "vcfnp/iter.pyx":623
  *         elif field == FIELD_NAME_QUAL:
  *             out.append(variant.quality)
  *         elif field == FIELD_NAME_FILTER:             # <<<<<<<<<<<<<<
@@ -10118,7 +11580,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":599
+    /* "vcfnp/iter.pyx":631
  *             else:
  *                 out.append(flt)
  *         elif field == FIELD_NAME_NUM_ALLELES:             # <<<<<<<<<<<<<<
@@ -10128,19 +11590,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_14 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_NUM_ALLELES) != 0);
     if (__pyx_t_14) {
 
-      /* "vcfnp/iter.pyx":600
+      /* "vcfnp/iter.pyx":632
  *                 out.append(flt)
  *         elif field == FIELD_NAME_NUM_ALLELES:
  *             out.append(variant.alt.size() + 1)             # <<<<<<<<<<<<<<
  *         elif field == FIELD_NAME_IS_SNP:
  *             out.append(_is_snp(variant))
  */
-      __pyx_t_8 = __Pyx_PyInt_FromSize_t((__pyx_v_variant->alt.size() + 1)); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 600; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __Pyx_PyInt_FromSize_t((__pyx_v_variant->alt.size() + 1)); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 632; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 600; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 632; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "vcfnp/iter.pyx":599
+      /* "vcfnp/iter.pyx":631
  *             else:
  *                 out.append(flt)
  *         elif field == FIELD_NAME_NUM_ALLELES:             # <<<<<<<<<<<<<<
@@ -10150,7 +11612,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":601
+    /* "vcfnp/iter.pyx":633
  *         elif field == FIELD_NAME_NUM_ALLELES:
  *             out.append(variant.alt.size() + 1)
  *         elif field == FIELD_NAME_IS_SNP:             # <<<<<<<<<<<<<<
@@ -10160,19 +11622,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     __pyx_t_14 = ((__pyx_v_field == __pyx_v_5vcfnp_4iter_FIELD_NAME_IS_SNP) != 0);
     if (__pyx_t_14) {
 
-      /* "vcfnp/iter.pyx":602
+      /* "vcfnp/iter.pyx":634
  *             out.append(variant.alt.size() + 1)
  *         elif field == FIELD_NAME_IS_SNP:
  *             out.append(_is_snp(variant))             # <<<<<<<<<<<<<<
  *         else:
  *             if vcf_type == FIELD_BOOL:
  */
-      __pyx_t_8 = __pyx_f_5vcfnp_4iter__is_snp(__pyx_v_variant); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __pyx_f_5vcfnp_4iter__is_snp(__pyx_v_variant); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 634; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 602; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_8); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 634; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "vcfnp/iter.pyx":601
+      /* "vcfnp/iter.pyx":633
  *         elif field == FIELD_NAME_NUM_ALLELES:
  *             out.append(variant.alt.size() + 1)
  *         elif field == FIELD_NAME_IS_SNP:             # <<<<<<<<<<<<<<
@@ -10182,7 +11644,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
       goto __pyx_L7;
     }
 
-    /* "vcfnp/iter.pyx":604
+    /* "vcfnp/iter.pyx":636
  *             out.append(_is_snp(variant))
  *         else:
  *             if vcf_type == FIELD_BOOL:             # <<<<<<<<<<<<<<
@@ -10190,36 +11652,36 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
  *                 val = (variant.infoFlags.count(field) > 0)
  */
     /*else*/ {
-      __pyx_t_8 = __Pyx_PyInt_From_enum__vcf_3a__3a_VariantFieldType(vcf::FIELD_BOOL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 604; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __Pyx_PyInt_From_enum__vcf_3a__3a_VariantFieldType(vcf::FIELD_BOOL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 636; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_2 = PyObject_RichCompare(__pyx_v_vcf_type, __pyx_t_8, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 604; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyObject_RichCompare(__pyx_v_vcf_type, __pyx_t_8, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 636; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_14 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_14 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 604; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_14 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_14 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 636; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       if (__pyx_t_14) {
 
-        /* "vcfnp/iter.pyx":606
+        /* "vcfnp/iter.pyx":638
  *             if vcf_type == FIELD_BOOL:
  *                 # ignore arity, this is a flag
  *                 val = (variant.infoFlags.count(field) > 0)             # <<<<<<<<<<<<<<
  *                 out.append(val)
  *             else:
  */
-        __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_variant->infoFlags.count(__pyx_v_field) > 0)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 606; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyBool_FromLong((__pyx_v_variant->infoFlags.count(__pyx_v_field) > 0)); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_XDECREF_SET(__pyx_v_val, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "vcfnp/iter.pyx":607
+        /* "vcfnp/iter.pyx":639
  *                 # ignore arity, this is a flag
  *                 val = (variant.infoFlags.count(field) > 0)
  *                 out.append(val)             # <<<<<<<<<<<<<<
  *             else:
  *                 if arity is not None:
  */
-        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 607; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_val); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 639; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "vcfnp/iter.pyx":604
+        /* "vcfnp/iter.pyx":636
  *             out.append(_is_snp(variant))
  *         else:
  *             if vcf_type == FIELD_BOOL:             # <<<<<<<<<<<<<<
@@ -10229,7 +11691,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         goto __pyx_L10;
       }
 
-      /* "vcfnp/iter.pyx":609
+      /* "vcfnp/iter.pyx":641
  *                 out.append(val)
  *             else:
  *                 if arity is not None:             # <<<<<<<<<<<<<<
@@ -10241,29 +11703,29 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         __pyx_t_12 = (__pyx_t_14 != 0);
         if (__pyx_t_12) {
 
-          /* "vcfnp/iter.pyx":610
+          /* "vcfnp/iter.pyx":642
  *             else:
  *                 if arity is not None:
  *                     vals = _mktblval_multi(variant.info[field], arity, fill)             # <<<<<<<<<<<<<<
  *                     out.extend(vals)
  *                 elif flattener is not None:
  */
-          __pyx_t_15 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 610; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-          __pyx_t_2 = __pyx_f_5vcfnp_4iter__mktblval_multi((__pyx_v_variant->info[__pyx_v_field]), __pyx_t_15, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 610; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_15 = __Pyx_PyInt_As_int(__pyx_v_arity); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 642; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = __pyx_f_5vcfnp_4iter__mktblval_multi((__pyx_v_variant->info[__pyx_v_field]), __pyx_t_15, __pyx_v_fill); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 642; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_XDECREF_SET(__pyx_v_vals, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "vcfnp/iter.pyx":611
+          /* "vcfnp/iter.pyx":643
  *                 if arity is not None:
  *                     vals = _mktblval_multi(variant.info[field], arity, fill)
  *                     out.extend(vals)             # <<<<<<<<<<<<<<
  *                 elif flattener is not None:
  *                     _, t = flattener
  */
-          __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_vals); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 611; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_vals); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 643; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "vcfnp/iter.pyx":609
+          /* "vcfnp/iter.pyx":641
  *                 out.append(val)
  *             else:
  *                 if arity is not None:             # <<<<<<<<<<<<<<
@@ -10273,7 +11735,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
           goto __pyx_L11;
         }
 
-        /* "vcfnp/iter.pyx":612
+        /* "vcfnp/iter.pyx":644
  *                     vals = _mktblval_multi(variant.info[field], arity, fill)
  *                     out.extend(vals)
  *                 elif flattener is not None:             # <<<<<<<<<<<<<<
@@ -10284,7 +11746,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         __pyx_t_14 = (__pyx_t_12 != 0);
         if (__pyx_t_14) {
 
-          /* "vcfnp/iter.pyx":613
+          /* "vcfnp/iter.pyx":645
  *                     out.extend(vals)
  *                 elif flattener is not None:
  *                     _, t = flattener             # <<<<<<<<<<<<<<
@@ -10301,7 +11763,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
             if (unlikely(size != 2)) {
               if (size > 2) __Pyx_RaiseTooManyValuesError(2);
               else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+              {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             }
             #if CYTHON_COMPILING_IN_CPYTHON
             if (likely(PyTuple_CheckExact(sequence))) {
@@ -10314,21 +11776,21 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
             __Pyx_INCREF(__pyx_t_2);
             __Pyx_INCREF(__pyx_t_8);
             #else
-            __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_2);
-            __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_8 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_8);
             #endif
           } else {
             Py_ssize_t index = -1;
-            __pyx_t_7 = PyObject_GetIter(__pyx_v_flattener); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_7 = PyObject_GetIter(__pyx_v_flattener); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_7);
             __pyx_t_10 = Py_TYPE(__pyx_t_7)->tp_iternext;
             index = 0; __pyx_t_2 = __pyx_t_10(__pyx_t_7); if (unlikely(!__pyx_t_2)) goto __pyx_L12_unpacking_failed;
             __Pyx_GOTREF(__pyx_t_2);
             index = 1; __pyx_t_8 = __pyx_t_10(__pyx_t_7); if (unlikely(!__pyx_t_8)) goto __pyx_L12_unpacking_failed;
             __Pyx_GOTREF(__pyx_t_8);
-            if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_7), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_7), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __pyx_t_10 = NULL;
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
             goto __pyx_L13_unpacking_done;
@@ -10336,7 +11798,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
             __pyx_t_10 = NULL;
             if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __pyx_L13_unpacking_done:;
           }
           __Pyx_XDECREF_SET(__pyx_v__, __pyx_t_2);
@@ -10344,14 +11806,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
           __Pyx_XDECREF_SET(__pyx_v_t, __pyx_t_8);
           __pyx_t_8 = 0;
 
-          /* "vcfnp/iter.pyx":614
+          /* "vcfnp/iter.pyx":646
  *                 elif flattener is not None:
  *                     _, t = flattener
  *                     vals = t(variant.info[field])             # <<<<<<<<<<<<<<
  *                     out.extend(vals)
  *                 elif variant.info[field].size() == 0:
  */
-          __pyx_t_2 = __pyx_convert_vector_to_py_std_3a__3a_string((__pyx_v_variant->info[__pyx_v_field])); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 614; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = __pyx_convert_vector_to_py_std_3a__3a_string((__pyx_v_variant->info[__pyx_v_field])); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 646; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_INCREF(__pyx_v_t);
           __pyx_t_7 = __pyx_v_t; __pyx_t_6 = NULL;
@@ -10365,17 +11827,17 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
             }
           }
           if (!__pyx_t_6) {
-            __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_2); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 614; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_2); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 646; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_GOTREF(__pyx_t_8);
           } else {
-            __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 614; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 646; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_5);
             __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_6); __pyx_t_6 = NULL;
             __Pyx_GIVEREF(__pyx_t_2);
             PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_2);
             __pyx_t_2 = 0;
-            __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 614; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 646; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_8);
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           }
@@ -10383,16 +11845,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
           __Pyx_XDECREF_SET(__pyx_v_vals, __pyx_t_8);
           __pyx_t_8 = 0;
 
-          /* "vcfnp/iter.pyx":615
+          /* "vcfnp/iter.pyx":647
  *                     _, t = flattener
  *                     vals = t(variant.info[field])
  *                     out.extend(vals)             # <<<<<<<<<<<<<<
  *                 elif variant.info[field].size() == 0:
  *                     out.append(fill)
  */
-          __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_vals); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 615; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_13 = __Pyx_PyList_Extend(__pyx_v_out, __pyx_v_vals); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 647; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "vcfnp/iter.pyx":612
+          /* "vcfnp/iter.pyx":644
  *                     vals = _mktblval_multi(variant.info[field], arity, fill)
  *                     out.extend(vals)
  *                 elif flattener is not None:             # <<<<<<<<<<<<<<
@@ -10402,7 +11864,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
           goto __pyx_L11;
         }
 
-        /* "vcfnp/iter.pyx":616
+        /* "vcfnp/iter.pyx":648
  *                     vals = t(variant.info[field])
  *                     out.extend(vals)
  *                 elif variant.info[field].size() == 0:             # <<<<<<<<<<<<<<
@@ -10412,16 +11874,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
         __pyx_t_14 = (((__pyx_v_variant->info[__pyx_v_field]).size() == 0) != 0);
         if (__pyx_t_14) {
 
-          /* "vcfnp/iter.pyx":617
+          /* "vcfnp/iter.pyx":649
  *                     out.extend(vals)
  *                 elif variant.info[field].size() == 0:
  *                     out.append(fill)             # <<<<<<<<<<<<<<
  *                 else:
  *                     out.append(b','.join(variant.info[field]))
  */
-          __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 617; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 649; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "vcfnp/iter.pyx":616
+          /* "vcfnp/iter.pyx":648
  *                     vals = t(variant.info[field])
  *                     out.extend(vals)
  *                 elif variant.info[field].size() == 0:             # <<<<<<<<<<<<<<
@@ -10431,7 +11893,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
           goto __pyx_L11;
         }
 
-        /* "vcfnp/iter.pyx":619
+        /* "vcfnp/iter.pyx":651
  *                     out.append(fill)
  *                 else:
  *                     out.append(b','.join(variant.info[field]))             # <<<<<<<<<<<<<<
@@ -10439,12 +11901,12 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
  *     return _s(tuple(out))
  */
         /*else*/ {
-          __pyx_t_8 = __pyx_convert_vector_to_py_std_3a__3a_string((__pyx_v_variant->info[__pyx_v_field])); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 619; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_8 = __pyx_convert_vector_to_py_std_3a__3a_string((__pyx_v_variant->info[__pyx_v_field])); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 651; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_7 = __Pyx_PyBytes_Join(__pyx_kp_b__4, __pyx_t_8); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 619; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_7 = __Pyx_PyBytes_Join(__pyx_kp_b__14, __pyx_t_8); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 651; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_7); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 619; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_7); if (unlikely(__pyx_t_13 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 651; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         }
         __pyx_L11:;
@@ -10453,7 +11915,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
     }
     __pyx_L7:;
 
-    /* "vcfnp/iter.pyx":570
+    /* "vcfnp/iter.pyx":602
  *     cdef string field
  *     cdef string flt
  *     for field, arity, vcf_type, flattener in zip(fields, arities, info_types,             # <<<<<<<<<<<<<<
@@ -10463,7 +11925,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":621
+  /* "vcfnp/iter.pyx":653
  *                     out.append(b','.join(variant.info[field]))
  *     # force back to str
  *     return _s(tuple(out))             # <<<<<<<<<<<<<<
@@ -10471,16 +11933,16 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_AsTuple(__pyx_v_out); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 653; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __pyx_f_5vcfnp_6compat_s(__pyx_t_1, 0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __pyx_f_5vcfnp_6compat_s(__pyx_t_1, 0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 653; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":563
+  /* "vcfnp/iter.pyx":595
  * 
  * 
  * cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,             # <<<<<<<<<<<<<<
@@ -10513,7 +11975,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mkvtblrow(vcf::Variant *__p
   return __pyx_r;
 }
 
-/* "vcfnp/iter.pyx":624
+/* "vcfnp/iter.pyx":656
  * 
  * 
  * cdef inline object _mktblval_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -10537,19 +11999,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mktblval_multi(std::vector<
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_mktblval_multi", 0);
 
-  /* "vcfnp/iter.pyx":627
+  /* "vcfnp/iter.pyx":659
  *                                    object fill):
  *     cdef int i
  *     out = list()             # <<<<<<<<<<<<<<
  *     for i in range(arity):
  *         if i < string_vals.size():
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 627; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 659; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "vcfnp/iter.pyx":628
+  /* "vcfnp/iter.pyx":660
  *     cdef int i
  *     out = list()
  *     for i in range(arity):             # <<<<<<<<<<<<<<
@@ -10560,7 +12022,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mktblval_multi(std::vector<
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "vcfnp/iter.pyx":629
+    /* "vcfnp/iter.pyx":661
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -10570,7 +12032,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mktblval_multi(std::vector<
     __pyx_t_4 = ((__pyx_v_i < __pyx_v_string_vals.size()) != 0);
     if (__pyx_t_4) {
 
-      /* "vcfnp/iter.pyx":630
+      /* "vcfnp/iter.pyx":662
  *     for i in range(arity):
  *         if i < string_vals.size():
  *             out.append(string_vals.at(i))             # <<<<<<<<<<<<<<
@@ -10581,14 +12043,14 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mktblval_multi(std::vector<
         __pyx_t_5 = __pyx_v_string_vals.at(__pyx_v_i);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "vcfnp/iter.pyx":629
+      /* "vcfnp/iter.pyx":661
  *     out = list()
  *     for i in range(arity):
  *         if i < string_vals.size():             # <<<<<<<<<<<<<<
@@ -10598,19 +12060,19 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mktblval_multi(std::vector<
       goto __pyx_L5;
     }
 
-    /* "vcfnp/iter.pyx":632
+    /* "vcfnp/iter.pyx":664
  *             out.append(string_vals.at(i))
  *         else:
  *             out.append(fill)             # <<<<<<<<<<<<<<
  *     return out
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 632; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_out, __pyx_v_fill); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 664; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L5:;
   }
 
-  /* "vcfnp/iter.pyx":633
+  /* "vcfnp/iter.pyx":665
  *         else:
  *             out.append(fill)
  *     return out             # <<<<<<<<<<<<<<
@@ -10620,7 +12082,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5vcfnp_4iter__mktblval_multi(std::vector<
   __pyx_r = __pyx_v_out;
   goto __pyx_L0;
 
-  /* "vcfnp/iter.pyx":624
+  /* "vcfnp/iter.pyx":656
  * 
  * 
  * cdef inline object _mktblval_multi(vector[string]& string_vals, int arity,             # <<<<<<<<<<<<<<
@@ -10812,7 +12274,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10868,7 +12330,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  * 
  *             info.buf = PyArray_DATA(self)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -11177,7 +12639,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12010,7 +13472,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12078,7 +13540,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  *             # One could encode it in the format string and have Cython
  *             # complain instead, BUT: < and > in format strings also imply
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12187,7 +13649,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  */
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_Raise(__pyx_t_4, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -12974,7 +14436,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if itemsize <= 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -13006,7 +14468,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if not isinstance(format, bytes):
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -13041,7 +14503,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  */
     __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_format, __pyx_n_s_encode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_format, __pyx_t_5);
@@ -13117,7 +14579,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  * 
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -13401,7 +14863,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *             if self.dtype_is_object:
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -13642,7 +15104,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(stru
  *         info.buf = self.data
  *         info.len = self.len
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -16428,7 +17890,7 @@ static PyObject *__pyx_memoryview_convert_item_to_object(struct __pyx_memoryview
  *         else:
  *             if len(self.view.format) == 1:
  */
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 447; __pyx_clineno = __LINE__; goto __pyx_L5_except_error;}
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 447; __pyx_clineno = __LINE__; goto __pyx_L5_except_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -17258,7 +18720,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_7strides___get__(st
  * 
  *             return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 523; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 523; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -17375,7 +18837,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_10suboffsets___get_
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->view.ndim); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__19, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__29, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = __pyx_t_3;
@@ -18715,9 +20177,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
         __Pyx_GOTREF(__pyx_t_7);
         { Py_ssize_t __pyx_temp;
           for (__pyx_temp=0; __pyx_temp < ((__pyx_v_ndim - __pyx_t_8) + 1); __pyx_temp++) {
-            __Pyx_INCREF(__pyx_slice__20);
-            __Pyx_GIVEREF(__pyx_slice__20);
-            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__20);
+            __Pyx_INCREF(__pyx_slice__30);
+            __Pyx_GIVEREF(__pyx_slice__30);
+            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__30);
           }
         }
         __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_7); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 640; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -18750,7 +20212,7 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
  *         else:
  */
       /*else*/ {
-        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__21); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 643; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__31); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 643; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __pyx_L7:;
 
@@ -18895,9 +20357,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
     __Pyx_GOTREF(__pyx_t_3);
     { Py_ssize_t __pyx_temp;
       for (__pyx_temp=0; __pyx_temp < __pyx_v_nslices; __pyx_temp++) {
-        __Pyx_INCREF(__pyx_slice__22);
-        __Pyx_GIVEREF(__pyx_slice__22);
-        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__22);
+        __Pyx_INCREF(__pyx_slice__32);
+        __Pyx_GIVEREF(__pyx_slice__32);
+        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__32);
       }
     }
     __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_3); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 654; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -19024,7 +20486,7 @@ static PyObject *assert_direct_dimensions(Py_ssize_t *__pyx_v_suboffsets, int __
  * 
  * 
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 661; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__33, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 661; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -24746,9 +26208,17 @@ static PyObject *__pyx_tp_new_5vcfnp_4iter___pyx_scope_struct___itervariants(PyT
 static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct___itervariants(PyObject *o) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *)o;
   PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v__);
   Py_CLEAR(p->__pyx_v_fieldspec);
   Py_CLEAR(p->__pyx_v_filter_ids);
+  Py_CLEAR(p->__pyx_v_flatten_filter);
+  Py_CLEAR(p->__pyx_v_parse_info);
   Py_CLEAR(p->__pyx_v_region);
+  Py_CLEAR(p->__pyx_v_region_start);
+  Py_CLEAR(p->__pyx_v_region_start_stop);
+  Py_CLEAR(p->__pyx_v_region_stop);
+  Py_CLEAR(p->__pyx_v_truncate);
+  Py_CLEAR(p->__pyx_v_v);
   Py_CLEAR(p->__pyx_v_vcf_fn);
   Py_CLEAR(p->__pyx_v_vcf_fns);
   Py_CLEAR(p->__pyx_t_0);
@@ -24762,11 +26232,38 @@ static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct___itervariants(PyOb
 static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct___itervariants(PyObject *o, visitproc v, void *a) {
   int e;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *)o;
+  if (p->__pyx_v__) {
+    e = (*v)(p->__pyx_v__, a); if (e) return e;
+  }
   if (p->__pyx_v_fieldspec) {
     e = (*v)(p->__pyx_v_fieldspec, a); if (e) return e;
   }
   if (p->__pyx_v_filter_ids) {
     e = (*v)(p->__pyx_v_filter_ids, a); if (e) return e;
+  }
+  if (p->__pyx_v_flatten_filter) {
+    e = (*v)(p->__pyx_v_flatten_filter, a); if (e) return e;
+  }
+  if (p->__pyx_v_parse_info) {
+    e = (*v)(p->__pyx_v_parse_info, a); if (e) return e;
+  }
+  if (p->__pyx_v_region) {
+    e = (*v)(p->__pyx_v_region, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start) {
+    e = (*v)(p->__pyx_v_region_start, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start_stop) {
+    e = (*v)(p->__pyx_v_region_start_stop, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_stop) {
+    e = (*v)(p->__pyx_v_region_stop, a); if (e) return e;
+  }
+  if (p->__pyx_v_truncate) {
+    e = (*v)(p->__pyx_v_truncate, a); if (e) return e;
+  }
+  if (p->__pyx_v_v) {
+    e = (*v)(p->__pyx_v_v, a); if (e) return e;
   }
   if (p->__pyx_v_vcf_fn) {
     e = (*v)(p->__pyx_v_vcf_fn, a); if (e) return e;
@@ -24783,17 +26280,44 @@ static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct___itervariants(PyOb
 static int __pyx_tp_clear_5vcfnp_4iter___pyx_scope_struct___itervariants(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct___itervariants *)o;
+  tmp = ((PyObject*)p->__pyx_v__);
+  p->__pyx_v__ = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_fieldspec);
-  p->__pyx_v_fieldspec = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_fieldspec = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_filter_ids);
-  p->__pyx_v_filter_ids = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_filter_ids = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_flatten_filter);
+  p->__pyx_v_flatten_filter = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_parse_info);
+  p->__pyx_v_parse_info = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region);
+  p->__pyx_v_region = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start);
+  p->__pyx_v_region_start = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start_stop);
+  p->__pyx_v_region_start_stop = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_stop);
+  p->__pyx_v_region_stop = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_truncate);
+  p->__pyx_v_truncate = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_v);
+  p->__pyx_v_v = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fn);
   p->__pyx_v_vcf_fn = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fns);
-  p->__pyx_v_vcf_fns = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_vcf_fns = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_t_0);
   p->__pyx_t_0 = Py_None; Py_INCREF(Py_None);
@@ -24883,9 +26407,17 @@ static PyObject *__pyx_tp_new_5vcfnp_4iter___pyx_scope_struct_1__itervariants_wi
 static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition(PyObject *o) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *)o;
   PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v__);
   Py_CLEAR(p->__pyx_v_fieldspec);
   Py_CLEAR(p->__pyx_v_filter_ids);
+  Py_CLEAR(p->__pyx_v_flatten_filter);
+  Py_CLEAR(p->__pyx_v_parse_info);
   Py_CLEAR(p->__pyx_v_region);
+  Py_CLEAR(p->__pyx_v_region_start);
+  Py_CLEAR(p->__pyx_v_region_start_stop);
+  Py_CLEAR(p->__pyx_v_region_stop);
+  Py_CLEAR(p->__pyx_v_truncate);
+  Py_CLEAR(p->__pyx_v_v);
   Py_CLEAR(p->__pyx_v_vcf_fn);
   Py_CLEAR(p->__pyx_v_vcf_fns);
   Py_CLEAR(p->__pyx_t_0);
@@ -24900,11 +26432,38 @@ static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct_1__itervariants_wit
 static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition(PyObject *o, visitproc v, void *a) {
   int e;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *)o;
+  if (p->__pyx_v__) {
+    e = (*v)(p->__pyx_v__, a); if (e) return e;
+  }
   if (p->__pyx_v_fieldspec) {
     e = (*v)(p->__pyx_v_fieldspec, a); if (e) return e;
   }
   if (p->__pyx_v_filter_ids) {
     e = (*v)(p->__pyx_v_filter_ids, a); if (e) return e;
+  }
+  if (p->__pyx_v_flatten_filter) {
+    e = (*v)(p->__pyx_v_flatten_filter, a); if (e) return e;
+  }
+  if (p->__pyx_v_parse_info) {
+    e = (*v)(p->__pyx_v_parse_info, a); if (e) return e;
+  }
+  if (p->__pyx_v_region) {
+    e = (*v)(p->__pyx_v_region, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start) {
+    e = (*v)(p->__pyx_v_region_start, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start_stop) {
+    e = (*v)(p->__pyx_v_region_start_stop, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_stop) {
+    e = (*v)(p->__pyx_v_region_stop, a); if (e) return e;
+  }
+  if (p->__pyx_v_truncate) {
+    e = (*v)(p->__pyx_v_truncate, a); if (e) return e;
+  }
+  if (p->__pyx_v_v) {
+    e = (*v)(p->__pyx_v_v, a); if (e) return e;
   }
   if (p->__pyx_v_vcf_fn) {
     e = (*v)(p->__pyx_v_vcf_fn, a); if (e) return e;
@@ -24921,17 +26480,44 @@ static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct_1__itervariants_wit
 static int __pyx_tp_clear_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition *)o;
+  tmp = ((PyObject*)p->__pyx_v__);
+  p->__pyx_v__ = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_fieldspec);
-  p->__pyx_v_fieldspec = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_fieldspec = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_filter_ids);
-  p->__pyx_v_filter_ids = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_filter_ids = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_flatten_filter);
+  p->__pyx_v_flatten_filter = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_parse_info);
+  p->__pyx_v_parse_info = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region);
+  p->__pyx_v_region = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start);
+  p->__pyx_v_region_start = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start_stop);
+  p->__pyx_v_region_start_stop = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_stop);
+  p->__pyx_v_region_stop = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_truncate);
+  p->__pyx_v_truncate = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_v);
+  p->__pyx_v_v = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fn);
   p->__pyx_v_vcf_fn = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fns);
-  p->__pyx_v_vcf_fns = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_vcf_fns = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_t_0);
   p->__pyx_t_0 = Py_None; Py_INCREF(Py_None);
@@ -25017,9 +26603,16 @@ static PyObject *__pyx_tp_new_5vcfnp_4iter___pyx_scope_struct_2__itercalldata(Py
 static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct_2__itercalldata(PyObject *o) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *)o;
   PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v__);
   Py_CLEAR(p->__pyx_v_fieldspec);
+  Py_CLEAR(p->__pyx_v_ploidy);
   Py_CLEAR(p->__pyx_v_region);
+  Py_CLEAR(p->__pyx_v_region_start);
+  Py_CLEAR(p->__pyx_v_region_start_stop);
+  Py_CLEAR(p->__pyx_v_region_stop);
   Py_CLEAR(p->__pyx_v_samples);
+  Py_CLEAR(p->__pyx_v_truncate);
+  Py_CLEAR(p->__pyx_v_v);
   Py_CLEAR(p->__pyx_v_vcf_fn);
   Py_CLEAR(p->__pyx_v_vcf_fns);
   Py_CLEAR(p->__pyx_t_0);
@@ -25033,11 +26626,35 @@ static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct_2__itercalldata(PyO
 static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct_2__itercalldata(PyObject *o, visitproc v, void *a) {
   int e;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *)o;
+  if (p->__pyx_v__) {
+    e = (*v)(p->__pyx_v__, a); if (e) return e;
+  }
   if (p->__pyx_v_fieldspec) {
     e = (*v)(p->__pyx_v_fieldspec, a); if (e) return e;
   }
+  if (p->__pyx_v_ploidy) {
+    e = (*v)(p->__pyx_v_ploidy, a); if (e) return e;
+  }
+  if (p->__pyx_v_region) {
+    e = (*v)(p->__pyx_v_region, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start) {
+    e = (*v)(p->__pyx_v_region_start, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start_stop) {
+    e = (*v)(p->__pyx_v_region_start_stop, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_stop) {
+    e = (*v)(p->__pyx_v_region_stop, a); if (e) return e;
+  }
   if (p->__pyx_v_samples) {
     e = (*v)(p->__pyx_v_samples, a); if (e) return e;
+  }
+  if (p->__pyx_v_truncate) {
+    e = (*v)(p->__pyx_v_truncate, a); if (e) return e;
+  }
+  if (p->__pyx_v_v) {
+    e = (*v)(p->__pyx_v_v, a); if (e) return e;
   }
   if (p->__pyx_v_vcf_fn) {
     e = (*v)(p->__pyx_v_vcf_fn, a); if (e) return e;
@@ -25054,17 +26671,41 @@ static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct_2__itercalldata(PyO
 static int __pyx_tp_clear_5vcfnp_4iter___pyx_scope_struct_2__itercalldata(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_2__itercalldata *)o;
+  tmp = ((PyObject*)p->__pyx_v__);
+  p->__pyx_v__ = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_fieldspec);
-  p->__pyx_v_fieldspec = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_fieldspec = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_ploidy);
+  p->__pyx_v_ploidy = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region);
+  p->__pyx_v_region = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start);
+  p->__pyx_v_region_start = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start_stop);
+  p->__pyx_v_region_start_stop = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_stop);
+  p->__pyx_v_region_stop = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_samples);
-  p->__pyx_v_samples = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_samples = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_truncate);
+  p->__pyx_v_truncate = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_v);
+  p->__pyx_v_v = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fn);
   p->__pyx_v_vcf_fn = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fns);
-  p->__pyx_v_vcf_fns = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_vcf_fns = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_t_0);
   p->__pyx_t_0 = Py_None; Py_INCREF(Py_None);
@@ -25154,9 +26795,16 @@ static PyObject *__pyx_tp_new_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_wi
 static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition(PyObject *o) {
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *)o;
   PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v__);
   Py_CLEAR(p->__pyx_v_fieldspec);
+  Py_CLEAR(p->__pyx_v_ploidy);
   Py_CLEAR(p->__pyx_v_region);
+  Py_CLEAR(p->__pyx_v_region_start);
+  Py_CLEAR(p->__pyx_v_region_start_stop);
+  Py_CLEAR(p->__pyx_v_region_stop);
   Py_CLEAR(p->__pyx_v_samples);
+  Py_CLEAR(p->__pyx_v_truncate);
+  Py_CLEAR(p->__pyx_v_v);
   Py_CLEAR(p->__pyx_v_vcf_fn);
   Py_CLEAR(p->__pyx_v_vcf_fns);
   Py_CLEAR(p->__pyx_t_0);
@@ -25171,11 +26819,35 @@ static void __pyx_tp_dealloc_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_wit
 static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition(PyObject *o, visitproc v, void *a) {
   int e;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *)o;
+  if (p->__pyx_v__) {
+    e = (*v)(p->__pyx_v__, a); if (e) return e;
+  }
   if (p->__pyx_v_fieldspec) {
     e = (*v)(p->__pyx_v_fieldspec, a); if (e) return e;
   }
+  if (p->__pyx_v_ploidy) {
+    e = (*v)(p->__pyx_v_ploidy, a); if (e) return e;
+  }
+  if (p->__pyx_v_region) {
+    e = (*v)(p->__pyx_v_region, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start) {
+    e = (*v)(p->__pyx_v_region_start, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_start_stop) {
+    e = (*v)(p->__pyx_v_region_start_stop, a); if (e) return e;
+  }
+  if (p->__pyx_v_region_stop) {
+    e = (*v)(p->__pyx_v_region_stop, a); if (e) return e;
+  }
   if (p->__pyx_v_samples) {
     e = (*v)(p->__pyx_v_samples, a); if (e) return e;
+  }
+  if (p->__pyx_v_truncate) {
+    e = (*v)(p->__pyx_v_truncate, a); if (e) return e;
+  }
+  if (p->__pyx_v_v) {
+    e = (*v)(p->__pyx_v_v, a); if (e) return e;
   }
   if (p->__pyx_v_vcf_fn) {
     e = (*v)(p->__pyx_v_vcf_fn, a); if (e) return e;
@@ -25192,17 +26864,41 @@ static int __pyx_tp_traverse_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_wit
 static int __pyx_tp_clear_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition(PyObject *o) {
   PyObject* tmp;
   struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *p = (struct __pyx_obj_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition *)o;
+  tmp = ((PyObject*)p->__pyx_v__);
+  p->__pyx_v__ = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_fieldspec);
-  p->__pyx_v_fieldspec = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_fieldspec = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_ploidy);
+  p->__pyx_v_ploidy = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region);
+  p->__pyx_v_region = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start);
+  p->__pyx_v_region_start = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_start_stop);
+  p->__pyx_v_region_start_stop = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_region_stop);
+  p->__pyx_v_region_stop = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_samples);
-  p->__pyx_v_samples = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_samples = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_truncate);
+  p->__pyx_v_truncate = Py_None; Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_v);
+  p->__pyx_v_v = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fn);
   p->__pyx_v_vcf_fn = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_v_vcf_fns);
-  p->__pyx_v_vcf_fns = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  p->__pyx_v_vcf_fns = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
   tmp = ((PyObject*)p->__pyx_t_0);
   p->__pyx_t_0 = Py_None; Py_INCREF(Py_None);
@@ -26131,7 +27827,7 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_kp_b_, __pyx_k_, sizeof(__pyx_k_), 0, 0, 0, 0},
+  {&__pyx_kp_s_, __pyx_k_, sizeof(__pyx_k_), 0, 0, 1, 0},
   {&__pyx_n_b_A, __pyx_k_A, sizeof(__pyx_k_A), 0, 0, 0, 1},
   {&__pyx_n_b_ALT, __pyx_k_ALT, sizeof(__pyx_k_ALT), 0, 0, 0, 1},
   {&__pyx_n_s_ASCII, __pyx_k_ASCII, sizeof(__pyx_k_ASCII), 0, 0, 1, 1},
@@ -26168,9 +27864,12 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s_Unable_to_convert_item_to_object, __pyx_k_Unable_to_convert_item_to_object, sizeof(__pyx_k_Unable_to_convert_item_to_object), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
-  {&__pyx_kp_b__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 0, 0},
-  {&__pyx_kp_b__24, __pyx_k__24, sizeof(__pyx_k__24), 0, 0, 0, 0},
-  {&__pyx_kp_b__4, __pyx_k__4, sizeof(__pyx_k__4), 0, 0, 0, 0},
+  {&__pyx_kp_b__11, __pyx_k__11, sizeof(__pyx_k__11), 0, 0, 0, 0},
+  {&__pyx_kp_b__12, __pyx_k__12, sizeof(__pyx_k__12), 0, 0, 0, 0},
+  {&__pyx_kp_b__14, __pyx_k__14, sizeof(__pyx_k__14), 0, 0, 0, 0},
+  {&__pyx_kp_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 0},
+  {&__pyx_kp_b__34, __pyx_k__34, sizeof(__pyx_k__34), 0, 0, 0, 0},
+  {&__pyx_n_s__37, __pyx_k__37, sizeof(__pyx_k__37), 0, 0, 1, 1},
   {&__pyx_n_s_allocate_buffer, __pyx_k_allocate_buffer, sizeof(__pyx_k_allocate_buffer), 0, 0, 1, 1},
   {&__pyx_n_s_args, __pyx_k_args, sizeof(__pyx_k_args), 0, 0, 1, 1},
   {&__pyx_n_s_arities, __pyx_k_arities, sizeof(__pyx_k_arities), 0, 0, 1, 1},
@@ -26243,10 +27942,14 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_region, __pyx_k_region, sizeof(__pyx_k_region), 0, 0, 1, 1},
   {&__pyx_n_s_region_set, __pyx_k_region_set, sizeof(__pyx_k_region_set), 0, 0, 1, 1},
+  {&__pyx_n_s_region_start, __pyx_k_region_start, sizeof(__pyx_k_region_start), 0, 0, 1, 1},
+  {&__pyx_n_s_region_start_stop, __pyx_k_region_start_stop, sizeof(__pyx_k_region_start_stop), 0, 0, 1, 1},
+  {&__pyx_n_s_region_stop, __pyx_k_region_stop, sizeof(__pyx_k_region_stop), 0, 0, 1, 1},
   {&__pyx_n_s_samples, __pyx_k_samples, sizeof(__pyx_k_samples), 0, 0, 1, 1},
   {&__pyx_n_s_send, __pyx_k_send, sizeof(__pyx_k_send), 0, 0, 1, 1},
   {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
   {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
+  {&__pyx_n_s_split, __pyx_k_split, sizeof(__pyx_k_split), 0, 0, 1, 1},
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
   {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
   {&__pyx_n_s_stop, __pyx_k_stop, sizeof(__pyx_k_stop), 0, 0, 1, 1},
@@ -26258,10 +27961,12 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_throw, __pyx_k_throw, sizeof(__pyx_k_throw), 0, 0, 1, 1},
   {&__pyx_n_s_transformers, __pyx_k_transformers, sizeof(__pyx_k_transformers), 0, 0, 1, 1},
+  {&__pyx_n_s_truncate, __pyx_k_truncate, sizeof(__pyx_k_truncate), 0, 0, 1, 1},
   {&__pyx_kp_s_unable_to_allocate_array_data, __pyx_k_unable_to_allocate_array_data, sizeof(__pyx_k_unable_to_allocate_array_data), 0, 0, 1, 0},
   {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
   {&__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_k_unknown_dtype_code_in_numpy_pxd, sizeof(__pyx_k_unknown_dtype_code_in_numpy_pxd), 0, 1, 0, 0},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
+  {&__pyx_n_s_v, __pyx_k_v, sizeof(__pyx_k_v), 0, 0, 1, 1},
   {&__pyx_n_s_variant, __pyx_k_variant, sizeof(__pyx_k_variant), 0, 0, 1, 1},
   {&__pyx_n_s_variant_file, __pyx_k_variant_file, sizeof(__pyx_k_variant_file), 0, 0, 1, 1},
   {&__pyx_n_s_vcf_fn, __pyx_k_vcf_fn, sizeof(__pyx_k_vcf_fn), 0, 0, 1, 1},
@@ -26271,9 +27976,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_StopIteration = __Pyx_GetBuiltinName(__pyx_n_s_StopIteration); if (!__pyx_builtin_StopIteration) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_StopIteration = __Pyx_GetBuiltinName(__pyx_n_s_StopIteration); if (!__pyx_builtin_StopIteration) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 256; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -26291,19 +27996,107 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "vcfnp/iter.pyx":502
+  /* "vcfnp/iter.pyx":116
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
+
+  /* "vcfnp/iter.pyx":118
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+
+  /* "vcfnp/iter.pyx":154
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+
+  /* "vcfnp/iter.pyx":156
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
+
+  /* "vcfnp/iter.pyx":420
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
+
+  /* "vcfnp/iter.pyx":422
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
+
+  /* "vcfnp/iter.pyx":453
+ *                 raise StopIteration
+ *             if ':' in region:
+ *                 _, region_start_stop = region.split(':')             # <<<<<<<<<<<<<<
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]
+ */
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
+
+  /* "vcfnp/iter.pyx":455
+ *                 _, region_start_stop = region.split(':')
+ *                 region_start, region_stop = [int(v) for v in
+ *                                              region_start_stop.split('-')]             # <<<<<<<<<<<<<<
+ *         variant = new Variant(deref(variant_file))
+ * 
+ */
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 455; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
+
+  /* "vcfnp/iter.pyx":534
  *             return -1
  *         else:
  *             return (-1,) * ploidy             # <<<<<<<<<<<<<<
  *     else:
  *         split(gts.at(0), GT_DELIMS, allele_strings)
  */
-  __pyx_tuple__3 = PyTuple_New(1); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 502; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__3);
+  __pyx_tuple__13 = PyTuple_New(1); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 534; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_INCREF(__pyx_int_neg_1);
   __Pyx_GIVEREF(__pyx_int_neg_1);
-  PyTuple_SET_ITEM(__pyx_tuple__3, 0, __pyx_int_neg_1);
-  __Pyx_GIVEREF(__pyx_tuple__3);
+  PyTuple_SET_ITEM(__pyx_tuple__13, 0, __pyx_int_neg_1);
+  __Pyx_GIVEREF(__pyx_tuple__13);
 
   /* "../../../../pyenv/vcfnp_py34/lib/python3.4/site-packages/Cython/Includes/numpy/__init__.pxd":218
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
@@ -26312,9 +28105,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_C_contiguous); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_C_contiguous); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__15);
+  __Pyx_GIVEREF(__pyx_tuple__15);
 
   /* "../../../../pyenv/vcfnp_py34/lib/python3.4/site-packages/Cython/Includes/numpy/__init__.pxd":222
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
@@ -26323,9 +28116,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             info.buf = PyArray_DATA(self)
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_Fortran_contiguou); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_Fortran_contiguou); if (unlikely(!__pyx_tuple__16)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
   /* "../../../../pyenv/vcfnp_py34/lib/python3.4/site-packages/Cython/Includes/numpy/__init__.pxd":259
  *                 if ((descr.byteorder == c'>' and little_endian) or
@@ -26334,9 +28127,9 @@ static int __Pyx_InitCachedConstants(void) {
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
   /* "../../../../pyenv/vcfnp_py34/lib/python3.4/site-packages/Cython/Includes/numpy/__init__.pxd":799
  * 
@@ -26345,9 +28138,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor); if (unlikely(!__pyx_tuple__18)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 799; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "../../../../pyenv/vcfnp_py34/lib/python3.4/site-packages/Cython/Includes/numpy/__init__.pxd":803
  *         if ((child.byteorder == c'>' and little_endian) or
@@ -26356,9 +28149,9 @@ static int __Pyx_InitCachedConstants(void) {
  *             # One could encode it in the format string and have Cython
  *             # complain instead, BUT: < and > in format strings also imply
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__19)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__19);
+  __Pyx_GIVEREF(__pyx_tuple__19);
 
   /* "../../../../pyenv/vcfnp_py34/lib/python3.4/site-packages/Cython/Includes/numpy/__init__.pxd":823
  *             t = child.type_num
@@ -26367,9 +28160,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor_2); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor_2); if (unlikely(!__pyx_tuple__20)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
 
   /* "View.MemoryView":129
  * 
@@ -26378,9 +28171,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if itemsize <= 0:
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__21)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__21);
+  __Pyx_GIVEREF(__pyx_tuple__21);
 
   /* "View.MemoryView":132
  * 
@@ -26389,9 +28182,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if not isinstance(format, bytes):
  */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__22)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
 
   /* "View.MemoryView":135
  * 
@@ -26400,9 +28193,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         self._format = format  # keep a reference to the byte string
  *         self.format = self._format
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_ASCII); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_n_s_ASCII); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "View.MemoryView":144
  * 
@@ -26411,9 +28204,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__14)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__24)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
 
   /* "View.MemoryView":172
  *             self.data = <char *>malloc(self.len)
@@ -26422,9 +28215,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             if self.dtype_is_object:
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__25)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__25);
+  __Pyx_GIVEREF(__pyx_tuple__25);
 
   /* "View.MemoryView":188
  *             bufmode = PyBUF_F_CONTIGUOUS | PyBUF_ANY_CONTIGUOUS
@@ -26433,9 +28226,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         info.buf = self.data
  *         info.len = self.len
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__16)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__26)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__26);
+  __Pyx_GIVEREF(__pyx_tuple__26);
 
   /* "View.MemoryView":447
  *             result = struct.unpack(self.view.format, bytesitem)
@@ -26444,9 +28237,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         else:
  *             if len(self.view.format) == 1:
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 447; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__27)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 447; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
 
   /* "View.MemoryView":523
  *             if self.view.strides == NULL:
@@ -26455,9 +28248,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__18)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 523; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__28)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 523; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__28);
+  __Pyx_GIVEREF(__pyx_tuple__28);
 
   /* "View.MemoryView":531
  *         def __get__(self):
@@ -26466,12 +28259,12 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             return tuple([suboffset for suboffset in self.view.suboffsets[:self.view.ndim]])
  */
-  __pyx_tuple__19 = PyTuple_New(1); if (unlikely(!__pyx_tuple__19)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__19);
+  __pyx_tuple__29 = PyTuple_New(1); if (unlikely(!__pyx_tuple__29)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 531; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__29);
   __Pyx_INCREF(__pyx_int_neg_1);
   __Pyx_GIVEREF(__pyx_int_neg_1);
-  PyTuple_SET_ITEM(__pyx_tuple__19, 0, __pyx_int_neg_1);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  PyTuple_SET_ITEM(__pyx_tuple__29, 0, __pyx_int_neg_1);
+  __Pyx_GIVEREF(__pyx_tuple__29);
 
   /* "View.MemoryView":640
  *         if item is Ellipsis:
@@ -26480,9 +28273,9 @@ static int __Pyx_InitCachedConstants(void) {
  *                 seen_ellipsis = True
  *             else:
  */
-  __pyx_slice__20 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__20)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 640; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__20);
-  __Pyx_GIVEREF(__pyx_slice__20);
+  __pyx_slice__30 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__30)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 640; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_slice__30);
+  __Pyx_GIVEREF(__pyx_slice__30);
 
   /* "View.MemoryView":643
  *                 seen_ellipsis = True
@@ -26491,9 +28284,9 @@ static int __Pyx_InitCachedConstants(void) {
  *             have_slices = True
  *         else:
  */
-  __pyx_slice__21 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__21)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 643; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__21);
-  __Pyx_GIVEREF(__pyx_slice__21);
+  __pyx_slice__31 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__31)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 643; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_slice__31);
+  __Pyx_GIVEREF(__pyx_slice__31);
 
   /* "View.MemoryView":654
  *     nslices = ndim - len(result)
@@ -26502,9 +28295,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     return have_slices or nslices, tuple(result)
  */
-  __pyx_slice__22 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__22)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 654; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__22);
-  __Pyx_GIVEREF(__pyx_slice__22);
+  __pyx_slice__32 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__32)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 654; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_slice__32);
+  __Pyx_GIVEREF(__pyx_slice__32);
 
   /* "View.MemoryView":661
  *     for suboffset in suboffsets[:ndim]:
@@ -26513,93 +28306,93 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 661; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_tuple__33 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__33)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 661; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__33);
+  __Pyx_GIVEREF(__pyx_tuple__33);
 
   /* "vcfnp/iter.pyx":61
  * 
  * 
  * def itervariants(vcf_fns, region, fields, arities, fills, info_types,             # <<<<<<<<<<<<<<
  *                  transformers, filter_ids, flatten_filter, parse_info,
- *                  condition):
+ *                  condition, truncate):
  */
-  __pyx_tuple__25 = PyTuple_Pack(12, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fields, __pyx_n_s_arities, __pyx_n_s_fills, __pyx_n_s_info_types, __pyx_n_s_transformers, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_parse_info, __pyx_n_s_condition, __pyx_n_s_fieldspec); if (unlikely(!__pyx_tuple__25)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__25);
-  __Pyx_GIVEREF(__pyx_tuple__25);
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(11, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariants_2, 61, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__35 = PyTuple_Pack(13, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fields, __pyx_n_s_arities, __pyx_n_s_fills, __pyx_n_s_info_types, __pyx_n_s_transformers, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_parse_info, __pyx_n_s_condition, __pyx_n_s_truncate, __pyx_n_s_fieldspec); if (unlikely(!__pyx_tuple__35)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__35);
+  __Pyx_GIVEREF(__pyx_tuple__35);
+  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(12, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariants_2, 61, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "vcfnp/iter.pyx":94
  * 
  * 
- * def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                   tuple filter_ids, bint flatten_filter, bint parse_info):
+ * def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,             # <<<<<<<<<<<<<<
+ *                   parse_info, truncate):
  * 
  */
-  __pyx_tuple__27 = PyTuple_Pack(10, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fieldspec, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_parse_info, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_vcf_fn, __pyx_n_s_region_set); if (unlikely(!__pyx_tuple__27)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__27);
-  __Pyx_GIVEREF(__pyx_tuple__27);
-  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(6, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariants, 94, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__38 = PyTuple_Pack(16, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fieldspec, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_parse_info, __pyx_n_s_truncate, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_vcf_fn, __pyx_n_s_region_start, __pyx_n_s_region_stop, __pyx_n_s_region_set, __pyx_n_s__37, __pyx_n_s_region_start_stop, __pyx_n_s_v); if (unlikely(!__pyx_tuple__38)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__38);
+  __Pyx_GIVEREF(__pyx_tuple__38);
+  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(7, 0, 16, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariants, 94, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":125
+  /* "vcfnp/iter.pyx":133
  * 
  * 
- * def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                                  tuple filter_ids, bint flatten_filter,
- *                                  bint parse_info, np.uint8_t[:] condition):
+ * def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,             # <<<<<<<<<<<<<<
+ *                                  flatten_filter, parse_info, np.uint8_t[:]
+ *                                  condition, truncate):
  */
-  __pyx_tuple__29 = PyTuple_Pack(13, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fieldspec, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_parse_info, __pyx_n_s_condition, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_i, __pyx_n_s_n, __pyx_n_s_vcf_fn, __pyx_n_s_region_set); if (unlikely(!__pyx_tuple__29)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__29);
-  __Pyx_GIVEREF(__pyx_tuple__29);
-  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(7, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariants_with_condition, 125, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__40 = PyTuple_Pack(19, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fieldspec, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_parse_info, __pyx_n_s_condition, __pyx_n_s_truncate, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_i, __pyx_n_s_n, __pyx_n_s_vcf_fn, __pyx_n_s_region_start, __pyx_n_s_region_stop, __pyx_n_s_region_set, __pyx_n_s__37, __pyx_n_s_region_start_stop, __pyx_n_s_v); if (unlikely(!__pyx_tuple__40)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__40);
+  __Pyx_GIVEREF(__pyx_tuple__40);
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(8, 0, 19, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariants_with_condition, 133, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":362
+  /* "vcfnp/iter.pyx":379
  * 
  * 
  * def itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills,             # <<<<<<<<<<<<<<
- *                  format_types, condition):
+ *                  format_types, condition, truncate):
  *     """Iterate over call data (genotypes, etc.) returning tuples suitable for
  */
-  __pyx_tuple__31 = PyTuple_Pack(10, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_samples, __pyx_n_s_ploidy, __pyx_n_s_fields, __pyx_n_s_arities, __pyx_n_s_fills, __pyx_n_s_format_types, __pyx_n_s_condition, __pyx_n_s_fieldspec); if (unlikely(!__pyx_tuple__31)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__31);
-  __Pyx_GIVEREF(__pyx_tuple__31);
-  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(9, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itercalldata_2, 362, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__42 = PyTuple_Pack(11, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_samples, __pyx_n_s_ploidy, __pyx_n_s_fields, __pyx_n_s_arities, __pyx_n_s_fills, __pyx_n_s_format_types, __pyx_n_s_condition, __pyx_n_s_truncate, __pyx_n_s_fieldspec); if (unlikely(!__pyx_tuple__42)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__42);
+  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(10, 0, 11, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itercalldata_2, 379, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":387
+  /* "vcfnp/iter.pyx":405
  * 
  * 
- * def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
- *                   tuple fieldspec):
+ * def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):             # <<<<<<<<<<<<<<
+ *     cdef VariantCallFile *variant_file
+ *     cdef Variant *variant
+ */
+  __pyx_tuple__44 = PyTuple_Pack(15, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_samples, __pyx_n_s_ploidy, __pyx_n_s_fieldspec, __pyx_n_s_truncate, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_vcf_fn, __pyx_n_s_region_start, __pyx_n_s_region_stop, __pyx_n_s_region_set, __pyx_n_s__37, __pyx_n_s_region_start_stop, __pyx_n_s_v); if (unlikely(!__pyx_tuple__44)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__44);
+  __Pyx_GIVEREF(__pyx_tuple__44);
+  __pyx_codeobj__45 = (PyObject*)__Pyx_PyCode_New(6, 0, 15, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__44, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itercalldata, 405, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__45)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+  /* "vcfnp/iter.pyx":435
+ * 
+ * 
+ * def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,             # <<<<<<<<<<<<<<
+ *                                  np.uint8_t[:] condition, truncate):
  *     cdef VariantCallFile *variant_file
  */
-  __pyx_tuple__33 = PyTuple_Pack(9, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_samples, __pyx_n_s_ploidy, __pyx_n_s_fieldspec, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_vcf_fn, __pyx_n_s_region_set); if (unlikely(!__pyx_tuple__33)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__33);
-  __Pyx_GIVEREF(__pyx_tuple__33);
-  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(5, 0, 9, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itercalldata, 387, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__46 = PyTuple_Pack(18, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_samples, __pyx_n_s_ploidy, __pyx_n_s_fieldspec, __pyx_n_s_condition, __pyx_n_s_truncate, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_i, __pyx_n_s_n, __pyx_n_s_vcf_fn, __pyx_n_s_region_start, __pyx_n_s_region_stop, __pyx_n_s_region_set, __pyx_n_s__37, __pyx_n_s_region_start_stop, __pyx_n_s_v); if (unlikely(!__pyx_tuple__46)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__46);
+  __Pyx_GIVEREF(__pyx_tuple__46);
+  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(7, 0, 18, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itercalldata_with_condition, 435, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "vcfnp/iter.pyx":410
- * 
- * 
- * def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,             # <<<<<<<<<<<<<<
- *                                  int ploidy, tuple fieldspec,
- *                                  np.uint8_t[:] condition):
- */
-  __pyx_tuple__35 = PyTuple_Pack(12, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_samples, __pyx_n_s_ploidy, __pyx_n_s_fieldspec, __pyx_n_s_condition, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_i, __pyx_n_s_n, __pyx_n_s_vcf_fn, __pyx_n_s_region_set); if (unlikely(!__pyx_tuple__35)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__35);
-  __Pyx_GIVEREF(__pyx_tuple__35);
-  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(6, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itercalldata_with_condition, 410, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-
-  /* "vcfnp/iter.pyx":527
+  /* "vcfnp/iter.pyx":559
  * 
  * 
  * def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,             # <<<<<<<<<<<<<<
  *                       filter_ids, flatten_filter, fill, flatteners):
  * 
  */
-  __pyx_tuple__37 = PyTuple_Pack(14, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fields, __pyx_n_s_arities, __pyx_n_s_info_types, __pyx_n_s_parse_info, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_fill, __pyx_n_s_flatteners, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_vcf_fn, __pyx_n_s_region_set); if (unlikely(!__pyx_tuple__37)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__37);
-  __Pyx_GIVEREF(__pyx_tuple__37);
-  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(10, 0, 14, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariantstable, 527, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__48 = PyTuple_Pack(14, __pyx_n_s_vcf_fns, __pyx_n_s_region, __pyx_n_s_fields, __pyx_n_s_arities, __pyx_n_s_info_types, __pyx_n_s_parse_info, __pyx_n_s_filter_ids, __pyx_n_s_flatten_filter, __pyx_n_s_fill, __pyx_n_s_flatteners, __pyx_n_s_variant_file, __pyx_n_s_variant, __pyx_n_s_vcf_fn, __pyx_n_s_region_set); if (unlikely(!__pyx_tuple__48)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__48);
+  __Pyx_GIVEREF(__pyx_tuple__48);
+  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(10, 0, 14, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_media_aliman_SD1_src_github_ali, __pyx_n_s_itervariantstable, 559, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
   /* "View.MemoryView":278
  *         return self.name
@@ -26608,9 +28401,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_tuple__39 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__39)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__39);
-  __Pyx_GIVEREF(__pyx_tuple__39);
+  __pyx_tuple__50 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__50)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__50);
+  __Pyx_GIVEREF(__pyx_tuple__50);
 
   /* "View.MemoryView":279
  * 
@@ -26619,9 +28412,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_tuple__40 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__40)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__40);
-  __Pyx_GIVEREF(__pyx_tuple__40);
+  __pyx_tuple__51 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__51)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__51);
+  __Pyx_GIVEREF(__pyx_tuple__51);
 
   /* "View.MemoryView":280
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -26630,9 +28423,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__41 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__41)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__41);
-  __Pyx_GIVEREF(__pyx_tuple__41);
+  __pyx_tuple__52 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__52)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__52);
+  __Pyx_GIVEREF(__pyx_tuple__52);
 
   /* "View.MemoryView":283
  * 
@@ -26641,9 +28434,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__42)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__42);
-  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_tuple__53 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__53)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__53);
+  __Pyx_GIVEREF(__pyx_tuple__53);
 
   /* "View.MemoryView":284
  * 
@@ -26652,9 +28445,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__43 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__43)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__43);
-  __Pyx_GIVEREF(__pyx_tuple__43);
+  __pyx_tuple__54 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__54)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__54);
+  __Pyx_GIVEREF(__pyx_tuple__54);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -26772,16 +28565,16 @@ PyMODINIT_FUNC PyInit_iter(void)
   if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct___itervariants) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_5vcfnp_4iter___pyx_scope_struct___itervariants.tp_print = 0;
   __pyx_ptype_5vcfnp_4iter___pyx_scope_struct___itervariants = &__pyx_type_5vcfnp_4iter___pyx_scope_struct___itervariants;
-  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition.tp_print = 0;
   __pyx_ptype_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition = &__pyx_type_5vcfnp_4iter___pyx_scope_struct_1__itervariants_with_condition;
-  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_2__itercalldata) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_2__itercalldata) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_5vcfnp_4iter___pyx_scope_struct_2__itercalldata.tp_print = 0;
   __pyx_ptype_5vcfnp_4iter___pyx_scope_struct_2__itercalldata = &__pyx_type_5vcfnp_4iter___pyx_scope_struct_2__itercalldata;
-  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition.tp_print = 0;
   __pyx_ptype_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition = &__pyx_type_5vcfnp_4iter___pyx_scope_struct_3__itercalldata_with_condition;
-  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_4_itervariantstable) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_5vcfnp_4iter___pyx_scope_struct_4_itervariantstable) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_5vcfnp_4iter___pyx_scope_struct_4_itervariantstable.tp_print = 0;
   __pyx_ptype_5vcfnp_4iter___pyx_scope_struct_4_itervariantstable = &__pyx_type_5vcfnp_4iter___pyx_scope_struct_4_itervariantstable;
   if (PyType_Ready(&__pyx_type___pyx_array) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -26943,7 +28736,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * cdef string GT_DELIMS = b'/|'
  * cdef string FIELD_NAME_CHROM = b'CHROM'
  */
-  __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b_); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b__11); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 42; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_5vcfnp_4iter_DOT = __pyx_t_7;
 
   /* "vcfnp/iter.pyx":43
@@ -26953,7 +28746,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * cdef string FIELD_NAME_CHROM = b'CHROM'
  * cdef string FIELD_NAME_POS = b'POS'
  */
-  __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b__24); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_kp_b__34); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_5vcfnp_4iter_GT_DELIMS = __pyx_t_7;
 
   /* "vcfnp/iter.pyx":44
@@ -27111,7 +28904,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * 
  * def itervariants(vcf_fns, region, fields, arities, fills, info_types,             # <<<<<<<<<<<<<<
  *                  transformers, filter_ids, flatten_filter, parse_info,
- *                  condition):
+ *                  condition, truncate):
  */
   __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_1itervariants, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
@@ -27121,8 +28914,8 @@ PyMODINIT_FUNC PyInit_iter(void)
   /* "vcfnp/iter.pyx":94
  * 
  * 
- * def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                   tuple filter_ids, bint flatten_filter, bint parse_info):
+ * def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,             # <<<<<<<<<<<<<<
+ *                   parse_info, truncate):
  * 
  */
   __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_3_itervariants, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -27130,64 +28923,64 @@ PyMODINIT_FUNC PyInit_iter(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_itervariants, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "vcfnp/iter.pyx":125
+  /* "vcfnp/iter.pyx":133
  * 
  * 
- * def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,             # <<<<<<<<<<<<<<
- *                                  tuple filter_ids, bint flatten_filter,
- *                                  bint parse_info, np.uint8_t[:] condition):
+ * def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,             # <<<<<<<<<<<<<<
+ *                                  flatten_filter, parse_info, np.uint8_t[:]
+ *                                  condition, truncate):
  */
-  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_6_itervariants_with_condition, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_6_itervariants_with_condition, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itervariants_with_condition, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itervariants_with_condition, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "vcfnp/iter.pyx":362
+  /* "vcfnp/iter.pyx":379
  * 
  * 
  * def itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills,             # <<<<<<<<<<<<<<
- *                  format_types, condition):
+ *                  format_types, condition, truncate):
  *     """Iterate over call data (genotypes, etc.) returning tuples suitable for
  */
-  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_9itercalldata, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_9itercalldata, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itercalldata_2, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itercalldata_2, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "vcfnp/iter.pyx":387
+  /* "vcfnp/iter.pyx":405
  * 
  * 
- * def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,             # <<<<<<<<<<<<<<
- *                   tuple fieldspec):
+ * def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):             # <<<<<<<<<<<<<<
+ *     cdef VariantCallFile *variant_file
+ *     cdef Variant *variant
+ */
+  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_11_itercalldata, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itercalldata, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "vcfnp/iter.pyx":435
+ * 
+ * 
+ * def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,             # <<<<<<<<<<<<<<
+ *                                  np.uint8_t[:] condition, truncate):
  *     cdef VariantCallFile *variant_file
  */
-  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_11_itercalldata, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_14_itercalldata_with_condition, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itercalldata, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itercalldata_with_condition, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "vcfnp/iter.pyx":410
- * 
- * 
- * def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,             # <<<<<<<<<<<<<<
- *                                  int ploidy, tuple fieldspec,
- *                                  np.uint8_t[:] condition):
- */
-  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_14_itercalldata_with_condition, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itercalldata_with_condition, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "vcfnp/iter.pyx":527
+  /* "vcfnp/iter.pyx":559
  * 
  * 
  * def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,             # <<<<<<<<<<<<<<
  *                       filter_ids, flatten_filter, fill, flatteners):
  * 
  */
-  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_17itervariantstable, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyCFunction_NewEx(&__pyx_mdef_5vcfnp_4iter_17itervariantstable, NULL, __pyx_n_s_vcfnp_iter); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itervariantstable, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 527; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_itervariantstable, __pyx_t_4) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 559; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "vcfnp/iter.pyx":1
@@ -27220,7 +29013,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__39, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__50, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_XGOTREF(generic);
   __Pyx_DECREF_SET(generic, __pyx_t_4);
@@ -27234,7 +29027,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__40, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__51, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_XGOTREF(strided);
   __Pyx_DECREF_SET(strided, __pyx_t_4);
@@ -27248,7 +29041,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * 
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__41, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__52, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_XGOTREF(indirect);
   __Pyx_DECREF_SET(indirect, __pyx_t_4);
@@ -27262,7 +29055,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__42, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__53, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_XGOTREF(contiguous);
   __Pyx_DECREF_SET(contiguous, __pyx_t_4);
@@ -27276,7 +29069,7 @@ PyMODINIT_FUNC PyInit_iter(void)
  * 
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__43, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__54, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_XGOTREF(indirect_contiguous);
   __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_4);
@@ -27549,32 +29342,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
     return result;
 }
 
-static void __Pyx_RaiseArgumentTypeInvalid(const char* name, PyObject *obj, PyTypeObject *type) {
-    PyErr_Format(PyExc_TypeError,
-        "Argument '%.200s' has incorrect type (expected %.200s, got %.200s)",
-        name, type->tp_name, Py_TYPE(obj)->tp_name);
-}
-static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
-    const char *name, int exact)
-{
-    if (unlikely(!type)) {
-        PyErr_SetString(PyExc_SystemError, "Missing type object");
-        return 0;
-    }
-    if (none_allowed && obj == Py_None) return 1;
-    else if (exact) {
-        if (likely(Py_TYPE(obj) == type)) return 1;
-        #if PY_MAJOR_VERSION == 2
-        else if ((type == &PyBaseString_Type) && likely(__Pyx_PyBaseString_CheckExact(obj))) return 1;
-        #endif
-    }
-    else {
-        if (likely(PyObject_TypeCheck(obj, type))) return 1;
-    }
-    __Pyx_RaiseArgumentTypeInvalid(name, obj, type);
-    return 0;
-}
-
 static CYTHON_INLINE void __Pyx_ErrRestore(PyObject *type, PyObject *value, PyObject *tb) {
 #if CYTHON_COMPILING_IN_CPYTHON
     PyObject *tmp_type, *tmp_value, *tmp_tb;
@@ -27765,6 +29532,62 @@ bad:
     return;
 }
 #endif
+
+static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected) {
+    PyErr_Format(PyExc_ValueError,
+                 "too many values to unpack (expected %" CYTHON_FORMAT_SSIZE_T "d)", expected);
+}
+
+static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index) {
+    PyErr_Format(PyExc_ValueError,
+                 "need more than %" CYTHON_FORMAT_SSIZE_T "d value%.1s to unpack",
+                 index, (index == 1) ? "" : "s");
+}
+
+static CYTHON_INLINE int __Pyx_IterFinish(void) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    PyThreadState *tstate = PyThreadState_GET();
+    PyObject* exc_type = tstate->curexc_type;
+    if (unlikely(exc_type)) {
+        if (likely(exc_type == PyExc_StopIteration) || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration)) {
+            PyObject *exc_value, *exc_tb;
+            exc_value = tstate->curexc_value;
+            exc_tb = tstate->curexc_traceback;
+            tstate->curexc_type = 0;
+            tstate->curexc_value = 0;
+            tstate->curexc_traceback = 0;
+            Py_DECREF(exc_type);
+            Py_XDECREF(exc_value);
+            Py_XDECREF(exc_tb);
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    return 0;
+#else
+    if (unlikely(PyErr_Occurred())) {
+        if (likely(PyErr_ExceptionMatches(PyExc_StopIteration))) {
+            PyErr_Clear();
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    return 0;
+#endif
+}
+
+static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected) {
+    if (unlikely(retval)) {
+        Py_DECREF(retval);
+        __Pyx_RaiseTooManyValuesError(expected);
+        return -1;
+    } else {
+        return __Pyx_IterFinish();
+    }
+    return 0;
+}
 
 static CYTHON_INLINE int __Pyx_IsLittleEndian(void) {
   unsigned int n = 1;
@@ -28454,62 +30277,6 @@ static void __Pyx_RaiseBufferIndexError(int axis) {
      "Out of bounds on buffer access (axis %d)", axis);
 }
 
-static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected) {
-    PyErr_Format(PyExc_ValueError,
-                 "too many values to unpack (expected %" CYTHON_FORMAT_SSIZE_T "d)", expected);
-}
-
-static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index) {
-    PyErr_Format(PyExc_ValueError,
-                 "need more than %" CYTHON_FORMAT_SSIZE_T "d value%.1s to unpack",
-                 index, (index == 1) ? "" : "s");
-}
-
-static CYTHON_INLINE int __Pyx_IterFinish(void) {
-#if CYTHON_COMPILING_IN_CPYTHON
-    PyThreadState *tstate = PyThreadState_GET();
-    PyObject* exc_type = tstate->curexc_type;
-    if (unlikely(exc_type)) {
-        if (likely(exc_type == PyExc_StopIteration) || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration)) {
-            PyObject *exc_value, *exc_tb;
-            exc_value = tstate->curexc_value;
-            exc_tb = tstate->curexc_traceback;
-            tstate->curexc_type = 0;
-            tstate->curexc_value = 0;
-            tstate->curexc_traceback = 0;
-            Py_DECREF(exc_type);
-            Py_XDECREF(exc_value);
-            Py_XDECREF(exc_tb);
-            return 0;
-        } else {
-            return -1;
-        }
-    }
-    return 0;
-#else
-    if (unlikely(PyErr_Occurred())) {
-        if (likely(PyErr_ExceptionMatches(PyExc_StopIteration))) {
-            PyErr_Clear();
-            return 0;
-        } else {
-            return -1;
-        }
-    }
-    return 0;
-#endif
-}
-
-static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected) {
-    if (unlikely(retval)) {
-        Py_DECREF(retval);
-        __Pyx_RaiseTooManyValuesError(expected);
-        return -1;
-    } else {
-        return __Pyx_IterFinish();
-    }
-    return 0;
-}
-
 static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
 #if CYTHON_COMPILING_IN_PYPY
     return PyObject_RichCompareBool(s1, s2, equals);
@@ -28748,6 +30515,32 @@ static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
         return 1;
     PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
                  Py_TYPE(obj)->tp_name, type->tp_name);
+    return 0;
+}
+
+static void __Pyx_RaiseArgumentTypeInvalid(const char* name, PyObject *obj, PyTypeObject *type) {
+    PyErr_Format(PyExc_TypeError,
+        "Argument '%.200s' has incorrect type (expected %.200s, got %.200s)",
+        name, type->tp_name, Py_TYPE(obj)->tp_name);
+}
+static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
+    const char *name, int exact)
+{
+    if (unlikely(!type)) {
+        PyErr_SetString(PyExc_SystemError, "Missing type object");
+        return 0;
+    }
+    if (none_allowed && obj == Py_None) return 1;
+    else if (exact) {
+        if (likely(Py_TYPE(obj) == type)) return 1;
+        #if PY_MAJOR_VERSION == 2
+        else if ((type == &PyBaseString_Type) && likely(__Pyx_PyBaseString_CheckExact(obj))) return 1;
+        #endif
+    }
+    else {
+        if (likely(PyObject_TypeCheck(obj, type))) return 1;
+    }
+    __Pyx_RaiseArgumentTypeInvalid(name, obj, type);
     return 0;
 }
 
@@ -29694,209 +31487,30 @@ __pyx_fail:
     return result;
 }
 
-#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
-#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
-#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
-    {\
-        func_type value = func_value;\
-        if (sizeof(target_type) < sizeof(func_type)) {\
-            if (unlikely(value != (func_type) (target_type) value)) {\
-                func_type zero = 0;\
-                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
-                    return (target_type) -1;\
-                if (is_unsigned && unlikely(value < zero))\
-                    goto raise_neg_overflow;\
-                else\
-                    goto raise_overflow;\
-            }\
-        }\
-        return (target_type) value;\
-    }
-
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
-    const int neg_one = (int) -1, const_zero = (int) 0;
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
+    const long neg_one = (long) -1, const_zero = (long) 0;
     const int is_unsigned = neg_one > const_zero;
-#if PY_MAJOR_VERSION < 3
-    if (likely(PyInt_Check(x))) {
-        if (sizeof(int) < sizeof(long)) {
-            __PYX_VERIFY_RETURN_INT(int, long, PyInt_AS_LONG(x))
-        } else {
-            long val = PyInt_AS_LONG(x);
-            if (is_unsigned && unlikely(val < 0)) {
-                goto raise_neg_overflow;
-            }
-            return (int) val;
-        }
-    } else
-#endif
-    if (likely(PyLong_Check(x))) {
-        if (is_unsigned) {
-#if CYTHON_USE_PYLONG_INTERNALS
-            const digit* digits = ((PyLongObject*)x)->ob_digit;
-            switch (Py_SIZE(x)) {
-                case  0: return (int) 0;
-                case  1: __PYX_VERIFY_RETURN_INT(int, digit, digits[0])
-                case 2:
-                    if (8 * sizeof(int) > 1 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) >= 2 * PyLong_SHIFT) {
-                            return (int) (((((int)digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case 3:
-                    if (8 * sizeof(int) > 2 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) >= 3 * PyLong_SHIFT) {
-                            return (int) (((((((int)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case 4:
-                    if (8 * sizeof(int) > 3 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) >= 4 * PyLong_SHIFT) {
-                            return (int) (((((((((int)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-            }
-#endif
-#if CYTHON_COMPILING_IN_CPYTHON
-            if (unlikely(Py_SIZE(x) < 0)) {
-                goto raise_neg_overflow;
-            }
-#else
-            {
-                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
-                if (unlikely(result < 0))
-                    return (int) -1;
-                if (unlikely(result == 1))
-                    goto raise_neg_overflow;
-            }
-#endif
-            if (sizeof(int) <= sizeof(unsigned long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(int, unsigned long, PyLong_AsUnsignedLong(x))
-            } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(int, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
-            }
-        } else {
-#if CYTHON_USE_PYLONG_INTERNALS
-            const digit* digits = ((PyLongObject*)x)->ob_digit;
-            switch (Py_SIZE(x)) {
-                case  0: return (int) 0;
-                case -1: __PYX_VERIFY_RETURN_INT(int, sdigit, -(sdigit) digits[0])
-                case  1: __PYX_VERIFY_RETURN_INT(int,  digit, +digits[0])
-                case -2:
-                    if (8 * sizeof(int) - 1 > 1 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) - 1 > 2 * PyLong_SHIFT) {
-                            return (int) -(((((int)digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case 2:
-                    if (8 * sizeof(int) > 1 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) - 1 > 2 * PyLong_SHIFT) {
-                            return (int) (((((int)digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case -3:
-                    if (8 * sizeof(int) - 1 > 2 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) - 1 > 3 * PyLong_SHIFT) {
-                            return (int) -(((((((int)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case 3:
-                    if (8 * sizeof(int) > 2 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) - 1 > 3 * PyLong_SHIFT) {
-                            return (int) (((((((int)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case -4:
-                    if (8 * sizeof(int) - 1 > 3 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) - 1 > 4 * PyLong_SHIFT) {
-                            return (int) -(((((((((int)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-                case 4:
-                    if (8 * sizeof(int) > 3 * PyLong_SHIFT) {
-                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
-                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
-                        } else if (8 * sizeof(int) - 1 > 4 * PyLong_SHIFT) {
-                            return (int) (((((((((int)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
-                        }
-                    }
-                    break;
-            }
-#endif
-            if (sizeof(int) <= sizeof(long)) {
-                __PYX_VERIFY_RETURN_INT_EXC(int, long, PyLong_AsLong(x))
-            } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-                __PYX_VERIFY_RETURN_INT_EXC(int, PY_LONG_LONG, PyLong_AsLongLong(x))
-            }
-        }
-        {
-#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
-            PyErr_SetString(PyExc_RuntimeError,
-                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
-#else
-            int val;
-            PyObject *v = __Pyx_PyNumber_Int(x);
- #if PY_MAJOR_VERSION < 3
-            if (likely(v) && !PyLong_Check(v)) {
-                PyObject *tmp = v;
-                v = PyNumber_Long(tmp);
-                Py_DECREF(tmp);
-            }
- #endif
-            if (likely(v)) {
-                int one = 1; int is_little = (int)*(unsigned char *)&one;
-                unsigned char *bytes = (unsigned char *)&val;
-                int ret = _PyLong_AsByteArray((PyLongObject *)v,
-                                              bytes, sizeof(val),
-                                              is_little, !is_unsigned);
-                Py_DECREF(v);
-                if (likely(!ret))
-                    return val;
-            }
-#endif
-            return (int) -1;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
         }
     } else {
-        int val;
-        PyObject *tmp = __Pyx_PyNumber_Int(x);
-        if (!tmp) return (int) -1;
-        val = __Pyx_PyInt_As_int(tmp);
-        Py_DECREF(tmp);
-        return val;
+        if (sizeof(long) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
     }
-raise_overflow:
-    PyErr_SetString(PyExc_OverflowError,
-        "value too large to convert to int");
-    return (int) -1;
-raise_neg_overflow:
-    PyErr_SetString(PyExc_OverflowError,
-        "can't convert negative value to int");
-    return (int) -1;
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
+                                     little, !is_unsigned);
+    }
 }
 
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_npy_uint8(npy_uint8 value) {
@@ -29924,6 +31538,27 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_npy_uint8(npy_uint8 value) {
                                      little, !is_unsigned);
     }
 }
+
+#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
+#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
+#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
+    {\
+        func_type value = func_value;\
+        if (sizeof(target_type) < sizeof(func_type)) {\
+            if (unlikely(value != (func_type) (target_type) value)) {\
+                func_type zero = 0;\
+                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
+                    return (target_type) -1;\
+                if (is_unsigned && unlikely(value < zero))\
+                    goto raise_neg_overflow;\
+                else\
+                    goto raise_overflow;\
+            }\
+        }\
+        return (target_type) value;\
+    }
 
 static CYTHON_INLINE npy_uint8 __Pyx_PyInt_As_npy_uint8(PyObject *x) {
     const npy_uint8 neg_one = (npy_uint8) -1, const_zero = (npy_uint8) 0;
@@ -30120,30 +31755,188 @@ static int __pyx_memview_set_nn___pyx_t_5numpy_uint8_t(const char *itemp, PyObje
     return 1;
 }
 
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
-    const long neg_one = (long) -1, const_zero = (long) 0;
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
+    const int neg_one = (int) -1, const_zero = (int) 0;
     const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(int) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(int, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (int) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (int) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(int, digit, digits[0])
+                case 2:
+                    if (8 * sizeof(int) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) >= 2 * PyLong_SHIFT) {
+                            return (int) (((((int)digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(int) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) >= 3 * PyLong_SHIFT) {
+                            return (int) (((((((int)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(int) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) >= 4 * PyLong_SHIFT) {
+                            return (int) (((((((((int)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (int) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(int) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(int, unsigned long, PyLong_AsUnsignedLong(x))
+            } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(int, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (int) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(int, sdigit, -(sdigit) digits[0])
+                case  1: __PYX_VERIFY_RETURN_INT(int,  digit, +digits[0])
+                case -2:
+                    if (8 * sizeof(int) - 1 > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) - 1 > 2 * PyLong_SHIFT) {
+                            return (int) -(((((int)digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 2:
+                    if (8 * sizeof(int) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) - 1 > 2 * PyLong_SHIFT) {
+                            return (int) (((((int)digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case -3:
+                    if (8 * sizeof(int) - 1 > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) - 1 > 3 * PyLong_SHIFT) {
+                            return (int) -(((((((int)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(int) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) - 1 > 3 * PyLong_SHIFT) {
+                            return (int) (((((((int)digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case -4:
+                    if (8 * sizeof(int) - 1 > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) - 1 > 4 * PyLong_SHIFT) {
+                            return (int) -(((((((((int)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(int) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0])))
+                        } else if (8 * sizeof(int) - 1 > 4 * PyLong_SHIFT) {
+                            return (int) (((((((((int)digits[3]) << PyLong_SHIFT) | digits[2]) << PyLong_SHIFT) | digits[1]) << PyLong_SHIFT) | digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+            if (sizeof(int) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(int, long, PyLong_AsLong(x))
+            } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(int, PY_LONG_LONG, PyLong_AsLongLong(x))
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            int val;
+            PyObject *v = __Pyx_PyNumber_Int(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (int) -1;
         }
     } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-        }
+        int val;
+        PyObject *tmp = __Pyx_PyNumber_Int(x);
+        if (!tmp) return (int) -1;
+        val = __Pyx_PyInt_As_int(tmp);
+        Py_DECREF(tmp);
+        return val;
     }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to int");
+    return (int) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to int");
+    return (int) -1;
 }
 
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {

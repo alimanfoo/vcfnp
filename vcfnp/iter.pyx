@@ -60,13 +60,12 @@ cdef string FIELD_NAME_GT = b'GT'
 
 def itervariants(vcf_fns, region, fields, arities, fills, info_types,
                  transformers, filter_ids, flatten_filter, parse_info,
-                 condition):
+                 condition, truncate):
     """Iterate over variants from a VCF file, and generate a tuple for each
     variant suitable for loading into a numpy array."""
 
     # force to bytes
     vcf_fns = _b(tuple(vcf_fns))
-    region = _b(region)
     fields = _b(tuple(fields))
     arities = tuple(arities)
     fills = tuple(fills)
@@ -81,18 +80,19 @@ def itervariants(vcf_fns, region, fields, arities, fills, info_types,
         return _itervariants(vcf_fns=vcf_fns, region=region,
                              fieldspec=fieldspec, filter_ids=filter_ids,
                              flatten_filter=flatten_filter,
-                             parse_info=parse_info)
+                             parse_info=parse_info, truncate=truncate)
     else:
         return _itervariants_with_condition(vcf_fns=vcf_fns, region=region,
                                             fieldspec=fieldspec,
                                             filter_ids=filter_ids,
                                             flatten_filter=flatten_filter,
                                             parse_info=parse_info,
-                                            condition=condition)
+                                            condition=condition,
+                                            truncate=truncate)
 
 
-def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,
-                  tuple filter_ids, bint flatten_filter, bint parse_info):
+def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,
+                  parse_info, truncate):
 
     # statically typed variables
     cdef VariantCallFile *variant_file
@@ -106,15 +106,23 @@ def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,
         variant_file.parseInfo = parse_info
         # set whether samples fields need to be parsed
         variant_file.parseSamples = False
+        region_start, region_stop = None, None
         if region is not None:
             # set genome region to extract variants from
-            region_set = variant_file.setRegion(region)
+            region_set = variant_file.setRegion(_b(region))
             if not region_set:
                 raise StopIteration
+            if ':' in region:
+                _, region_start_stop = region.split(':')
+                region_start, region_stop = [int(v) for v in
+                                             region_start_stop.split('-')]
         variant = new Variant(deref(variant_file))
 
         # iterate over variants
         while _get_next_variant(variant_file, variant):
+            if region_start is not None and truncate and \
+                    variant.position < region_start:
+                continue
             yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
 
         # clean up
@@ -122,9 +130,9 @@ def _itervariants(tuple vcf_fns, bytes region, tuple fieldspec,
         del variant
 
 
-def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,
-                                 tuple filter_ids, bint flatten_filter,
-                                 bint parse_info, np.uint8_t[:] condition):
+def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,
+                                 flatten_filter, parse_info, np.uint8_t[:]
+                                 condition, truncate):
 
     # statically typed variables
     cdef VariantCallFile *variant_file
@@ -137,13 +145,22 @@ def _itervariants_with_condition(tuple vcf_fns, bytes region, tuple fieldspec,
         variant_file.open(vcf_fn)
         variant_file.parseInfo = parse_info
         variant_file.parseSamples = False
+        region_start, region_stop = None, None
         if region is not None:
-            region_set = variant_file.setRegion(region)
+            region_set = variant_file.setRegion(_b(region))
             if not region_set:
                 raise StopIteration
+            if ':' in region:
+                _, region_start_stop = region.split(':')
+                region_start, region_stop = [int(v) for v in
+                                             region_start_stop.split('-')]
         variant = new Variant(deref(variant_file))
 
         while i < n and _get_next_variant(variant_file, variant):
+            if region_start is not None and truncate and \
+                    variant.position < region_start:
+                i += 1
+                continue
             if condition[i]:
                 yield _mkvrow(variant, fieldspec, filter_ids, flatten_filter)
             i += 1
@@ -360,13 +377,13 @@ cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity,
 
 
 def itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills,
-                 format_types, condition):
+                 format_types, condition, truncate):
     """Iterate over call data (genotypes, etc.) returning tuples suitable for
     loading into a numpy structured array."""
 
     # force bytes
     vcf_fns = _b(tuple(vcf_fns))
-    region = _b(region)
+    region = region
     samples = _b(tuple(samples))
     fields = _b(tuple(fields))
     arities = tuple(arities)
@@ -377,15 +394,15 @@ def itercalldata(vcf_fns, region, samples, ploidy, fields, arities, fills,
     fieldspec = tuple(zip(fields, arities, fills, format_types))
 
     if condition is None:
-        return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec)
+        return _itercalldata(vcf_fns, region, samples, ploidy, fieldspec,
+                             truncate)
     else:
         return _itercalldata_with_condition(vcf_fns, region, samples, ploidy,
-                                            fieldspec, condition)
+                                            fieldspec, condition, truncate)
 
 
 
-def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,
-                  tuple fieldspec):
+def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):
     cdef VariantCallFile *variant_file
     cdef Variant *variant
 
@@ -394,22 +411,29 @@ def _itercalldata(tuple vcf_fns, bytes region, tuple samples, int ploidy,
         variant_file.open(vcf_fn)
         variant_file.parseInfo = False
         variant_file.parseSamples = True
+        region_start, region_stop = None, None
         if region is not None:
-            region_set = variant_file.setRegion(region)
+            region_set = variant_file.setRegion(_b(region))
             if not region_set:
                 raise StopIteration
+            if ':' in region:
+                _, region_start_stop = region.split(':')
+                region_start, region_stop = [int(v) for v in
+                                             region_start_stop.split('-')]
         variant = new Variant(deref(variant_file))
 
         while _get_next_variant(variant_file, variant):
+            if region_start is not None and truncate and \
+                    variant.position < region_start:
+                continue
             yield _mkcrow(variant, samples, ploidy, fieldspec)
 
         del variant_file
         del variant
 
 
-def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,
-                                 int ploidy, tuple fieldspec,
-                                 np.uint8_t[:] condition):
+def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,
+                                 np.uint8_t[:] condition, truncate):
     cdef VariantCallFile *variant_file
     cdef Variant *variant
     cdef long i = 0
@@ -420,10 +444,15 @@ def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,
         variant_file.open(vcf_fn)
         variant_file.parseInfo = False
         variant_file.parseSamples = False
+        region_start, region_stop = None, None
         if region is not None:
-            region_set = variant_file.setRegion(region)
+            region_set = variant_file.setRegion(_b(region))
             if not region_set:
                 raise StopIteration
+            if ':' in region:
+                _, region_start_stop = region.split(':')
+                region_start, region_stop = [int(v) for v in
+                                             region_start_stop.split('-')]
         variant = new Variant(deref(variant_file))
 
         while i < n:
@@ -432,6 +461,9 @@ def _itercalldata_with_condition(tuple vcf_fns, bytes region, tuple samples,
                 variant_file.parseSamples = True
                 if not _get_next_variant(variant_file, variant):
                     break
+                if region_start is not None and truncate and \
+                        variant.position < region_start:
+                    continue
                 yield _mkcrow(variant, samples, ploidy, fieldspec)
             else:
                 variant_file.parseSamples = False

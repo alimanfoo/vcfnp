@@ -409,3 +409,25 @@ def test_error_handling():
     vcf_fn = 'fixture/test48a.vcf'
     with assert_raises(RuntimeError):
         a = vcfnp.variants(vcf_fn)
+
+
+def test_truncate():
+    # https://github.com/alimanfoo/vcfnp/issues/54
+
+    vcf_fn = 'fixture/test54.vcf.gz'
+
+    # truncate by default
+    v = variants(vcf_fn, region='chr1:10-100')
+    eq_(2, len(v))
+    c = calldata(vcf_fn, region='chr1:10-100')
+    eq_(2, len(c))
+    c2d = calldata_2d(vcf_fn, region='chr1:10-100')
+    eq_(2, len(c2d))
+
+    # don't truncate
+    v = variants(vcf_fn, region='chr1:10-100', truncate=False)
+    eq_(3, len(v))
+    c = calldata(vcf_fn, region='chr1:10-100', truncate=False)
+    eq_(3, len(c))
+    c2d = calldata_2d(vcf_fn, region='chr1:10-100', truncate=False)
+    eq_(3, len(c2d))

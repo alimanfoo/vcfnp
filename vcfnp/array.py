@@ -32,7 +32,7 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
              arities=None, fills=None, transformers=None, vcf_types=None,
              count=None, progress=0, logstream=None, condition=None,
              slice_args=None, flatten_filter=False, verbose=True, cache=False,
-             cachedir=None, skip_cached=False):
+             cachedir=None, skip_cached=False, truncate=True):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
     (including INFO).
@@ -86,6 +86,9 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
         Manually specify the directory to use to store cache files.
     skip_cached: bool, optional
         If True and cache file is fresh, do not load and return None.
+    truncate: bool, optional
+        If True (default) only include variants whose start position is within
+        the given region. If False, use default tabix behaviour.
 
     Examples
     --------
@@ -122,7 +125,7 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
                              slice_args=slice_args,
                              flatten_filter=flatten_filter, verbose=verbose,
                              cache=cache, cachedir=cachedir,
-                             skip_cached=skip_cached)
+                             skip_cached=skip_cached, truncate=truncate)
     return loader.load()
 
 
@@ -346,6 +349,7 @@ class _VariantsLoader(_ArrayLoader):
 
         # set up iterator
         region = self.region
+        truncate = self.truncate
         condition = self.condition
         if condition is not None:
             condition = np.asarray(condition).astype('uint8')
@@ -353,7 +357,8 @@ class _VariantsLoader(_ArrayLoader):
                           arities=arities, fills=fills,
                           info_types=info_types, transformers=transformers,
                           filter_ids=filter_ids, flatten_filter=flatten_filter,
-                          parse_info=parse_info, condition=condition)
+                          parse_info=parse_info, condition=condition,
+                          truncate=truncate)
 
         # slice iterator
         slice_args = self.slice_args
@@ -523,7 +528,7 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
              exclude_fields=None, dtypes=None, arities=None, fills=None,
              vcf_types=None, count=None, progress=0, logstream=None,
              condition=None, slice_args=None, verbose=True, cache=False,
-             cachedir=None, skip_cached=False):
+             cachedir=None, skip_cached=False, truncate=True):
     """
     Load a numpy 1-dimensional structured array with data from the sample
     columns of a VCF file.
@@ -569,13 +574,16 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
         Manually specify the directory to use to store cache files.
     skip_cached: bool
         If True and cache file is fresh, do not load and return None.
+    truncate: bool, optional
+        If True (default) only include variants whose start position is within
+        the given region. If False, use default tabix behaviour.
 
     Examples
     --------
 
         >>> from vcfnp import calldata, view2d
-        >>> C = calldata('fixture/sample.vcf')
-        >>> C
+        >>> c = calldata('fixture/sample.vcf')
+        >>> c
         array([ ((True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, False, [0, 1], 0, 0, '0/1', [3, 3])),
                ((True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, False, [0, 1], 0, 0, '0/1', [3, 3])),
                ((True, True, [0, 0], 1, 48, '0|0', [51, 51]), (True, True, [1, 0], 8, 48, '1|0', [51, 51]), (True, False, [1, 1], 5, 43, '1/1', [0, 0])),
@@ -586,7 +594,7 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                ((True, False, [0, 0], 0, 0, '0/0', [0, 0]), (True, True, [0, 0], 0, 0, '0|0', [0, 0]), (False, False, [-1, -1], 0, 0, './.', [0, 0])),
                ((True, False, [0, -1], 0, 0, '0', [0, 0]), (True, False, [0, 1], 0, 0, '0/1', [0, 0]), (True, True, [0, 2], 0, 0, '0|2', [0, 0]))],
               dtype=[('NA00001', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])])
-        >>> C['NA00001']
+        >>> c['NA00001']
         array([(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
                (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
                (True, True, [0, 0], 1, 48, '0|0', [51, 51]),
@@ -597,8 +605,8 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                (True, False, [0, 0], 0, 0, '0/0', [0, 0]),
                (True, False, [0, -1], 0, 0, '0', [0, 0])],
               dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
-        >>> C2d = view2d(C)
-        >>> C2d
+        >>> c2d = view2d(c)
+        >>> c2d
         array([[(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
                 (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
                 (True, False, [0, 1], 0, 0, '0/1', [3, 3])],
@@ -627,7 +635,7 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                 (True, False, [0, 1], 0, 0, '0/1', [0, 0]),
                 (True, True, [0, 2], 0, 0, '0|2', [0, 0])]],
               dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
-        >>> C2d['genotype']
+        >>> c2d['genotype']
         array([[[ 0,  0],
                 [ 0,  0],
                 [ 0,  1]],
@@ -663,7 +671,7 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                [[ 0, -1],
                 [ 0,  1],
                 [ 0,  2]]], dtype=int8)
-        >>> C2d['genotype'][3, :]
+        >>> c2d['genotype'][3, :]
         array([[0, 0],
                [0, 1],
                [0, 0]], dtype=int8)
@@ -678,7 +686,7 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                              logstream=logstream, condition=condition,
                              slice_args=slice_args, verbose=verbose,
                              cache=cache, cachedir=cachedir,
-                             skip_cached=skip_cached)
+                             skip_cached=skip_cached, truncate=truncate)
     arr = loader.load()
     return arr
 
@@ -752,10 +760,11 @@ class _CalldataLoader(_ArrayLoader):
         if condition is not None:
             condition = np.asarray(condition).astype('uint8')
         region = self.region
+        truncate = self.truncate
         it = itercalldata(vcf_fns=vcf_fns, region=region, samples=samples,
                           ploidy=ploidy, fields=fields, arities=arities,
                           fills=fills, format_types=format_types,
-                          condition=condition)
+                          condition=condition, truncate=truncate)
 
         # slice iterator
         slice_args = self.slice_args
@@ -772,7 +781,7 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                 exclude_fields=None, dtypes=None, arities=None, fills=None,
                 vcf_types=None, count=None, progress=0, logstream=None,
                 condition=None, slice_args=None, verbose=True, cache=False,
-                cachedir=None, skip_cached=False):
+                cachedir=None, skip_cached=False, truncate=True):
     """
     Load a numpy 2-dimensional structured array with data from the sample
     columns of a VCF file. Convenience function, equivalent to calldata()
@@ -781,11 +790,14 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
 
     Parameters
     ----------
-
     vcf_fn: string or list
         Name of the VCF file or list of file names.
     region: string
         Region to extract, e.g., 'chr1' or 'chr1:0-100000'.
+    samples: sequence of strings
+        Samples to load.
+    ploidy: int
+        Sample ploidy.
     fields: list or array-like
         List of fields to extract from the VCF.
     exclude_fields: list or array-like
@@ -820,6 +832,9 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
         Manually specify the directory to use to store cache files.
     skip_cached: bool
         If True and cache file is fresh, do not load and return None.
+    truncate: bool, optional
+        If True (default) only include variants whose start position is within
+        the given region. If False, use default tabix behaviour.
 
     """
 
@@ -831,7 +846,7 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                                progress=progress, logstream=logstream,
                                condition=condition, slice_args=slice_args,
                                verbose=verbose, cache=cache, cachedir=cachedir,
-                               skip_cached=skip_cached)
+                               skip_cached=skip_cached, truncate=truncate)
     arr = loader.load()
     return arr
 
