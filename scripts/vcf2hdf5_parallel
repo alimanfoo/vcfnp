@@ -6,8 +6,8 @@ given directly using --regions-string or --regions-file.
 Then runs vcfnpy2hdf5 serially on each chromosome/scaffold/contig.
 
 Examples:
-    vcf2hdf5_parallel --vcf in.vcf.gz --fatsa ref.fa
-    vcf2hdf5_parallel --vcf in.vcf.gz --fatsa ref.fa --cleanup --jobs -1
+    vcf2hdf5_parallel --vcf in.vcf.gz --fasta ref.fa
+    vcf2hdf5_parallel --vcf in.vcf.gz --fasta ref.fa --cleanup --jobs -1
     vcf2hdf5_parallel --vcf in.vcf.gz --regions-string '2L:0-20000 X' --out foo
 
 Author: Travis Collier <https://github.com/travc>
@@ -110,10 +110,10 @@ def Main(argv=None):
                            default=None,
                            help="output prefix, "
                                 "default is VCF stripped of path and "
-                                "extention")
+                                "extension")
 
     opt_group.add_argument('--force', action='store_true',
-                           help="remove existing cache directory and hdf5 "
+                           help="remove existing cache directory and HDF5 "
                                 "file if they exist (default is to abort)")
     opt_group.add_argument('--cleanup', action='store_true',
                            help="remove cache and log files when finished ")
@@ -131,9 +131,9 @@ def Main(argv=None):
                            help="compression option (level) for HDF5 output "
                                 "file (default=%(default)s)")
     opt_group.add_argument('--hdf5-chunk-size',
-                           dest='hdf5_chunk_size', type=int, metavar='NBYTES',
-                           default=2 ** 20,
-                           help='HDF5 chunk size (defaults to 1Mb)')
+                           dest='hdf5_chunk_size', type=int,
+                           default=2 ** 20, metavar='NBYTES',
+                           help='HDF5 chunk size in bytes (defaults to 1Mb)')
     opt_group.add_argument('--hdf5-chunk-width',
                            dest='hdf5_chunk_width', type=int, metavar='N',
                            default=10,
@@ -329,9 +329,9 @@ def Main(argv=None):
 
     ## serial vcfnpy2hdf5 ##
     vcfnpy2hdf5_start_tic = time.time()
-    logging.info("creating hdf5 file '{}'".format(hdf5_out_filename))
+    logging.info("creating HDF5 file '{}'".format(hdf5_out_filename))
     if os.path.lexists(hdf5_out_filename) and args.force:
-        logging.warning("removing existing hdf5 file: "
+        logging.warning("removing existing HDF5 file: "
                         "'{}'".format(hdf5_out_filename))
         os.unlink(hdf5_out_filename)
     # remove existing log file (each job will append)
@@ -342,7 +342,7 @@ def Main(argv=None):
             raise
     # run vcfnpy2hdf5 for each chrom
     for chrom in chrom_list:
-        logging.info("adding '{}' to hdf5 file".format(chrom))
+        logging.info("adding '{}' to HDF5 file".format(chrom))
         cmd = [python_exec]
         cmd += [shutil.which(args.vcfnpy2hdf5_exec),
                 '--vcf', args.vcf,
