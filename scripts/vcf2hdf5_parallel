@@ -352,9 +352,9 @@ def Main(argv=None):
                 '--group', chrom,
                 '--output', hdf5_out_filename,
                 '--compression', args.hdf5_compression,
-                '--compression-opts', args.hdf5_compression_opts,
-                '--chunk-size', args.hdf5_chunk_size,
-                '--chunk-width', args.hdf5_chunk_width,
+                '--compression-opts', str(args.hdf5_compression_opts),
+                '--chunk-size', str(args.hdf5_chunk_size),
+                '--chunk-width', str(args.hdf5_chunk_width),
                 ]
         logging.debug("cmd={}".format(cmd))
         with open(hdf5_out_filename + '.log', 'a') as logfile:
