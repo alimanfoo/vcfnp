@@ -20,7 +20,7 @@ EFF_DEFAULT_DTYPE = [
     ('Effect_Impact', 'a8'),
     ('Functional_Class', 'a8'),
     ('Codon_Change', 'a7'),  # N.B., will lose information for indels
-    ('Amino_Acid_Change', 'a6'),  # N.B., will lose information for indels
+    ('Amino_Acid_Change', 'a8'),  # N.B., will lose information for indels
     ('Amino_Acid_Length', 'i4'),
     ('Gene_Name', 'a14'),  # N.B., may be too short for some species
     ('Transcript_BioType', 'a20'),
