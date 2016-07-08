@@ -247,7 +247,7 @@ def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
         cache_fn = os.path.join(cachedir, '%s.npy' % array_type)
     else:
         # loading a specific region
-        region = region.replace(':', '_').replace('-', '_')
+        region = region.replace(':', '__').replace('-', '_')
         cache_fn = os.path.join(cachedir, '%s.%s.npy' % (array_type, region))
     return cache_fn
 

@@ -257,8 +257,8 @@ def Main(argv=None):
     # check chrom_list for invalid chars '_' and ':'
     # @TCC at least '_' could probably be allowed if vcf2npy output file nameing was changed (need a separator between chrom and position range)
     for c in chrom_list:
-        if '_' in c:
-            logging.critical("character '_' in chrom name '{}' will probably break this script".format(c))
+        if '__' in c:
+            logging.critical("substring '__' in chrom name '{}' may break this script".format(c))
             sys.exit(2)
         if ':' in c:
             logging.critical("character ':' in chrom name '{}' will probably break this script".format(c))
@@ -359,7 +359,7 @@ def Main(argv=None):
                 '--vcf', args.vcf,
                 '--input-dir', outdir,
                 '--input-filename-template',
-                '{{array_type}}.{}_*.npy'.format(chrom),
+                '{{array_type}}.{}__*.npy'.format(chrom),
                 '--group', chrom,
                 '--output', hdf5_out_filename,
                 '--compression', args.hdf5_compression,
