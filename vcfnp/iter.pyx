@@ -255,7 +255,7 @@ cdef inline object _is_snp(Variant *variant):
         return False
     for i in range(variant.alt.size()):
         alt = variant.alt.at(i)
-        if alt not in {b'A', b'C', b'G', b'T'}:
+        if alt not in {b'A', b'C', b'G', b'T', b'*'}:
             return False
     return True
 
