@@ -253,6 +253,17 @@ def Main(argv=None):
                     chrom = fields[args.regions_column].split(':')[0]
                     if chrom not in chrom_list:
                         chrom_list[chrom] = True
+
+    # check chrom_list for invalid chars '_' and ':'
+    # @TCC at least '_' could probably be allowed if vcf2npy output file nameing was changed (need a separator between chrom and position range)
+    for c in chrom_list:
+        if '__' in c:
+            logging.critical("substring '__' in chrom name '{}' may break this script".format(c))
+            sys.exit(2)
+        if ':' in c:
+            logging.critical("character ':' in chrom name '{}' will probably break this script".format(c))
+            sys.exit(2)
+             
     logging.debug("region_list={}".format(region_list))
     logging.debug("chrom_list={}".format(chrom_list))
     logging.info("decomposing into {} tasks".format(len(region_list)))
@@ -348,13 +359,13 @@ def Main(argv=None):
                 '--vcf', args.vcf,
                 '--input-dir', outdir,
                 '--input-filename-template',
-                '{{array_type}}.{}*.npy'.format(chrom),
+                '{{array_type}}.{}__*.npy'.format(chrom),
                 '--group', chrom,
                 '--output', hdf5_out_filename,
                 '--compression', args.hdf5_compression,
-                '--compression-opts', args.hdf5_compression_opts,
-                '--chunk-size', args.hdf5_chunk_size,
-                '--chunk-width', args.hdf5_chunk_width,
+                '--compression-opts', str(args.hdf5_compression_opts),
+                '--chunk-size', str(args.hdf5_chunk_size),
+                '--chunk-width', str(args.hdf5_chunk_width),
                 ]
         logging.debug("cmd={}".format(cmd))
         with open(hdf5_out_filename + '.log', 'a') as logfile:
