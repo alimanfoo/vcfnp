@@ -5,11 +5,11 @@
 from __future__ import print_function, absolute_import, division
 
 
-from libcpp cimport bool
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp.map cimport map
 from libc.stdlib cimport atoi, atol, atof
+# noinspection PyUnresolvedReferences
 from cython.operator cimport dereference as deref
 import numpy as np
 cimport numpy as np
@@ -169,14 +169,13 @@ def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,
         del variant
 
 
-cdef inline bool _get_next_variant(VariantCallFile *variant_file,
-                                   Variant *variant):
+cdef _get_next_variant(VariantCallFile *variant_file, Variant *variant):
     # break this out into a separate function so we can profile it
     return variant_file.getNextVariant(deref(variant))
 
 
-cdef inline object _mkvrow(Variant *variant, tuple fieldspec, tuple filter_ids,
-                           bint flatten_filter):
+cdef _mkvrow(Variant *variant, tuple fieldspec, tuple filter_ids,
+             bint flatten_filter):
     """Make a row of variant data."""
     out = list()
     for f, arity, fill, vcf_type, transformer in fieldspec:
@@ -189,9 +188,8 @@ cdef inline object _mkvrow(Variant *variant, tuple fieldspec, tuple filter_ids,
     return tuple(out)
 
 
-cdef inline object _mkvval(Variant *variant, string field, int arity,
-                           object fill, int vcf_type, transformer,
-                           tuple filter_ids):
+cdef _mkvval(Variant *variant, string field, int arity, object fill,
+             int vcf_type, transformer, tuple filter_ids):
     if field == FIELD_NAME_CHROM:
         out = variant.sequenceName
     elif field == FIELD_NAME_POS:
@@ -222,7 +220,7 @@ cdef inline object _mkvval(Variant *variant, string field, int arity,
     return out
 
 
-cdef inline object _mkaltval(Variant *variant, int arity, object fill):
+cdef _mkaltval(Variant *variant, int arity, object fill):
     if arity == 1:
         if variant.alt.size() == 0:
             out = fill
@@ -241,14 +239,14 @@ cdef inline object _mkaltval(Variant *variant, int arity, object fill):
     return out
 
 
-cdef inline object _mkfilterval(Variant *variant, tuple filter_ids):
+cdef _mkfilterval(Variant *variant, tuple filter_ids):
     filters = <list>split(variant.filter, SEMICOLON)
     out = [(f in filters) for f in filter_ids]
     out = tuple(out)
     return out
 
 
-cdef inline object _is_snp(Variant *variant):
+cdef _is_snp(Variant *variant):
     cdef int i
     cdef bytes alt
     if variant.ref.size() > 1:
@@ -260,21 +258,20 @@ cdef inline object _is_snp(Variant *variant):
     return True
 
 
-cdef inline object _svlen(Variant *variant, int arity, object fill):
+cdef _svlen(Variant *variant, int arity, object fill):
     if arity == 1:
         return _svlen_single(variant.ref, variant.alt, fill)
     else:
         return _svlen_multi(variant.ref, variant.alt, arity, fill)
 
 
-cdef inline object _svlen_single(string ref, vector[string]& alt, object fill):
+cdef _svlen_single(string ref, vector[string]& alt, object fill):
     if alt.size() > 0:
         return <int>(alt.at(0).size() - ref.size())
     return fill
 
 
-cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity,
-                                object fill):
+cdef _svlen_multi(string ref, vector[string]& alt, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -285,8 +282,7 @@ cdef inline object _svlen_multi(string ref, vector[string]& alt, int arity,
     return out
 
 
-cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,
-                          int vcf_type):
+cdef _mkval(vector[string]& string_vals, int arity, object fill, int vcf_type):
     if vcf_type == FIELD_FLOAT:
         out = _mkval_double(string_vals, arity, fill)
     elif vcf_type == FIELD_INTEGER:
@@ -297,8 +293,7 @@ cdef inline object _mkval(vector[string]& string_vals, int arity, object fill,
     return out
 
 
-cdef inline object _mkval_string(vector[string]& string_vals, int arity,
-                                 object fill):
+cdef _mkval_string(vector[string]& string_vals, int arity, object fill):
     if arity == 1:
         if string_vals.size() > 0:
             return string_vals.at(0)
@@ -308,8 +303,7 @@ cdef inline object _mkval_string(vector[string]& string_vals, int arity,
         return _mkval_string_multi(string_vals, arity, fill)
 
 
-cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity,
-                                       object fill):
+cdef _mkval_string_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -320,8 +314,7 @@ cdef inline object _mkval_string_multi(vector[string]& string_vals, int arity,
     return out
 
 
-cdef inline object _mkval_double(vector[string]& string_vals, int arity,
-                                 object fill):
+cdef _mkval_double(vector[string]& string_vals, int arity, object fill):
     if arity == 1:
         out = _mkval_double_single(string_vals, fill)
     else:
@@ -329,16 +322,14 @@ cdef inline object _mkval_double(vector[string]& string_vals, int arity,
     return out
 
 
-cdef inline object _mkval_double_single(vector[string]& string_vals,
-                                        object fill):
+cdef _mkval_double_single(vector[string]& string_vals, object fill):
     cdef double v
     if string_vals.size() > 0:
         return atof(string_vals.at(0).c_str())
     return fill
 
 
-cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity,
-                                       object fill):
+cdef _mkval_double_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -349,8 +340,7 @@ cdef inline object _mkval_double_multi(vector[string]& string_vals, int arity,
     return out
 
 
-cdef inline object _mkval_long(vector[string]& string_vals, int arity,
-                               object fill):
+cdef _mkval_long(vector[string]& string_vals, int arity, object fill):
     if arity == 1:
         out = _mkval_long_single(string_vals, fill)
     else:
@@ -358,14 +348,13 @@ cdef inline object _mkval_long(vector[string]& string_vals, int arity,
     return out
 
 
-cdef inline object _mkval_long_single(vector[string]& string_vals, object fill):
+cdef _mkval_long_single(vector[string]& string_vals, object fill):
     if string_vals.size() > 0:
         return atol(string_vals.at(0).c_str())
     return fill
 
 
-cdef inline object _mkval_long_multi(vector[string]& string_vals, int arity,
-                                     object fill):
+cdef _mkval_long_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):
@@ -475,22 +464,19 @@ def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,
         del variant
 
 
-cdef inline object _mkcrow(Variant *variant, tuple samples, int ploidy,
-                           tuple fieldspec):
+cdef _mkcrow(Variant *variant, tuple samples, int ploidy, tuple fieldspec):
     out = [_mkcvals(variant, s, ploidy, fieldspec) for s in samples]
     return tuple(out)
 
 
-cdef inline object _mkcvals(Variant *variant, string sample, int ploidy,
-                            tuple fieldspec):
+cdef _mkcvals(Variant *variant, string sample, int ploidy, tuple fieldspec):
     out = [_mkcval(variant.samples[sample], ploidy, f, arity, fill, format_type)
            for (f, arity, fill, format_type) in fieldspec]
     return tuple(out)
 
 
-cdef inline object _mkcval(map[string, vector[string]]& sample_data, int ploidy,
-                           string field, int arity, object fill,
-                           int format_type):
+cdef _mkcval(map[string, vector[string]]& sample_data, int ploidy,
+             string field, int arity, object fill, int format_type):
     if field == FIELD_NAME_IS_CALLED:
         return _is_called(sample_data)
     elif field == FIELD_NAME_IS_PHASED:
@@ -501,7 +487,7 @@ cdef inline object _mkcval(map[string, vector[string]]& sample_data, int ploidy,
         return _mkval(sample_data[field], arity, fill, format_type)
 
 
-cdef inline bool _is_called(map[string, vector[string]]& sample_data):
+cdef _is_called(map[string, vector[string]]& sample_data):
     cdef vector[string] *gts
     gts = &sample_data[FIELD_NAME_GT]
     if gts.size() == 0:
@@ -510,7 +496,7 @@ cdef inline bool _is_called(map[string, vector[string]]& sample_data):
         return gts.at(0).find(b'.') == npos
 
 
-cdef inline bool _is_phased(map[string, vector[string]]& sample_data):
+cdef _is_phased(map[string, vector[string]]& sample_data):
     cdef vector[string] *gts
     gts = &sample_data[FIELD_NAME_GT]
     if gts.size() == 0:
@@ -519,8 +505,7 @@ cdef inline bool _is_phased(map[string, vector[string]]& sample_data):
         return gts.at(0).find(b'|') != npos
 
 
-cdef inline object _genotype(map[string, vector[string]]& sample_data,
-                             int ploidy):
+cdef _genotype(map[string, vector[string]]& sample_data, int ploidy):
     cdef vector[string] *gts
     cdef vector[int] alleles
     cdef vector[string] allele_strings
@@ -592,10 +577,9 @@ def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,
         del variant
 
 
-cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,
-                              tuple info_types,
-                              tuple filter_ids, bint flatten_filter,
-                              object fill, tuple flatteners):
+cdef _mkvtblrow(Variant *variant, tuple fields, tuple arities,
+                tuple info_types, tuple filter_ids, bint flatten_filter,
+                object fill, tuple flatteners):
     out = list()
     cdef string field
     cdef string flt
@@ -653,8 +637,7 @@ cdef inline object _mkvtblrow(Variant *variant, tuple fields, tuple arities,
     return _s(tuple(out))
 
 
-cdef inline object _mktblval_multi(vector[string]& string_vals, int arity,
-                                   object fill):
+cdef _mktblval_multi(vector[string]& string_vals, int arity, object fill):
     cdef int i
     out = list()
     for i in range(arity):

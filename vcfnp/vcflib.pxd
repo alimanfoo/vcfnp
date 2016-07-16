@@ -51,27 +51,27 @@ cdef extern from "Variant.h" namespace "vcf":
         bool parseInfo
         bool parseSamples
         bool _done
-        void updateSamples(vector[string]& newSampleNames)
-        void addHeaderLine(string line)
-        void removeInfoHeaderLine(string line)
-        void removeGenoHeaderLine(string line)
-        vector[string] infoIds()
-        vector[string] formatIds()
-        vector[string] filterIds()
+        void updateSamples(vector[string]& newSampleNames) except +
+        void addHeaderLine(string line) except +
+        void removeInfoHeaderLine(string line) except +
+        void removeGenoHeaderLine(string line) except +
+        vector[string] infoIds() except +
+        vector[string] formatIds() except +
+        vector[string] filterIds() except +
         bool open(string& filename) except +
         bool openFile(string& filename) except +
         bool openTabix(string& filename) except +
-#        bool open(istream& stream) 
-#        bool open(ifstream& stream) 
+#        bool open(istream& stream) except +
+#        bool open(ifstream& stream) except +
         bool openForOutput(string& headerStr) except +
-        bool is_open()
-        bool eof()
-        bool done()
-        bool parseHeader(string& headerStr)
-        bool parseHeader()
-        bool getNextVariant(Variant& var)
-        bool setRegion(string region)
-        bool setRegion(string seq, long int start, long int end)
+        bool is_open() except +
+        bool eof() except +
+        bool done() except +
+        bool parseHeader(string& headerStr) except +
+        bool parseHeader() except +
+        bool getNextVariant(Variant& var) except +
+        bool setRegion(string region) except +
+        bool setRegion(string seq, long int start, long int end) except +
 
 
     cdef cppclass VariantAllele:
@@ -79,7 +79,7 @@ cdef extern from "Variant.h" namespace "vcf":
         string alt
         string repr
         long position
-        VariantAllele(string r, string a, long p)
+        VariantAllele(string r, string a, long p) except +
         
     
     cdef cppclass Variant:
@@ -99,45 +99,45 @@ cdef extern from "Variant.h" namespace "vcf":
                                  float gapExtendPenalty,
                                  float repeatGapExtendPenalty,
                                  string flankingRefLeft,
-                                 string flankingRefRight)
-        map[string, string] extendedAlternates(long int newPosition, long int length)
+                                 string flankingRefRight) except +
+        map[string, string] extendedAlternates(long int newPosition, long int length) except +
         string originalLine
         string filter
         double quality
-        VariantFieldType infoType(string& key)
+        VariantFieldType infoType(string& key) except +
         map[string, vector[string]] info
         map[string, bool] infoFlags
-        VariantFieldType formatType(string& key)
+        VariantFieldType formatType(string& key) except +
         vector[string] format
         map[string, map[string, vector[string]]] samples
         vector[string] sampleNames
         vector[string] outputSampleNames
         VariantCallFile* vcf
-        void removeAlt(string& altallele)
-        Variant()
-        Variant(VariantCallFile& v)
-        void setVariantCallFile(VariantCallFile& v)
-        void setVariantCallFile(VariantCallFile* v)
-        void parse(string& line, bool parseInfo, bool parseSamples)
-        void addFilter(string& tag)
-        bool getValueBool(string& key, string& sample, int index)
-        double getValueFloat(string& key, string& sample, int index)
-        string getValueString(string& key, string& sample, int index)
-        bool getSampleValueBool(string& key, string& sample, int index)
-        double getSampleValueFloat(string& key, string& sample, int index)
-        string getSampleValueString(string& key, string& sample, int index)
-        bool getInfoValueBool(string& key, int index)
-        double getInfoValueFloat(string& key, int index)
-        string getInfoValueString(string& key, int index)
+        void removeAlt(string& altallele) except +
+        Variant() except +
+        Variant(VariantCallFile& v) except +
+        void setVariantCallFile(VariantCallFile& v) except +
+        void setVariantCallFile(VariantCallFile* v) except +
+        void parse(string& line, bool parseInfo, bool parseSamples) except +
+        void addFilter(string& tag) except +
+        bool getValueBool(string& key, string& sample, int index) except +
+        double getValueFloat(string& key, string& sample, int index) except +
+        string getValueString(string& key, string& sample, int index) except +
+        bool getSampleValueBool(string& key, string& sample, int index) except +
+        double getSampleValueFloat(string& key, string& sample, int index) except +
+        string getSampleValueString(string& key, string& sample, int index) except +
+        bool getInfoValueBool(string& key, int index) except +
+        double getInfoValueFloat(string& key, int index) except +
+        string getInfoValueString(string& key, int index) except +
 #        void printAlt(ostream& out)
 #        void printAlleles(ostream& out)
-        int getAltAlleleIndex(string& allele)
-        void updateAlleleIndexes()
-        void addFormatField(string& key)
-        void setOutputSampleNames(vector[string]& outputSamples)
-        map[pair[int, int], int] getGenotypeIndexesDiploid()
-        int getNumSamples()
-        int getNumValidGenotypes()
+        int getAltAlleleIndex(string& allele) except +
+        void updateAlleleIndexes() except +
+        void addFormatField(string& key) except +
+        void setOutputSampleNames(vector[string]& outputSamples) except +
+        map[pair[int, int], int] getGenotypeIndexesDiploid() except +
+        int getNumSamples() except +
+        int getNumValidGenotypes() except +
         
 
 cdef class PyVariantCallFile:

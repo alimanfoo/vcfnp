@@ -410,6 +410,11 @@ def test_error_handling():
     with assert_raises(RuntimeError):
         a = vcfnp.variants(vcf_fn)
 
+    # file has mode sample columns than in header row
+    vcf_fn = 'fixture/test48b.vcf'
+    with assert_raises(RuntimeError):
+        a = vcfnp.calldata(vcf_fn)
+
 
 def test_truncate():
     # https://github.com/alimanfoo/vcfnp/issues/54
