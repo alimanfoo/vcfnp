@@ -11,8 +11,6 @@ from libcpp.map cimport map
 from libc.stdlib cimport atoi, atol, atof
 # noinspection PyUnresolvedReferences
 from cython.operator cimport dereference as deref
-import numpy as np
-cimport numpy as np
 import logging
 
 
@@ -131,8 +129,8 @@ def _itervariants(vcf_fns, region, fieldspec, filter_ids, flatten_filter,
 
 
 def _itervariants_with_condition(vcf_fns, region, fieldspec, filter_ids,
-                                 flatten_filter, parse_info, np.uint8_t[:]
-                                 condition, truncate):
+                                 flatten_filter, parse_info, condition,
+                                 truncate):
 
     # statically typed variables
     cdef VariantCallFile *variant_file
@@ -422,7 +420,7 @@ def _itercalldata(vcf_fns, region, samples, ploidy, fieldspec, truncate):
 
 
 def _itercalldata_with_condition(vcf_fns, region, samples, ploidy, fieldspec,
-                                 np.uint8_t[:] condition, truncate):
+                                 condition, truncate):
     cdef VariantCallFile *variant_file
     cdef Variant *variant
     cdef long i = 0

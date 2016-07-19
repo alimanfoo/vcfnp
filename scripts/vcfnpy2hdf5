@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 from __future__ import print_function, division, absolute_import
-
-
 import os
 import sys
 import argparse
 from glob import glob
 from datetime import datetime
 import operator
+
+
 import numpy as np
 import h5py
+
+
 import vcfnp
 import vcfnp.vcflib as vcflib
 from vcfnp.compat import b as _b

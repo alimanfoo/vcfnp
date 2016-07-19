@@ -10,12 +10,6 @@ except ImportError:
     print('Cython is required.')
     raise
 
-try:
-    import numpy as np
-except ImportError:
-    print('Numpy is required.')
-    raise
-
 
 def get_version(source='vcfnp/__init__.py'):
     with open(source) as f:
@@ -102,5 +96,5 @@ setup(
              'scripts/vcf2csv',
              'scripts/vcf2hdf5_parallel'
              ],
-    include_dirs=[np.get_include()]             
+    install_requires=['numpy']
 )
