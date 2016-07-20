@@ -166,8 +166,8 @@ def test_tabulate_variants_flatten_ann():
         tbl[1])
     eq_(('2L', 192, 'G', 'A', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA',
          'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA'), tbl[2])
-    eq_(('2L', 13513722, 'A', 'T', 'T', 'missense_variant', 'MODERATE', 
-         'AGAP005273', 'AGAP005273', 'transcript', 'AGAP005273-RA', 
+    eq_(('2L', 13513722, 'A', 'T', 'T', 'missense_variant', 'MODERATE',
+         'AGAP005273', 'AGAP005273', 'transcript', 'AGAP005273-RA',
          'VectorBase', '1/4', 'n.17A>T', 'p.Asp6Val', '17', '4788', '17', '-1',
          '6', '-1', 'NA'), tbl[3])
 
@@ -187,7 +187,7 @@ def test_tabulate_variants_flatten_ann():
         tbl[1])
     eq_(('2L', 192, 'G', 'A', None, None, None, None, None, None, None, None,
          None, None, None, None, None, None, None, None, None, None), tbl[2])
-    eq_(('2L', 13513722, 'A', 'T', 'T', 'missense_variant', 'MODERATE', 
-         'AGAP005273', 'AGAP005273', 'transcript', 'AGAP005273-RA', 
+    eq_(('2L', 13513722, 'A', 'T', 'T', 'missense_variant', 'MODERATE',
+         'AGAP005273', 'AGAP005273', 'transcript', 'AGAP005273-RA',
          'VectorBase', '1/4', 'n.17A>T', 'p.Asp6Val', '17', '4788', '17', '-1',
          '6', '-1', None), tbl[3])

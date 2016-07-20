@@ -25,18 +25,21 @@ import vcfnp.config as config
 
 
 logger = logging.getLogger(__name__)
-debug = lambda msg: logger.debug('%s: %s' % (inspect.stack()[1][3], msg))
 
 
-def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
-             arities=None, fills=None, transformers=None, vcf_types=None,
-             count=None, progress=0, logstream=None, condition=None,
-             slice_args=None, flatten_filter=False, verbose=True, cache=False,
-             cachedir=None, skip_cached=False, compress_cache=False,
-             truncate=True):
+def debug(msg):
+    logger.debug('%s: %s' % (inspect.stack()[1][3], msg))
+
+
+def variants(vcf_fn, region=None, fields=None, exclude_fields=None,
+             dtypes=None, arities=None, fills=None, transformers=None,
+             vcf_types=None, count=None, progress=0, logstream=None,
+             condition=None, slice_args=None, flatten_filter=False,
+             verbose=True, cache=False, cachedir=None, skip_cached=False,
+             compress_cache=False, truncate=True):
     """
-    Load an numpy structured array with data from the fixed fields of a VCF file
-    (including INFO).
+    Load an numpy structured array with data from the fixed fields of a VCF
+    file (including INFO).
 
     Parameters
     ----------
@@ -50,10 +53,11 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
     exclude_fields: list or array-like, optional
         Fields to exclude from extraction.
     dtypes: dict or dict-like, optional
-        Dictionary cotaining dtypes to use instead of the default inferred ones.
+        Dictionary cotaining dtypes to use instead of the default inferred
+        ones.
     arities: dict or dict-like, optional
-        Dictionary containing field:integer mappings used to override the number
-        of values to expect.
+        Dictionary containing field:integer mappings used to override the
+        number of values to expect.
     fills: dict or dict-like, optional
         Dictionary containing field:fillvalue mappings used to override the
         defaults used for missing values.
@@ -96,28 +100,29 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
     Examples
     --------
 
-        >>> from vcfnp import variants
-        >>> v = variants('fixture/sample.vcf')
-        >>> v
-        array([ ('19', 111, '.', 'A', 'C', 9.600000381469727, (False, False, False), 2, True, 0, '.', 0, 0.0, 0, False, 0, False, 0),
-               ('19', 112, '.', 'A', 'G', 10.0, (False, False, False), 2, True, 0, '.', 0, 0.0, 0, False, 0, False, 0),
-               ('20', 14370, 'rs6054257', 'G', 'A', 29.0, (False, False, True), 2, True, 0, '.', 0, 0.5, 0, True, 14, True, 3),
-               ('20', 17330, '.', 'T', 'A', 3.0, (True, False, False), 2, True, 0, '.', 0, 0.017000000923871994, 0, False, 11, False, 3),
-               ('20', 1110696, 'rs6040355', 'A', 'G', 67.0, (False, False, True), 3, True, 0, 'T', 0, 0.3330000042915344, 0, True, 10, False, 2),
-               ('20', 1230237, '.', 'T', '.', 47.0, (False, False, True), 2, False, 0, 'T', 0, 0.0, 0, False, 13, False, 3),
-               ('20', 1234567, 'microsat1', 'G', 'GA', 50.0, (False, False, True), 3, False, 1, 'G', 3, 0.0, 6, False, 9, False, 3),
-               ('20', 1235237, '.', 'T', '.', 0.0, (False, False, False), 2, False, 0, '.', 0, 0.0, 0, False, 0, False, 0),
-               ('X', 10, 'rsTest', 'AC', 'A', 10.0, (False, False, True), 3, False, -1, '.', 0, 0.0, 0, False, 0, False, 0)],
-              dtype=[('CHROM', 'S12'), ('POS', '<i4'), ('ID', 'S12'), ('REF', 'S12'), ('ALT', 'S12'), ('QUAL', '<f4'), ('FILTER', [('q10', '?'), ('s50', '?'), ('PASS', '?')]), ('num_alleles', 'u1'), ('is_snp', '?'), ('svlen', '<i4'), ('AA', 'S12'), ('AC', '<u2'), ('AF', '<f4'), ('AN', '<u2'), ('DB', '?'), ('DP', '<i4'), ('H2', '?'), ('NS', '<i4')])
-        >>> v['QUAL']
-        array([  9.60000038,  10.        ,  29.        ,   3.        ,
-                67.        ,  47.        ,  50.        ,   0.        ,  10.        ], dtype=float32)
-        >>> v['FILTER']['PASS']
-        array([False, False,  True, False,  True,  True,  True, False,  True], dtype=bool)
-        >>> v['AF']
-        array([ 0.   ,  0.   ,  0.5  ,  0.017,  0.333,  0.   ,  0.   ,  0.   ,  0.   ], dtype=float32)
+    >>> from vcfnp import variants
+    >>> v = variants('fixture/sample.vcf')
+    >>> v
+    array([ (b'19', 111, b'.', b'A', b'C', 9.600000381469727, (False, False, False), 2, True, 0, b'', 0, 0.0, 0, False, 0, False, 0),
+           (b'19', 112, b'.', b'A', b'G', 10.0, (False, False, False), 2, True, 0, b'', 0, 0.0, 0, False, 0, False, 0),
+           (b'20', 14370, b'rs6054257', b'G', b'A', 29.0, (False, False, True), 2, True, 0, b'', 0, 0.5, 0, True, 14, True, 3),
+           (b'20', 17330, b'.', b'T', b'A', 3.0, (True, False, False), 2, True, 0, b'', 0, 0.016998291015625, 0, False, 11, False, 3),
+           (b'20', 1110696, b'rs6040355', b'A', b'G', 67.0, (False, False, True), 3, True, 0, b'T', 0, 0.3330078125, 0, True, 10, False, 2),
+           (b'20', 1230237, b'.', b'T', b'.', 47.0, (False, False, True), 2, False, 0, b'T', 0, 0.0, 0, False, 13, False, 3),
+           (b'20', 1234567, b'microsat1', b'G', b'GA', 50.0, (False, False, True), 3, False, 1, b'G', 3, 0.0, 6, False, 9, False, 3),
+           (b'20', 1235237, b'.', b'T', b'.', 0.0, (False, False, False), 2, False, 0, b'', 0, 0.0, 0, False, 0, False, 0),
+           (b'X', 10, b'rsTest', b'AC', b'A', 10.0, (False, False, True), 3, False, -1, b'', 0, 0.0, 0, False, 0, False, 0)],
+          dtype=[('CHROM', 'S12'), ('POS', '<i4'), ('ID', 'S12'), ('REF', 'S12'), ('ALT', 'S12'), ('QUAL', '<f4'), ('FILTER', [('q10', '?'), ('s50', '?'), ('PASS', '?')]), ('num_alleles', 'u1'), ('is_snp', '?'), ('svlen', '<i4'), ('AA', 'S12'), ('AC', '<u2'), ('AF', '<f2'), ('AN', '<u2'), ('DB', '?'), ('DP', '<i4'), ('H2', '?'), ('NS', '<i4')])
+    >>> v['QUAL']
+    array([  9.60000038,  10.        ,  29.        ,   3.        ,
+            67.        ,  47.        ,  50.        ,   0.        ,  10.        ], dtype=float32)
+    >>> v['FILTER']['PASS']
+    array([False, False,  True, False,  True,  True,  True, False,  True], dtype=bool)
+    >>> v['AF']
+    array([ 0.        ,  0.        ,  0.5       ,  0.01699829,  0.33300781,
+            0.        ,  0.        ,  0.        ,  0.        ], dtype=float16)
 
-    """
+    """  # flake8: noqa
 
     loader = _VariantsLoader(vcf_fn, region=region, fields=fields,
                              exclude_fields=exclude_fields, dtypes=dtypes,
@@ -609,102 +614,94 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
     Examples
     --------
 
-        >>> from vcfnp import calldata, view2d
-        >>> c = calldata('fixture/sample.vcf')
-        >>> c
-        array([ ((True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, False, [0, 1], 0, 0, '0/1', [3, 3])),
-               ((True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, True, [0, 0], 0, 0, '0|0', [10, 10]), (True, False, [0, 1], 0, 0, '0/1', [3, 3])),
-               ((True, True, [0, 0], 1, 48, '0|0', [51, 51]), (True, True, [1, 0], 8, 48, '1|0', [51, 51]), (True, False, [1, 1], 5, 43, '1/1', [0, 0])),
-               ((True, True, [0, 0], 3, 49, '0|0', [58, 50]), (True, True, [0, 1], 5, 3, '0|1', [65, 3]), (True, False, [0, 0], 3, 41, '0/0', [0, 0])),
-               ((True, True, [1, 2], 6, 21, '1|2', [23, 27]), (True, True, [2, 1], 0, 2, '2|1', [18, 2]), (True, False, [2, 2], 4, 35, '2/2', [0, 0])),
-               ((True, True, [0, 0], 0, 54, '0|0', [56, 60]), (True, True, [0, 0], 4, 48, '0|0', [51, 51]), (True, False, [0, 0], 2, 61, '0/0', [0, 0])),
-               ((True, False, [0, 1], 4, 0, '0/1', [0, 0]), (True, False, [0, 2], 2, 17, '0/2', [0, 0]), (False, False, [-1, -1], 3, 40, './.', [0, 0])),
-               ((True, False, [0, 0], 0, 0, '0/0', [0, 0]), (True, True, [0, 0], 0, 0, '0|0', [0, 0]), (False, False, [-1, -1], 0, 0, './.', [0, 0])),
-               ((True, False, [0, -1], 0, 0, '0', [0, 0]), (True, False, [0, 1], 0, 0, '0/1', [0, 0]), (True, True, [0, 2], 0, 0, '0|2', [0, 0]))],
-              dtype=[('NA00001', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])])
-        >>> c['NA00001']
-        array([(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
-               (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
-               (True, True, [0, 0], 1, 48, '0|0', [51, 51]),
-               (True, True, [0, 0], 3, 49, '0|0', [58, 50]),
-               (True, True, [1, 2], 6, 21, '1|2', [23, 27]),
-               (True, True, [0, 0], 0, 54, '0|0', [56, 60]),
-               (True, False, [0, 1], 4, 0, '0/1', [0, 0]),
-               (True, False, [0, 0], 0, 0, '0/0', [0, 0]),
-               (True, False, [0, -1], 0, 0, '0', [0, 0])],
-              dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
-        >>> c2d = view2d(c)
-        >>> c2d
-        array([[(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
-                (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
-                (True, False, [0, 1], 0, 0, '0/1', [3, 3])],
-               [(True, True, [0, 0], 0, 0, '0|0', [10, 10]),
-                (True, True, [0, 0], 0, 0, '0|0', [10, 10]),
-                (True, False, [0, 1], 0, 0, '0/1', [3, 3])],
-               [(True, True, [0, 0], 1, 48, '0|0', [51, 51]),
-                (True, True, [1, 0], 8, 48, '1|0', [51, 51]),
-                (True, False, [1, 1], 5, 43, '1/1', [0, 0])],
-               [(True, True, [0, 0], 3, 49, '0|0', [58, 50]),
-                (True, True, [0, 1], 5, 3, '0|1', [65, 3]),
-                (True, False, [0, 0], 3, 41, '0/0', [0, 0])],
-               [(True, True, [1, 2], 6, 21, '1|2', [23, 27]),
-                (True, True, [2, 1], 0, 2, '2|1', [18, 2]),
-                (True, False, [2, 2], 4, 35, '2/2', [0, 0])],
-               [(True, True, [0, 0], 0, 54, '0|0', [56, 60]),
-                (True, True, [0, 0], 4, 48, '0|0', [51, 51]),
-                (True, False, [0, 0], 2, 61, '0/0', [0, 0])],
-               [(True, False, [0, 1], 4, 0, '0/1', [0, 0]),
-                (True, False, [0, 2], 2, 17, '0/2', [0, 0]),
-                (False, False, [-1, -1], 3, 40, './.', [0, 0])],
-               [(True, False, [0, 0], 0, 0, '0/0', [0, 0]),
-                (True, True, [0, 0], 0, 0, '0|0', [0, 0]),
-                (False, False, [-1, -1], 0, 0, './.', [0, 0])],
-               [(True, False, [0, -1], 0, 0, '0', [0, 0]),
-                (True, False, [0, 1], 0, 0, '0/1', [0, 0]),
-                (True, True, [0, 2], 0, 0, '0|2', [0, 0])]],
-              dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
-        >>> c2d['genotype']
-        array([[[ 0,  0],
-                [ 0,  0],
-                [ 0,  1]],
+    >>> from vcfnp import calldata, view2d
+    >>> c = calldata('fixture/sample.vcf')
+    >>> c
+    array([ ((True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, False, [0, 1], 0, 0, b'0/1', [3, 3])),
+           ((True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, False, [0, 1], 0, 0, b'0/1', [3, 3])),
+           ((True, True, [0, 0], 1, 48, b'0|0', [51, 51]), (True, True, [1, 0], 8, 48, b'1|0', [51, 51]), (True, False, [1, 1], 5, 43, b'1/1', [0, 0])),
+           ((True, True, [0, 0], 3, 49, b'0|0', [58, 50]), (True, True, [0, 1], 5, 3, b'0|1', [65, 3]), (True, False, [0, 0], 3, 41, b'0/0', [0, 0])),
+           ((True, True, [1, 2], 6, 21, b'1|2', [23, 27]), (True, True, [2, 1], 0, 2, b'2|1', [18, 2]), (True, False, [2, 2], 4, 35, b'2/2', [0, 0])),
+           ((True, True, [0, 0], 0, 54, b'0|0', [56, 60]), (True, True, [0, 0], 4, 48, b'0|0', [51, 51]), (True, False, [0, 0], 2, 61, b'0/0', [0, 0])),
+           ((True, False, [0, 1], 4, 0, b'0/1', [0, 0]), (True, False, [0, 2], 2, 17, b'0/2', [0, 0]), (False, False, [-1, -1], 3, 40, b'./.', [0, 0])),
+           ((True, False, [0, 0], 0, 0, b'0/0', [0, 0]), (True, True, [0, 0], 0, 0, b'0|0', [0, 0]), (False, False, [-1, -1], 0, 0, b'./.', [0, 0])),
+           ((True, False, [0, -1], 0, 0, b'0', [0, 0]), (True, False, [0, 1], 0, 0, b'0/1', [0, 0]), (True, True, [0, 2], 0, 0, b'0|2', [0, 0]))],
+          dtype=[('NA00001', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])])
+    >>> c['NA00001']
+    array([(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+           (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+           (True, True, [0, 0], 1, 48, b'0|0', [51, 51]),
+           (True, True, [0, 0], 3, 49, b'0|0', [58, 50]),
+           (True, True, [1, 2], 6, 21, b'1|2', [23, 27]),
+           (True, True, [0, 0], 0, 54, b'0|0', [56, 60]),
+           (True, False, [0, 1], 4, 0, b'0/1', [0, 0]),
+           (True, False, [0, 0], 0, 0, b'0/0', [0, 0]),
+           (True, False, [0, -1], 0, 0, b'0', [0, 0])],
+          dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
+    >>> c2d = view2d(c)
+    >>> c2d
+    array([[(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, False, [0, 1], 0, 0, b'0/1', [3, 3])],
+           [(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, False, [0, 1], 0, 0, b'0/1', [3, 3])],
+           [(True, True, [0, 0], 1, 48, b'0|0', [51, 51]),
+            (True, True, [1, 0], 8, 48, b'1|0', [51, 51]),
+            (True, False, [1, 1], 5, 43, b'1/1', [0, 0])],
+           [(True, True, [0, 0], 3, 49, b'0|0', [58, 50]),
+            (True, True, [0, 1], 5, 3, b'0|1', [65, 3]),
+            (True, False, [0, 0], 3, 41, b'0/0', [0, 0])],
+           [(True, True, [1, 2], 6, 21, b'1|2', [23, 27]),
+            (True, True, [2, 1], 0, 2, b'2|1', [18, 2]),
+            (True, False, [2, 2], 4, 35, b'2/2', [0, 0])],
+           [(True, True, [0, 0], 0, 54, b'0|0', [56, 60]),
+            (True, True, [0, 0], 4, 48, b'0|0', [51, 51]),
+            (True, False, [0, 0], 2, 61, b'0/0', [0, 0])],
+           [(True, False, [0, 1], 4, 0, b'0/1', [0, 0]),
+            (True, False, [0, 2], 2, 17, b'0/2', [0, 0]),
+            (False, False, [-1, -1], 3, 40, b'./.', [0, 0])],
+           [(True, False, [0, 0], 0, 0, b'0/0', [0, 0]),
+            (True, True, [0, 0], 0, 0, b'0|0', [0, 0]),
+            (False, False, [-1, -1], 0, 0, b'./.', [0, 0])],
+           [(True, False, [0, -1], 0, 0, b'0', [0, 0]),
+            (True, False, [0, 1], 0, 0, b'0/1', [0, 0]),
+            (True, True, [0, 2], 0, 0, b'0|2', [0, 0])]],
+          dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
+    >>> c2d['genotype']
+    array([[[ 0,  0],
+            [ 0,  0],
+            [ 0,  1]],
+           [[ 0,  0],
+            [ 0,  0],
+            [ 0,  1]],
+           [[ 0,  0],
+            [ 1,  0],
+            [ 1,  1]],
+           [[ 0,  0],
+            [ 0,  1],
+            [ 0,  0]],
+           [[ 1,  2],
+            [ 2,  1],
+            [ 2,  2]],
+           [[ 0,  0],
+            [ 0,  0],
+            [ 0,  0]],
+           [[ 0,  1],
+            [ 0,  2],
+            [-1, -1]],
+           [[ 0,  0],
+            [ 0,  0],
+            [-1, -1]],
+           [[ 0, -1],
+            [ 0,  1],
+            [ 0,  2]]], dtype=int8)
+    >>> c2d['genotype'][3, :]
+    array([[0, 0],
+           [0, 1],
+           [0, 0]], dtype=int8)
 
-               [[ 0,  0],
-                [ 0,  0],
-                [ 0,  1]],
-
-               [[ 0,  0],
-                [ 1,  0],
-                [ 1,  1]],
-
-               [[ 0,  0],
-                [ 0,  1],
-                [ 0,  0]],
-
-               [[ 1,  2],
-                [ 2,  1],
-                [ 2,  2]],
-
-               [[ 0,  0],
-                [ 0,  0],
-                [ 0,  0]],
-
-               [[ 0,  1],
-                [ 0,  2],
-                [-1, -1]],
-
-               [[ 0,  0],
-                [ 0,  0],
-                [-1, -1]],
-
-               [[ 0, -1],
-                [ 0,  1],
-                [ 0,  2]]], dtype=int8)
-        >>> c2d['genotype'][3, :]
-        array([[0, 0],
-               [0, 1],
-               [0, 0]], dtype=int8)
-
-    """
+    """  # flake8: noqa
 
     loader = _CalldataLoader(vcf_fn, region=region, samples=samples,
                              ploidy=ploidy, fields=fields,
@@ -758,7 +755,8 @@ class _CalldataLoader(_ArrayLoader):
         # support for working around VCFs with bad FORMAT headers
         vcf_types = self.vcf_types
         for f in fields:
-            if f not in config.STANDARD_CALLDATA_FIELDS and f not in format_ids:
+            if (f not in config.STANDARD_CALLDATA_FIELDS and
+                    f not in format_ids):
                 # fall back to unary string; can be overridden with
                 # vcf_types, dtypes and arities args
                 format_types[f] = TYPE_STRING
@@ -775,7 +773,8 @@ class _CalldataLoader(_ArrayLoader):
 
         # determine expected number of values for each field
         ploidy = self.ploidy
-        arities = _calldata_arities(fields, self.arities, format_counts, ploidy)
+        arities = _calldata_arities(fields, self.arities, format_counts,
+                                    ploidy)
 
         # determine fill values to use where number of values is less than
         # expectation
@@ -834,7 +833,8 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
     exclude_fields: list or array-like
         Fields to exclude from extraction.
     dtypes: dict or dict-like
-        Dictionary cotaining dtypes to use instead of the default inferred ones.
+        Dictionary cotaining dtypes to use instead of the default inferred
+        ones.
     arities: dict or dict-like
         Override the amount of values to expect
     fills: dict or dict-like
@@ -869,7 +869,85 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
         If True (default) only include variants whose start position is within
         the given region. If False, use default tabix behaviour.
 
-    """
+    Examples
+    --------
+
+    >>> from vcfnp import calldata_2d
+    >>> c2d = calldata_2d('fixture/sample.vcf')
+    >>> c2d
+    array([[(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, False, [0, 1], 0, 0, b'0/1', [3, 3])],
+           [(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, False, [0, 1], 0, 0, b'0/1', [3, 3])],
+           [(True, True, [0, 0], 1, 48, b'0|0', [51, 51]),
+            (True, True, [1, 0], 8, 48, b'1|0', [51, 51]),
+            (True, False, [1, 1], 5, 43, b'1/1', [0, 0])],
+           [(True, True, [0, 0], 3, 49, b'0|0', [58, 50]),
+            (True, True, [0, 1], 5, 3, b'0|1', [65, 3]),
+            (True, False, [0, 0], 3, 41, b'0/0', [0, 0])],
+           [(True, True, [1, 2], 6, 21, b'1|2', [23, 27]),
+            (True, True, [2, 1], 0, 2, b'2|1', [18, 2]),
+            (True, False, [2, 2], 4, 35, b'2/2', [0, 0])],
+           [(True, True, [0, 0], 0, 54, b'0|0', [56, 60]),
+            (True, True, [0, 0], 4, 48, b'0|0', [51, 51]),
+            (True, False, [0, 0], 2, 61, b'0/0', [0, 0])],
+           [(True, False, [0, 1], 4, 0, b'0/1', [0, 0]),
+            (True, False, [0, 2], 2, 17, b'0/2', [0, 0]),
+            (False, False, [-1, -1], 3, 40, b'./.', [0, 0])],
+           [(True, False, [0, 0], 0, 0, b'0/0', [0, 0]),
+            (True, True, [0, 0], 0, 0, b'0|0', [0, 0]),
+            (False, False, [-1, -1], 0, 0, b'./.', [0, 0])],
+           [(True, False, [0, -1], 0, 0, b'0', [0, 0]),
+            (True, False, [0, 1], 0, 0, b'0/1', [0, 0]),
+            (True, True, [0, 2], 0, 0, b'0|2', [0, 0])]],
+          dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
+    >>> c2d['GT']
+    array([[b'0|0', b'0|0', b'0/1'],
+           [b'0|0', b'0|0', b'0/1'],
+           [b'0|0', b'1|0', b'1/1'],
+           [b'0|0', b'0|1', b'0/0'],
+           [b'1|2', b'2|1', b'2/2'],
+           [b'0|0', b'0|0', b'0/0'],
+           [b'0/1', b'0/2', b'./.'],
+           [b'0/0', b'0|0', b'./.'],
+           [b'0', b'0/1', b'0|2']],
+          dtype='|S3')
+    >>> c2d['genotype']
+    array([[[ 0,  0],
+            [ 0,  0],
+            [ 0,  1]],
+           [[ 0,  0],
+            [ 0,  0],
+            [ 0,  1]],
+           [[ 0,  0],
+            [ 1,  0],
+            [ 1,  1]],
+           [[ 0,  0],
+            [ 0,  1],
+            [ 0,  0]],
+           [[ 1,  2],
+            [ 2,  1],
+            [ 2,  2]],
+           [[ 0,  0],
+            [ 0,  0],
+            [ 0,  0]],
+           [[ 0,  1],
+            [ 0,  2],
+            [-1, -1]],
+           [[ 0,  0],
+            [ 0,  0],
+            [-1, -1]],
+           [[ 0, -1],
+            [ 0,  1],
+            [ 0,  2]]], dtype=int8)
+    >>> c2d['genotype'][3, :]
+    array([[0, 0],
+           [0, 1],
+           [0, 0]], dtype=int8)
+
+    """  # flake8: noqa
 
     loader = _Calldata2DLoader(vcf_fn, region=region, samples=samples,
                                ploidy=ploidy, fields=fields,
@@ -906,7 +984,8 @@ def _calldata_fields(fields, exclude_fields, format_ids):
         # fields specified by user
         for f in fields:
             # check if field is standard or defined in VCF header
-            if f not in config.STANDARD_CALLDATA_FIELDS and f not in format_ids:
+            if (f not in config.STANDARD_CALLDATA_FIELDS and
+                    f not in format_ids):
                 # support extracting FORMAT even if not declared in header,
                 # but warn...
                 print('WARNING: no definition found for field %s' % f,
@@ -999,63 +1078,91 @@ def view2d(a):
     Examples
     --------
 
-        >>> from vcfnp import calldata
-        >>> a = calldata('sample.vcf')
-        >>> a
-        array([ ((True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, False, [0, 1], '0/1', 0, 0, [3, 3])),
-               ((True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, True, [0, 0], '0|0', 0, 0, [10, 10]), (True, False, [0, 1], '0/1', 0, 0, [3, 3])),
-               ((True, True, [0, 0], '0|0', 48, 1, [51, 51]), (True, True, [1, 0], '1|0', 48, 8, [51, 51]), (True, False, [1, 1], '1/1', 43, 5, [0, 0])),
-               ((True, True, [0, 0], '0|0', 49, 3, [58, 50]), (True, True, [0, 1], '0|1', 3, 5, [65, 3]), (True, False, [0, 0], '0/0', 41, 3, [0, 0])),
-               ((True, True, [1, 2], '1|2', 21, 6, [23, 27]), (True, True, [2, 1], '2|1', 2, 0, [18, 2]), (True, False, [2, 2], '2/2', 35, 4, [0, 0])),
-               ((True, True, [0, 0], '0|0', 54, 0, [56, 60]), (True, True, [0, 0], '0|0', 48, 4, [51, 51]), (True, False, [0, 0], '0/0', 61, 2, [0, 0])),
-               ((True, False, [0, 1], '0/1', 0, 4, [0, 0]), (True, False, [0, 2], '0/2', 17, 2, [0, 0]), (True, False, [1, 1], '1/1', 40, 3, [0, 0])),
-               ((True, False, [0, 0], '0/0', 0, 0, [0, 0]), (True, True, [0, 0], '0|0', 0, 0, [0, 0]), (False, False, [-1, -1], './.', 0, 0, [0, 0])),
-               ((True, False, [0, -1], '0', 0, 0, [0, 0]), (True, False, [0, 1], '0/1', 0, 0, [0, 0]), (True, True, [0, 2], '0|2', 0, 0, [0, 0]))],
-              dtype=[('NA00001', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])])
-        >>> from vcfnp import view2d
-        >>> b = view2d(a)
-        >>> b
-        array([[(True, True, [0, 0], '0|0', 0, 0, [10, 10]),
-                (True, True, [0, 0], '0|0', 0, 0, [10, 10]),
-                (True, False, [0, 1], '0/1', 0, 0, [3, 3])],
-               [(True, True, [0, 0], '0|0', 0, 0, [10, 10]),
-                (True, True, [0, 0], '0|0', 0, 0, [10, 10]),
-                (True, False, [0, 1], '0/1', 0, 0, [3, 3])],
-               [(True, True, [0, 0], '0|0', 48, 1, [51, 51]),
-                (True, True, [1, 0], '1|0', 48, 8, [51, 51]),
-                (True, False, [1, 1], '1/1', 43, 5, [0, 0])],
-               [(True, True, [0, 0], '0|0', 49, 3, [58, 50]),
-                (True, True, [0, 1], '0|1', 3, 5, [65, 3]),
-                (True, False, [0, 0], '0/0', 41, 3, [0, 0])],
-               [(True, True, [1, 2], '1|2', 21, 6, [23, 27]),
-                (True, True, [2, 1], '2|1', 2, 0, [18, 2]),
-                (True, False, [2, 2], '2/2', 35, 4, [0, 0])],
-               [(True, True, [0, 0], '0|0', 54, 0, [56, 60]),
-                (True, True, [0, 0], '0|0', 48, 4, [51, 51]),
-                (True, False, [0, 0], '0/0', 61, 2, [0, 0])],
-               [(True, False, [0, 1], '0/1', 0, 4, [0, 0]),
-                (True, False, [0, 2], '0/2', 17, 2, [0, 0]),
-                (True, False, [1, 1], '1/1', 40, 3, [0, 0])],
-               [(True, False, [0, 0], '0/0', 0, 0, [0, 0]),
-                (True, True, [0, 0], '0|0', 0, 0, [0, 0]),
-                (False, False, [-1, -1], './.', 0, 0, [0, 0])],
-               [(True, False, [0, -1], '0', 0, 0, [0, 0]),
-                (True, False, [0, 1], '0/1', 0, 0, [0, 0]),
-                (True, True, [0, 2], '0|2', 0, 0, [0, 0])]],
-              dtype=[('is_called', '|b1'), ('is_phased', '|b1'), ('genotype', '|i1', (2,)), ('GT', '|S3'), ('GQ', '|u1'), ('DP', '<u2'), ('HQ', '<i4', (2,))])
-        >>> b['GT']
-        array([['0|0', '0|0', '0/1'],
-               ['0|0', '0|0', '0/1'],
-               ['0|0', '1|0', '1/1'],
-               ['0|0', '0|1', '0/0'],
-               ['1|2', '2|1', '2/2'],
-               ['0|0', '0|0', '0/0'],
-               ['0/1', '0/2', '1/1'],
-               ['0/0', '0|0', './.'],
-               ['0', '0/1', '0|2']],
-              dtype='|S3')
+    >>> from vcfnp import calldata
+    >>> a = calldata('fixture/sample.vcf')
+    >>> a
+    array([ ((True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, False, [0, 1], 0, 0, b'0/1', [3, 3])),
+           ((True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, True, [0, 0], 0, 0, b'0|0', [10, 10]), (True, False, [0, 1], 0, 0, b'0/1', [3, 3])),
+           ((True, True, [0, 0], 1, 48, b'0|0', [51, 51]), (True, True, [1, 0], 8, 48, b'1|0', [51, 51]), (True, False, [1, 1], 5, 43, b'1/1', [0, 0])),
+           ((True, True, [0, 0], 3, 49, b'0|0', [58, 50]), (True, True, [0, 1], 5, 3, b'0|1', [65, 3]), (True, False, [0, 0], 3, 41, b'0/0', [0, 0])),
+           ((True, True, [1, 2], 6, 21, b'1|2', [23, 27]), (True, True, [2, 1], 0, 2, b'2|1', [18, 2]), (True, False, [2, 2], 4, 35, b'2/2', [0, 0])),
+           ((True, True, [0, 0], 0, 54, b'0|0', [56, 60]), (True, True, [0, 0], 4, 48, b'0|0', [51, 51]), (True, False, [0, 0], 2, 61, b'0/0', [0, 0])),
+           ((True, False, [0, 1], 4, 0, b'0/1', [0, 0]), (True, False, [0, 2], 2, 17, b'0/2', [0, 0]), (False, False, [-1, -1], 3, 40, b'./.', [0, 0])),
+           ((True, False, [0, 0], 0, 0, b'0/0', [0, 0]), (True, True, [0, 0], 0, 0, b'0|0', [0, 0]), (False, False, [-1, -1], 0, 0, b'./.', [0, 0])),
+           ((True, False, [0, -1], 0, 0, b'0', [0, 0]), (True, False, [0, 1], 0, 0, b'0/1', [0, 0]), (True, True, [0, 2], 0, 0, b'0|2', [0, 0]))],
+          dtype=[('NA00001', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00002', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))]), ('NA00003', [('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])])
+    >>> from vcfnp import view2d
+    >>> b = view2d(a)
+    >>> b
+    array([[(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, False, [0, 1], 0, 0, b'0/1', [3, 3])],
+           [(True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, True, [0, 0], 0, 0, b'0|0', [10, 10]),
+            (True, False, [0, 1], 0, 0, b'0/1', [3, 3])],
+           [(True, True, [0, 0], 1, 48, b'0|0', [51, 51]),
+            (True, True, [1, 0], 8, 48, b'1|0', [51, 51]),
+            (True, False, [1, 1], 5, 43, b'1/1', [0, 0])],
+           [(True, True, [0, 0], 3, 49, b'0|0', [58, 50]),
+            (True, True, [0, 1], 5, 3, b'0|1', [65, 3]),
+            (True, False, [0, 0], 3, 41, b'0/0', [0, 0])],
+           [(True, True, [1, 2], 6, 21, b'1|2', [23, 27]),
+            (True, True, [2, 1], 0, 2, b'2|1', [18, 2]),
+            (True, False, [2, 2], 4, 35, b'2/2', [0, 0])],
+           [(True, True, [0, 0], 0, 54, b'0|0', [56, 60]),
+            (True, True, [0, 0], 4, 48, b'0|0', [51, 51]),
+            (True, False, [0, 0], 2, 61, b'0/0', [0, 0])],
+           [(True, False, [0, 1], 4, 0, b'0/1', [0, 0]),
+            (True, False, [0, 2], 2, 17, b'0/2', [0, 0]),
+            (False, False, [-1, -1], 3, 40, b'./.', [0, 0])],
+           [(True, False, [0, 0], 0, 0, b'0/0', [0, 0]),
+            (True, True, [0, 0], 0, 0, b'0|0', [0, 0]),
+            (False, False, [-1, -1], 0, 0, b'./.', [0, 0])],
+           [(True, False, [0, -1], 0, 0, b'0', [0, 0]),
+            (True, False, [0, 1], 0, 0, b'0/1', [0, 0]),
+            (True, True, [0, 2], 0, 0, b'0|2', [0, 0])]],
+          dtype=[('is_called', '?'), ('is_phased', '?'), ('genotype', 'i1', (2,)), ('DP', '<u2'), ('GQ', 'u1'), ('GT', 'S3'), ('HQ', '<i4', (2,))])
+    >>> b['GT']
+    array([[b'0|0', b'0|0', b'0/1'],
+           [b'0|0', b'0|0', b'0/1'],
+           [b'0|0', b'1|0', b'1/1'],
+           [b'0|0', b'0|1', b'0/0'],
+           [b'1|2', b'2|1', b'2/2'],
+           [b'0|0', b'0|0', b'0/0'],
+           [b'0/1', b'0/2', b'./.'],
+           [b'0/0', b'0|0', b'./.'],
+           [b'0', b'0/1', b'0|2']],
+          dtype='|S3')
+    >>> b['genotype']
+    array([[[ 0,  0],
+            [ 0,  0],
+            [ 0,  1]],
+           [[ 0,  0],
+            [ 0,  0],
+            [ 0,  1]],
+           [[ 0,  0],
+            [ 1,  0],
+            [ 1,  1]],
+           [[ 0,  0],
+            [ 0,  1],
+            [ 0,  0]],
+           [[ 1,  2],
+            [ 2,  1],
+            [ 2,  2]],
+           [[ 0,  0],
+            [ 0,  0],
+            [ 0,  0]],
+           [[ 0,  1],
+            [ 0,  2],
+            [-1, -1]],
+           [[ 0,  0],
+            [ 0,  0],
+            [-1, -1]],
+           [[ 0, -1],
+            [ 0,  1],
+            [ 0,  2]]], dtype=int8)
 
-    """
+    """  # flake8: noqa
 
     rows = a.size
     cols = len(a.dtype)

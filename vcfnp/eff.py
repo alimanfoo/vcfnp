@@ -79,10 +79,12 @@ def eff_default_transformer(fills=EFF_DEFAULT_FILLS):
             # ignore all but first effect
             match_eff_main = _prog_eff_main.match(vals[0])
             if match_eff_main is None:
-                logging.warning('match_eff_main is None: vals={}'.format(str(vals[0])))
+                logging.warning(
+                    'match_eff_main is None: vals={}'.format(str(vals[0]))
+                )
                 return fills
             eff = [match_eff_main.group(1)] \
-                  + match_eff_main.group(2).split(b'|')
+                + match_eff_main.group(2).split(b'|')
             result = tuple(
                 fill if v == b''
                 else int(v) if i == 5 or i == 10
@@ -141,7 +143,7 @@ def flatten_eff(fill=b'.'):
             # ignore all but first effect
             match_eff_main = _prog_eff_main.match(vals[0])
             eff = [match_eff_main.group(1)] \
-                  + match_eff_main.group(2).split(b'|')
+                + match_eff_main.group(2).split(b'|')
             eff = [fill if v == b'' else v for v in eff[:11]]
             return eff
     return _flatten

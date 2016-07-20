@@ -9,7 +9,7 @@ from nose.tools import eq_
 def test_len():
     vcf = PyVariantCallFile('fixture/sample.vcf')
     eq_(9, len(vcf))
-    
+
 
 def test_metadata():
     vcf = PyVariantCallFile('fixture/sample.vcf')
@@ -37,8 +37,8 @@ def test_fixed_fields():
     eq_(['C'], v.ALT)
     eq_(9.6, v.QUAL)
     eq_(['.'], v.FILTER)  # split in C++
-    
-    
+
+
 def test_info():
     vcf = PyVariantCallFile('fixture/sample.vcf')
     v = list(iter(vcf))[4]  # fifth variant

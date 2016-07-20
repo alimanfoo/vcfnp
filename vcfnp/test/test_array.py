@@ -52,8 +52,8 @@ def test_variants_flatten_filter():
 def test_variants_region():
     a = variants('fixture/sample.vcf.gz', region='20')
     eq_(6, len(a))
-    
-    
+
+
 def test_variants_region_empty():
     a = variants('fixture/sample.vcf.gz', region='18')
     eq_(0, len(a))
@@ -64,22 +64,22 @@ def test_variants_region_empty():
 def test_variants_count():
     a = variants('fixture/sample.vcf', count=3)
     eq_(3, len(a))
-    
-    
+
+
 def test_variants_exclude_fields():
     a = variants('fixture/sample.vcf', exclude_fields=['ID', 'FILTER'])
     assert 'CHROM' in a.dtype.names
     assert 'ID' not in a.dtype.names
     assert 'FILTER' not in a.dtype.names
-    
-    
+
+
 def test_variants_slice():
     a = variants('fixture/sample.vcf.gz')
     eq_(b'rs6054257', a['ID'][2])
     a = variants('fixture/sample.vcf.gz', slice_args=(0, None, 2))
     eq_(b'rs6054257', a['ID'][1])
-    
-    
+
+
 def test_calldata():
     a = calldata('fixture/sample.vcf')
     debug(repr(a))
@@ -158,7 +158,7 @@ def test_condition():
     eq_(5, len(c))
     vf = variants('fixture/sample.vcf', condition=v['FILTER']['PASS'])
     eq_(5, len(vf))
-    
+
 
 def test_variable_calldata():
     c = calldata('fixture/test1.vcf')
@@ -168,8 +168,8 @@ def test_variable_calldata():
     eq_(b'.', c['test2']['GT'][0])
     eq_(b'0', c['test2']['GT'][1])
     eq_(b'1', c['test2']['GT'][2])
-    
-    
+
+
 def test_missing_calldata():
     c = calldata('fixture/test1.vcf')
 
@@ -477,22 +477,22 @@ def test_error_handling():
     # try to open a directory
     vcf_fn = '.'
     with assert_raises(ValueError):
-        a = vcfnp.variants(vcf_fn)
+        vcfnp.variants(vcf_fn)
 
     # try to open a file that doesn't exist
     vcf_fn = 'doesnotexist'
     with assert_raises(ValueError):
-        a = vcfnp.variants(vcf_fn)
+        vcfnp.variants(vcf_fn)
 
     # file is nothing like a VCF (has no header etc.)
     vcf_fn = 'fixture/test48a.vcf'
     with assert_raises(RuntimeError):
-        a = vcfnp.variants(vcf_fn)
+        vcfnp.variants(vcf_fn)
 
     # file has mode sample columns than in header row
     vcf_fn = 'fixture/test48b.vcf'
     with assert_raises(RuntimeError):
-        a = vcfnp.calldata(vcf_fn)
+        vcfnp.calldata(vcf_fn)
 
 
 def test_truncate():

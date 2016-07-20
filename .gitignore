@@ -9,4 +9,5 @@ MANIFEST
 tmp
 .ipynb_checkpoints/
 *.npz
+.tox
 
