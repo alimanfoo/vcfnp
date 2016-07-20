@@ -8,3 +8,5 @@ MANIFEST
 *.prof
 tmp
 .ipynb_checkpoints/
+*.npz
+

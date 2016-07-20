@@ -4,6 +4,7 @@ from __future__ import print_function, division, absolute_import
 import os
 from nose.tools import eq_, assert_almost_equal, assert_raises
 import numpy as np
+from numpy.testing import assert_array_equal
 import logging
 
 
@@ -288,17 +289,17 @@ def test_variants_transformers_ann():
 
 
 def test_svlen():
-    # v = variants('fixture/test13.vcf').view(np.recarray)
-    # assert hasattr(v, 'svlen')
-    # eq_(0, v.svlen[0])
-    # eq_(1, v.svlen[1])
-    # eq_(-1, v.svlen[2])
-    # eq_(3, v.svlen[3])
-    # eq_(3, v.svlen[4])
+    v = variants('fixture/test13.vcf').view(np.recarray)
+    assert hasattr(v, 'svlen')
+    eq_(0, v.svlen[0])
+    eq_(1, v.svlen[1])
+    eq_(-1, v.svlen[2])
+    eq_(3, v.svlen[3])
+    eq_(3, v.svlen[4])
     v = variants('fixture/test13.vcf', arities={'svlen': 2}).view(np.recarray)
-    # assert hasattr(v, 'svlen')
-    # eq_((3, 0), tuple(v.svlen[3]))
-    # eq_((3, -2), tuple(v.svlen[4]))
+    assert hasattr(v, 'svlen')
+    eq_((3, 0), tuple(v.svlen[3]))
+    eq_((3, -2), tuple(v.svlen[4]))
 
 
 def test_duplicate_field_definitions():
@@ -342,7 +343,7 @@ def test_caching():
         os.remove(cache_fn)
     a = variants(vcf_fn, cache=True, verbose=True)
     a2 = np.load(cache_fn)
-    assert np.all(a == a2)
+    assert_array_equal(a, a2)
 
     cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='calldata')
     debug(cache_fn)
@@ -350,7 +351,7 @@ def test_caching():
         os.remove(cache_fn)
     a = calldata(vcf_fn, cache=True, verbose=True)
     a2 = np.load(cache_fn)
-    assert np.all(a == a2)
+    assert_array_equal(a, a2)
 
     cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='calldata_2d')
     debug(cache_fn)
@@ -358,7 +359,7 @@ def test_caching():
         os.remove(cache_fn)
     a = calldata_2d(vcf_fn, cache=True, verbose=True)
     a2 = np.load(cache_fn)
-    assert np.all(a == a2)
+    assert_array_equal(a, a2)
 
 
 def test_caching_cachedir():
@@ -372,7 +373,7 @@ def test_caching_cachedir():
         os.remove(cache_fn)
     a = variants(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
     a2 = np.load(cache_fn)
-    assert np.all(a == a2)
+    assert_array_equal(a, a2)
 
     cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='calldata',
                                         cachedir=cachedir)
@@ -381,7 +382,7 @@ def test_caching_cachedir():
         os.remove(cache_fn)
     a = calldata(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
     a2 = np.load(cache_fn)
-    assert np.all(a == a2)
+    assert_array_equal(a, a2)
 
     cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='calldata_2d',
                                         cachedir=cachedir)
@@ -390,7 +391,38 @@ def test_caching_cachedir():
         os.remove(cache_fn)
     a = calldata_2d(vcf_fn, cache=True, verbose=True, cachedir=cachedir)
     a2 = np.load(cache_fn)
-    assert np.all(a == a2)
+    assert_array_equal(a, a2)
+
+
+def test_caching_compression():
+    vcf_fn = 'fixture/sample.vcf.gz'
+
+    cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='variants',
+                                        compress=True)
+    debug(cache_fn)
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    a = variants(vcf_fn, cache=True, compress_cache=True, verbose=True)
+    a2 = np.load(cache_fn)['data']
+    assert_array_equal(a, a2)
+
+    cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='calldata',
+                                        compress=True)
+    debug(cache_fn)
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    a = calldata(vcf_fn, cache=True, compress_cache=True, verbose=True)
+    a2 = np.load(cache_fn)['data']
+    assert_array_equal(a, a2)
+
+    cache_fn = vcfnp.array._mk_cache_fn(vcf_fn, array_type='calldata_2d',
+                                        compress=True)
+    debug(cache_fn)
+    if os.path.exists(cache_fn):
+        os.remove(cache_fn)
+    a = calldata_2d(vcf_fn, cache=True, compress_cache=True, verbose=True)
+    a2 = np.load(cache_fn)['data']
+    assert_array_equal(a, a2)
 
 
 def test_error_handling():

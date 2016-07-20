@@ -32,7 +32,8 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
              arities=None, fills=None, transformers=None, vcf_types=None,
              count=None, progress=0, logstream=None, condition=None,
              slice_args=None, flatten_filter=False, verbose=True, cache=False,
-             cachedir=None, skip_cached=False, truncate=True):
+             cachedir=None, skip_cached=False, compress_cache=False,
+             truncate=True):
     """
     Load an numpy structured array with data from the fixed fields of a VCF file
     (including INFO).
@@ -86,6 +87,8 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
         Manually specify the directory to use to store cache files.
     skip_cached: bool, optional
         If True and cache file is fresh, do not load and return None.
+    compress_cache: bool, optional
+        If True, compress the cache file.
     truncate: bool, optional
         If True (default) only include variants whose start position is within
         the given region. If False, use default tabix behaviour.
@@ -125,7 +128,8 @@ def variants(vcf_fn, region=None, fields=None, exclude_fields=None, dtypes=None,
                              slice_args=slice_args,
                              flatten_filter=flatten_filter, verbose=verbose,
                              cache=cache, cachedir=cachedir,
-                             skip_cached=skip_cached, truncate=truncate)
+                             skip_cached=skip_cached,
+                             compress_cache=compress_cache, truncate=truncate)
     return loader.load()
 
 
@@ -153,22 +157,31 @@ class _ArrayLoader(object):
         cache = self.cache
         cachedir = self.cachedir
         skip_cached = self.skip_cached
+        compress_cache = self.compress_cache
+
         if cache:
             log('caching is enabled')
             cache_fn, is_cached = _get_cache(vcf_fn, array_type=array_type,
                                              region=region, cachedir=cachedir,
-                                             log=log)
+                                             compress=compress_cache, log=log)
             if not is_cached:
                 log('building array')
                 arr = self.build()
                 log('saving to cache file', cache_fn)
-                np.save(cache_fn, arr)
+                if compress_cache:
+                    np.savez_compressed(cache_fn, data=arr)
+                else:
+                    np.save(cache_fn, arr)
+
             elif skip_cached:
                 log('skipping load from cache file', cache_fn)
                 arr = None
+
             else:
                 log('loading from cache file', cache_fn)
                 arr = np.load(cache_fn)
+                if compress_cache:
+                    arr = arr['data']
 
         else:
             log('caching is disabled')
@@ -229,9 +242,12 @@ def _get_logger(logstream, verbose):
     return log
 
 
-def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
+def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None,
+                 compress=False):
     """Utility function to construct a filename for a cache file, given a VCF
     file name (where the original data came from) and other parameters."""
+
+    # ensure cache dir exists
     if cachedir is None:
         # use the VCF file name as the base for a directory name
         cachedir = vcf_fn + config.CACHEDIR_SUFFIX
@@ -242,17 +258,26 @@ def _mk_cache_fn(vcf_fn, array_type, region=None, cachedir=None):
         assert os.path.isdir(cachedir), \
             'unexpected error, cache directory is not a directory: %r' \
             % cachedir
+
+    # handle compression
+    if compress:
+        suffix = 'npz'
+    else:
+        suffix = 'npy'
+
+    # handle region
     if region is None:
         # loading the whole genome (i.e., all variants)
-        cache_fn = os.path.join(cachedir, '%s.npy' % array_type)
+        cache_fn = os.path.join(cachedir, '%s.%s' % (array_type, suffix))
     else:
         # loading a specific region
         region = region.replace(':', '__').replace('-', '_')
-        cache_fn = os.path.join(cachedir, '%s.%s.npy' % (array_type, region))
+        cache_fn = os.path.join(cachedir, '%s.%s.%s' % (array_type, region,
+                                                        suffix))
     return cache_fn
 
 
-def _get_cache(vcf_fn, array_type, region, cachedir, log):
+def _get_cache(vcf_fn, array_type, region, cachedir, compress, log):
     """Utility function to obtain a cache file name and determine whether or
     not a fresh cache file is available."""
 
@@ -264,7 +289,7 @@ def _get_cache(vcf_fn, array_type, region, cachedir, log):
 
     # create cache file name
     cache_fn = _mk_cache_fn(vcf_fn, array_type=array_type, region=region,
-                            cachedir=cachedir)
+                            cachedir=cachedir, compress=compress)
 
     # decide whether or not a fresh cache file is available
     # (if not, we will parse the VCF and build array from scratch)
@@ -528,7 +553,8 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
              exclude_fields=None, dtypes=None, arities=None, fills=None,
              vcf_types=None, count=None, progress=0, logstream=None,
              condition=None, slice_args=None, verbose=True, cache=False,
-             cachedir=None, skip_cached=False, truncate=True):
+             cachedir=None, skip_cached=False, compress_cache=False,
+             truncate=True):
     """
     Load a numpy 1-dimensional structured array with data from the sample
     columns of a VCF file.
@@ -574,6 +600,8 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
         Manually specify the directory to use to store cache files.
     skip_cached: bool
         If True and cache file is fresh, do not load and return None.
+    compress_cache: bool, optional
+        If True, compress the cache file.
     truncate: bool, optional
         If True (default) only include variants whose start position is within
         the given region. If False, use default tabix behaviour.
@@ -686,7 +714,9 @@ def calldata(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                              logstream=logstream, condition=condition,
                              slice_args=slice_args, verbose=verbose,
                              cache=cache, cachedir=cachedir,
-                             skip_cached=skip_cached, truncate=truncate)
+                             skip_cached=skip_cached,
+                             compress_cache=compress_cache,
+                             truncate=truncate)
     arr = loader.load()
     return arr
 
@@ -781,7 +811,8 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                 exclude_fields=None, dtypes=None, arities=None, fills=None,
                 vcf_types=None, count=None, progress=0, logstream=None,
                 condition=None, slice_args=None, verbose=True, cache=False,
-                cachedir=None, skip_cached=False, truncate=True):
+                cachedir=None, skip_cached=False, compress_cache=False,
+                truncate=True):
     """
     Load a numpy 2-dimensional structured array with data from the sample
     columns of a VCF file. Convenience function, equivalent to calldata()
@@ -832,6 +863,8 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
         Manually specify the directory to use to store cache files.
     skip_cached: bool
         If True and cache file is fresh, do not load and return None.
+    compress_cache: bool, optional
+        If True, compress the cache file.
     truncate: bool, optional
         If True (default) only include variants whose start position is within
         the given region. If False, use default tabix behaviour.
@@ -846,7 +879,9 @@ def calldata_2d(vcf_fn, region=None, samples=None, ploidy=2, fields=None,
                                progress=progress, logstream=logstream,
                                condition=condition, slice_args=slice_args,
                                verbose=verbose, cache=cache, cachedir=cachedir,
-                               skip_cached=skip_cached, truncate=truncate)
+                               skip_cached=skip_cached,
+                               compress_cache=compress_cache,
+                               truncate=truncate)
     arr = loader.load()
     return arr
 

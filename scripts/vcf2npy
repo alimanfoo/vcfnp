@@ -24,7 +24,7 @@ def log(*msg):
 
 def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
          task_size, task_index, region, exclude_fields, ploidy, dtypes, arities,
-         progress, truncate):
+         progress, truncate, compress):
 
     assert vcf_filename is not None, 'missing VCF filename, try vcf2npy --help'
     assert os.path.exists(vcf_filename), 'VCF file not found'
@@ -67,19 +67,22 @@ def main(vcf_filename, fasta_filename, output_dir, array_type, chromosome,
                              exclude_fields=exclude_fields, dtypes=dtypes,
                              arities=arities, flatten_filter=True, cache=True,
                              cachedir=output_dir, skip_cached=True,
-                             verbose=True, truncate=truncate)
+                             compress_cache=compress, verbose=True,
+                             truncate=truncate)
     elif array_type == 'calldata':
         arr = vcfnp.calldata(vcf_filename, region=region, progress=progress,
                              ploidy=ploidy, exclude_fields=exclude_fields,
                              dtypes=dtypes, arities=arities, cache=True,
                              cachedir=output_dir, skip_cached=True,
-                             verbose=True, truncate=truncate)
+                             compress_cache=compress, verbose=True,
+                             truncate=truncate)
     elif array_type == 'calldata_2d':
         arr = vcfnp.calldata_2d(vcf_filename, region=region, progress=progress,
                                 ploidy=ploidy, exclude_fields=exclude_fields,
                                 dtypes=dtypes, arities=arities, cache=True,
                                 cachedir=output_dir, skip_cached=True,
-                                verbose=True, truncate=truncate)
+                                compress_cache=compress, verbose=True,
+                                truncate=truncate)
     else:
         raise Exception('unexpected array type: %s' % array_type)
     if arr is not None:
@@ -145,6 +148,8 @@ if __name__ == '__main__':
                         default=False,
                         help='do not truncate variants to region boundary ('
                              'i.e., use default tabix behaviour)')
+    parser.add_argument('--compress', dest='compress', action='store_true',
+                        default=False, help='save in a compressed .npz file')
     args = parser.parse_args()
 
     # region or chromosome [[task-index] task-size]
@@ -199,4 +204,5 @@ if __name__ == '__main__':
          dtypes=dtypes,
          arities=arities,
          progress=args.progress,
-         truncate=(not args.no_truncate))
+         truncate=(not args.no_truncate),
+         compress=args.compress)
