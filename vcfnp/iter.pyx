@@ -54,6 +54,8 @@ cdef string FIELD_NAME_IS_CALLED = b'is_called'
 cdef string FIELD_NAME_IS_PHASED = b'is_phased'
 cdef string FIELD_NAME_GENOTYPE = b'genotype'
 cdef string FIELD_NAME_GT = b'GT'
+cdef string FIELD_NAME_GENOTYPE_AC = b'genotype_ac'
+cdef string FIELD_NAME_PLOIDY = b'ploidy'
 
 
 def itervariants(vcf_fns, region, fields, arities, fills, info_types,
@@ -480,7 +482,11 @@ cdef _mkcval(map[string, vector[string]]& sample_data, int ploidy,
     elif field == FIELD_NAME_IS_PHASED:
         return _is_phased(sample_data)
     elif field == FIELD_NAME_GENOTYPE:
-        return _genotype(sample_data, ploidy)
+        return _genotype(sample_data, ploidy, fill)
+    elif field == FIELD_NAME_GENOTYPE_AC:
+        return _genotype_ac(sample_data, arity, fill)
+    elif field == FIELD_NAME_PLOIDY:
+        return _ploidy(sample_data, fill)
     else:
         return _mkval(sample_data[field], arity, fill, format_type)
 
@@ -503,7 +509,7 @@ cdef _is_phased(map[string, vector[string]]& sample_data):
         return gts.at(0).find(b'|') != npos
 
 
-cdef _genotype(map[string, vector[string]]& sample_data, int ploidy):
+cdef _genotype(map[string, vector[string]]& sample_data, int ploidy, fill):
     cdef vector[string] *gts
     cdef vector[int] alleles
     cdef vector[string] allele_strings
@@ -512,9 +518,9 @@ cdef _genotype(map[string, vector[string]]& sample_data, int ploidy):
     gts = &sample_data[FIELD_NAME_GT]
     if gts.size() == 0:
         if ploidy == 1:
-            return -1
+            return fill
         else:
-            return (-1,) * ploidy
+            return (fill,) * ploidy
     else:
         split(gts.at(0), GT_DELIMS, allele_strings)
         if ploidy == 1:
@@ -537,6 +543,36 @@ cdef _genotype(map[string, vector[string]]& sample_data, int ploidy):
                 else:
                     alleles.push_back(-1)
             return tuple(alleles)
+
+
+cdef _ploidy(map[string, vector[string]]& sample_data, fill):
+    cdef vector[string] *gts
+    gts = &sample_data[FIELD_NAME_GT]
+    cdef vector[string] allele_strings
+    if gts.size() == 0:
+        return fill
+    else:
+        split(gts.at(0), GT_DELIMS, allele_strings)
+        return allele_strings.size()
+
+
+cdef _genotype_ac(map[string, vector[string]]& sample_data, int arity, fill):
+    cdef vector[string] *gts
+    cdef int i
+    cdef vector[string] allele_strings
+    gts = &sample_data[FIELD_NAME_GT]
+    if gts.size() == 0:
+        return (fill,) * arity
+    else:
+        gac = [0] * arity
+        split(gts.at(0), GT_DELIMS, allele_strings)
+        for i in range(allele_strings.size()):
+            s = allele_strings.at(i)
+            if s != b'.':
+                allele = atoi(s.c_str())
+                if allele < arity:
+                    gac[allele] += 1
+        return tuple(gac)
 
 
 def itervariantstable(vcf_fns, region, fields, arities, info_types, parse_info,

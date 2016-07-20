@@ -126,6 +126,8 @@ DEFAULT_CALLDATA_DTYPE = {
     'is_called': 'b1',
     'is_phased': 'b1',
     'genotype': 'i1',
+    'genotype_ac': 'i1',
+    'ploidy': 'i1',
     # set some lower precision defaults for known FORMAT fields
     'AD': 'u2',
     'DP': 'u2',
@@ -141,12 +143,16 @@ DEFAULT_CALLDATA_FILL = {
     'is_called': False,
     'is_phased': False,
     'genotype': -1,
+    'genotype_ac': -1,
+    'ploidy': -1,
 }
 
 
 DEFAULT_CALLDATA_ARITY = {
     'is_called': 1,
     'is_phased': 1,
+    'genotype_ac': 2,  # biallelic
+    'ploidy': 1,
     # N.B., set genotype arity to ploidy
     'AD': 2,  # default to biallelic
 }

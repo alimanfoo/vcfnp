@@ -92,6 +92,53 @@ def test_calldata():
     eq_((10, 10), tuple(a[0]['NA00001']['HQ']))
 
 
+def test_genotype_ac():
+    a = calldata_2d('fixture/test63.vcf',
+                    fields=['GT', 'genotype', 'genotype_ac', 'ploidy'],
+                    ploidy=3, arities=dict(genotype_ac=3))
+    debug(repr(a))
+
+    # check GT
+    expect = np.array([
+        [b'0/0', b'0/0/0', b'0'],
+        [b'1', b'0/1', b'0/1/2'],
+        [b'././.', b'.', b'./.'],
+        [b'././.', b'././.', b'././.'],
+    ])
+    actual = a['GT']
+    assert_array_equal(expect, actual)
+
+    # check genotype
+    expect = np.array([
+        [(0, 0, -1), (0, 0, 0), (0, -1, -1)],
+        [(1, -1, -1), (0, 1, -1), (0, 1, 2)],
+        [(-1, -1, -1), (-1, -1, -1), (-1, -1, -1)],
+        [(-1, -1, -1), (-1, -1, -1), (-1, -1, -1)],
+    ])
+    actual = a['genotype']
+    assert_array_equal(expect, actual)
+
+    # check ploidy
+    expect = np.array([
+        [2, 3, 1],
+        [1, 2, 3],
+        [3, 1, 2],
+        [-1, -1, -1],
+    ])
+    actual = a['ploidy']
+    assert_array_equal(expect, actual)
+
+    # check genotype_ac
+    expect = np.array([
+        [(2, 0, 0), (3, 0, 0), (1, 0, 0)],
+        [(0, 1, 0), (1, 1, 0), (1, 1, 1)],
+        [(0, 0, 0), (0, 0, 0), (0, 0, 0)],
+        [(-1, -1, -1), (-1, -1, -1), (-1, -1, -1)],
+    ])
+    actual = a['genotype_ac']
+    assert_array_equal(expect, actual)
+
+
 def test_calldata_region():
     a = calldata('fixture/sample.vcf.gz', region='20')
     eq_(6, len(a))
