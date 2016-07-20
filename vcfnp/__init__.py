@@ -10,4 +10,4 @@ from vcfnp.array import variants, calldata, calldata_2d, view2d
 from vcfnp.table import VariantsTable
 
 
-__version__ = '2.3.0.dev0'
+__version__ = '2.3.0'
