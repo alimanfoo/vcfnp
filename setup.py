@@ -54,7 +54,6 @@ vcflib_extension = Extension(
     language='c++',
     include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp'],
     libraries=['m', 'z'],
-    extra_compile_args=['-O3']
 )
 
 
@@ -64,7 +63,6 @@ iter_extension = Extension(
     language='c++',
     include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp'],
     libraries=['m', 'z'],
-    extra_compile_args=['-O3']
 )
 
 
