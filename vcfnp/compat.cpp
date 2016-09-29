@@ -3,9 +3,9 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [], 
+        "depends": [],
         "language": "c++"
-    }, 
+    },
     "module_name": "vcfnp.compat"
 }
 END: Cython Metadata */
@@ -506,9 +506,9 @@ static const char *__pyx_filename;
 
 static const char *__pyx_f[] = {
   "vcfnp/compat.pyx",
-  ".tox/py27/local/lib/python2.7/site-packages/Cython/Includes/cpython/type.pxd",
-  ".tox/py27/local/lib/python2.7/site-packages/Cython/Includes/cpython/bool.pxd",
-  ".tox/py27/local/lib/python2.7/site-packages/Cython/Includes/cpython/complex.pxd",
+  "type.pxd",
+  "bool.pxd",
+  "complex.pxd",
 };
 
 /*--- Type declarations ---*/

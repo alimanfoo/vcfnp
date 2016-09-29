@@ -4,24 +4,24 @@
 {
     "distutils": {
         "depends": [
-            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/Variant.h", 
+            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/Variant.h",
             "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/split.h"
-        ], 
+        ],
         "extra_compile_args": [
             "-O3"
-        ], 
+        ],
         "include_dirs": [
-            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib", 
-            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/smithwaterman", 
-            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/tabixpp", 
+            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib",
+            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/smithwaterman",
+            "/home/aliman/src/github/alimanfoo/vcfnp/vcflib/tabixpp",
             "./vcfnp"
-        ], 
-        "language": "c++", 
+        ],
+        "language": "c++",
         "libraries": [
-            "m", 
+            "m",
             "z"
         ]
-    }, 
+    },
     "module_name": "vcfnp.iter"
 }
 END: Cython Metadata */
