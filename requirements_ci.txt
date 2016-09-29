@@ -1,0 +1,4 @@
+cython
+numpy
+h5py
+nose
