@@ -104,5 +104,4 @@ setup(
              'scripts/vcf2csv',
              'scripts/vcf2hdf5_parallel'
              ],
-    install_requires=['numpy']
 )

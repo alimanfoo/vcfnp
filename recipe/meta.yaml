@@ -1,0 +1,38 @@
+{% set name = "vcfnp" %}
+{% set version = "dev" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ../
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - cython
+    - zlib
+  run:
+    - python
+    - numpy
+    - h5py
+
+test:
+  requires:
+    - nose
+  imports:
+    - vcfnp
+  source_files:
+    - fixture/*
+  commands:
+    - nosetests -v vcfnp
+
+about:
+  home: http://github.com/alimanfoo/vcfnp
+  license: MIT
+  license_file: LICENSE.txt
