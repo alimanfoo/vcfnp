@@ -48,11 +48,20 @@ compat_extension = Extension(
 )
 
 
+include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp']
+for k in 'LIBRARY_INC', 'LIBRARY_LIB':
+    if k in os.environ:
+        d = os.environ[k]
+        include_dirs.append(d)
+        print('[vcfnp] adding include dir %r %r' % (k, d))
+        print(os.listdir(d))
+
+
 vcflib_extension = Extension(
     'vcfnp.vcflib',
     sources=['vcfnp/vcflib.pyx'] + get_vcflib_sources(),
     language='c++',
-    include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp'],
+    include_dirs=include_dirs,
     libraries=['m', 'z'],
 )
 
@@ -61,7 +70,7 @@ iter_extension = Extension(
     'vcfnp.iter',
     sources=['vcfnp/iter.pyx'] + get_vcflib_sources(),
     language='c++',
-    include_dirs=[vcflib_dir, smithwaterman_dir, tabixpp_dir, './vcfnp'],
+    include_dirs=include_dirs,
     libraries=['m', 'z'],
 )
 
