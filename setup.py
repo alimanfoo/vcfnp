@@ -55,6 +55,8 @@ for k in 'LIBRARY_INC', 'LIBRARY_LIB':
         include_dirs.append(d)
         print('[vcfnp] adding include dir %r %r' % (k, d))
         print(os.listdir(d))
+if os.name == 'nt':
+    include_dirs.append('./include')
 
 
 vcflib_extension = Extension(
